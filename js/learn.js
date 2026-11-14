@@ -10,7 +10,8 @@
 
   var COURSES = window.SADU_COURSES, COLOURS = window.SADU_COLOURS, STORIES = window.SADU_STORIES || [];
   var PER_LESSON = 4;            // questions in a lesson
-  var KEY = 'sadu-progress-v1';  // where progress is kept in localStorage
+  var KEY = 'sadu-progress-v1';  // where progress is kept in localStorage (the first child; others add ':<id>')
+  var PROFILES_KEY = 'sadu-profiles-v1';  // the list of children on this device and who is learning now
   var GOLD = '#FFC93C', EMPTY = '#E6DFCF';
   var RING = 113.1;              // length of the progress ring (2 × π × 18)
   var LOCALE = LANG === 'ar' ? 'ar-SA-u-ca-gregory-nu-latn' : 'en-GB';
@@ -69,6 +70,8 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      whoTitle: 'Who is learning today?', addChild: 'Add a child', addBtn: 'Add', switchChild: 'Switch child', childN: 'Child %A',
+      removeChild: 'Remove this child', removeSure: 'Delete this child and all their progress on this device?', yesRemove: 'Yes, remove', profStars: '%A stars', profStar1: '1 star',
       goalTitle: 'Daily goal', goalToday: 'Today: %A of %B', goalDone: 'Goal reached today!', goalPick: 'Lessons a day:', goalHit: 'Daily goal reached! Well done!',
       navStickers: 'Stickers', stickerTitle: 'Sticker book', stickerIntro: 'Finish a lesson or a story to win its sticker. Three stars make it gold!',
       stickerCount: '%A of %B stickers', newSticker: 'New sticker!', openStickers: 'Open the sticker book', stickerLocked: 'Not won yet', goldSticker: 'gold',
@@ -130,6 +133,8 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      whoTitle: 'من سيتعلّم اليوم؟', addChild: 'أضف طفلًا', addBtn: 'أضف', switchChild: 'بدّل الطفل', childN: 'طفل %A',
+      removeChild: 'احذف هذا الطفل', removeSure: 'هل تريد حذف هذا الطفل وكل تقدّمه على هذا الجهاز؟', yesRemove: 'نعم، احذف', profStars: '%A نجمة', profStar1: 'نجمة واحدة',
       goalTitle: 'هدف اليوم', goalToday: 'اليوم: %A من %B', goalDone: 'حقّقت هدف اليوم!', goalPick: 'دروس في اليوم:', goalHit: 'حقّقت هدف اليوم! أحسنت!',
       navStickers: 'الملصقات', stickerTitle: 'دفتر الملصقات', stickerIntro: 'أنهِ درسًا أو قصة لتربح ملصقها. ثلاث نجوم تجعله ذهبيًا!',
       stickerCount: '%A من %B ملصقًا', newSticker: 'ملصق جديد!', openStickers: 'افتح دفتر الملصقات', stickerLocked: 'لم تربحه بعد', goldSticker: 'ذهبي',
@@ -160,11 +165,21 @@
   function dayKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function clock(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
 
+  // ---- child profiles ----
+  function keyFor(id) { return id === 'p1' ? KEY : KEY + ':' + id; }
+  function loadProfiles() {
+    try { var p = JSON.parse(localStorage.getItem(PROFILES_KEY)); if (p && p.list && p.list.length) return p; } catch (e) {}
+    return { active: 'p1', list: [{ id: 'p1' }] };
+  }
+  function saveProfiles() { try { localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles)); } catch (e) {} }
+  function peek(id) { try { return JSON.parse(localStorage.getItem(keyFor(id))) || {}; } catch (e) { return {}; } }
+  var profiles = loadProfiles();
+
   function load() {
-    try { var d = JSON.parse(localStorage.getItem(KEY)); if (d && d.lessons) { d.days = d.days || {}; d.stories = d.stories || {}; return d; } } catch (e) {}
+    try { var d = JSON.parse(localStorage.getItem(keyFor(profiles.active))); if (d && d.lessons) { d.days = d.days || {}; d.stories = d.stories || {}; return d; } } catch (e) {}
     return { name: '', lessons: {}, seconds: 0, days: {}, stories: {} };
   }
-  function save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
+  function save(d) { try { localStorage.setItem(keyFor(profiles.active), JSON.stringify(d)); } catch (e) {} }
 
   // ---- read aloud, with the voices installed on the device ----
   var SPEECH = 'speechSynthesis' in window;
@@ -399,7 +414,7 @@
   class Component extends DCLogic {
     constructor(props) {
       super(props);
-      this.state = { view: location.hash === '#report' ? 'report' : 'home', ci: 0, ls: null, data: load(), confirming: false };
+      this.state = { view: location.hash === '#report' ? 'report' : profiles.list.length > 1 ? 'who' : 'home', ci: 0, ls: null, data: load(), confirming: false };
       var self = this;
       if (SPEECH) speechSynthesis.addEventListener('voiceschanged', function () { self.setState({}); });
       // keyboard: 1, 2, 3 pick an answer; Enter moves on
@@ -419,6 +434,12 @@
       window.scrollTo(0, 0);
       var main = document.getElementById('main');
       if (main) main.focus({ preventScroll: true });
+    }
+
+    switchTo(id) {
+      profiles.active = id; saveProfiles();
+      this._trace = null; this._said = null;
+      this.go('home', { data: load(), ls: null, saqrN: 0, adding: false, removing: false });
     }
 
     startStoryQuiz(si) {
@@ -478,8 +499,9 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isWho: s.view === 'who', goWho: function () { self.go('who', { adding: false }); },
         isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
-        shellCls: s.view === 'lesson' || s.view === 'story' ? 'shell focus' : 'shell',
+        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
         gamesHref: (LANG === 'ar' ? 'ar.html' : 'index.html') + '#games',
@@ -620,6 +642,45 @@
       out.dash.saqrCls = funN ? (funN % 2 ? 'saqr cheer' : 'saqr cheer2') : 'saqr';
       out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
       out.dash.say = function () { speak([out.dash.guide]); };
+
+      // ---- who is learning ----
+      out.who = {
+        cards: profiles.list.map(function (pr, i) {
+          var d = pr.id === profiles.active ? data : peek(pr.id), st = 0;
+          Object.keys(d.lessons || {}).forEach(function (k) { st += d.lessons[k].stars || 0; });
+          var nm = (d.name || '').trim() || fill(T.childN, { A: i + 1 });
+          return { name: nm, initial: nm.charAt(0).toUpperCase(), photo: d.photo || '', hasPhoto: !!d.photo, noPhoto: !d.photo,
+            meta: (st === 1 ? T.profStar1 : fill(T.profStars, { A: st })) + (d.age ? ' · ' + fill(T.ageChip, { A: d.age }) : ''),
+            cls: pr.id === profiles.active ? 'who-card on' : 'who-card',
+            pick: function () { sfx('pop'); self.switchTo(pr.id); } };
+        }),
+        adding: !!s.adding, notAdding: !s.adding,
+        startAdd: function () { sfx('tap'); self.setState({ adding: true, newAge: 0 }); },
+        cancelAdd: function () { self.setState({ adding: false }); },
+        ages: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (a) {
+          return { label: String(a), cls: a === s.newAge ? 'age-btn on' : 'age-btn', pressed: a === s.newAge ? 'true' : 'false', set: function () { self.setState({ newAge: a }); } };
+        }),
+        add: function () {
+          var el = document.getElementById('new-child'), nm = el ? String(el.value).trim().slice(0, 40) : '';
+          var id = 'p' + Date.now().toString(36);
+          try { localStorage.setItem(keyFor(id), JSON.stringify({ name: nm, lessons: {}, seconds: 0, days: {}, stories: {}, age: s.newAge || undefined })); } catch (e) {}
+          profiles.list.push({ id: id }); if (el) el.value = '';
+          self.switchTo(id);
+        },
+        many: profiles.list.length > 1
+      };
+      out.r_remove = {
+        can: profiles.list.length > 1 && !s.removing, asking: !!s.removing,
+        ask: function () { self.setState({ removing: true }); },
+        cancel: function () { self.setState({ removing: false }); },
+        yes: function () {
+          var gone = profiles.active;
+          try { localStorage.removeItem(keyFor(gone)); } catch (e) {}
+          profiles.list = profiles.list.filter(function (x) { return x.id !== gone; });
+          self.switchTo(profiles.list[0].id);
+          self.setState({ view: 'who' });
+        }
+      };
 
       // ---- stories ----
       var storiesRead = 0;
@@ -912,7 +973,7 @@
         askReset: function () { self.setState({ confirming: true }); },
         cancelReset: function () { self.setState({ confirming: false }); },
         doReset: function () {
-          try { localStorage.removeItem(KEY); } catch (e) {}
+          try { localStorage.removeItem(keyFor(profiles.active)); } catch (e) {}
           var el = document.getElementById('child-name'); if (el) el.value = '';
           self.setState({ data: load(), confirming: false, ls: null });
         }

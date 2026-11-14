@@ -69,9 +69,11 @@ take or choose a photo. It is cropped to a small square and appears in the greet
 menu and the "Well done!" screen after each lesson. It is kept in this browser only and is never
 uploaded; "Remove photo" or "Reset progress" deletes it.
 
+**Children:** several children can learn on one device. "Switch child" in the side menu opens "Who is learning today?", where a parent can add a child (name and age). Each child has their own progress, stickers, photo, age, goal and settings. A child can be removed from the Family report.
+
 Progress is saved in the browser on that device only (`localStorage`). There are no accounts:
 another device, another browser, or clearing the browser data starts from zero, and there is
-one child per browser.
+each child's progress stays on that browser.
 
 **Lesson podcasts:** put an audio file named after the lesson in the `audio` folder (for
 example `audio/math-1-en.m4a`) and a player appears on that lesson's Learn card. The full
