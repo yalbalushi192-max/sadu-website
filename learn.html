@@ -143,7 +143,15 @@
 <div class="{{ w.cls }}"><div class="wk-track"><div class="{{ w.bar }}" style="height: {{ w.h }}"></div></div><span>{{ w.label }}</span></div>
 </sc-for>
 </div>
-<p class="small muted">{{ t.streakHint }}</p>
+<div class="goal-box">
+<div class="{{ dash.goal.ringCls }}" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ dash.goal.dash }}" transform="rotate(-90 22 22)"/></svg><span>🎯</span></div>
+<div class="goal-text">
+<b>{{ t.goalTitle }}</b>
+<span class="small">{{ dash.goal.text }}</span>
+<sc-if value="{{ dash.goal.done }}"><span class="small goal-ok">{{ t.goalDone }}</span></sc-if>
+<div class="goal-pick"><span class="small muted">{{ t.goalPick }}</span><sc-for list="{{ dash.goal.choices }}" as="g"><button type="button" class="{{ g.cls }}" onclick="{{ g.set }}" aria-pressed="{{ g.pressed }}">{{ g.label }}</button></sc-for></div>
+</div>
+</div>
 </article>
 </div>
 
@@ -473,6 +481,7 @@
 <div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
 </div>
 <span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<sc-if value="{{ ls.goalHit }}"><div class="goal-hit" role="status">🎯 {{ t.goalHit }}</div></sc-if>
 <sc-if value="{{ ls.hasNewSticker }}"><div class="new-sticker" role="status"><span class="sticker big" aria-hidden="true">{{ ls.newSticker }}</span><b>{{ t.newSticker }}</b></div></sc-if>
 <h1 class="h1">{{ ls.doneTitle }}</h1>
 <p class="lead" role="status">{{ ls.title }}: {{ ls.earnedText }}</p>

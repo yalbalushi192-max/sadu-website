@@ -69,6 +69,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      goalTitle: 'Daily goal', goalToday: 'Today: %A of %B', goalDone: 'Goal reached today!', goalPick: 'Lessons a day:', goalHit: 'Daily goal reached! Well done!',
       navStickers: 'Stickers', stickerTitle: 'Sticker book', stickerIntro: 'Finish a lesson or a story to win its sticker. Three stars make it gold!',
       stickerCount: '%A of %B stickers', newSticker: 'New sticker!', openStickers: 'Open the sticker book', stickerLocked: 'Not won yet', goldSticker: 'gold',
       soundOn: 'Sound effects are on', soundOff: 'Sound effects are off', tapSaqr: 'Tap Saqr for a fun fact',
@@ -129,6 +130,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      goalTitle: 'هدف اليوم', goalToday: 'اليوم: %A من %B', goalDone: 'حقّقت هدف اليوم!', goalPick: 'دروس في اليوم:', goalHit: 'حقّقت هدف اليوم! أحسنت!',
       navStickers: 'الملصقات', stickerTitle: 'دفتر الملصقات', stickerIntro: 'أنهِ درسًا أو قصة لتربح ملصقها. ثلاث نجوم تجعله ذهبيًا!',
       stickerCount: '%A من %B ملصقًا', newSticker: 'ملصق جديد!', openStickers: 'افتح دفتر الملصقات', stickerLocked: 'لم تربحه بعد', goldSticker: 'ذهبي',
       soundOn: 'المؤثرات الصوتية تعمل', soundOff: 'المؤثرات الصوتية متوقفة', tapSaqr: 'اضغط على صقر ليخبرك بمعلومة ممتعة',
@@ -411,6 +413,7 @@
 
     go(view, extra) {
       hush();
+      bits = [];  // confetti stops when the child moves to another page
       this._said = null;
       this.setState(Object.assign({ view: view, confirming: false }, extra || {}));
       window.scrollTo(0, 0);
@@ -453,11 +456,12 @@
         acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4) };
       }
       data.seconds += secs;
-      var today = dayKey(new Date());
-      data.days[today] = (data.days[today] || 0) + 1;
+      var today = dayKey(new Date()), goal = data.goal || 2, before = data.days[today] || 0;
+      data.days[today] = before + 1;
+      var goalHit = before < goal && before + 1 >= goal;
       save(data);
-      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker }) });
-      sfx('done'); burst(null, 160);
+      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit }) });
+      sfx('done'); burst(null, goalHit ? 260 : 160);
       window.scrollTo(0, 0);
     }
 
@@ -595,6 +599,13 @@
         btn: pick.rec ? T.resumeLesson : T.startLesson,
         start: function () { self.startLesson(pick.ci, pick.li); },
         week: week, streak: String(streak),
+        goal: (function () {
+          var g = data.goal || 2, n = data.days[dayKey(today)] || 0, pct = Math.min(100, Math.round(n / g * 100));
+          return { text: fill(T.goalToday, { A: Math.min(n, g), B: g }), done: n >= g, notDone: n < g, dash: (RING * pct / 100).toFixed(1) + ' ' + RING,
+            ringCls: n >= g ? 'ring goal-ring done' : 'ring goal-ring',
+            choices: [1, 2, 3].map(function (c) { return { label: String(c), cls: c === g ? 'age-btn sm on' : 'age-btn sm', pressed: c === g ? 'true' : 'false',
+              set: function () { var d = Object.assign({}, self.state.data, { goal: c }); save(d); sfx('tap'); self.setState({ data: d }); } }; }) };
+        })(),
         minutes: String(Math.round(data.seconds / 60)), started: String(started), courseCount: String(COURSES.length),
         count: fill(T.coursesCount, { A: COURSES.length, B: lessonsAll })
       };
@@ -734,7 +745,7 @@
           fbCls: ls.solved ? 'feedback ok' : ls.wrong.length ? 'feedback bad' : 'feedback',
           solved: ls.solved, nextLabel: last ? T.finish : T.next,
           earnedText: fill(T.earned, { A: ls.earned }), earnedStars: stars(ls.earned),
-          newSticker: ls.newSticker || '', hasNewSticker: !!ls.newSticker,
+          newSticker: ls.newSticker || '', hasNewSticker: !!ls.newSticker, goalHit: !!ls.goalHit,
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
           hasNext: !isStoryQuiz && ls.li < lessonCount - 1,
