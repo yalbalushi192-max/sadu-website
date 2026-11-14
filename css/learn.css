@@ -477,3 +477,10 @@ button.who{border:0;background:none;padding:0;text-align:start;cursor:pointer;fo
 .level-msg{font-size:16px;padding:6px 16px}
 .mastery-key{margin:-6px 0 8px}
 .step-main .mlv{margin-top:4px}
+
+/* ---------- course challenge ---------- */
+.challenge{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:2px solid var(--c);background:linear-gradient(135deg,var(--surface),var(--t))}
+.challenge-ic{font-size:40px;line-height:1}
+.challenge-text{flex:1 1 240px;display:flex;flex-direction:column;gap:4px}
+.changes{display:flex;flex-direction:column;align-items:center;gap:6px}
+.changes .mlv{font-size:14px;padding:3px 12px}

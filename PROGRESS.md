@@ -17,7 +17,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 B. Full learning platform (owner's request; profiles first):
    - [x] Child profiles: several children on one device, each with their own name, photo, age, progress, stickers and settings; a "Who is learning?" screen; existing progress becomes the first profile. Done: "Switch child" in the side menu; add a child with name and age; remove a child from the Family report.
    - [x] Mastery levels (idea from Khan Academy): each lesson moves through Not started, Attempted, Familiar, Proficient, Mastered with good scores and can slip back; shown on the course path and in the report; a course mastery %. Done: practice reaches Proficient; Mastered waits for the course challenge.
-   - [ ] Course challenge (idea from Khan Academy unit tests): about 8 mixed questions from a whole course that can raise mastery levels.
+   - [x] Course challenge (idea from Khan Academy unit tests): about 8 mixed questions from a whole course that can raise mastery levels. Done: card at the end of each course page, unlocks after 2 lessons, 8 mixed questions from played lessons; all right moves Proficient to Mastered, mistakes can slip a level; best score kept.
    - [ ] Printable worksheets (idea from Khan Academy Kids printables): a print button that makes a worksheet for a lesson.
    - [ ] Curriculum levels: every course organised into Level 1, 2 and 3 (units), with many more lessons per subject (target 15+ per course), keeping old lesson ids.
    - [ ] Certificates: a printable certificate when a course or level is finished.

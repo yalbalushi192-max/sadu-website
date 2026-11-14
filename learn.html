@@ -387,6 +387,16 @@
 </li>
 </sc-for>
 </ol>
+<div class="card challenge" style="--c: {{ course.color }}; --t: {{ course.tint }}">
+<span class="challenge-ic" aria-hidden="true">🏆</span>
+<div class="challenge-text">
+<h2 class="h3">{{ t.chTitle }}</h2>
+<p class="small muted">{{ t.chText }}</p>
+<sc-if value="{{ course.ch.hasBest }}"><span class="small"><b>{{ course.ch.best }}</b></span></sc-if>
+<sc-if value="{{ course.ch.locked }}"><span class="small muted">🔒 {{ t.chLocked }}</span></sc-if>
+</div>
+<sc-if value="{{ course.ch.open }}"><button type="button" class="btn primary" onclick="{{ course.ch.start }}">{{ t.chStart }}</button></sc-if>
+</div>
 </section>
 </sc-if>
 
@@ -509,6 +519,8 @@
 <div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
 </div>
 <span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<sc-if value="{{ ls.hasChanges }}"><div class="changes" role="status"><b>{{ t.chChanges }}</b><sc-for list="{{ ls.changes }}" as="ch"><span class="{{ ch.cls }}">{{ ch.text }}</span></sc-for></div></sc-if>
+<sc-if value="{{ ls.noChanges }}"><p class="small muted">{{ t.chSame }}</p></sc-if>
 <sc-if value="{{ ls.hasLevel }}"><div class="{{ ls.levelCls }} level-msg" role="status">{{ ls.levelMsg }}</div></sc-if>
 <sc-if value="{{ ls.goalHit }}"><div class="goal-hit" role="status">🎯 {{ t.goalHit }}</div></sc-if>
 <sc-if value="{{ ls.hasNewSticker }}"><div class="new-sticker" role="status"><span class="sticker big" aria-hidden="true">{{ ls.newSticker }}</span><b>{{ t.newSticker }}</b></div></sc-if>

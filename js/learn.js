@@ -72,6 +72,9 @@
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
       mlv: ['Not started', 'Attempted', 'Familiar', 'Proficient', 'Mastered'], masteryWord: 'Mastery', masteryPct: 'Mastery %A%',
       levelUp: 'Level up: from %A to %B!', levelNow: 'Mastery: %B', masteryKey: 'Mastery levels: a lesson moves up with good scores and can slip back if it is forgotten. Mastered comes from the course challenge.',
+      chTitle: 'Course challenge', chText: 'Mixed questions from the lessons you have played. Get them right to reach Mastered!',
+      chStart: 'Start the challenge', chLocked: 'Play 2 lessons in this course to unlock the challenge.', chBest: 'Best score: %A%',
+      chChanges: 'Mastery changes', chLine: '%L: %A → %B', chSame: 'No change this time. Practise and try again!',
       whoTitle: 'Who is learning today?', addChild: 'Add a child', addBtn: 'Add', switchChild: 'Switch child', childN: 'Child %A',
       removeChild: 'Remove this child', removeSure: 'Delete this child and all their progress on this device?', yesRemove: 'Yes, remove', profStars: '%A stars', profStar1: '1 star',
       goalTitle: 'Daily goal', goalToday: 'Today: %A of %B', goalDone: 'Goal reached today!', goalPick: 'Lessons a day:', goalHit: 'Daily goal reached! Well done!',
@@ -137,6 +140,9 @@
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
       mlv: ['لم يبدأ', 'حاول', 'مألوف', 'متمكّن', 'متقن'], masteryWord: 'الإتقان', masteryPct: 'الإتقان %A%',
       levelUp: 'ارتقيت من %A إلى %B!', levelNow: 'الإتقان: %B', masteryKey: 'مستويات الإتقان: يرتقي الدرس مع الدرجات الجيدة وقد ينخفض إذا نُسي. ومستوى «متقن» يأتي من تحدّي الدورة.',
+      chTitle: 'تحدّي الدورة', chText: 'أسئلة منوّعة من الدروس التي لعبتها. أجب عنها صحيحة لتصل إلى «متقن»!',
+      chStart: 'ابدأ التحدّي', chLocked: 'العب درسين في هذه الدورة لفتح التحدّي.', chBest: 'أفضل نتيجة: %A%',
+      chChanges: 'تغيّرات الإتقان', chLine: '%L: %A ← %B', chSame: 'لا تغيير هذه المرة. تدرّب وحاول مرة أخرى!',
       whoTitle: 'من سيتعلّم اليوم؟', addChild: 'أضف طفلًا', addBtn: 'أضف', switchChild: 'بدّل الطفل', childN: 'طفل %A',
       removeChild: 'احذف هذا الطفل', removeSure: 'هل تريد حذف هذا الطفل وكل تقدّمه على هذا الجهاز؟', yesRemove: 'نعم، احذف', profStars: '%A نجمة', profStar1: 'نجمة واحدة',
       goalTitle: 'هدف اليوم', goalToday: 'اليوم: %A من %B', goalDone: 'حقّقت هدف اليوم!', goalPick: 'دروس في اليوم:', goalHit: 'حقّقت هدف اليوم! أحسنت!',
@@ -457,6 +463,20 @@
       this.go('home', { data: load(), ls: null, saqrN: 0, adding: false, removing: false });
     }
 
+    startChallenge(ci) {
+      var c = COURSES[ci], data = this.state.data, pools = [];
+      c.lessons.forEach(function (l, li) {
+        if (!data.lessons[l.id]) return;
+        var raw = (l.make ? l.make() : l.questions).filter(function (q) { return !q.kind; });
+        if (raw.length) pools.push(shuffle(raw.map(function (q) { var x = prepQ(q, l.hint); x.li = li; return x; })));
+      });
+      var qs = [];
+      for (var round = 0; qs.length < 8 && pools.some(function (pl) { return pl.length; }); round++) {
+        pools.forEach(function (pl) { if (pl.length && qs.length < 8) qs.push(pl.shift()); });
+      }
+      this.go('lesson', { ci: ci, ls: { challenge: true, li: 0, step: 'quiz', qs: shuffle(qs), qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], results: [], act: freshAct(qs[0]) } });
+    }
+
     startStoryQuiz(si) {
       var st = STORIES[si];
       var qs = st.questions.map(function (q) {
@@ -474,12 +494,24 @@
       this.go('lesson', { ci: ci, ls: { li: li, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
     }
 
-    finishLesson() {
-      var ls = this.state.ls, n = ls.qs.length, newSticker = '', levelMsg = '', levelCls = '';
+    finishLesson(results) {
+      var ls = this.state.ls, n = ls.qs.length, newSticker = '', levelMsg = '', levelCls = '', changes = null;
       var earned = ls.firstTry === n ? 3 : ls.firstTry === n - 1 ? 2 : 1;
       var secs = Math.min(900, Math.round((Date.now() - ls.t0) / 1000));
       var data = JSON.parse(JSON.stringify(this.state.data));
-      if (ls.story != null) {
+      if (ls.challenge) {
+        var c = COURSES[this.state.ci], per = {};
+        (results || []).forEach(function (ok, k) { var li = ls.qs[k].li; per[li] = per[li] || { n: 0, ok: 0 }; per[li].n++; if (ok) per[li].ok++; });
+        changes = [];
+        Object.keys(per).forEach(function (li) {
+          var l = c.lessons[li], rec = data.lessons[l.id], from = masteryOf(rec), to = nextMastery(from, per[li].ok / per[li].n, true);
+          rec.mastery = to;
+          if (to !== from) changes.push({ text: fill(T.chLine, { L: tx(l.title), A: T.mlv[from], B: T.mlv[to] }), cls: mastClass(to) });
+        });
+        data.challenges = data.challenges || {};
+        var best = (data.challenges[c.id] || {}).best || 0;
+        data.challenges[c.id] = { best: Math.max(best, Math.round(ls.firstTry / n * 100)), when: Date.now() };
+      } else if (ls.story != null) {
         var sid = STORIES[ls.story].id, was = data.stories[sid] || { stars: 0 };
         var newSticker = data.stories[sid] ? '' : (STORIES[ls.story].sticker || '⭐');
         data.stories[sid] = { stars: Math.max(was.stars, earned), when: Date.now() };
@@ -499,7 +531,7 @@
       data.days[today] = before + 1;
       var goalHit = before < goal && before + 1 >= goal;
       save(data);
-      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit, levelMsg: levelMsg, levelCls: levelCls }) });
+      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit, levelMsg: levelMsg, levelCls: levelCls, changes: changes }) });
       sfx('done'); burst(null, goalHit ? 260 : 160);
       window.scrollTo(0, 0);
     }
@@ -587,6 +619,11 @@
         };
       });
       out.course = out.courses[s.ci];
+      if (out.course) {
+        var cc = COURSES[s.ci], playedHere = cc.lessons.filter(function (l) { return data.lessons[l.id]; }).length, chRec = (data.challenges || {})[cc.id];
+        out.course.ch = { open: playedHere >= 2, locked: playedHere < 2, best: chRec ? fill(T.chBest, { A: chRec.best }) : '', hasBest: !!chRec,
+          start: function () { sfx('tap'); self.startChallenge(s.ci); } };
+      }
       var age = data.age || 0;
       out.coursesFit = out.courses.filter(function (c) { return c.fits; });
       out.coursesOther = out.courses.filter(function (c) { return !c.fits; });
@@ -765,14 +802,17 @@
       var ls = s.ls;
       if (s.view === 'lesson' && ls) {
         var isStoryQuiz = ls.story != null, story = isStoryQuiz ? STORIES[ls.story] : null;
-        var lesson = isStoryQuiz ? { id: 'story-' + story.id, title: story.title, teach: '' } : COURSES[s.ci].lessons[ls.li];
-        var lessonCount = isStoryQuiz ? 1 : COURSES[s.ci].lessons.length;
+        var isChallenge = !!ls.challenge;
+        var lesson = isStoryQuiz ? { id: 'story-' + story.id, title: story.title, teach: '' }
+          : isChallenge ? { id: 'challenge-' + COURSES[s.ci].id, title: T.chTitle, teach: '' } : COURSES[s.ci].lessons[ls.li];
+        var lessonCount = isStoryQuiz || isChallenge ? 1 : COURSES[s.ci].lessons.length;
         if (isStoryQuiz) out.course = { name: T.storiesTitle, color: story.color, tint: story.tint };
         var q = ls.qs[ls.qi], last = ls.qi === ls.qs.length - 1;
         var seq = (q.seq || []).map(function (name) { return { hex: COLOURS[name].hex, name: COLOURS[name][LANG] }; });
         var filled = ls.step === 'teach' ? 0 : ls.step === 'done' ? ls.qs.length : ls.qi + (ls.solved ? 1 : 0);
         var next = function () {
-          if (last) { self.finishLesson(); } else { self.setState({ ls: Object.assign({}, ls, { qi: ls.qi + 1, wrong: [], solved: false, act: freshAct(ls.qs[ls.qi + 1]) }) }); }
+          var results = (ls.results || []).concat(ls.wrong.length === 0);
+          if (last) { self.finishLesson(results); } else { self.setState({ ls: Object.assign({}, ls, { qi: ls.qi + 1, wrong: [], solved: false, results: results, act: freshAct(ls.qs[ls.qi + 1]) }) }); }
         };
         var startQuiz = function () { self.setState({ ls: Object.assign({}, ls, { step: 'quiz' }) }); };
         var auto = data.autoRead !== false;
@@ -830,12 +870,13 @@
           levelMsg: ls.levelMsg || '', hasLevel: !!ls.levelMsg, levelCls: ls.levelCls || '',
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
-          hasNext: !isStoryQuiz && ls.li < lessonCount - 1,
-          isLast: !isStoryQuiz && ls.li === lessonCount - 1,
+          hasNext: !isStoryQuiz && !isChallenge && ls.li < lessonCount - 1,
+          isLast: !isStoryQuiz && !isChallenge && ls.li === lessonCount - 1,
           backLabel: isStoryQuiz ? T.backStories : T.backCourse,
           startQuiz: startQuiz,
           next: next,
-          again: function () { self.startLesson(s.ci, ls.li); },
+          again: function () { if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
+          isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),
           nextLesson: function () { self.startLesson(s.ci, ls.li + 1); },
           backCourse: function () { self.go(isStoryQuiz ? 'stories' : 'course'); }
         };
