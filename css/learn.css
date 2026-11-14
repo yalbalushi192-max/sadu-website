@@ -464,3 +464,16 @@ button.who{border:0;background:none;padding:0;text-align:start;cursor:pointer;fo
 .who-card.add{border-style:dashed;background:transparent;box-shadow:none}
 .add-plus{background:var(--sunk);color:var(--ink-2);font-size:40px;box-shadow:none}
 .add-form{display:flex;flex-direction:column;gap:14px;max-width:560px;align-self:center;width:100%}
+
+/* ---------- mastery levels ---------- */
+.mlv{display:inline-flex;align-items:center;gap:4px;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:800;line-height:1.6;white-space:nowrap}
+.mlv::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.8}
+.mlv.l0{background:#ECEAF4;color:#625F82}
+.mlv.l1{background:#F1EDE4;color:#6B5A3A}
+.mlv.l2{background:var(--amber-soft);color:var(--amber)}
+.mlv.l3{background:var(--green-soft);color:var(--green)}
+.mlv.l4{background:#ECE5FF;color:#5B3FC4}
+.mlv.l4::before{content:'★';width:auto;height:auto;background:none;opacity:1}
+.level-msg{font-size:16px;padding:6px 16px}
+.mastery-key{margin:-6px 0 8px}
+.step-main .mlv{margin-top:4px}

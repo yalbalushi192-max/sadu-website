@@ -70,6 +70,8 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      mlv: ['Not started', 'Attempted', 'Familiar', 'Proficient', 'Mastered'], masteryWord: 'Mastery', masteryPct: 'Mastery %A%',
+      levelUp: 'Level up: from %A to %B!', levelNow: 'Mastery: %B', masteryKey: 'Mastery levels: a lesson moves up with good scores and can slip back if it is forgotten. Mastered comes from the course challenge.',
       whoTitle: 'Who is learning today?', addChild: 'Add a child', addBtn: 'Add', switchChild: 'Switch child', childN: 'Child %A',
       removeChild: 'Remove this child', removeSure: 'Delete this child and all their progress on this device?', yesRemove: 'Yes, remove', profStars: '%A stars', profStar1: '1 star',
       goalTitle: 'Daily goal', goalToday: 'Today: %A of %B', goalDone: 'Goal reached today!', goalPick: 'Lessons a day:', goalHit: 'Daily goal reached! Well done!',
@@ -133,6 +135,8 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      mlv: ['لم يبدأ', 'حاول', 'مألوف', 'متمكّن', 'متقن'], masteryWord: 'الإتقان', masteryPct: 'الإتقان %A%',
+      levelUp: 'ارتقيت من %A إلى %B!', levelNow: 'الإتقان: %B', masteryKey: 'مستويات الإتقان: يرتقي الدرس مع الدرجات الجيدة وقد ينخفض إذا نُسي. ومستوى «متقن» يأتي من تحدّي الدورة.',
       whoTitle: 'من سيتعلّم اليوم؟', addChild: 'أضف طفلًا', addBtn: 'أضف', switchChild: 'بدّل الطفل', childN: 'طفل %A',
       removeChild: 'احذف هذا الطفل', removeSure: 'هل تريد حذف هذا الطفل وكل تقدّمه على هذا الجهاز؟', yesRemove: 'نعم، احذف', profStars: '%A نجمة', profStar1: 'نجمة واحدة',
       goalTitle: 'هدف اليوم', goalToday: 'اليوم: %A من %B', goalDone: 'حقّقت هدف اليوم!', goalPick: 'دروس في اليوم:', goalHit: 'حقّقت هدف اليوم! أحسنت!',
@@ -292,6 +296,17 @@
       })
     };
   }
+
+  // ---- mastery (idea from Khan Academy): 0 not started, 1 attempted, 2 familiar, 3 proficient, 4 mastered ----
+  var MASTERY_POINTS = [0, 0, 50, 80, 100];
+  function masteryOf(rec) { return !rec ? 0 : rec.mastery != null ? rec.mastery : { 3: 3, 2: 2, 1: 1 }[rec.stars] || 1; }
+  // practice can reach Proficient; Mastered is earned in a course challenge; a weak score slips one level back
+  function nextMastery(level, acc, challenge) {
+    if (acc >= 1) return challenge ? (level >= 3 ? 4 : 3) : level <= 1 ? 3 : Math.min(3, Math.max(level, level + 1));
+    if (acc >= 0.7) return level >= 4 ? 3 : Math.max(level, 2);
+    return level >= 3 ? 2 : Math.max(level, 1);
+  }
+  function mastClass(level) { return 'mlv l' + level; }
 
   // ---- stickers: one per lesson (from the course's list) and one per story ----
   function stickerOf(ci, li) { var st = COURSES[ci].stickers; return st && st.length ? st[li % st.length] : '⭐'; }
@@ -460,7 +475,7 @@
     }
 
     finishLesson() {
-      var ls = this.state.ls, n = ls.qs.length, newSticker = '';
+      var ls = this.state.ls, n = ls.qs.length, newSticker = '', levelMsg = '', levelCls = '';
       var earned = ls.firstTry === n ? 3 : ls.firstTry === n - 1 ? 2 : 1;
       var secs = Math.min(900, Math.round((Date.now() - ls.t0) / 1000));
       var data = JSON.parse(JSON.stringify(this.state.data));
@@ -473,15 +488,18 @@
       var old = data.lessons[lesson.id] || { stars: 0, plays: 0 };
       newSticker = data.lessons[lesson.id] ? '' : stickerOf(this.state.ci, ls.li);
       // acc and missed describe the latest play; the learning plan uses them to find weak spots
+      var lvFrom = masteryOf(data.lessons[lesson.id]), lvTo = nextMastery(lvFrom, ls.firstTry / n, false);
       data.lessons[lesson.id] = { stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
-        acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4) };
+        acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4), mastery: lvTo };
+      levelMsg = lvTo > lvFrom && lvFrom > 0 ? fill(T.levelUp, { A: T.mlv[lvFrom], B: T.mlv[lvTo] }) : fill(T.levelNow, { B: T.mlv[lvTo] });
+      levelCls = mastClass(lvTo);
       }
       data.seconds += secs;
       var today = dayKey(new Date()), goal = data.goal || 2, before = data.days[today] || 0;
       data.days[today] = before + 1;
       var goalHit = before < goal && before + 1 >= goal;
       save(data);
-      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit }) });
+      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit, levelMsg: levelMsg, levelCls: levelCls }) });
       sfx('done'); burst(null, goalHit ? 260 : 160);
       window.scrollTo(0, 0);
     }
@@ -531,18 +549,20 @@
       // ---- courses, with saved progress worked in ----
       var doneAll = 0, starsAll = 0, lessonsAll = 0, lastAll = 0, started = 0, flat = [];
       out.courses = COURSES.map(function (c, ci) {
-        var done = 0, st = 0, nextIdx = -1;
+        var done = 0, st = 0, nextIdx = -1, mPts = 0;
         var lessons = c.lessons.map(function (l, li) {
           var rec = data.lessons[l.id];
           lessonsAll += 1;
           if (rec) { done += 1; st += rec.stars; if (rec.when > lastAll) lastAll = rec.when; }
           else if (nextIdx === -1) nextIdx = li;
+          mPts += MASTERY_POINTS[masteryOf(rec)];
           var row = {
             num: String(li + 1), title: tx(l.title), stars: stars(rec ? rec.stars : 0),
             starsText: fill(T.rStarsShort, { A: rec ? rec.stars : 0 }),
             note: rec ? fill(T.doneOn, { D: day(rec.when) }) : T.lessonMeta,
             reportNote: rec ? fill(T.rStarsShort, { A: rec.stars }) + ' · ' + day(rec.when) : T.rNew,
             btn: rec ? T.again : T.start, done: !!rec,
+            mLabel: T.mlv[masteryOf(rec)], mCls: mastClass(masteryOf(rec)),
             start: function () { self.startLesson(ci, li); }
           };
           flat.push({ rec: rec, course: tx(c.name), title: row.title, ci: ci, li: li });
@@ -555,13 +575,13 @@
         });
         if (done) started += 1;
         doneAll += done; starsAll += st;
-        var pct = Math.round((done / c.lessons.length) * 100);
+        var pct = Math.round((done / c.lessons.length) * 100), mPct = Math.round(mPts / (c.lessons.length * 100) * 100);
         return {
           name: tx(c.name), age: tx(c.age), color: c.color, tint: c.tint, icon: c.icon, lessons: lessons,
           doneText: fill(T.xOfY, { A: done, B: c.lessons.length }),
           starsText: fill(T.rStarsOf, { A: st, B: c.lessons.length * 3 }),
           pct: pct + '%', pctNum: String(pct), starsNum: st,
-          dash: (RING * pct / 100).toFixed(1) + ' ' + RING,
+          dash: (RING * mPct / 100).toFixed(1) + ' ' + RING, mPct: mPct + '%', masteryText: fill(T.masteryPct, { A: mPct }),
           cta: done === 0 ? T.ctaStart : done === c.lessons.length ? T.ctaReview : T.ctaContinue, fits: fitsAge(c, data.age),
           open: function () { self.go('course', { ci: ci }); }
         };
@@ -807,6 +827,7 @@
           solved: ls.solved, nextLabel: last ? T.finish : T.next,
           earnedText: fill(T.earned, { A: ls.earned }), earnedStars: stars(ls.earned),
           newSticker: ls.newSticker || '', hasNewSticker: !!ls.newSticker, goalHit: !!ls.goalHit,
+          levelMsg: ls.levelMsg || '', hasLevel: !!ls.levelMsg, levelCls: ls.levelCls || '',
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
           hasNext: !isStoryQuiz && ls.li < lessonCount - 1,

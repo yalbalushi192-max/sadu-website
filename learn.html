@@ -210,7 +210,7 @@
 <article class="ccard" style="--c: {{ c.color }}; --t: {{ c.tint }}">
 <div class="ccard-top">
 <span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
-<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.pct }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.pct }}</span></div>
+<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.masteryText }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.mPct }}</span></div>
 </div>
 <h3 class="h3">{{ c.name }}</h3>
 <p class="small muted">{{ c.age }}</p>
@@ -232,7 +232,7 @@
 <article class="ccard" style="--c: {{ c.color }}; --t: {{ c.tint }}">
 <div class="ccard-top">
 <span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
-<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.pct }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.pct }}</span></div>
+<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.masteryText }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.mPct }}</span></div>
 </div>
 <h3 class="h3">{{ c.name }}</h3>
 <p class="small muted">{{ c.age }}</p>
@@ -366,7 +366,7 @@
 <span class="tile lg" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ course.icon }}"/></svg></span>
 <div class="course-hero-text">
 <h1 class="h1">{{ course.name }}</h1>
-<p class="meta">{{ course.age }} · {{ course.doneText }} · {{ course.starsText }}</p>
+<p class="meta">{{ course.age }} · {{ course.doneText }} · {{ course.starsText }} · <b>{{ course.masteryText }}</b></p>
 <div class="bar" role="progressbar" aria-label="{{ course.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ course.pctNum }}"><div style="width: {{ course.pct }}"></div></div>
 </div>
 </header>
@@ -379,6 +379,7 @@
 <sc-if value="{{ l.isNext }}"><span class="tag next-tag">{{ t.upNext }}</span></sc-if>
 <b>{{ l.title }}</b>
 <span class="small muted">{{ l.note }}</span>
+<span class="{{ l.mCls }}">{{ l.mLabel }}</span>
 </div>
 <span class="stars" role="img" aria-label="{{ l.starsText }}"><sc-for list="{{ l.stars }}" as="s"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
 <button type="button" class="{{ l.btnCls }}" onclick="{{ l.start }}">{{ l.btn }}</button>
@@ -508,6 +509,7 @@
 <div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
 </div>
 <span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<sc-if value="{{ ls.hasLevel }}"><div class="{{ ls.levelCls }} level-msg" role="status">{{ ls.levelMsg }}</div></sc-if>
 <sc-if value="{{ ls.goalHit }}"><div class="goal-hit" role="status">🎯 {{ t.goalHit }}</div></sc-if>
 <sc-if value="{{ ls.hasNewSticker }}"><div class="new-sticker" role="status"><span class="sticker big" aria-hidden="true">{{ ls.newSticker }}</span><b>{{ t.newSticker }}</b></div></sc-if>
 <h1 class="h1">{{ ls.doneTitle }}</h1>
@@ -606,17 +608,18 @@
 
 <div class="card">
 <h2 class="h3 card-title">{{ t.rBySubject }}</h2>
+<p class="small muted mastery-key">{{ t.masteryKey }}</p>
 <sc-for list="{{ courses }}" as="c">
 <details class="subject" style="--c: {{ c.color }}">
 <summary>
 <span class="tile sm" aria-hidden="true" style="background: {{ c.color }}"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
 <span class="subject-name">{{ c.name }}</span>
 <span class="subject-bar"><span class="bar" role="progressbar" aria-label="{{ c.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ c.pctNum }}"><span style="width: {{ c.pct }}"></span></span></span>
-<span class="small muted subject-meta">{{ c.doneText }} · {{ c.starsText }}</span>
+<span class="small muted subject-meta">{{ c.doneText }} · {{ c.masteryText }}</span>
 <svg class="chev" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
 </summary>
 <ul class="lines">
-<sc-for list="{{ c.lessons }}" as="l"><li><span>{{ l.num }}. {{ l.title }}</span><span>{{ l.reportNote }}</span></li></sc-for>
+<sc-for list="{{ c.lessons }}" as="l"><li><span>{{ l.num }}. {{ l.title }} <span class="{{ l.mCls }}">{{ l.mLabel }}</span></span><span>{{ l.reportNote }}</span></li></sc-for>
 </ul>
 </details>
 </sc-for>
