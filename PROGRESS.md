@@ -14,6 +14,12 @@ This file is updated after each finished item. Each item is also saved as a git 
 
 0. [x] Make it interactive for kids (owner's request, first): (a) sound effects, confetti, tappable Saqr with fun facts, bouncy answers; (b) sticker book: a sticker for every finished lesson. Part (a) done: sound effects (switch in the lesson bar), confetti, tap Saqr for fun facts, bouncy answers. Part (b) done: sticker book page (menu: Stickers), a sticker per lesson and story, gold for 3 stars, "New sticker!" on the result screen, latest stickers on the dashboard.
 1. [x] More phonics: English digraphs (sh, ch, th, ck), more first-sound sets, and Arabic short vowels (fatha, kasra, damma). Done: phonics-8 (r h b f), phonics-9 (sh ch th ck), phonics-10 (fatha, kasra, damma); missed words now show in the plan; single letters shown large.
+B. Full learning platform (owner's request; profiles first):
+   - [ ] Child profiles: several children on one device, each with their own name, photo, age, progress, stickers and settings; a "Who is learning?" screen; existing progress becomes the first profile.
+   - [ ] Curriculum levels: every course organised into Level 1, 2 and 3 (units), with many more lessons per subject (target 15+ per course), keeping old lesson ids.
+   - [ ] Certificates: a printable certificate when a course or level is finished.
+   - [ ] Weekly summary for parents: a "this week" page (lessons, minutes, strengths, what to practise), printable.
+   - [ ] Plan for accounts, syncing across devices and putting the site online (a written plan with options and costs for the owner to decide; nothing set up without the owner).
 A. Ideas from the best children's learning apps (owner's request; Sadu's own look and content, nothing copied):
    - [x] Split Phonics into English Phonics and Arabic Phonics (lesson ids and stickers kept).
    - [x] Daily goal (like Duolingo ABC, Lingokids): pick 1, 2 or 3 lessons a day; a goal ring on the dashboard; a celebration when it is reached. Done: in the This week card.
