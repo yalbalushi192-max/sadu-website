@@ -117,7 +117,7 @@
 
   window.SADU_COURSES = [
     {
-      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🏠', '🌙', '🐇', '🚢', '🍊'], name: { en: 'Phonics', ar: 'الأصوات والحروف' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
+      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🐇', '🚢'], name: { en: 'English Phonics', ar: 'الأصوات الإنجليزية' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#B9A8FF', tint: '#E4DDFF',
       tip: { en: 'Say letter sounds, not letter names: "sss" for s, "mmm" for m. On walks, ask: which sound does "palm" start with?', ar: 'انطق صوت الحرف لا اسمه: «سَ» لا «سين». وفي النزهة اسأل: بأي صوت تبدأ كلمة «نخلة»؟' },
       icon: 'M7 10a5 5 0 1 1 10 0c0 3.5-3.5 4-3.5 7a2.5 2.5 0 0 1-5 0M10 10a2 2 0 1 1 4 0',
@@ -147,10 +147,31 @@
             { q: BLEND, show: 'p · i · g', opts: ['🐷', '🐶', '🐟'] },
             { q: BLEND, show: 'd · o · g', opts: ['🐶', '🐷', '☀️'] }
           ] },
+        { id: 'phonics-8', title: { en: 'First sounds: r h b f', ar: 'أول صوت: r h b f' },
+          teach: { en: 'r says "rrr" as in rabbit, h says "h" like a little breath as in hat, b says "b" as in bus, and f says "fff" as in fish. For f, your top teeth touch your bottom lip.', ar: 'r صوته «رْ» كما في rabbit، و h صوته «هْ» كنفَس خفيف كما في hat، و b صوته «بْ» كما في bus، و f صوته «فْ» كما في fish. في f تلمس أسنانك العليا شفتك السفلى.' },
+          hint: { en: 'Is it a breath (h), teeth on your lip (f), lips together (b), or a growl (r)?', ar: 'هل هو نفَس (h)، أم أسنان على الشفة (f)، أم شفتان مطبقتان (b)، أم صوت يتدحرج (r)؟' },
+          questions: [hear('rabbit', ['r', 'h', 'b']), hear('hat', ['h', 'f', 'r']), hear('bus', ['b', 'r', 'f']), hear('fish', ['f', 'b', 'h'])] },
+        { id: 'phonics-9', title: { en: 'Two letters, one sound', ar: 'حرفان وصوت واحد' },
+          teach: { en: 'Some sounds are made by two letters together. sh says "shhh" as in ship, ch says "ch" as in chip, th puts your tongue between your teeth as in thumb, and ck says "k" at the end of duck.', ar: 'بعض الأصوات الإنجليزية يصنعها حرفان معًا. sh صوته «ش» كما في ship، و ch صوته «تش» كما في chip، وفي th يخرج اللسان بين الأسنان كما في thumb، و ck صوته «ك» في آخر duck.' },
+          hint: { en: 'Is it a quiet "shhh", a sneezy "ch", or is your tongue between your teeth (th)?', ar: 'هل هو «ش» هادئ، أم «تش» كالعطسة، أم لسانك بين أسنانك (th)؟' },
+          questions: [hear('ship', ['sh', 'ch', 'th']), hear('chip', ['ch', 'sh', 'th']), hear('thumb', ['th', 'sh', 'ch']), hear('duck', ['ck', 'sh', 'th'], HEAR_LAST)] }
+      ]
+    },
+    {
+      id: 'arabic-phonics', stickers: ['🏠', '🍊', '🌙'], name: { en: 'Arabic Phonics', ar: 'الأصوات العربية' },
+      age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
+      color: '#F6A04D', tint: '#FFE3C4',
+      tip: { en: 'Say each letter with its vowel sound: بَ is "ba", بِ is "bi", بُ is "bu". Point to letters on signs and packets and ask which sound they make.', ar: 'انطق كل حرف مع حركته: بَ، بِ، بُ. وأشِر إلى الحروف على اللافتات والعلب واسأل عن صوتها.' },
+      icon: 'M4 5h16v11H10l-5 4v-4H4zM9 10h.01M12 10h.01M15 10h.01',
+      lessons: [
         { id: 'phonics-6', title: { en: 'Arabic sounds', ar: 'أصوات الحروف العربية' },
           teach: { en: 'Arabic letters make sounds too: ب says "ba", ت says "ta", ن says "na" and ر says "ra". Listen to the start of the Arabic word to find its first letter.', ar: 'لكل حرف صوت: الباء «بَ»، والتاء «تَ»، والنون «نَ»، والراء «رَ». استمع إلى بداية الكلمة لتعرف أول حرف فيها.' },
           hint: { en: 'Say the word slowly with Saqr and listen to the very first sound.', ar: 'انطق الكلمة ببطء مع صقر واستمع إلى أول صوت فيها.' },
           questions: [hear('بيت', ['ب', 'ت', 'ن'], HEAR_AR), hear('تمر', ['ت', 'ب', 'ر'], HEAR_AR), hear('نخلة', ['ن', 'ر', 'ب'], HEAR_AR), hear('رمل', ['ر', 'ن', 'ت'], HEAR_AR)] },
+        { id: 'phonics-10', title: { en: 'Arabic short vowels', ar: 'الحركات القصيرة' },
+          teach: { en: 'Arabic has three short vowel marks. A fatha (a small line above) says "a": بَ is "ba". A kasra (a line below) says "i": بِ is "bi". A damma (a small و above) says "u": بُ is "bu".', ar: 'للحروف ثلاث حركات قصيرة: الفتحة (خط صغير فوق الحرف) تعطي صوت «ـَ» مثل بَ، والكسرة (خط تحت الحرف) تعطي صوت «ـِ» مثل بِ، والضمة (واو صغيرة فوق الحرف) تعطي صوت «ـُ» مثل بُ.' },
+          hint: { en: 'Listen to the first sound: is your mouth open (fatha), smiling (kasra) or round (damma)?', ar: 'استمع إلى أول صوت: هل فمك مفتوح (فتحة)، أم مبتسم (كسرة)، أم مستدير (ضمة)؟' },
+          questions: [hear('بَطّة', ['بَ', 'بِ', 'بُ']), hear('بِنت', ['بِ', 'بَ', 'بُ']), hear('بُرتقال', ['بُ', 'بَ', 'بِ']), hear('سُكّر', ['سُ', 'سَ', 'سِ'])] },
         { id: 'phonics-7', title: { en: 'Arabic blending', ar: 'تجميع الحروف' },
           teach: { en: 'Arabic letters join together to make a word. ق · م · ر join to make قمر (moon). Say each letter\'s sound, then say them together.', ar: 'تتّصل الحروف العربية لتصنع كلمة. ق · م · ر تتّصل فتصير «قمر». انطق صوت كل حرف، ثم انطقها معًا.' },
           hint: { en: 'Say the sound of each letter, then join them quickly.', ar: 'انطق صوت كل حرف، ثم صِلها بسرعة.' },
@@ -159,19 +180,7 @@
             { q: BLEND_AR, show: 'ش · م · س', opts: ['☀️', '🌙', '🏠'] },
             { q: BLEND_AR, show: 'س · م · ك', opts: ['🐟', '🏠', '🌙'] },
             { q: BLEND_AR, show: 'ب · ي · ت', opts: ['🏠', '🐟', '☀️'] }
-          ] },
-        { id: 'phonics-8', title: { en: 'First sounds: r h b f', ar: 'أول صوت: r h b f' },
-          teach: { en: 'r says "rrr" as in rabbit, h says "h" like a little breath as in hat, b says "b" as in bus, and f says "fff" as in fish. For f, your top teeth touch your bottom lip.', ar: 'r صوته «رْ» كما في rabbit، و h صوته «هْ» كنفَس خفيف كما في hat، و b صوته «بْ» كما في bus، و f صوته «فْ» كما في fish. في f تلمس أسنانك العليا شفتك السفلى.' },
-          hint: { en: 'Is it a breath (h), teeth on your lip (f), lips together (b), or a growl (r)?', ar: 'هل هو نفَس (h)، أم أسنان على الشفة (f)، أم شفتان مطبقتان (b)، أم صوت يتدحرج (r)؟' },
-          questions: [hear('rabbit', ['r', 'h', 'b']), hear('hat', ['h', 'f', 'r']), hear('bus', ['b', 'r', 'f']), hear('fish', ['f', 'b', 'h'])] },
-        { id: 'phonics-9', title: { en: 'Two letters, one sound', ar: 'حرفان وصوت واحد' },
-          teach: { en: 'Some sounds are made by two letters together. sh says "shhh" as in ship, ch says "ch" as in chip, th puts your tongue between your teeth as in thumb, and ck says "k" at the end of duck.', ar: 'بعض الأصوات الإنجليزية يصنعها حرفان معًا. sh صوته «ش» كما في ship، و ch صوته «تش» كما في chip، وفي th يخرج اللسان بين الأسنان كما في thumb، و ck صوته «ك» في آخر duck.' },
-          hint: { en: 'Is it a quiet "shhh", a sneezy "ch", or is your tongue between your teeth (th)?', ar: 'هل هو «ش» هادئ، أم «تش» كالعطسة، أم لسانك بين أسنانك (th)؟' },
-          questions: [hear('ship', ['sh', 'ch', 'th']), hear('chip', ['ch', 'sh', 'th']), hear('thumb', ['th', 'sh', 'ch']), hear('duck', ['ck', 'sh', 'th'], HEAR_LAST)] },
-        { id: 'phonics-10', title: { en: 'Arabic short vowels', ar: 'الحركات القصيرة' },
-          teach: { en: 'Arabic has three short vowel marks. A fatha (a small line above) says "a": بَ is "ba". A kasra (a line below) says "i": بِ is "bi". A damma (a small و above) says "u": بُ is "bu".', ar: 'للحروف ثلاث حركات قصيرة: الفتحة (خط صغير فوق الحرف) تعطي صوت «ـَ» مثل بَ، والكسرة (خط تحت الحرف) تعطي صوت «ـِ» مثل بِ، والضمة (واو صغيرة فوق الحرف) تعطي صوت «ـُ» مثل بُ.' },
-          hint: { en: 'Listen to the first sound: is your mouth open (fatha), smiling (kasra) or round (damma)?', ar: 'استمع إلى أول صوت: هل فمك مفتوح (فتحة)، أم مبتسم (كسرة)، أم مستدير (ضمة)؟' },
-          questions: [hear('بَطّة', ['بَ', 'بِ', 'بُ']), hear('بِنت', ['بِ', 'بَ', 'بُ']), hear('بُرتقال', ['بُ', 'بَ', 'بِ']), hear('سُكّر', ['سُ', 'سَ', 'سِ'])] }
+          ] }
       ]
     },
     {

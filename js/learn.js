@@ -19,7 +19,7 @@
     en: {
       docTitle: 'Sadu: my learning', brand: 'Sadu', navHome: 'Home', navReport: 'Family report', navGames: 'Games', langLabel: 'العربية',
       savedHere: 'Progress is saved on this device only.',
-      hello: 'Welcome back, %N', helloAnon: 'Welcome to Sadu', homeIntro: 'Short lessons in six subjects. Learn one idea, then answer four questions.',
+      hello: 'Welcome back, %N', helloAnon: 'Welcome to Sadu', homeIntro: 'Short, playful lessons. Learn one idea, then answer four questions.',
       continueLabel: 'Continue learning', startLabel: 'Start here', reviewLabel: 'Practise again',
       lessonOf: 'Lesson %A of %B', lessonMeta: '4 questions · about 3 minutes', startLesson: 'Start lesson', resumeLesson: 'Play again',
       thisWeek: 'This week', streak: 'day streak', streakHint: 'Finish a lesson each day to keep your streak going.',
@@ -79,7 +79,7 @@
     ar: {
       docTitle: 'سدو: تعلّمي', brand: 'سدو', navHome: 'الرئيسية', navReport: 'تقرير الأسرة', navGames: 'الألعاب', langLabel: 'English',
       savedHere: 'يُحفظ التقدّم على هذا الجهاز فقط.',
-      hello: 'أهلًا بعودتك يا %N', helloAnon: 'أهلًا بك في سدو', homeIntro: 'دروس قصيرة في ست مواد. تعلّم فكرة واحدة، ثم أجب عن أربعة أسئلة.',
+      hello: 'أهلًا بعودتك يا %N', helloAnon: 'أهلًا بك في سدو', homeIntro: 'دروس قصيرة وممتعة. تعلّم فكرة واحدة، ثم أجب عن أربعة أسئلة.',
       continueLabel: 'تابع التعلّم', startLabel: 'ابدأ من هنا', reviewLabel: 'تدرّب مرة أخرى',
       lessonOf: 'الدرس %A من %B', lessonMeta: '4 أسئلة · نحو 3 دقائق', startLesson: 'ابدأ الدرس', resumeLesson: 'العب مرة أخرى',
       thisWeek: 'هذا الأسبوع', streak: 'أيام متتالية', streakHint: 'أنهِ درسًا كل يوم لتستمر سلسلتك.',
