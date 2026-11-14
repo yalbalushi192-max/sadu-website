@@ -651,14 +651,16 @@
             key: String(k + 1),
             label: isColour ? col[LANG] : tx(opt.o), hasSw: isColour, sw: isColour ? col.hex : 'transparent',
             cls: (won ? 'opt right' : missed ? 'opt wrong' : dim ? 'opt dim' : 'opt') +
-              (!isColour && !/[0-9A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' pic' : ''),
+              (!isColour && !/[0-9A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' pic' : '') +
+              // single letters and letters with vowel marks are shown large so the marks are easy to see
+              (!isColour && tx(opt.o).length <= 3 && /[A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' big' : ''),
             dis: ls.solved || missed ? 'true' : 'false',
             tap: function () {
               if (ls.solved || ls.wrong.indexOf(k) !== -1) return;
               if (opt.right) {
                 self.setState({ ls: Object.assign({}, ls, { solved: true, firstTry: ls.firstTry + (ls.wrong.length ? 0 : 1) }) });
               } else {
-                var label = q.show ? q.show + (tx(q.gloss) ? ' (' + tx(q.gloss) + ')' : '') : tx(q.q);
+                var label = q.say ? q.say : q.show ? q.show + (tx(q.gloss) ? ' (' + tx(q.gloss) + ')' : '') : tx(q.q);
                 var missed = ls.wrong.length ? ls.missed : ls.missed.concat(label);
                 self.setState({ ls: Object.assign({}, ls, { wrong: ls.wrong.concat(k), missed: missed }) });
               }

@@ -396,3 +396,4 @@ html[lang=ar] .teach-label{letter-spacing:0}
 .age-chip{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:800;font-size:14px;color:var(--ink-2)}
 .course-grid.other .ccard{opacity:.85}
 .field-label{font-size:13px;font-weight:800;color:var(--muted)}
+.opt.big .opt-label{font-size:42px;line-height:1.3}
