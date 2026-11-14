@@ -10,8 +10,8 @@ The language link in the top menu switches between the two.
 
 ## Courses and family report
 
-`learn.html` is the learning page (Arabic: `learn.html?lang=ar`). It has six courses: phonics,
-maths, science, English, Arabic and art. Phonics has seven lessons and the others five; each lesson is a
+`learn.html` is the learning page (Arabic: `learn.html?lang=ar`). It has seven courses: English
+phonics, Arabic phonics, maths, science, English, Arabic and art; each lesson is a
 short idea to learn followed by four questions. A lesson earns 1 to 3 stars, depending on how
 many questions were right on the first try.
 
@@ -32,7 +32,7 @@ changed on the dashboard or in the Family report.
   most of the guide is covered without drawing far outside it. Arabic lesson 6 (letters), art lesson 6 (shapes).
 - `match`: tap an item, then its partner. English lesson 6 (words and pictures), science lesson 6 (animals).
 
-**Phonics:** the first course. Saqr says a word and the child picks the sound it starts (or ends)
+**Phonics:** two courses, English Phonics and Arabic Phonics. Saqr says a word and the child picks the sound it starts (or ends)
 with, using the letters s a t p i n m d g o c k; then the child blends sounds to read words
 (c · a · t → 🐱). Two lessons do the same in Arabic (hear بيت → ب; ق · م · ر → 🌙). A question with
 `say` in `js/courses.js` is a listening question; on a device with no voice the word is shown instead.
