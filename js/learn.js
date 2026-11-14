@@ -68,7 +68,11 @@
       traceTip: 'Draw over the grey line.', matchTip: 'Tap one on the left, then its partner on the right.',
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
-      otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age'
+      otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      soundOn: 'Sound effects are on', soundOff: 'Sound effects are off', tapSaqr: 'Tap Saqr for a fun fact',
+      fun: ['Did you know? A falcon can see a rabbit from more than a kilometre away!', 'Camels can drink a whole bathtub of water in a few minutes!',
+        'A palm tree can live for more than 100 years.', 'Bees dance to tell their friends where the flowers are!',
+        'The Moon has no light of its own. It shines with sunlight.', 'Octopuses have three hearts!', 'You are a star learner. Let\'s play!']
     },
     ar: {
       docTitle: 'سدو: تعلّمي', brand: 'سدو', navHome: 'الرئيسية', navReport: 'تقرير الأسرة', navGames: 'الألعاب', langLabel: 'English',
@@ -122,7 +126,11 @@
       traceTip: 'ارسم فوق الخط الرمادي.', matchTip: 'اضغط على عنصر من اليمين، ثم على ما يناسبه من اليسار.',
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
-      otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر'
+      otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      soundOn: 'المؤثرات الصوتية تعمل', soundOff: 'المؤثرات الصوتية متوقفة', tapSaqr: 'اضغط على صقر ليخبرك بمعلومة ممتعة',
+      fun: ['هل تعلم؟ الصقر يرى الأرنب من مسافة أكثر من كيلومتر!', 'الجمل يستطيع أن يشرب حوض استحمام كاملًا من الماء في دقائق!',
+        'النخلة قد تعيش أكثر من 100 سنة.', 'النحل يرقص ليخبر أصدقاءه بمكان الأزهار!',
+        'القمر ليس له ضوء خاص به، بل يلمع بضوء الشمس.', 'للأخطبوط ثلاثة قلوب!', 'أنت نجم في التعلّم. هيا نلعب!']
     }
   }[LANG];
   document.title = T.docTitle;
@@ -174,6 +182,61 @@
     });
   }
   function hush() { if (SPEECH) speechSynthesis.cancel(); }
+
+  // ---- sound effects: short tones made with the Web Audio API ----
+  var soundOn = true, audio = null;
+  function tone(f, t0, dur, type, vol) {
+    var o = audio.createOscillator(), g = audio.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(audio.destination); o.start(t0); o.stop(t0 + dur + 0.02);
+  }
+  function sfx(name) {
+    if (window.__sfxLog) window.__sfxLog.push(name);
+    if (!soundOn) return;
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume();
+      var t = audio.currentTime + 0.01;
+      if (name === 'tap') tone(660, t, 0.07, 'sine', 0.07);
+      else if (name === 'pop') { tone(880, t, 0.06, 'triangle', 0.12); tone(1320, t + 0.05, 0.07, 'triangle', 0.08); }
+      else if (name === 'right') [523.25, 659.25, 783.99].forEach(function (f, i) { tone(f, t + i * 0.08, 0.2, 'triangle', 0.14); });
+      else if (name === 'wrong') { tone(330, t, 0.13, 'sine', 0.12); tone(247, t + 0.11, 0.2, 'sine', 0.12); }
+      else if (name === 'done') [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) { tone(f, t + i * 0.12, i === 3 ? 0.6 : 0.18, 'triangle', 0.15); });
+    } catch (e) {}
+  }
+
+  // ---- confetti: a canvas over the page; nothing moves for people who ask for less motion ----
+  var fxCanvas = null, bits = [], fxLoop = null;
+  var FX_COLOURS = ['#FFC93C', '#B3261E', '#2ED3A6', '#3FA9F5', '#FF6FA8', '#B9A8FF', '#FF7A45'];
+  function burst(el, n) {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!fxCanvas) {
+      fxCanvas = document.createElement('canvas'); fxCanvas.className = 'fx'; fxCanvas.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(fxCanvas);
+    }
+    var dpr = window.devicePixelRatio || 1;
+    fxCanvas.width = innerWidth * dpr; fxCanvas.height = innerHeight * dpr;
+    var r = el && el.getBoundingClientRect ? el.getBoundingClientRect() : null;
+    var x = r ? r.left + r.width / 2 : innerWidth / 2, y = r ? r.top + r.height / 2 : innerHeight * 0.3;
+    for (var i = 0; i < n; i++) bits.push({ x: x, y: y, vx: (Math.random() - 0.5) * (r ? 9 : 16), vy: -Math.random() * (r ? 9 : 14) - 3,
+      life: 50 + Math.random() * 50, c: FX_COLOURS[i % FX_COLOURS.length], s: 5 + Math.random() * 6, a: Math.random() * 6, va: (Math.random() - 0.5) * 0.4, star: Math.random() < 0.35 });
+    if (!fxLoop) fxLoop = requestAnimationFrame(stepFx);
+  }
+  function stepFx() {
+    var g = fxCanvas.getContext('2d'), dpr = window.devicePixelRatio || 1;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, innerWidth, innerHeight);
+    bits = bits.filter(function (b) { return b.life > 0 && b.y < innerHeight + 40; });
+    bits.forEach(function (b) {
+      b.vy += 0.3; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.a += b.va; b.life -= 1;
+      g.save(); g.translate(b.x, b.y); g.rotate(b.a); g.globalAlpha = Math.min(1, b.life / 20); g.fillStyle = b.c;
+      if (b.star) { g.beginPath(); for (var k = 0; k < 10; k++) { var rr = k % 2 ? b.s * 0.45 : b.s; g.lineTo(Math.cos(k * Math.PI / 5) * rr, Math.sin(k * Math.PI / 5) * rr); } g.fill(); }
+      else g.fillRect(-b.s / 2, -b.s / 4, b.s, b.s / 2);
+      g.restore();
+    });
+    fxLoop = bits.length ? requestAnimationFrame(stepFx) : null;
+    if (!fxLoop) g.clearRect(0, 0, innerWidth, innerHeight);
+  }
   // a sum like "7 + ? = 12" is read as "7 + what number = 12"; shapes like ▲ are not read (that would give the answer away)
   function spoken(show) {
     // letters to blend ("c · a · t") are not read either: blending them is the child's job
@@ -385,14 +448,20 @@
       data.days[today] = (data.days[today] || 0) + 1;
       save(data);
       this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs }) });
+      sfx('done'); burst(null, 160);
       window.scrollTo(0, 0);
     }
 
     renderVals() {
       var self = this, s = this.state, data = s.data;
       this._keys = null;
+      soundOn = data.sfx !== false;
+      var sound = {
+        on: soundOn, off: !soundOn, label: soundOn ? T.soundOn : T.soundOff, cls: soundOn ? 'icon-btn on' : 'icon-btn',
+        toggle: function () { var d = Object.assign({}, self.state.data, { sfx: !soundOn }); save(d); self.setState({ data: d }); if (!soundOn) sfx('tap'); }
+      };
       var out = {
-        t: T,
+        t: T, sound: sound,
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
@@ -525,7 +594,11 @@
       var gText = !played.length ? fill(T.gStart, { N: who, L: out.dash.title })
         : out.plan.focus ? fill(T.gFocus, { N: who, S: out.plan.focus }) : fill(T.gGood, { N: who });
       out.dash.guide = gText;
-      out.dash.say = function () { speak([gText]); };
+      var funN = s.saqrN || 0, funText = funN ? T.fun[(funN - 1) % T.fun.length] : '';
+      if (funText) out.dash.guide = funText;
+      out.dash.saqrCls = funN ? (funN % 2 ? 'saqr cheer' : 'saqr cheer2') : 'saqr';
+      out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
+      out.dash.say = function () { speak([out.dash.guide]); };
 
       // ---- stories ----
       var storiesRead = 0;
@@ -547,7 +620,7 @@
           dots: st.pages.map(function (x, k) { return { cls: k <= s.page ? 'seg on' : 'seg' }; }),
           hasPrev: s.page > 0, isLast: lastPage, notLast: !lastPage,
           prev: function () { self.setState({ page: s.page - 1 }); },
-          next: function () { self.setState({ page: s.page + 1 }); },
+          next: function () { sfx('tap'); self.setState({ page: s.page + 1 }); },
           quiz: function () { self.startStoryQuiz(s.si); },
           say: function () { speak([pageText]); },
           close: function () { self.go('stories'); },
@@ -614,7 +687,7 @@
           count: ls.step === 'quiz' ? fill(T.qOf, { A: ls.qi + 1, B: ls.qs.length }) : ls.step === 'teach' ? T.learn : '',
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
           prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)), gloss: tx(q.gloss),
-          isChoice: q.kind === 'choice', isCount: q.kind === 'count', isTrace: q.kind === 'trace', isMatch: q.kind === 'match',
+          isChoice: q.kind === 'choice', optsCls: ls.wrong.length || ls.solved ? 'opts' : 'opts fresh', isCount: q.kind === 'count', isTrace: q.kind === 'trace', isMatch: q.kind === 'match',
           hasSay: !!q.say && out.speakOk, sayWord: function () { speak([q.say]); },
           seq: seq, hasSeq: seq.length > 0,
           msg: ls.solved ? cheer : ls.wrong.length ? T.no : q.kind === 'count' ? T.dragTip : q.kind === 'trace' ? T.traceTip : q.kind === 'match' ? T.matchTip : T.gIdle,
@@ -650,16 +723,18 @@
           return {
             key: String(k + 1),
             label: isColour ? col[LANG] : tx(opt.o), hasSw: isColour, sw: isColour ? col.hex : 'transparent',
-            cls: (won ? 'opt right' : missed ? 'opt wrong' : dim ? 'opt dim' : 'opt') +
+            cls: (won ? 'opt right' : missed ? 'opt wrong' + (ls.wrong[ls.wrong.length - 1] === k ? ' last' : '') : dim ? 'opt dim' : 'opt') +
               (!isColour && !/[0-9A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' pic' : '') +
               // single letters and letters with vowel marks are shown large so the marks are easy to see
               (!isColour && tx(opt.o).length <= 3 && /[A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' big' : ''),
             dis: ls.solved || missed ? 'true' : 'false',
-            tap: function () {
+            tap: function (e) {
               if (ls.solved || ls.wrong.indexOf(k) !== -1) return;
               if (opt.right) {
+                sfx('right'); burst(e && e.currentTarget, 40);
                 self.setState({ ls: Object.assign({}, ls, { solved: true, firstTry: ls.firstTry + (ls.wrong.length ? 0 : 1) }) });
               } else {
+                sfx('wrong');
                 var label = q.say ? q.say : q.show ? q.show + (tx(q.gloss) ? ' (' + tx(q.gloss) + ')' : '') : tx(q.q);
                 var missed = ls.wrong.length ? ls.missed : ls.missed.concat(label);
                 self.setState({ ls: Object.assign({}, ls, { wrong: ls.wrong.concat(k), missed: missed }) });
@@ -670,16 +745,18 @@
         // shared by the activities: a wrong try (remembered for the plan) and a right one
         var missLabel = q.kind === 'trace' ? q.show : tx(q.q);
         var tryWrong = function (extra) {
+          sfx('wrong');
           var missed = ls.wrong.length ? ls.missed : ls.missed.concat(missLabel);
           self.setState({ ls: Object.assign({}, ls, { wrong: ls.wrong.concat(ls.wrong.length), missed: missed, act: Object.assign({}, act, extra || {}) }) });
         };
         var tryRight = function (extra) {
+          sfx('right'); burst(document.querySelector('.basket, canvas.trace, .match'), 50);
           self.setState({ ls: Object.assign({}, ls, { solved: true, firstTry: ls.firstTry + (ls.wrong.length ? 0 : 1), act: Object.assign({}, act, extra || {}) }) });
         };
 
         if (q.kind === 'count' && ls.step === 'quiz') {
           var total = Math.min(12, q.n + 3), placed = act.placed;
-          var place = function () { if (!ls.solved && placed < total) self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { placed: placed + 1 }) }) }); };
+          var place = function () { if (!ls.solved && placed < total) sfx('pop'); if (!ls.solved && placed < total) self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { placed: placed + 1 }) }) }); };
           var tray = [];
           for (var ti = 0; ti < total - placed; ti++) tray.push({
             // drag a date: it follows the finger; dropped on the basket (or just tapped) it goes in
@@ -701,7 +778,7 @@
             key: function (e) { if (e.detail === 0) place(); }
           });
           var inBasket = [];
-          for (var bi = 0; bi < placed; bi++) inBasket.push({ out: function () { if (!ls.solved) self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { placed: placed - 1 }) }) }); } });
+          for (var bi = 0; bi < placed; bi++) inBasket.push({ out: function () { if (!ls.solved) sfx('tap'); if (!ls.solved) self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { placed: placed - 1 }) }) }); } });
           out.ls.cnt = { tray: tray, basket: inBasket, empty: placed === 0, notSolved: !ls.solved,
             check: function () { if (ls.solved) return; if (placed === q.n) tryRight(); else tryWrong({ tried: placed }); } };
         }
@@ -742,12 +819,12 @@
         if (q.kind === 'match' && ls.step === 'quiz') {
           var matchPick = function (side, i) {
             if (ls.solved || act.done.indexOf(i) !== -1) return;
-            if (act.sel === -1 || act.side === side) { self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { sel: i, side: side, badL: -1, badR: -1 }) }) }); return; }
+            if (act.sel === -1 || act.side === side) { sfx('tap'); self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { sel: i, side: side, badL: -1, badR: -1 }) }) }); return; }
             var l = side === 'L' ? i : act.sel, r = side === 'R' ? i : act.sel;
             if (l === r) {
               var done = act.done.concat(l), reset = { sel: -1, side: '', done: done, badL: -1, badR: -1 };
               if (done.length === q.pairs.length) tryRight(reset);
-              else self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, reset) }) });
+              else { sfx('pop'); self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, reset) }) }); }
             } else {
               tryWrong({ sel: -1, side: '', badL: l, badR: r });
             }

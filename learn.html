@@ -114,8 +114,8 @@
 </div>
 </sc-if>
 <div class="guide">
-<svg class="saqr" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg>
-<div class="bubble"><p>{{ dash.guide }}</p><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ dash.say }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
+<button type="button" class="saqr-btn" onclick="{{ dash.saqrTap }}" aria-label="{{ t.tapSaqr }}" title="{{ t.tapSaqr }}"><svg class="{{ dash.saqrCls }}" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg></button>
+<div class="bubble" aria-live="polite"><p>{{ dash.guide }}</p><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ dash.say }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
 </div>
 
 <div class="dash-top">
@@ -279,6 +279,7 @@
 <sc-if value="{{ story.auto }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></sc-if>
 <sc-if value="{{ story.autoOff }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg></sc-if>
 </button></sc-if>
+<button type="button" class="{{ sound.cls }} sfx-btn" onclick="{{ sound.toggle }}" aria-pressed="{{ sound.on }}" aria-label="{{ sound.label }}" title="{{ sound.label }}"><sc-if value="{{ sound.on }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></sc-if><sc-if value="{{ sound.off }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/><path d="M3 3l18 18"/></svg></sc-if></button>
 <span class="count">{{ story.of }}</span>
 </div>
 <div class="player-body story-body">
@@ -338,6 +339,7 @@
 <sc-if value="{{ ls.auto }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></sc-if>
 <sc-if value="{{ ls.autoOff }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg></sc-if>
 </button></sc-if>
+<button type="button" class="{{ sound.cls }} sfx-btn" onclick="{{ sound.toggle }}" aria-pressed="{{ sound.on }}" aria-label="{{ sound.label }}" title="{{ sound.label }}"><sc-if value="{{ sound.on }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></sc-if><sc-if value="{{ sound.off }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/><path d="M3 3l18 18"/></svg></sc-if></button>
 <span class="count">{{ ls.count }}</span>
 </div>
 
@@ -383,7 +385,7 @@
 </div>
 </sc-if>
 <sc-if value="{{ ls.isChoice }}">
-<div class="opts">
+<div class="{{ ls.optsCls }}">
 <sc-for list="{{ ls.opts }}" as="o">
 <button type="button" class="{{ o.cls }}" onclick="{{ o.tap }}" aria-disabled="{{ o.dis }}">
 <span class="key" aria-hidden="true">{{ o.key }}</span>

@@ -397,3 +397,25 @@ html[lang=ar] .teach-label{letter-spacing:0}
 .course-grid.other .ccard{opacity:.85}
 .field-label{font-size:13px;font-weight:800;color:var(--muted)}
 .opt.big .opt-label{font-size:42px;line-height:1.3}
+
+/* ---------- play feel: confetti, sounds switch, bouncy answers, tappable Saqr ---------- */
+canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100}
+.sfx-btn svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sfx-btn svg path:first-child{fill:none}
+.sfx-btn svg circle{fill:currentColor}
+.saqr-btn{border:0;background:none;padding:0;cursor:pointer;border-radius:50%;flex:none}
+.saqr-btn:hover .saqr{transform:rotate(-6deg) scale(1.05)}
+.saqr{transition:transform .2s ease-out}
+.saqr.cheer2{animation:hop2 .6s ease-out 2}
+@keyframes hop2{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px) rotate(4deg)}70%{transform:translateY(0) rotate(-3deg)}}
+.opts.fresh .opt{animation:popin .35s cubic-bezier(.3,1.6,.6,1) backwards}
+.opts.fresh .opt:nth-child(2){animation-delay:.07s}
+.opts.fresh .opt:nth-child(3){animation-delay:.14s}
+@keyframes popin{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.opt.right{animation:bounce .55s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bounce{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+.opt.wrong.last{animation:shake .4s ease-in-out}
+.date:active,.mcard:active,.opt:active{transform:scale(.94)}
+.ccard .tile,.scard .scene{transition:transform .25s cubic-bezier(.3,1.6,.6,1)}
+.ccard:hover .tile{transform:rotate(-8deg) scale(1.08)}
+@media (prefers-reduced-motion: reduce){.opts.fresh .opt,.opt.right,.opt.wrong.last,.saqr.cheer,.saqr.cheer2{animation:none}}
