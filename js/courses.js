@@ -3,7 +3,8 @@
 
    A course has: id, name, age, ages ([youngest, oldest], used to show the right courses for the
    child's age), color (strong), tint (light), tip (an activity for home, shown in the
-   learning plan when the subject needs practice), icon (SVG path) and lessons.
+   learning plan when the subject needs practice), icon (SVG path), stickers (one won per finished
+   lesson, in lesson order) and lessons.
    A lesson has: id, title, teach (the short explanation) and either
      questions: a fixed list, or
      make: a function that returns a fresh list each time (used for maths).
@@ -116,7 +117,7 @@
 
   window.SADU_COURSES = [
     {
-      id: 'phonics', name: { en: 'Phonics', ar: 'الأصوات والحروف' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
+      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🏠', '🌙', '🐇', '🚢', '🍊'], name: { en: 'Phonics', ar: 'الأصوات والحروف' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#B9A8FF', tint: '#E4DDFF',
       tip: { en: 'Say letter sounds, not letter names: "sss" for s, "mmm" for m. On walks, ask: which sound does "palm" start with?', ar: 'انطق صوت الحرف لا اسمه: «سَ» لا «سين». وفي النزهة اسأل: بأي صوت تبدأ كلمة «نخلة»؟' },
       icon: 'M7 10a5 5 0 1 1 10 0c0 3.5-3.5 4-3.5 7a2.5 2.5 0 0 1-5 0M10 10a2 2 0 1 1 4 0',
@@ -174,7 +175,7 @@
       ]
     },
     {
-      id: 'math', name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'math', stickers: ['🧮', '🔢', '🎯', '⚖️', '🧩', '🧺'], name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#FFC93C', tint: '#FFE9A8',
       tip: { en: 'Count and share things at home: dates at snack time, steps on the stairs. Ask: how many more to make 10?', ar: 'عُدّوا الأشياء في البيت وتقاسموها: التمر وقت الوجبة، ودرجات السلّم. واسأل: كم نحتاج لنصل إلى 10؟' },
       icon: 'M6 4v6M3 7h6M15 7h6M4 15l5 5M9 15l-5 5M15 16h6M15 20h6',
@@ -210,7 +211,7 @@
       ]
     },
     {
-      id: 'science', name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'science', stickers: ['🌱', '🐪', '🌗', '🧊', '🔬', '🐞'], name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#2ED3A6', tint: '#B9F3E2',
       tip: { en: 'Ask why questions together: why does ice melt, why do we see the Moon at night? Let your child guess first.', ar: 'اطرحا معًا أسئلة «لماذا»: لماذا يذوب الثلج؟ لماذا نرى القمر ليلًا؟ دع طفلك يخمّن أولًا.' },
       icon: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M7.5 15h9',
@@ -272,7 +273,7 @@
       ]
     },
     {
-      id: 'english', name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
+      id: 'english', stickers: ['🔤', '🎶', '🎈', '🐶', '📖', '🖼️'], name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
       color: '#3FA9F5', tint: '#C4E4FC',
       tip: { en: 'Play I spy with first sounds: I spy something starting with s. Read a short English picture book together.', ar: 'العبا لعبة «أرى شيئًا يبدأ بصوت s». واقرآ معًا قصة إنجليزية قصيرة مصوّرة.' },
       icon: 'M4 5h16v11H10l-5 4v-4H4zM8 9h8M8 12h5',
@@ -334,7 +335,7 @@
       ]
     },
     {
-      id: 'arabic', name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
+      id: 'arabic', stickers: ['📜', '🌓', '🔟', '🕌', '✌️', '✍️'], name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
       color: '#FF6FA8', tint: '#FFD0E2',
       tip: { en: 'Point to letters on signs and packets, and ask for a word that starts or ends with the same letter.', ar: 'أشِر إلى الحروف على اللافتات والعلب، واطلب كلمة تبدأ أو تنتهي بالحرف نفسه.' },
       icon: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M9 8h6',
@@ -391,7 +392,7 @@
       ]
     },
     {
-      id: 'art', name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
+      id: 'art', stickers: ['🎨', '🌈', '🧶', '🔺', '🖌️', '🌗'], name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
       color: '#FF7A45', tint: '#FFD3C0',
       tip: { en: 'Mix paints or food colouring together, and look for repeating patterns on rugs, tiles and clothes.', ar: 'امزجا الألوان أو ألوان الطعام، وابحثا عن النقوش المتكرّرة في السجاد والبلاط والملابس.' },
       icon: 'M20 4l-9 9M14 4l6 6M11 13c-3 0-4 2-4 4s-2 3-3 3c4 1 9 0 9-5',

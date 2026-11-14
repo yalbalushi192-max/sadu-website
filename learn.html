@@ -78,6 +78,7 @@
 <button type="button" onclick="{{ goHome }}" aria-current="{{ homeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"/></svg><span>{{ t.navHome }}</span></button>
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
+<button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
 <a href="{{ gamesHref }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><span>{{ t.navGames }}</span></a>
 <a href="{{ langHref }}" class="lang"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span>{{ t.langLabel }}</span></a>
 </nav>
@@ -153,6 +154,13 @@
 <div class="stat"><span class="stat-ic" style="background: #FFE1EC; color: #A3245A"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5"/></svg></span><div><b dir="ltr">{{ dash.started }}<small> / {{ dash.courseCount }}</small></b><span>{{ t.sCourses }}</span></div></div>
 </div>
 
+
+<article class="card sticker-card">
+<div class="sticker-card-text"><h2 class="h3">{{ t.stickerTitle }}</h2><span class="small muted">{{ stickers.count }}</span>
+<div class="bar"><span style="width: {{ stickers.pct }}"></span></div></div>
+<div class="sticker-strip" aria-hidden="true"><sc-for list="{{ stickers.recent }}" as="r"><span class="sticker mini">{{ r.s }}</span></sc-for><sc-if value="{{ stickers.noRecent }}"><span class="sticker mini locked">⭐</span><span class="sticker mini locked">🐪</span><span class="sticker mini locked">🌴</span></sc-if></div>
+<button type="button" class="btn secondary" onclick="{{ goStickers }}">{{ t.openStickers }}</button>
+</article>
 
 <article class="card plan">
 <div class="plan-head">
@@ -243,6 +251,23 @@
 </article>
 </sc-for>
 </div>
+</section>
+</sc-if>
+
+<!-- STICKERS: the sticker book -->
+<sc-if value="{{ isStickers }}">
+<section class="page">
+<header class="page-head">
+<h1 class="h1">{{ t.stickerTitle }}</h1>
+<p class="lead">{{ t.stickerIntro }}</p>
+<p class="small muted">{{ stickers.count }}</p>
+</header>
+<sc-for list="{{ stickers.groups }}" as="g">
+<div class="card sticker-group" style="--c: {{ g.color }}">
+<h2 class="h3"><span class="dot" style="background: {{ g.color }}"></span>{{ g.name }}</h2>
+<div class="sticker-grid"><sc-for list="{{ g.items }}" as="it"><span class="{{ it.cls }}" role="img" aria-label="{{ it.label }}" title="{{ it.label }}">{{ it.s }}</span></sc-for></div>
+</div>
+</sc-for>
 </section>
 </sc-if>
 
@@ -448,6 +473,7 @@
 <div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
 </div>
 <span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<sc-if value="{{ ls.hasNewSticker }}"><div class="new-sticker" role="status"><span class="sticker big" aria-hidden="true">{{ ls.newSticker }}</span><b>{{ t.newSticker }}</b></div></sc-if>
 <h1 class="h1">{{ ls.doneTitle }}</h1>
 <p class="lead" role="status">{{ ls.title }}: {{ ls.earnedText }}</p>
 <div class="result-stats">

@@ -12,7 +12,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 
 ## To do (in order)
 
-0. [ ] Make it interactive for kids (owner's request, first): (a) sound effects, confetti, tappable Saqr with fun facts, bouncy answers; (b) sticker book: a sticker for every finished lesson. Part (a) done: sound effects (switch in the lesson bar), confetti, tap Saqr for fun facts, bouncy answers.
+0. [x] Make it interactive for kids (owner's request, first): (a) sound effects, confetti, tappable Saqr with fun facts, bouncy answers; (b) sticker book: a sticker for every finished lesson. Part (a) done: sound effects (switch in the lesson bar), confetti, tap Saqr for fun facts, bouncy answers. Part (b) done: sticker book page (menu: Stickers), a sticker per lesson and story, gold for 3 stars, "New sticker!" on the result screen, latest stickers on the dashboard.
 1. [x] More phonics: English digraphs (sh, ch, th, ck), more first-sound sets, and Arabic short vowels (fatha, kasra, damma). Done: phonics-8 (r h b f), phonics-9 (sh ch th ck), phonics-10 (fatha, kasra, damma); missed words now show in the plan; single letters shown large.
 2. [ ] More stories: 2 or 3 new illustrated stories with questions.
 3. [ ] Polish and bug check: every lesson, story and activity on phone and desktop in both languages; accessibility (keyboard, labels, contrast).

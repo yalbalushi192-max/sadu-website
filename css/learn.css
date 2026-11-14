@@ -419,3 +419,21 @@ canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-
 .ccard .tile,.scard .scene{transition:transform .25s cubic-bezier(.3,1.6,.6,1)}
 .ccard:hover .tile{transform:rotate(-8deg) scale(1.08)}
 @media (prefers-reduced-motion: reduce){.opts.fresh .opt,.opt.right,.opt.wrong.last,.saqr.cheer,.saqr.cheer2{animation:none}}
+
+/* ---------- sticker book ---------- */
+.sticker{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--surface);font-size:34px;line-height:1;box-shadow:0 0 0 3px #FFFFFF,0 0 0 5px var(--line),var(--sh-1);font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
+.sticker.gold{background:radial-gradient(circle at 30% 25%,#FFF6C9,#FFD54F 60%,#E0A800);box-shadow:0 0 0 3px #FFFFFF,0 0 0 6px #E0A800,0 6px 14px -4px rgba(224,168,0,.6)}
+.sticker.locked{background:var(--sunk);filter:grayscale(1) brightness(.2);opacity:.18;box-shadow:none}
+.sticker.mini{width:40px;height:40px;font-size:22px;box-shadow:0 0 0 2px #FFFFFF,0 0 0 3px var(--line)}
+.sticker.big{width:110px;height:110px;font-size:62px;animation:stickerpop .7s cubic-bezier(.3,1.7,.5,1)}
+@keyframes stickerpop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(0)}}
+.new-sticker{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--amber);font-weight:800;font-size:18px}
+.sticker-card{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.sticker-card-text{display:flex;flex-direction:column;gap:6px;flex:1 1 180px}
+.sticker-card .bar{max-width:220px}
+.sticker-card .bar>*{background:var(--accent)}
+.sticker-strip{display:flex;flex-wrap:wrap;gap:10px;flex:2 1 260px}
+.sticker-group{display:flex;flex-direction:column;gap:14px}
+.sticker-group .h3{display:flex;align-items:center;gap:8px}
+.sticker-grid{display:flex;flex-wrap:wrap;gap:16px}
+@media (prefers-reduced-motion: reduce){.sticker.big{animation:none}}

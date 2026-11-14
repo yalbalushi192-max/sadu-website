@@ -69,6 +69,8 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navStickers: 'Stickers', stickerTitle: 'Sticker book', stickerIntro: 'Finish a lesson or a story to win its sticker. Three stars make it gold!',
+      stickerCount: '%A of %B stickers', newSticker: 'New sticker!', openStickers: 'Open the sticker book', stickerLocked: 'Not won yet', goldSticker: 'gold',
       soundOn: 'Sound effects are on', soundOff: 'Sound effects are off', tapSaqr: 'Tap Saqr for a fun fact',
       fun: ['Did you know? A falcon can see a rabbit from more than a kilometre away!', 'Camels can drink a whole bathtub of water in a few minutes!',
         'A palm tree can live for more than 100 years.', 'Bees dance to tell their friends where the flowers are!',
@@ -127,6 +129,8 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navStickers: 'الملصقات', stickerTitle: 'دفتر الملصقات', stickerIntro: 'أنهِ درسًا أو قصة لتربح ملصقها. ثلاث نجوم تجعله ذهبيًا!',
+      stickerCount: '%A من %B ملصقًا', newSticker: 'ملصق جديد!', openStickers: 'افتح دفتر الملصقات', stickerLocked: 'لم تربحه بعد', goldSticker: 'ذهبي',
       soundOn: 'المؤثرات الصوتية تعمل', soundOff: 'المؤثرات الصوتية متوقفة', tapSaqr: 'اضغط على صقر ليخبرك بمعلومة ممتعة',
       fun: ['هل تعلم؟ الصقر يرى الأرنب من مسافة أكثر من كيلومتر!', 'الجمل يستطيع أن يشرب حوض استحمام كاملًا من الماء في دقائق!',
         'النخلة قد تعيش أكثر من 100 سنة.', 'النحل يرقص ليخبر أصدقاءه بمكان الأزهار!',
@@ -271,6 +275,9 @@
       })
     };
   }
+
+  // ---- stickers: one per lesson (from the course's list) and one per story ----
+  function stickerOf(ci, li) { var st = COURSES[ci].stickers; return st && st.length ? st[li % st.length] : '⭐'; }
 
   // ---- age: which courses suit the child (age 0 or unset = show everything) ----
   function fitsAge(c, age) { return !age || age > 10 || !c.ages || (age >= c.ages[0] && age <= c.ages[1]); }
@@ -429,16 +436,18 @@
     }
 
     finishLesson() {
-      var ls = this.state.ls, n = ls.qs.length;
+      var ls = this.state.ls, n = ls.qs.length, newSticker = '';
       var earned = ls.firstTry === n ? 3 : ls.firstTry === n - 1 ? 2 : 1;
       var secs = Math.min(900, Math.round((Date.now() - ls.t0) / 1000));
       var data = JSON.parse(JSON.stringify(this.state.data));
       if (ls.story != null) {
         var sid = STORIES[ls.story].id, was = data.stories[sid] || { stars: 0 };
+        var newSticker = data.stories[sid] ? '' : (STORIES[ls.story].sticker || '⭐');
         data.stories[sid] = { stars: Math.max(was.stars, earned), when: Date.now() };
       } else {
       var lesson = COURSES[this.state.ci].lessons[ls.li];
       var old = data.lessons[lesson.id] || { stars: 0, plays: 0 };
+      newSticker = data.lessons[lesson.id] ? '' : stickerOf(this.state.ci, ls.li);
       // acc and missed describe the latest play; the learning plan uses them to find weak spots
       data.lessons[lesson.id] = { stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
         acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4) };
@@ -447,7 +456,7 @@
       var today = dayKey(new Date());
       data.days[today] = (data.days[today] || 0) + 1;
       save(data);
-      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs }) });
+      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker }) });
       sfx('done'); burst(null, 160);
       window.scrollTo(0, 0);
     }
@@ -465,6 +474,7 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
         shellCls: s.view === 'lesson' || s.view === 'story' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
@@ -611,6 +621,24 @@
           open: function () { self.go('story', { si: si, page: 0 }); } };
       });
       out.storiesRead = fill(T.storyDone, { A: storiesRead, B: STORIES.length });
+
+      // ---- sticker book ----
+      var won = 0, all = 0, recent = [];
+      var groups = COURSES.map(function (c, ci) {
+        return { name: tx(c.name), color: c.color, items: c.lessons.map(function (l, li) {
+          var rec = data.lessons[l.id], em = stickerOf(ci, li);
+          all += 1; if (rec) { won += 1; recent.push({ s: em, when: rec.when }); }
+          return { s: em, cls: rec ? (rec.stars === 3 ? 'sticker gold' : 'sticker') : 'sticker locked',
+            label: tx(l.title) + ' · ' + (rec ? (rec.stars === 3 ? T.goldSticker : fill(T.rStarsShort, { A: rec.stars })) : T.stickerLocked) };
+        }) };
+      });
+      groups.push({ name: T.storiesTitle, color: '#FFC93C', items: STORIES.map(function (st) {
+        var rec = data.stories[st.id]; all += 1; if (rec) { won += 1; recent.push({ s: st.sticker, when: rec.when }); }
+        return { s: st.sticker || '⭐', cls: rec ? (rec.stars === 3 ? 'sticker gold' : 'sticker') : 'sticker locked',
+          label: tx(st.title) + ' · ' + (rec ? fill(T.rStarsShort, { A: rec.stars }) : T.stickerLocked) };
+      }) });
+      out.stickers = { groups: groups, count: fill(T.stickerCount, { A: won, B: all }), pct: Math.round(won / all * 100) + '%',
+        recent: recent.sort(function (a, b) { return b.when - a.when; }).slice(0, 8), hasRecent: recent.length > 0, noRecent: recent.length === 0 };
       if (s.view === 'story') {
         var st = STORIES[s.si], pg = st.pages[s.page], lastPage = s.page === st.pages.length - 1;
         var pageText = tx(pg.text);
@@ -706,6 +734,7 @@
           fbCls: ls.solved ? 'feedback ok' : ls.wrong.length ? 'feedback bad' : 'feedback',
           solved: ls.solved, nextLabel: last ? T.finish : T.next,
           earnedText: fill(T.earned, { A: ls.earned }), earnedStars: stars(ls.earned),
+          newSticker: ls.newSticker || '', hasNewSticker: !!ls.newSticker,
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
           hasNext: !isStoryQuiz && ls.li < lessonCount - 1,

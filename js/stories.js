@@ -1,7 +1,7 @@
 /* Sadu site: the stories shown on learn.html (Story time).
    Every text is written twice: { en: 'English', ar: 'عربي' }.
 
-   A story has: id, title, color (strong), tint (light), pages and questions.
+   A story has: id, sticker (won when the story's questions are finished), title, color (strong), tint (light), pages and questions.
    A page has:
      bg     the sky: 'day', 'dusk', 'night' or 'sea'
      props  the picture, as [name, x, y, size] on a 400 × 240 stage. Names are the drawings in
@@ -17,7 +17,7 @@
 
   window.SADU_STORIES = [
     {
-      id: 'saqr-flies', title: { en: 'Saqr Learns to Fly', ar: 'صقر يتعلّم الطيران' },
+      id: 'saqr-flies', sticker: '🦅', title: { en: 'Saqr Learns to Fly', ar: 'صقر يتعلّم الطيران' },
       color: '#FFC93C', tint: '#FFE9A8',
       ages: [3, 8], pages: [
         { bg: 'day', props: [['sun', 310, 18, 60], GROUND, ['tent', 40, 110, 120], ['saqr', 220, 130, 80]],
@@ -43,7 +43,7 @@
       ]
     },
     {
-      id: 'nouf-water', title: { en: 'Nouf Finds Water', ar: 'نوف تجد الماء' },
+      id: 'nouf-water', sticker: '🐫', title: { en: 'Nouf Finds Water', ar: 'نوف تجد الماء' },
       color: '#2ED3A6', tint: '#B9F3E2',
       ages: [3, 8], pages: [
         { bg: 'day', props: [['sun', 300, 14, 70], GROUND, ['camel', 120, 96, 150]],
@@ -69,7 +69,7 @@
       ]
     },
     {
-      id: 'pearl-boat', title: { en: 'The Pearl Boat', ar: 'سفينة اللؤلؤ' },
+      id: 'pearl-boat', sticker: '🦪', title: { en: 'The Pearl Boat', ar: 'سفينة اللؤلؤ' },
       color: '#3FA9F5', tint: '#C4E4FC',
       ages: [3, 8], pages: [
         { bg: 'sea', props: [['sun', 320, 14, 56], ['sea', 0, 150, 400], ['boat', 110, 70, 190], ['grandpa', 128, 128, 60], ['girl', 232, 142, 44]],
