@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sadu: my learning</title>
+<meta name="description" content="Sadu courses: short lessons in maths, science, English, Arabic and art, with a family progress report.">
+<meta name="theme-color" content="#23204A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=Tajawal:wght@500;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/learn.css">
+</head>
+<body>
+<!-- Saqr, the Sadu guide: a young falcon in a Sadu scarf. Used with <use href="#saqr"/>. -->
+<svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+<symbol id="saqr" viewBox="0 0 120 120">
+<path d="M48 100l12 14 12-14z" fill="#5A3A22"/>
+<ellipse cx="60" cy="76" rx="32" ry="34" fill="#8B5E3C"/>
+<ellipse cx="60" cy="85" rx="20" ry="22" fill="#F4E9D3"/>
+<path d="M49 79l5.5-5 5.5 5 5.5-5 5.5 5M49 91l5.5-5 5.5 5 5.5-5 5.5 5" fill="none" stroke="#B3261E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30 62c-10 10-12 26-4 38 8-2 14-10 14-22z" fill="#6B4429"/>
+<path d="M27 81l4-6 4 6zM27 91l4-6 4 6z" fill="#FFC93C"/>
+<path d="M90 62c10 10 12 26 4 38-8-2-14-10-14-22z" fill="#6B4429"/>
+<path d="M85 81l4-6 4 6zM85 91l4-6 4 6z" fill="#FFC93C"/>
+<path d="M48 108h8M64 108h8" stroke="#E0A800" stroke-width="5" stroke-linecap="round"/>
+<circle cx="60" cy="40" r="27" fill="#8B5E3C"/>
+<path d="M53 15c2-7 8-9 12-6-3 1-4 3-4 6z" fill="#6B4429"/>
+<path d="M38 44c0-12 10-18 22-18s22 6 22 18c0 10-10 17-22 17s-22-7-22-17z" fill="#FFF7EA"/>
+<path d="M42 46c0 6 2 10 5 12M78 46c0 6-2 10-5 12" fill="none" stroke="#6B4429" stroke-width="3" stroke-linecap="round"/>
+<circle cx="50" cy="41" r="6" fill="#23204A"/><circle cx="70" cy="41" r="6" fill="#23204A"/>
+<circle cx="52" cy="39" r="2" fill="#FFFFFF"/><circle cx="72" cy="39" r="2" fill="#FFFFFF"/>
+<path d="M54 48c3-2 9-2 12 0-1 6-4 9-6 10-2-1-5-4-6-10z" fill="#FFC93C" stroke="#C98A00" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M36 60c8 5 16 7 24 7s16-2 24-7l2 7c-8 6-17 8-26 8s-18-2-26-8z" fill="#B3261E"/>
+<path d="M44 66.5l3-4 3 4zM53 68.5l3-4 3 4zM62 68.5l3-4 3 4zM71 66.5l3-4 3 4z" fill="#FFFFFF"/>
+</symbol>
+<!-- story drawings -->
+<linearGradient id="sky-day" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ED8FF"/><stop offset="1" stop-color="#FFF1D2"/></linearGradient>
+<linearGradient id="sky-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9E7A"/><stop offset="1" stop-color="#FFE1A8"/></linearGradient>
+<linearGradient id="sky-night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C1A3D"/><stop offset="1" stop-color="#3E3A78"/></linearGradient>
+<linearGradient id="sky-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#E4F6FF"/></linearGradient>
+<symbol id="p-date" viewBox="0 0 40 52"><path d="M20 8V2" stroke="#6B8E23" stroke-width="3" stroke-linecap="round"/><ellipse cx="20" cy="29" rx="14" ry="20" fill="#8B3A1E"/><ellipse cx="14" cy="22" rx="4" ry="9" fill="#B5562E"/><path d="M20 12q4 17 0 34" stroke="#6E2C16" stroke-width="1.5" fill="none"/></symbol>
+<symbol id="p-saqr" viewBox="0 0 120 120"><use href="#saqr"/></symbol>
+<symbol id="p-grandma" viewBox="0 0 120 120"><g style="filter: saturate(.35) brightness(1.1)"><use href="#saqr"/></g><circle cx="50" cy="41" r="8.5" fill="none" stroke="#23204A" stroke-width="2"/><circle cx="70" cy="41" r="8.5" fill="none" stroke="#23204A" stroke-width="2"/><path d="M58.5 41h3" stroke="#23204A" stroke-width="2"/></symbol>
+<symbol id="p-dunes" viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 40Q90 0 180 35T400 25V100H0z" fill="#F2C77B"/><path d="M0 70Q120 30 240 64T400 55V100H0z" fill="#E6A24C"/></symbol>
+<symbol id="p-sea" viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 12q25-12 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0V100H0z" fill="#3FA9F5"/><path d="M0 40q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0V100H0z" fill="#1F7CC4"/></symbol>
+<symbol id="p-stars" viewBox="0 0 400 240"><g fill="#FFF7D6"><circle cx="30" cy="30" r="2"/><circle cx="90" cy="70" r="1.6"/><circle cx="150" cy="20" r="2.2"/><circle cx="210" cy="60" r="1.5"/><circle cx="250" cy="25" r="2"/><circle cx="60" cy="110" r="1.4"/><circle cx="180" cy="100" r="1.8"/><circle cx="380" cy="90" r="1.6"/><circle cx="120" cy="45" r="1.2"/><path d="M340 120l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g></symbol>
+<symbol id="p-sun" viewBox="0 0 100 100"><g stroke="#FFB020" stroke-width="6" stroke-linecap="round"><path d="M50 4v12M50 84v12M4 50h12M84 50h12M17 17l9 9M74 74l9 9M17 83l9-9M74 26l9-9"/></g><circle cx="50" cy="50" r="24" fill="#FFC93C"/></symbol>
+<symbol id="p-moon" viewBox="0 0 100 100"><path d="M62 10a40 40 0 1 0 28 66A32 32 0 1 1 62 10z" fill="#FFE9A8"/></symbol>
+<symbol id="p-palm" viewBox="0 0 100 100"><path d="M48 96c2-26 0-46-4-62h8c3 16 4 36 2 62z" fill="#9A6B3F"/><path d="M47 44l8-2M46 56l9-2M47 68l8-2M48 80l8-2" stroke="#7A5230" stroke-width="2"/><g fill="#1E9E5A"><path d="M50 32C38 18 20 18 8 28c14-2 28 0 42 8z"/><path d="M50 32c12-14 30-14 42-4-14-2-28 0-42 8z"/><path d="M50 32C44 16 30 6 16 6c12 6 22 16 30 28z"/><path d="M50 32c6-16 20-26 34-26-12 6-22 16-30 28z"/><path d="M50 32c-10 4-18 16-20 28 8-10 14-16 22-22z"/><path d="M50 32c10 4 18 16 20 28-8-10-14-16-22-22z"/></g><g fill="#8B3A1E"><circle cx="45" cy="38" r="3"/><circle cx="51" cy="40" r="3"/><circle cx="56" cy="37" r="3"/></g></symbol>
+<symbol id="p-tent" viewBox="0 0 100 100"><path d="M6 86L18 34h64l12 52z" fill="#3A2A20"/><path d="M14 52h72v10H14z" fill="#B3261E"/><path d="M16 62l4-10 4 10zM28 62l4-10 4 10zM40 62l4-10 4 10zM52 62l4-10 4 10zM64 62l4-10 4 10zM76 62l4-10 4 10z" fill="#FFFFFF"/><path d="M40 86V66h20v20z" fill="#1A120D"/><path d="M18 34L4 30M82 34l14-4" stroke="#3A2A20" stroke-width="3"/></symbol>
+<symbol id="p-camel" viewBox="0 0 100 100"><g fill="#C98B4E"><ellipse cx="46" cy="52" rx="26" ry="14"/><path d="M30 44q8-20 18-4 6-14 14 2z"/><path d="M68 50q6-4 8-20l8 0q2 14-6 26z"/><ellipse cx="82" cy="26" rx="9" ry="6"/><path d="M28 60h6v30h-6zM40 62h6v28h-6zM54 62h6v28h-6zM64 60h6v30h-6z"/></g><path d="M20 50q-6 6-4 14" stroke="#C98B4E" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="85" cy="24" r="1.8" fill="#23204A"/><path d="M34 40h26v6H34z" fill="#B3261E"/><path d="M36 46l3-5 3 5zM44 46l3-5 3 5zM52 46l3-5 3 5z" fill="#FFFFFF"/></symbol>
+<symbol id="p-well" viewBox="0 0 100 100"><path d="M18 30h64M24 30v-14M76 30v-14M20 16h60" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/><path d="M50 16v24" stroke="#5A3A22" stroke-width="2"/><rect x="44" y="40" width="12" height="10" fill="#9A6B3F"/><path d="M14 56h72v32a6 6 0 0 1-6 6H20a6 6 0 0 1-6-6z" fill="#B9A58A"/><path d="M14 56h72v8H14z" fill="#9C8A70"/><path d="M26 70h14M50 78h14M30 86h12M58 66h14" stroke="#8C7A62" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="p-pool" viewBox="0 0 100 100"><ellipse cx="50" cy="20" rx="48" ry="14" fill="#3FA9F5"/><ellipse cx="44" cy="17" rx="20" ry="4" fill="#9ED8FF"/></symbol>
+<symbol id="p-bird" viewBox="0 0 100 100"><path d="M10 50q20-20 40 0 20-20 40 0-20-8-40 6-20-14-40-6z" fill="#23204A"/></symbol>
+<symbol id="p-boat" viewBox="0 0 100 100"><path d="M48 8v52" stroke="#5A3A22" stroke-width="3"/><path d="M50 10q30 22 34 44H50z" fill="#F4E9D3"/><path d="M48 14q-22 18-26 40h26z" fill="#FFFFFF"/><path d="M4 60h92q-8 22-30 22H30Q12 82 4 60z" fill="#8B5E3C"/><path d="M10 66h80" stroke="#6B4429" stroke-width="3"/></symbol>
+<symbol id="p-fish" viewBox="0 0 100 100"><path d="M20 50q24-28 56 0-32 28-56 0z" fill="#FF7A45"/><path d="M76 50l18-14v28z" fill="#FF7A45"/><circle cx="34" cy="46" r="4" fill="#23204A"/><path d="M48 38q6 12 0 24" stroke="#FFC93C" stroke-width="3" fill="none"/></symbol>
+<symbol id="p-shell" viewBox="0 0 100 100"><path d="M10 60q40 34 80 0z" fill="#9C8A9E"/><path d="M14 56q36-50 72 0" fill="#C9B7CB"/><path d="M50 18v38M32 26l8 30M68 26l-8 30" stroke="#9C8A9E" stroke-width="2"/><circle cx="50" cy="64" r="9" fill="#FFFFFF"/><circle cx="47" cy="61" r="3" fill="#E9F4FF"/></symbol>
+<symbol id="p-girl" viewBox="0 0 100 100"><path d="M26 96l8-46h32l8 46z" fill="#FF6FA8"/><circle cx="50" cy="34" r="20" fill="#7B5CD6"/><circle cx="50" cy="36" r="13" fill="#E8B48A"/><circle cx="45" cy="35" r="1.8" fill="#23204A"/><circle cx="55" cy="35" r="1.8" fill="#23204A"/><path d="M45 41q5 4 10 0" stroke="#23204A" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-grandpa" viewBox="0 0 100 100"><path d="M24 98l6-50h40l6 50z" fill="#FFFFFF" stroke="#D9D2C0"/><path d="M28 30q22-26 44 0v18H28z" fill="#FFFFFF" stroke="#D9D2C0"/><path d="M30 24h40" stroke="#23204A" stroke-width="4"/><circle cx="50" cy="36" r="12" fill="#D9A27A"/><path d="M38 40q12 18 24 0v6q-12 12-24 0z" fill="#E8E8E8"/><circle cx="45" cy="34" r="1.8" fill="#23204A"/><circle cx="55" cy="34" r="1.8" fill="#23204A"/></symbol>
+</svg>
+<div id="app"></div>
+<noscript>This page needs JavaScript to show its content.</noscript>
+
+<!-- The words come from the T list in js/learn.js, so this one page serves English and Arabic (learn.html?lang=ar).
+     Views: home (dashboard), course (its lessons), lesson (learn, questions, result) and report (family report). -->
+<template id="page">
+<div class="{{ shellCls }}">
+
+<!-- SIDEBAR (top bar on small screens; hidden while a lesson is playing) -->
+<aside class="side no-print">
+<a class="brand" href="{{ siteHref }}">
+<span class="brand-mark"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8L42 40H6z" fill="#B3261E" stroke="#B3261E" stroke-width="3"/><path d="M19.5 16h9l1.7 3H17.8z" fill="#FFFFFF"/><path d="M16.1 22h15.8l1.7 3H14.4z" fill="#FFFFFF"/><circle cx="19.5" cy="31" r="1.6" fill="#FFFFFF"/><circle cx="28.5" cy="31" r="1.6" fill="#FFFFFF"/><path d="M19 35q5 4 10 0" stroke="#FFFFFF" stroke-width="2.2"/></svg></span>
+<span class="brand-name">{{ t.brand }}</span>
+</a>
+<nav class="side-nav" aria-label="Main">
+<button type="button" onclick="{{ goHome }}" aria-current="{{ homeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"/></svg><span>{{ t.navHome }}</span></button>
+<button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
+<button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
+<a href="{{ gamesHref }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><span>{{ t.navGames }}</span></a>
+<a href="{{ langHref }}" class="lang"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span>{{ t.langLabel }}</span></a>
+</nav>
+<div class="side-foot">
+<div class="who"><span class="avatar" aria-hidden="true"><sc-if value="{{ hasPhoto }}"><img src="{{ photo }}" alt=""></sc-if><sc-if value="{{ noPhoto }}">{{ initial }}</sc-if></span><b>{{ childName }}</b></div>
+<p>{{ t.savedHere }}</p>
+</div>
+</aside>
+
+<main class="main" id="main" tabindex="-1">
+
+<!-- HOME: dashboard -->
+<sc-if value="{{ isHome }}">
+<section class="page">
+<header class="greet">
+<label class="me" title="{{ photoBtn }}">
+<input type="file" accept="image/*" class="file" onchange="{{ setPhoto }}">
+<sc-if value="{{ hasPhoto }}"><img src="{{ photo }}" alt="{{ childName }}"></sc-if>
+<sc-if value="{{ noPhoto }}"><span class="me-empty"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span>{{ t.photoAdd }}</span></span></sc-if>
+</label>
+<div class="page-head">
+<p class="eyebrow">{{ dash.date }}</p>
+<h1 class="h1">{{ dash.hello }}</h1>
+<p class="lead">{{ t.homeIntro }}</p>
+</div>
+</header>
+
+<sc-if value="{{ ageInfo.picking }}">
+<div class="card age-card">
+<h2 class="h3">{{ t.agePick }}</h2>
+<p class="small muted">{{ t.ageIntro }}</p>
+<div class="age-row"><sc-for list="{{ ageInfo.choices }}" as="a"><button type="button" class="{{ a.cls }}" onclick="{{ a.set }}" aria-pressed="{{ a.pressed }}">{{ a.label }}</button></sc-for>
+<button type="button" class="btn ghost" onclick="{{ ageInfo.all }}">{{ t.ageAll }}</button></div>
+</div>
+</sc-if>
+<div class="guide">
+<svg class="saqr" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg>
+<div class="bubble"><p>{{ dash.guide }}</p><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ dash.say }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
+</div>
+
+<div class="dash-top">
+<article class="hero" style="--c: {{ dash.color }}; --t: {{ dash.tint }}">
+<svg class="band" aria-hidden="true" width="100%" height="14"><defs><pattern id="heroband" width="28" height="14" patternUnits="userSpaceOnUse"><path d="M0 14L7 2l7 12z" fill="#B3261E"/><path d="M14 14L21 2l7 12z" fill="#23204A"/></pattern></defs><rect width="100%" height="14" fill="url(#heroband)"/></svg>
+<div class="hero-body">
+<div class="hero-text">
+<p class="eyebrow">{{ dash.label }}</p>
+<h2 class="h2">{{ dash.title }}</h2>
+<p class="meta"><span class="tag">{{ dash.course }}</span> {{ dash.of }} · {{ t.lessonMeta }}</p>
+<button type="button" class="btn primary lg" onclick="{{ dash.start }}">{{ dash.btn }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+<div class="hero-art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ dash.icon }}"/></svg></div>
+</div>
+</article>
+
+<article class="card week">
+<div class="week-head">
+<h2 class="h3">{{ t.thisWeek }}</h2>
+<span class="streak"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5c.6 3.4 4.8 5.6 4.8 10.3a4.8 4.8 0 0 1-9.6 0c0-2.1 1-3.6 2.2-4.6.1 1.6.9 2.7 2 3 0-3.2-.7-5.6.6-8.7z"/></svg><b>{{ dash.streak }}</b> {{ t.streak }}</span>
+</div>
+<div class="wk-row" dir="ltr">
+<sc-for list="{{ dash.week }}" as="w">
+<div class="{{ w.cls }}"><div class="wk-track"><div class="{{ w.bar }}" style="height: {{ w.h }}"></div></div><span>{{ w.label }}</span></div>
+</sc-for>
+</div>
+<p class="small muted">{{ t.streakHint }}</p>
+</article>
+</div>
+
+<div class="stats">
+<div class="stat"><span class="stat-ic" style="background: #DDF3E6; color: #0B6B3A"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span><div><b dir="ltr">{{ total.done }}<small> / {{ total.lessons }}</small></b><span>{{ t.sLessons }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFF1C7; color: #8A5A00"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></span><div><b dir="ltr">{{ total.stars }}<small> / {{ total.starsMax }}</small></b><span>{{ t.sStars }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #DCEEFD; color: #145E96"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>{{ dash.minutes }}</b><span>{{ t.sMinutes }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFE1EC; color: #A3245A"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5"/></svg></span><div><b dir="ltr">{{ dash.started }}<small> / {{ dash.courseCount }}</small></b><span>{{ t.sCourses }}</span></div></div>
+</div>
+
+
+<article class="card plan">
+<div class="plan-head">
+<div class="page-head" style="gap: 4px">
+<h2 class="h2">{{ t.planTitle }}</h2>
+<p class="muted">{{ plan.summary }}</p>
+</div>
+<button type="button" class="btn ghost" onclick="{{ goReport }}">{{ t.planSee }}</button>
+</div>
+<sc-if value="{{ plan.any }}">
+<div class="levels">
+<sc-for list="{{ plan.levels }}" as="lv"><div class="level" style="--c: {{ lv.color }}"><div class="level-top"><b>{{ lv.name }}</b><span class="level-score" dir="ltr">{{ lv.score }}</span></div><span class="{{ lv.badge }}">{{ lv.label }}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ plan.hasSteps }}">
+<ol class="plan-steps">
+<sc-for list="{{ plan.short }}" as="st">
+<li class="pstep" style="--c: {{ st.color }}">
+<span class="pstep-num" aria-hidden="true">{{ st.num }}</span>
+<div class="pstep-main">
+<b>{{ st.title }}</b>
+<span class="why">{{ st.why }}</span>
+<sc-if value="{{ st.hasMissed }}"><div class="focus-items"><span class="small muted" style="background: none; padding: 0">{{ t.stMissed }}</span><sc-for list="{{ st.missed }}" as="m"><span dir="auto">{{ m }}</span></sc-for></div></sc-if>
+</div>
+<button type="button" class="btn secondary" onclick="{{ st.go }}">{{ t.planGo }}</button>
+</li>
+</sc-for>
+</ol>
+</sc-if>
+</article>
+
+<div class="section-head">
+<h2 class="h2">{{ ageInfo.heading }}</h2>
+<sc-if value="{{ ageInfo.notPicking }}"><button type="button" class="age-chip" onclick="{{ ageInfo.open }}">{{ ageInfo.chip }} · {{ t.ageChange }}</button></sc-if>
+</div>
+<sc-if value="{{ ageInfo.over10 }}"><p class="small muted">{{ t.ageNote10 }}</p></sc-if>
+<div class="course-grid">
+<sc-for list="{{ coursesFit }}" as="c">
+<article class="ccard" style="--c: {{ c.color }}; --t: {{ c.tint }}">
+<div class="ccard-top">
+<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
+<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.pct }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.pct }}</span></div>
+</div>
+<h3 class="h3">{{ c.name }}</h3>
+<p class="small muted">{{ c.age }}</p>
+<div class="ccard-meta"><span>{{ c.doneText }}</span><span class="st"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg>{{ c.starsText }}</span></div>
+<button type="button" class="btn secondary" onclick="{{ c.open }}">{{ c.cta }}</button>
+</article>
+</sc-for>
+<article class="ccard promo">
+<div class="ccard-top"><span class="tile" aria-hidden="true" style="background: #B9A8FF"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></span></div>
+<h3 class="h3">{{ t.gamesTitle }}</h3>
+<p class="small">{{ t.gamesText }}</p>
+<a class="btn accent" href="{{ gamesHref }}">{{ t.gamesBtn }}</a>
+</article>
+</div>
+<sc-if value="{{ hasOther }}">
+<div class="section-head"><h2 class="h3">{{ t.otherAges }}</h2></div>
+<div class="course-grid other">
+<sc-for list="{{ coursesOther }}" as="c">
+<article class="ccard" style="--c: {{ c.color }}; --t: {{ c.tint }}">
+<div class="ccard-top">
+<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
+<div class="ring" role="img" aria-label="{{ c.name }}: {{ c.pct }}"><svg aria-hidden="true" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" cx="22" cy="22" r="18" stroke-dasharray="{{ c.dash }}" transform="rotate(-90 22 22)"/></svg><span dir="ltr">{{ c.pct }}</span></div>
+</div>
+<h3 class="h3">{{ c.name }}</h3>
+<p class="small muted">{{ c.age }}</p>
+<div class="ccard-meta"><span>{{ c.doneText }}</span><span class="st"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg>{{ c.starsText }}</span></div>
+<button type="button" class="btn secondary" onclick="{{ c.open }}">{{ c.cta }}</button>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+<div class="section-head">
+<h2 class="h2">{{ t.storiesTitle }}</h2>
+<span class="muted small">{{ storiesRead }}</span>
+</div>
+<div class="story-grid">
+<sc-for list="{{ stories }}" as="sc">
+<article class="scard" style="--c: {{ sc.color }}; --t: {{ sc.tint }}">
+<svg class="scene" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="240" fill="{{ sc.cover.sky }}"/><sc-for list="{{ sc.cover.props }}" as="pp"><use href="{{ pp.href }}" x="{{ pp.x }}" y="{{ pp.y }}" width="{{ pp.w }}" height="{{ pp.h }}" transform="{{ pp.tf }}"/></sc-for></svg>
+<div class="scard-body">
+<h3 class="h3">{{ sc.title }}</h3>
+<span class="stars" role="img" aria-label="{{ sc.starsText }}"><sc-for list="{{ sc.stars }}" as="s"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<button type="button" class="btn secondary" onclick="{{ sc.open }}">{{ sc.btn }}</button>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<!-- STORIES: the list -->
+<sc-if value="{{ isStories }}">
+<section class="page">
+<header class="page-head">
+<h1 class="h1">{{ t.storiesTitle }}</h1>
+<p class="lead">{{ t.storiesIntro }}</p>
+<p class="small muted">{{ storiesRead }}</p>
+</header>
+<div class="story-grid">
+<sc-for list="{{ stories }}" as="sc">
+<article class="scard" style="--c: {{ sc.color }}; --t: {{ sc.tint }}">
+<svg class="scene" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="240" fill="{{ sc.cover.sky }}"/><sc-for list="{{ sc.cover.props }}" as="pp"><use href="{{ pp.href }}" x="{{ pp.x }}" y="{{ pp.y }}" width="{{ pp.w }}" height="{{ pp.h }}" transform="{{ pp.tf }}"/></sc-for></svg>
+<div class="scard-body">
+<h3 class="h3">{{ sc.title }}</h3>
+<span class="stars" role="img" aria-label="{{ sc.starsText }}"><sc-for list="{{ sc.stars }}" as="s"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<button type="button" class="btn secondary" onclick="{{ sc.open }}">{{ sc.btn }}</button>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<!-- STORY: the reader, one page at a time -->
+<sc-if value="{{ isStory }}">
+<section class="player" style="--c: {{ story.color }}; --t: {{ story.tint }}">
+<div class="player-top">
+<button type="button" class="icon-btn" onclick="{{ story.close }}" aria-label="{{ t.backStories }}" title="{{ t.backStories }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<div class="segs" aria-hidden="true"><sc-for list="{{ story.dots }}" as="g"><span class="{{ g.cls }}"></span></sc-for></div>
+<sc-if value="{{ speakOk }}"><button type="button" class="{{ story.autoCls }}" onclick="{{ story.toggleAuto }}" aria-pressed="{{ story.auto }}" aria-label="{{ story.autoLabel }}" title="{{ story.autoLabel }}">
+<sc-if value="{{ story.auto }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></sc-if>
+<sc-if value="{{ story.autoOff }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg></sc-if>
+</button></sc-if>
+<span class="count">{{ story.of }}</span>
+</div>
+<div class="player-body story-body">
+<p class="eyebrow"><span class="dot" style="background: {{ story.color }}"></span>{{ story.title }}</p>
+<div class="scene-frame"><svg class="scene" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="240" fill="{{ story.art.sky }}"/><sc-for list="{{ story.art.props }}" as="pp"><use href="{{ pp.href }}" x="{{ pp.x }}" y="{{ pp.y }}" width="{{ pp.w }}" height="{{ pp.h }}" transform="{{ pp.tf }}"/></sc-for></svg></div>
+<div class="story-text">
+<p>{{ story.text }}</p>
+<sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ story.say }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if>
+</div>
+<div class="actions story-nav">
+<sc-if value="{{ story.hasPrev }}"><button type="button" class="btn ghost lg" onclick="{{ story.prev }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.prevPage }}</button></sc-if>
+<sc-if value="{{ story.notLast }}"><button type="button" class="btn primary lg" onclick="{{ story.next }}">{{ t.nextPage }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></sc-if>
+<sc-if value="{{ story.isLast }}"><button type="button" class="btn primary lg" onclick="{{ story.quiz }}">{{ t.storyQuiz }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></sc-if>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- COURSE: its lessons as a path -->
+<sc-if value="{{ isCourse }}">
+<section class="page narrow">
+<button type="button" class="back" onclick="{{ goHome }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.back }}</button>
+<header class="course-hero" style="--c: {{ course.color }}; --t: {{ course.tint }}">
+<span class="tile lg" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="{{ course.icon }}"/></svg></span>
+<div class="course-hero-text">
+<h1 class="h1">{{ course.name }}</h1>
+<p class="meta">{{ course.age }} · {{ course.doneText }} · {{ course.starsText }}</p>
+<div class="bar" role="progressbar" aria-label="{{ course.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ course.pctNum }}"><div style="width: {{ course.pct }}"></div></div>
+</div>
+</header>
+<ol class="path" style="--c: {{ course.color }}; --t: {{ course.tint }}">
+<sc-for list="{{ course.lessons }}" as="l">
+<li class="{{ l.state }}">
+<span class="marker" aria-hidden="true"><span class="num">{{ l.num }}</span><svg class="tick" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+<div class="step-card">
+<div class="step-main">
+<sc-if value="{{ l.isNext }}"><span class="tag next-tag">{{ t.upNext }}</span></sc-if>
+<b>{{ l.title }}</b>
+<span class="small muted">{{ l.note }}</span>
+</div>
+<span class="stars" role="img" aria-label="{{ l.starsText }}"><sc-for list="{{ l.stars }}" as="s"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<button type="button" class="{{ l.btnCls }}" onclick="{{ l.start }}">{{ l.btn }}</button>
+</div>
+</li>
+</sc-for>
+</ol>
+</section>
+</sc-if>
+
+<!-- LESSON: learn, then questions, then the result -->
+<sc-if value="{{ isLesson }}">
+<section class="player" style="--c: {{ course.color }}; --t: {{ course.tint }}">
+<div class="player-top">
+<button type="button" class="icon-btn" onclick="{{ ls.backCourse }}" aria-label="{{ ls.backLabel }}" title="{{ ls.backLabel }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<div class="segs" aria-hidden="true"><sc-for list="{{ ls.segs }}" as="g"><span class="{{ g.cls }}"></span></sc-for></div>
+<sc-if value="{{ speakOk }}"><button type="button" class="{{ ls.autoCls }}" onclick="{{ ls.toggleAuto }}" aria-pressed="{{ ls.auto }}" aria-label="{{ ls.autoLabel }}" title="{{ ls.autoLabel }}">
+<sc-if value="{{ ls.auto }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></sc-if>
+<sc-if value="{{ ls.autoOff }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg></sc-if>
+</button></sc-if>
+<span class="count">{{ ls.count }}</span>
+</div>
+
+<div class="player-body">
+<sc-if value="{{ ls.isTeach }}">
+<div class="pcard">
+<p class="eyebrow"><span class="dot" style="background: {{ course.color }}"></span>{{ course.name }} · {{ ls.of }}</p>
+<h1 class="h1">{{ ls.title }}</h1>
+<div class="guide small-guide">
+<svg class="saqr" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg>
+<div class="bubble"><p>{{ ls.teachIntro }}</p></div>
+</div>
+<div class="teach-box">
+<div class="teach-top"><span class="teach-label">{{ t.learn }}</span><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ ls.sayTeach }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
+<p class="teach">{{ ls.teach }}</p>
+</div>
+<!-- Lesson podcast: shown only when a file audio/<lesson id>-<en or ar>.m4a (or .mp3, .wav) exists -->
+<div class="listen" hidden>
+<span>{{ t.listen }}</span>
+<audio controls preload="metadata" onloadedmetadata="{{ ls.audioReady }}">
+<source src="{{ ls.audio }}.m4a" type="audio/mp4">
+<source src="{{ ls.audio }}.mp3" type="audio/mpeg">
+<source src="{{ ls.audio }}.wav" type="audio/wav">
+</audio>
+</div>
+<div class="actions"><button type="button" class="btn primary lg" onclick="{{ ls.startQuiz }}">{{ t.startQuiz }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ ls.isQuiz }}">
+<div class="pcard quiz">
+<div class="prompt-row"><h1 class="prompt">{{ ls.prompt }}</h1><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ ls.sayQuestion }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
+<sc-if value="{{ ls.hasSay }}">
+<button type="button" class="say-btn" onclick="{{ ls.sayWord }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>{{ t.listenBtn }}</span></button>
+</sc-if>
+<sc-if value="{{ ls.hasShow }}">
+<div class="show-box"><span class="show" dir="auto">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span></div>
+</sc-if>
+<sc-if value="{{ ls.hasSeq }}">
+<div class="seq" dir="ltr">
+<sc-for list="{{ ls.seq }}" as="sq"><span role="img" aria-label="{{ sq.name }}" style="background: {{ sq.hex }}"></span></sc-for>
+<span class="q" aria-hidden="true">?</span>
+</div>
+</sc-if>
+<sc-if value="{{ ls.isChoice }}">
+<div class="opts">
+<sc-for list="{{ ls.opts }}" as="o">
+<button type="button" class="{{ o.cls }}" onclick="{{ o.tap }}" aria-disabled="{{ o.dis }}">
+<span class="key" aria-hidden="true">{{ o.key }}</span>
+<sc-if value="{{ o.hasSw }}"><i style="background: {{ o.sw }}"></i></sc-if>
+<span class="opt-label" dir="auto">{{ o.label }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- COUNT: drag dates into the basket -->
+<sc-if value="{{ ls.isCount }}">
+<div class="count-act">
+<div class="tray" aria-label="{{ t.tray }}">
+<sc-for list="{{ ls.cnt.tray }}" as="d"><button type="button" class="date" onpointerdown="{{ d.down }}" onclick="{{ d.key }}" aria-label="{{ t.dateLabel }}"><svg viewBox="0 0 40 52" aria-hidden="true"><use href="#p-date"/></svg></button></sc-for>
+</div>
+<div class="basket" aria-label="{{ t.basket }}">
+<sc-for list="{{ ls.cnt.basket }}" as="d"><button type="button" class="date in" onclick="{{ d.out }}" aria-label="{{ t.takeBack }}"><svg viewBox="0 0 40 52" aria-hidden="true"><use href="#p-date"/></svg></button></sc-for>
+<sc-if value="{{ ls.cnt.empty }}"><span class="basket-hint">{{ t.basket }}</span></sc-if>
+</div>
+<sc-if value="{{ ls.cnt.notSolved }}"><div class="actions center"><button type="button" class="btn primary lg" onclick="{{ ls.cnt.check }}">{{ t.check }}</button></div></sc-if>
+</div>
+</sc-if>
+
+<!-- TRACE: draw over the letter or shape -->
+<sc-if value="{{ ls.isTrace }}">
+<div class="trace-act">
+<canvas class="trace" width="300" height="300" onpointerdown="{{ ls.trc.down }}" role="img" aria-label="{{ ls.prompt }}"></canvas>
+<sc-if value="{{ ls.trc.notSolved }}"><div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.trc.clear }}">{{ t.clear }}</button><button type="button" class="btn primary lg" onclick="{{ ls.trc.check }}">{{ t.check }}</button></div></sc-if>
+</div>
+</sc-if>
+
+<!-- MATCH: pair each item on one side with its partner -->
+<sc-if value="{{ ls.isMatch }}">
+<div class="match">
+<div class="mcol"><sc-for list="{{ ls.mtc.lefts }}" as="m"><button type="button" class="{{ m.cls }}" onclick="{{ m.tap }}" aria-pressed="{{ m.pressed }}"><span dir="auto">{{ m.label }}</span></button></sc-for></div>
+<div class="mcol"><sc-for list="{{ ls.mtc.rights }}" as="m"><button type="button" class="{{ m.cls }}" onclick="{{ m.tap }}" aria-pressed="{{ m.pressed }}"><span dir="auto">{{ m.label }}</span></button></sc-for></div>
+</div>
+</sc-if>
+</div>
+<div class="{{ ls.fbCls }}">
+<div class="fb-inner">
+<div class="fb-guide">
+<svg class="{{ ls.guideCls }}" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<div class="fb-text" role="status" aria-live="polite">
+<span class="fb-msg">{{ ls.msg }}</span>
+<sc-if value="{{ ls.hasHint }}"><span class="fb-hint"><b>{{ t.hintWord }}</b> <span dir="auto">{{ ls.hint }}</span></span></sc-if>
+</div>
+<sc-if value="{{ ls.hasHint }}"><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ ls.sayHint }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></sc-if>
+</div>
+<sc-if value="{{ ls.solved }}"><button type="button" class="btn primary lg" onclick="{{ ls.next }}">{{ ls.nextLabel }}</button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ ls.isDone }}">
+<div class="pcard result">
+<div class="champ-row">
+<sc-if value="{{ hasPhoto }}"><div class="champ"><img src="{{ photo }}" alt="{{ childName }}"></div></sc-if>
+<div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
+</div>
+<span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<h1 class="h1">{{ ls.doneTitle }}</h1>
+<p class="lead" role="status">{{ ls.title }}: {{ ls.earnedText }}</p>
+<div class="result-stats">
+<div><b dir="ltr">{{ ls.firstTry }}</b><span>{{ t.firstTry }}</span></div>
+<div><b dir="ltr">{{ ls.earnedNum }}</b><span>{{ t.starsLabel }}</span></div>
+<div><b dir="ltr">{{ ls.time }}</b><span>{{ t.timeTaken }}</span></div>
+</div>
+<div class="actions center">
+<sc-if value="{{ ls.hasNext }}"><button type="button" class="btn primary lg" onclick="{{ ls.nextLesson }}">{{ t.nextLesson }}</button></sc-if>
+<sc-if value="{{ ls.isLast }}"><button type="button" class="btn primary lg" onclick="{{ goHome }}">{{ t.backHome }}</button></sc-if>
+<button type="button" class="btn secondary lg" onclick="{{ ls.again }}">{{ t.tryAgain }}</button>
+<button type="button" class="btn ghost lg" onclick="{{ ls.backCourse }}">{{ ls.backLabel }}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</section>
+</sc-if>
+
+<!-- FAMILY REPORT -->
+<sc-if value="{{ isReport }}">
+<section class="page">
+<header class="page-head">
+<p class="eyebrow">{{ r.date }}</p>
+<h1 class="h1">{{ t.rTitle }}</h1>
+<p class="lead no-print">{{ t.rIntro }}</p>
+</header>
+
+<div class="card profile">
+<div class="photo-field">
+<span class="avatar xl" aria-hidden="true"><sc-if value="{{ hasPhoto }}"><img src="{{ photo }}" alt=""></sc-if><sc-if value="{{ noPhoto }}">{{ initial }}</sc-if></span>
+<div class="photo-actions">
+<b>{{ t.photoLabel }}</b>
+<div class="actions no-print">
+<label class="btn secondary"><input type="file" accept="image/*" class="file" onchange="{{ setPhoto }}">{{ photoBtn }}</label>
+<sc-if value="{{ hasPhoto }}"><button type="button" class="btn ghost" onclick="{{ removePhoto }}">{{ t.photoRemove }}</button></sc-if>
+</div>
+<span class="small muted no-print">{{ t.photoNote }}</span>
+</div>
+</div>
+<div class="field">
+<span class="field-label">{{ t.ageLabel }}</span>
+<div class="age-row"><sc-for list="{{ ageInfo.choices }}" as="a"><button type="button" class="{{ a.cls }}" onclick="{{ a.set }}" aria-pressed="{{ a.pressed }}">{{ a.label }}</button></sc-for></div>
+</div>
+<div class="field">
+<label for="child-name">{{ t.rName }}</label>
+<input id="child-name" class="input" type="text" maxlength="40" autocomplete="off" placeholder="{{ t.rNamePh }}" value="{{ r.name }}" oninput="{{ r.setName }}">
+</div>
+<sc-if value="{{ r.strong }}"><p class="strong-note">{{ r.strong }}</p></sc-if>
+</div>
+
+<div class="stats">
+<div class="stat"><span class="stat-ic" style="background: #DDF3E6; color: #0B6B3A"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span><div><b dir="ltr">{{ total.done }}<small> / {{ total.lessons }}</small></b><span>{{ t.rLessons }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFF1C7; color: #8A5A00"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></span><div><b dir="ltr">{{ total.stars }}<small> / {{ total.starsMax }}</small></b><span>{{ t.rStars }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #DCEEFD; color: #145E96"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>{{ r.minutes }}</b><span>{{ t.rMinutes }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFE1EC; color: #A3245A"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b class="sm">{{ r.last }}</b><span>{{ t.rLast }}</span></div></div>
+</div>
+
+
+<div class="card plan">
+<div class="plan-head">
+<div class="page-head" style="gap: 4px">
+<h2 class="h2">{{ t.planTitle }}</h2>
+<p class="muted">{{ t.planIntro }}</p>
+</div>
+</div>
+<p style="font-weight: 800">{{ plan.summary }}</p>
+<sc-if value="{{ plan.any }}">
+<h3 class="h3">{{ t.planLevels }}</h3>
+<div class="levels">
+<sc-for list="{{ plan.levels }}" as="lv"><div class="level" style="--c: {{ lv.color }}"><div class="level-top"><b>{{ lv.name }}</b><span class="level-score" dir="ltr">{{ lv.score }}</span></div><span class="{{ lv.badge }}">{{ lv.label }}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ plan.hasSteps }}">
+<h3 class="h3">{{ t.planNext }}</h3>
+<ol class="plan-steps">
+<sc-for list="{{ plan.steps }}" as="st">
+<li class="pstep" style="--c: {{ st.color }}">
+<span class="pstep-num" aria-hidden="true">{{ st.num }}</span>
+<div class="pstep-main">
+<b>{{ st.title }}</b>
+<span class="why">{{ st.why }}</span>
+<sc-if value="{{ st.hasMissed }}"><div class="focus-items"><span class="small muted" style="background: none; padding: 0">{{ t.stMissed }}</span><sc-for list="{{ st.missed }}" as="m"><span dir="auto">{{ m }}</span></sc-for></div></sc-if>
+</div>
+<button type="button" class="btn secondary" onclick="{{ st.go }}">{{ t.planGo }}</button>
+</li>
+</sc-for>
+</ol>
+</sc-if>
+<sc-for list="{{ plan.tips }}" as="tp">
+<div class="home-tip"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9.5V21h14V9.5"/></svg><div><b>{{ tp.title }}</b><span>{{ tp.text }}</span></div></div>
+</sc-for>
+</div>
+
+<div class="card">
+<h2 class="h3 card-title">{{ t.rBySubject }}</h2>
+<sc-for list="{{ courses }}" as="c">
+<details class="subject" style="--c: {{ c.color }}">
+<summary>
+<span class="tile sm" aria-hidden="true" style="background: {{ c.color }}"><svg viewBox="0 0 24 24"><path d="{{ c.icon }}"/></svg></span>
+<span class="subject-name">{{ c.name }}</span>
+<span class="subject-bar"><span class="bar" role="progressbar" aria-label="{{ c.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ c.pctNum }}"><span style="width: {{ c.pct }}"></span></span></span>
+<span class="small muted subject-meta">{{ c.doneText }} · {{ c.starsText }}</span>
+<svg class="chev" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+</summary>
+<ul class="lines">
+<sc-for list="{{ c.lessons }}" as="l"><li><span>{{ l.num }}. {{ l.title }}</span><span>{{ l.reportNote }}</span></li></sc-for>
+</ul>
+</details>
+</sc-for>
+</div>
+
+<div class="two">
+<div class="card">
+<h2 class="h3 card-title">{{ t.rPractice }}</h2>
+<sc-if value="{{ r.hasPractice }}"><ul class="lines"><sc-for list="{{ r.practice }}" as="p"><li><span>{{ p.text }}</span><span>{{ p.note }}</span></li></sc-for></ul></sc-if>
+<sc-if value="{{ r.noPractice }}"><p class="empty">{{ t.rNoPractice }}</p></sc-if>
+</div>
+<div class="card">
+<h2 class="h3 card-title">{{ t.rRecent }}</h2>
+<sc-if value="{{ r.hasRecent }}"><ul class="lines"><sc-for list="{{ r.recent }}" as="p"><li><span>{{ p.text }}</span><span>{{ p.note }}</span></li></sc-for></ul></sc-if>
+<sc-if value="{{ r.noRecent }}"><p class="empty">{{ t.rNoRecent }}</p></sc-if>
+</div>
+</div>
+
+<div class="actions no-print">
+<button type="button" class="btn secondary" onclick="{{ r.print }}">{{ t.print }}</button>
+<sc-if value="{{ r.notConfirming }}"><button type="button" class="btn ghost" onclick="{{ r.askReset }}">{{ t.reset }}</button></sc-if>
+<sc-if value="{{ r.confirming }}">
+<span role="alert" class="confirm">{{ t.sure }}</span>
+<button type="button" class="btn danger" onclick="{{ r.doReset }}">{{ t.yesReset }}</button>
+<button type="button" class="btn ghost" onclick="{{ r.cancelReset }}">{{ t.cancel }}</button>
+</sc-if>
+</div>
+</section>
+</sc-if>
+
+</main>
+</div>
+</template>
+
+<script src="js/runtime.js"></script>
+<script src="js/courses.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/learn.js"></script>
+</body>
+</html>

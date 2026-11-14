@@ -1,0 +1,13 @@
+/* Sadu site: page basics. Component styles are inline in the page markup. */
+body{margin:0;background:#FBF3E4}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+a,button{transition:transform .2s ease-out,filter .2s ease-out}
+button:hover,a[href]:hover{filter:brightness(1.05)}
+button:active,a[href]:active{transform:translateY(2px) scale(.98)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #23204A;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}
+}
+

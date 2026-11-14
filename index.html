@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sadu landing page</title>
+<meta name="description" content="Sadu: playful learning for kids aged 2 to 14. Courses, phonics and games in Arabic and English.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=Tajawal:wght@800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div id="app"></div>
+<noscript>This page needs JavaScript to show its content.</noscript>
+
+<template id="page">
+<div style="font-family: 'Nunito', system-ui, sans-serif; color: #23204A; background: #FBF3E4; font-size: 17px; line-height: 1.5; overflow: hidden">
+
+<!-- NAV -->
+<header style="max-width: 1180px; margin: 0 auto; padding: 24px clamp(20px, 5vw, 48px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="display: flex; align-items: center; gap: 12px; min-height: 44px">
+<span style="width: 48px; height: 48px; border-radius: 16px; background: #FFC93C; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 16px -6px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.16), inset 0 5px 8px rgba(255,255,255,.6)">
+<svg aria-hidden="true" width="38" height="38" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8L42 40H6z" fill="#B3261E" stroke="#B3261E" stroke-width="3"/><path d="M19.5 16h9l1.7 3H17.8z" fill="#FFFFFF"/><path d="M16.1 22h15.8l1.7 3H14.4z" fill="#FFFFFF"/><circle cx="19.5" cy="31" r="1.6" fill="#FFFFFF"/><circle cx="28.5" cy="31" r="1.6" fill="#FFFFFF"/><path d="M19 35q5 4 10 0" stroke="#FFFFFF" stroke-width="2.2"/></svg>
+</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px">Sadu</span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 700">
+<a href="#courses" style="padding: 10px 16px; min-height: 24px; border-radius: 999px">Courses</a>
+<a href="#phonics" style="padding: 10px 16px; min-height: 24px; border-radius: 999px">Phonics</a>
+<a href="#progress" style="padding: 10px 16px; min-height: 24px; border-radius: 999px">Progress</a>
+<a href="#games" style="padding: 10px 16px; min-height: 24px; border-radius: 999px">Games</a>
+<a href="#stories" style="padding: 10px 16px; min-height: 24px; border-radius: 999px">Stories</a>
+<a href="learn.html" style="padding: 10px 16px; min-height: 24px; border-radius: 999px; background: #FFC93C">My courses</a>
+<a href="ar.html" lang="ar" style="padding: 10px 16px; min-height: 24px; border-radius: 999px; font-family: 'Tajawal', sans-serif; font-weight: 800">العربية</a>
+<a href="#enroll" style="padding: 12px 22px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 10px 16px -6px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.9)">Enroll</a>
+</nav>
+</header>
+
+<!-- HERO -->
+<section id="top" style="max-width: 1180px; margin: 0 auto; padding: 40px clamp(20px, 5vw, 48px) 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 48px">
+<div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<span style="align-self: flex-start; padding: 8px 16px; border-radius: 999px; background: #2ED3A6; font-weight: 800; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 8px 12px -6px rgba(35,32,74,.3), inset 0 -4px 6px rgba(35,32,74,.14), inset 0 4px 6px rgba(255,255,255,.5)">For curious kids aged 2 to 14</span>
+<h1 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(42px, 6vw, 72px); line-height: 1.02; letter-spacing: -.01em">Learning that feels like play.</h1>
+<p style="margin: 0; font-size: 20px; color: #4B4870; max-width: 520px">From first letters with a parent at age 2 to coding at 14. Short, hands-on lessons in Arabic, maths, science, art and code, with stories and examples from home.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<a href="learn.html" style="padding: 16px 30px; border-radius: 999px; background: {{accent}}; color: #FFFFFF; font-weight: 800; font-size: 18px; box-shadow: 0 16px 24px -10px rgba(35,32,74,.45), inset 0 -7px 10px rgba(35,32,74,.25), inset 0 7px 10px rgba(255,255,255,.35)">Start learning free</a>
+<a href="#courses" style="padding: 16px 30px; border-radius: 999px; background: #FFFFFF; font-weight: 800; font-size: 18px; box-shadow: 0 16px 24px -10px rgba(35,32,74,.25), inset 0 -7px 10px rgba(35,32,74,.08), inset 0 7px 10px rgba(255,255,255,.9)">Browse courses</a>
+</div>
+</div>
+
+<div aria-hidden="true" style="flex: 1 1 380px; min-width: 0; display: flex; justify-content: center">
+<div style="position: relative; width: 420px; max-width: 100%; height: 440px">
+<div style="position: absolute; left: 40px; top: 50px; width: 300px; height: 330px; border-radius: 48px; background: {{accent}}; transform: rotate(-6deg); box-shadow: 0 34px 48px -16px rgba(35,32,74,.45), inset 0 -16px 24px rgba(35,32,74,.28), inset 0 16px 24px rgba(255,255,255,.35); box-sizing: border-box; padding: 34px; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<span style="font-weight: 800; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; opacity: .9">Today's quest</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.1">Grow a date palm seed</span>
+<span style="font-size: 16px; opacity: .92">Soak it, plant it, and draw what changes each week.</span>
+<span style="margin-top: auto; align-self: flex-start; padding: 10px 18px; border-radius: 999px; background: #FFC93C; color: #23204A; font-weight: 800; box-shadow: inset 0 -4px 6px rgba(35,32,74,.16), inset 0 4px 6px rgba(255,255,255,.55)">15 min</span>
+</div>
+<div style="position: absolute; right: 0; top: 0; width: 120px; height: 120px; border-radius: 40px; background: #FFC93C; transform: rotate(10deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 22px 30px -12px rgba(35,32,74,.4), inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.6)">
+<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg>
+</div>
+<div style="position: absolute; right: 10px; bottom: 30px; width: 136px; height: 136px; border-radius: 50%; background: #2ED3A6; display: flex; align-items: center; justify-content: center; box-shadow: 0 22px 30px -12px rgba(35,32,74,.4), inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.55)">
+<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+</div>
+<div style="position: absolute; left: 0; bottom: 0; width: 110px; height: 110px; border-radius: 36px; background: #FF7A45; transform: rotate(-12deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 22px 30px -12px rgba(35,32,74,.4), inset 0 -10px 14px rgba(35,32,74,.18), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-4 .4-7 1-10"/><path d="M13 11c-1-3-4-4-7-3M13 11c1-3 4-4 7-3M13 11c-3-.6-6 .4-7 3.4M13 11c3-.6 6 .4 7 3.4M13 11c0-3-1-5-3-6"/></svg>
+</div>
+<div style="position: absolute; left: 10px; top: 10px; width: 64px; height: 64px; border-radius: 50%; background: #FF6FA8; box-shadow: 0 14px 20px -8px rgba(35,32,74,.4), inset 0 -7px 10px rgba(35,32,74,.16), inset 0 7px 10px rgba(255,255,255,.5)"></div>
+</div>
+</div>
+</section>
+
+<div aria-hidden="true" style="max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); box-sizing: border-box"><svg width="100%" height="30" style="display: block"><defs><pattern id="najd1" width="60" height="30" patternUnits="userSpaceOnUse"><path d="M0 30L15 4l15 26z" fill="#0B6B3A"/><path d="M30 30L45 4l15 26z" fill="#FFC93C"/></pattern></defs><rect width="100%" height="30" fill="url(#najd1)"/></svg></div>
+
+<!-- COURSES -->
+<section id="courses" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.1">Pick a quest</h2>
+<p style="margin: 0; color: #4B4870; font-size: 19px; max-width: 560px">A taste of the catalog, from age 2 to 14. Every course is a string of short lessons that end with something you made.</p>
+</div>
+
+<div role="group" aria-label="Filter courses by subject" style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" onclick="{{ pick.all }}" aria-pressed="{{ pill.all.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.all.bg }}; color: {{ pill.all.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">All</button>
+<button type="button" onclick="{{ pick.math }}" aria-pressed="{{ pill.math.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.math.bg }}; color: {{ pill.math.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">Maths</button>
+<button type="button" onclick="{{ pick.science }}" aria-pressed="{{ pill.science.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.science.bg }}; color: {{ pill.science.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">Science</button>
+<button type="button" onclick="{{ pick.lang }}" aria-pressed="{{ pill.lang.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.lang.bg }}; color: {{ pill.lang.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">Languages</button>
+<button type="button" onclick="{{ pick.art }}" aria-pressed="{{ pill.art.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.art.bg }}; color: {{ pill.art.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">Art</button>
+<button type="button" onclick="{{ pick.code }}" aria-pressed="{{ pill.code.on }}" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; background: {{ pill.code.bg }}; color: {{ pill.code.fg }}; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5)">Code</button>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px">
+
+<sc-if value="{{ show.math }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #FFC93C; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.14), inset 0 10px 14px rgba(255,255,255,.55)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6M3 7h6M15 7h6M4 15l5 5M9 15l-5 5M15 16h6M15 20h6"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #FFE9A8; font-weight: 800; font-size: 13px">Maths</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Souq Maths</h3>
+<p style="margin: 0; color: #4B4870">Count, weigh and give change in riyals while running your own pretend market stall.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 6 to 9 · 12 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+<sc-if value="{{ show.science }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #2ED3A6; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.14), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M7.5 15h9"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #B9F3E2; font-weight: 800; font-size: 13px">Science</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Desert Lab</h3>
+<p style="margin: 0; color: #4B4870">Safe experiments with sand, sun and water. Guess first, then test it.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 6 to 9 · 10 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+<sc-if value="{{ show.lang }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #3FA9F5; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #C4E4FC; font-weight: 800; font-size: 13px">Languages</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Arabic Letters Garden</h3>
+<p style="margin: 0; color: #4B4870">Letters and sounds through songs and finger games. Made for a child and a parent together.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 2 to 5 · 15 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+<sc-if value="{{ show.art }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #FF6FA8; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4l-9 9M14 4l6 6M11 13c-3 0-4 2-4 4s-2 3-3 3c4 1 9 0 9-5"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #FFD0E2; font-weight: 800; font-size: 13px">Art</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Weave Shapes and Colours</h3>
+<p style="margin: 0; color: #4B4870">Sort, stamp and colour triangles and stripes inspired by traditional weaving.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 2 to 5 · 8 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+<sc-if value="{{ show.code }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #FF7A45; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #FFD3C0; font-weight: 800; font-size: 13px">Code</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Code a Falcon</h3>
+<p style="margin: 0; color: #4B4870">Drag blocks to make a falcon fly, dive and call. Finish with a small game to share.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 10 to 14 · 14 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+<sc-if value="{{ show.science }}" hint-placeholder-val="{{ true }}">
+<article style="flex: 1 1 300px; max-width: 420px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.28), inset 0 -10px 16px rgba(35,32,74,.07), inset 0 10px 16px rgba(255,255,255,.9)">
+<div style="height: 130px; border-radius: 26px; background: #B9A8FF; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 -10px 14px rgba(35,32,74,.16), inset 0 10px 14px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14.5A8 8 0 1 1 9.5 5a6.5 6.5 0 0 0 9.5 9.5z"/><path d="M17 4v3M15.5 5.5h3"/></svg>
+</div>
+<span style="align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: #B9F3E2; font-weight: 800; font-size: 13px">Science</span>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.15">Moon Watchers</h3>
+<p style="margin: 0; color: #4B4870">Follow the Moon through a Hijri month, map three constellations and build a star wheel.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 15px">
+<span style="color: #4B4870">Ages 10 to 14 · 9 lessons</span>
+<a href="#enroll" style="padding: 10px 16px; border-radius: 999px; background: #FBF3E4; font-weight: 800">Preview</a>
+</div>
+</article>
+</sc-if>
+
+</div>
+</section>
+
+<!-- PROGRESS -->
+<section id="progress" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 48px">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.1">See every step you take</h2>
+<p style="margin: 0; color: #4B4870; font-size: 19px; max-width: 480px">Each finished lesson fills the bar and earns points. Parents get the same view, so nobody has to ask "what did you do today?"</p>
+<p style="margin: 0; font-weight: 800; color: #0B6B3A">Try it: tap a lesson to mark it done.</p>
+<a href="learn.html#report" style="align-self: flex-start; padding: 12px 22px; border-radius: 999px; background: #FFC93C; font-weight: 800; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.6)">Open the family report</a>
+<div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px; max-width: 460px">
+<span style="font-weight: 800; font-size: 15px; color: #4B4870">What the parent sees on their phone</span>
+<div role="status" aria-live="polite" style="background: #23204A; color: #FFFFFF; border-radius: 28px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 24px 34px -14px rgba(35,32,74,.5), inset 0 -8px 12px rgba(0,0,0,.35), inset 0 8px 12px rgba(255,255,255,.18)">
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="flex: none; width: 34px; height: 34px; border-radius: 12px; background: #FFC93C; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8L42 40H6z" fill="#B3261E" stroke="#B3261E" stroke-width="3"/><path d="M19.5 16h9l1.7 3H17.8z" fill="#FFFFFF"/><path d="M16.1 22h15.8l1.7 3H14.4z" fill="#FFFFFF"/><circle cx="19.5" cy="31" r="1.6" fill="#FFFFFF"/><circle cx="28.5" cy="31" r="1.6" fill="#FFFFFF"/><path d="M19 35q5 4 10 0" stroke="#FFFFFF" stroke-width="2.2"/></svg></span>
+<span style="font-weight: 800">Sadu</span>
+<span style="margin-inline-start: auto; font-size: 14px; color: #D6D3F0">now</span>
+</div>
+<span style="font-weight: 800; font-size: 18px">{{ note.title }}</span>
+<span style="font-size: 16px; color: #ECEAFB">{{ note.body }}</span>
+</div>
+</div>
+</div>
+
+<div style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border-radius: 40px; padding: 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column">
+<span style="font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: #4B4870">Code a Falcon</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 26px">Week 1</span>
+</div>
+<div style="display: flex; gap: 12px">
+<div style="padding: 10px 16px; border-radius: 20px; background: #FFC93C; text-align: center; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.55)">
+<div style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 22px; line-height: 1">{{ xp }}</div>
+<div style="font-weight: 800; font-size: 12px">points</div>
+</div>
+<div style="padding: 10px 16px; border-radius: 20px; background: #2ED3A6; text-align: center; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.5)">
+<div style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 22px; line-height: 1">{{ doneText }}</div>
+<div style="font-weight: 800; font-size: 12px">lessons</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 15px">
+<span>Progress</span><span aria-live="polite">{{ pct }}</span>
+</div>
+<div role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ pctNum }}" style="height: 26px; border-radius: 999px; background: #EADFC8; box-shadow: inset 0 5px 8px rgba(35,32,74,.16); overflow: hidden">
+<div style="height: 100%; width: {{ pct }}; border-radius: 999px; background: {{accent}}; transition: width .35s ease; box-shadow: inset 0 -6px 8px rgba(35,32,74,.25), inset 0 6px 8px rgba(255,255,255,.4)"></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<button type="button" onclick="{{ l1.toggle }}" aria-pressed="{{ l1.done }}" style="border: 0; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; min-height: 60px; border-radius: 22px; background: {{ l1.bg }}; color: #23204A; font-size: 17px; font-weight: 700; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: {{ l1.dot }}; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 5px rgba(35,32,74,.18)"><sc-if value="{{ l1.done }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if></span>
+<span>Meet your falcon</span>
+</button>
+<button type="button" onclick="{{ l2.toggle }}" aria-pressed="{{ l2.done }}" style="border: 0; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; min-height: 60px; border-radius: 22px; background: {{ l2.bg }}; color: #23204A; font-size: 17px; font-weight: 700; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: {{ l2.dot }}; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 5px rgba(35,32,74,.18)"><sc-if value="{{ l2.done }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if></span>
+<span>Make it fly</span>
+</button>
+<button type="button" onclick="{{ l3.toggle }}" aria-pressed="{{ l3.done }}" style="border: 0; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; min-height: 60px; border-radius: 22px; background: {{ l3.bg }}; color: #23204A; font-size: 17px; font-weight: 700; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: {{ l3.dot }}; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 5px rgba(35,32,74,.18)"><sc-if value="{{ l3.done }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if></span>
+<span>Teach it to dive</span>
+</button>
+<button type="button" onclick="{{ l4.toggle }}" aria-pressed="{{ l4.done }}" style="border: 0; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; min-height: 60px; border-radius: 22px; background: {{ l4.bg }}; color: #23204A; font-size: 17px; font-weight: 700; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: {{ l4.dot }}; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 5px rgba(35,32,74,.18)"><sc-if value="{{ l4.done }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if></span>
+<span>Paint the desert sky</span>
+</button>
+<button type="button" onclick="{{ l5.toggle }}" aria-pressed="{{ l5.done }}" style="border: 0; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; min-height: 60px; border-radius: 22px; background: {{ l5.bg }}; color: #23204A; font-size: 17px; font-weight: 700; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: {{ l5.dot }}; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 5px rgba(35,32,74,.18)"><sc-if value="{{ l5.done }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if></span>
+<span>Build the mini game</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- PHONICS -->
+<section id="phonics" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px); display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.2">Phonics: learn and play</h2>
+<p style="margin: 0; color: #4B4870; font-size: 19px; max-width: 600px">Letter sounds in English and Arabic. First meet the sound, then play with it.</p>
+</div>
+<div role="group" aria-label="Choose a language" style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" onclick="{{ ph.setEn }}" aria-pressed="{{ ph.enOn }}" lang="en" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5); font-family: 'Nunito', sans-serif; background: {{ ph.enBg }}; color: {{ ph.enFg }}">English</button>
+<button type="button" onclick="{{ ph.setAr }}" aria-pressed="{{ ph.arOn }}" lang="ar" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5); font-family: 'Tajawal', sans-serif; background: {{ ph.arBg }}; color: {{ ph.arFg }}">العربية</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 28px">
+
+<div style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<span style="align-self: flex-start; padding: 6px 16px; border-radius: 999px; background: #FFC93C; font-weight: 800; font-size: 15px; box-shadow: inset 0 -4px 6px rgba(35,32,74,.14), inset 0 4px 6px rgba(255,255,255,.55)">Learn</span>
+<div role="group" aria-label="Letters" style="display: flex; flex-wrap: wrap; gap: 10px; direction: {{ ph.dir }}">
+<sc-for list="{{ ph.letters }}" as="lt" hint-placeholder-count="6">
+<button type="button" onclick="{{ lt.pick }}" aria-pressed="{{ lt.on }}" style="border: 0; padding: 0; width: 60px; height: 60px; border-radius: 20px; font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 30px; line-height: 1; background: {{ lt.bg }}; color: {{ lt.fg }}; box-shadow: 0 10px 14px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.5)">{{ lt.ch }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 22px">
+<div aria-hidden="true" style="flex: none; width: 150px; height: 150px; border-radius: 44px; background: #FFC93C; display: flex; align-items: center; justify-content: center; font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 96px; line-height: 1; box-shadow: 0 20px 28px -12px rgba(35,32,74,.4), inset 0 -12px 16px rgba(35,32,74,.16), inset 0 12px 16px rgba(255,255,255,.6)">{{ ph.cur.ch }}</div>
+<div style="flex: 1 1 180px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">Sound</span>
+<span style="font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 34px; line-height: 1.2; direction: {{ ph.dir }}">{{ ph.cur.sound }}</span>
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">Example word</span>
+<span style="font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 600; font-size: 28px; line-height: 1.3">{{ ph.cur.word }} <span style="font-family: inherit; font-weight: 500; font-size: 18px; color: #4B4870">{{ ph.cur.gloss }}</span></span>
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">How to say it</span>
+<span style="font-size: 17px">{{ ph.cur.tip }}</span>
+</div>
+</div>
+<button type="button" onclick="{{ ph.hear }}" style="align-self: flex-start; border: 0; display: flex; align-items: center; gap: 10px; padding: 12px 22px; min-height: 48px; border-radius: 999px; background: #3FA9F5; color: #23204A; font-weight: 800; font-size: 16px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.500v5h3.500l4.500 4v-13l-4.500 4z"/><path d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/></svg>
+<span>Hear the word</span>
+</button>
+</div>
+
+<div style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 3vw, 32px); box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="padding: 6px 16px; border-radius: 999px; background: #FF6FA8; font-weight: 800; font-size: 15px; box-shadow: inset 0 -4px 6px rgba(35,32,74,.14), inset 0 4px 6px rgba(255,255,255,.5)">Play</span>
+<span style="display: flex; align-items: center; gap: 8px; font-weight: 800"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="#FFC93C" stroke="#23204A" stroke-width="1.800" stroke-linejoin="round"><path d="M12 3l2.700 5.600 6.100.800-4.500 4.300 1.100 6.100L12 16.900 6.600 19.800l1.100-6.100L3.200 9.400l6.100-.800z"/></svg><span>Stars: {{ ph.stars }}</span></span>
+</div>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 1.3">Which word starts with this sound?</span>
+<div aria-hidden="true" style="align-self: flex-start; padding: 8px 26px; border-radius: 26px; background: #0B6B3A; color: #FFFFFF; font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.3; box-shadow: 0 14px 20px -10px rgba(35,32,74,.4), inset 0 -8px 10px rgba(35,32,74,.28), inset 0 8px 10px rgba(255,255,255,.3)">{{ ph.cur.sound }}</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{ ph.choices }}" as="ch" hint-placeholder-count="3">
+<button type="button" onclick="{{ ch.tap }}" style="border: 0; padding: 10px 20px; min-height: 58px; border-radius: 22px; text-align: start; font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; color: #23204A; background: {{ ch.bg }}; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">{{ ch.word }}</button>
+</sc-for>
+</div>
+<span role="status" aria-live="polite" style="font-weight: 800; min-height: 26px; color: {{ ph.msgColor }}">{{ ph.msg }}</span>
+<button type="button" onclick="{{ ph.next }}" style="align-self: flex-start; border: 0; padding: 12px 22px; min-height: 48px; border-radius: 999px; background: #FFC93C; color: #23204A; font-weight: 800; font-size: 16px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.6)">Next sound</button>
+</div>
+
+</div>
+</section>
+
+<!-- GAMES -->
+<section id="games" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.2">Creative games</h2>
+<p style="margin: 0; color: #4B4870; font-size: 19px; max-width: 600px">Games that turn practice into play. Each one is tied to a course, so points count toward the same progress bar.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 28px">
+<article style="flex: 1 1 260px; min-width: 0; border-radius: 36px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.16), inset 0 12px 18px rgba(255,255,255,.5); background: #3FA9F5">
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 14px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.1), inset 0 6px 8px rgba(255,255,255,.9)"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.500 13c4-.5 6-5 9.500-5 2.500 0 3.500 2 9.500 1-2 5-6 8-10.500 8-3.500 0-6.500-1.500-8.500-4z"/><path d="M12 8c0-2 1.500-3.500 3.500-4"/></svg></div>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.2">Falcon Flight</h3>
+<p style="margin: 0">Steer the falcon through the dunes by solving quick sums before the wind changes.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+<span style="padding: 6px 14px; border-radius: 999px; background: #FFFFFF; font-weight: 800; font-size: 14px">Ages 6 to 9</span>
+<a href="#falcon-flight" style="padding: 10px 18px; border-radius: 999px; background: #23204A; color: #FFFFFF; font-weight: 800; font-size: 15px">Play now</a>
+</div>
+</article>
+<article style="flex: 1 1 260px; min-width: 0; border-radius: 36px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.16), inset 0 12px 18px rgba(255,255,255,.5); background: #FF6FA8">
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 14px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.1), inset 0 6px 8px rgba(255,255,255,.9)"><span lang="ar" style="font-family: 'Baloo Bhaijaan 2', sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #23204A; margin-top: -8px">ب</span></div>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.2">Letter Catch</h3>
+<p style="margin: 0">Catch the falling letter that matches the sound you hear. Slow and gentle for little hands.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+<span style="padding: 6px 14px; border-radius: 999px; background: #FFFFFF; font-weight: 800; font-size: 14px">Ages 2 to 5</span>
+<a href="#letter-catch" style="padding: 10px 18px; border-radius: 999px; background: #23204A; color: #FFFFFF; font-weight: 800; font-size: 15px">Play now</a>
+</div>
+</article>
+<article style="flex: 1 1 260px; min-width: 0; border-radius: 36px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.16), inset 0 12px 18px rgba(255,255,255,.5); background: #FF7A45">
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 14px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.1), inset 0 6px 8px rgba(255,255,255,.9)"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.500 10h17l-2 9.500h-13z"/><path d="M8 10l4-6 4 6M9.500 13.500v3M14.500 13.500v3"/></svg></div>
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.2">Souq Dash</h3>
+<p style="margin: 0">Fill each order and give the right change before the stall closes for the day.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+<span style="padding: 6px 14px; border-radius: 999px; background: #FFFFFF; font-weight: 800; font-size: 14px">Ages 10 to 14</span>
+<a href="#souq-dash" style="padding: 10px 18px; border-radius: 999px; background: #23204A; color: #FFFFFF; font-weight: 800; font-size: 15px">Play now</a>
+</div>
+</article>
+</div>
+
+<!-- FALCON FLIGHT (playable) -->
+<div id="falcon-flight" style="background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 4vw, 36px); box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 24px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">Falcon Flight</h3>
+<span style="padding: 6px 14px; border-radius: 999px; background: #C4E4FC; font-weight: 800; font-size: 14px">Ages 6 to 9</span>
+</div>
+
+<sc-if value="{{ ff.idle }}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; color: #4B4870; max-width: 640px">The falcon wants to reach the oasis, 8 dunes away. Solve each sum before the wind changes and it flies one dune further. A wrong answer or a change of wind costs a feather, and you have three.</p>
+<button type="button" onclick="{{ ff.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #3FA9F5; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Take off</button>
+</sc-if>
+
+<sc-if value="{{ ff.scene }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+<div style="padding: 10px 16px; min-width: 64px; border-radius: 20px; background: #FFC93C; text-align: center; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.55)">
+<div dir="ltr" style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 22px; line-height: 1">{{ ff.step }}</div>
+<div style="font-weight: 800; font-size: 12px">dunes</div>
+</div>
+<div role="img" aria-label="{{ ff.feathersLabel }}" style="padding: 10px 16px; border-radius: 20px; background: #FBF3E4; text-align: center; box-shadow: inset 0 5px 8px rgba(35,32,74,.1)">
+<div style="display: flex; gap: 6px; justify-content: center; height: 22px; align-items: center">
+<sc-for list="{{ ff.feathers }}" as="fe" hint-placeholder-count="3">
+<span style="width: 16px; height: 16px; border-radius: 50%; background: {{ fe.bg }}; box-shadow: inset 0 -3px 4px rgba(35,32,74,.18)"></span>
+</sc-for>
+</div>
+<div style="font-weight: 800; font-size: 12px">feathers</div>
+</div>
+</div>
+<div dir="ltr" aria-hidden="true" style="position: relative; height: 190px; border-radius: 28px; background: #C4E4FC; overflow: hidden; box-shadow: inset 0 6px 10px rgba(35,32,74,.14)">
+<div style="position: absolute; top: 16px; right: 26px; width: 46px; height: 46px; border-radius: 50%; background: #FFC93C; box-shadow: inset 0 -6px 8px rgba(35,32,74,.12), inset 0 6px 8px rgba(255,255,255,.6)"></div>
+<svg width="100%" height="90" viewBox="0 0 400 90" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: 0; display: block"><path d="M0 90V52q50-34 100 0t100 0 100 0 100 0v38z" fill="#F4D9A0"/><path d="M0 90V72q50-22 100 0t100 0 100 0 100 0v18z" fill="#EBC47E"/></svg>
+<svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#0B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 12px; bottom: 30px"><path d="M12 21c0-4 .4-7 1-10"/><path d="M13 11c-1-3-4-4-7-3M13 11c1-3 4-4 7-3M13 11c-3-.6-6 .4-7 3.4M13 11c3-.6 6 .4 7 3.4M13 11c0-3-1-5-3-6"/></svg>
+<div id="ff-bird" style="position: absolute; top: 40px; left: calc(2% + {{ ff.pos }}%); width: 64px; height: 64px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.1), inset 0 6px 8px rgba(255,255,255,.9)"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.500 13c4-.5 6-5 9.500-5 2.500 0 3.500 2 9.500 1-2 5-6 8-10.500 8-3.500 0-6.500-1.500-8.500-4z"/><path d="M12 8c0-2 1.500-3.500 3.500-4"/></svg></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ ff.playing }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">Wind</span>
+<div aria-hidden="true" style="flex: 1 1 200px; height: 18px; border-radius: 999px; background: #EADFC8; box-shadow: inset 0 4px 6px rgba(35,32,74,.16); overflow: hidden">
+<div id="ff-wind" style="height: 100%; width: {{ ff.barW }}; border-radius: 999px; background: #3FA9F5; box-shadow: inset 0 -4px 6px rgba(35,32,74,.2), inset 0 4px 6px rgba(255,255,255,.4)"></div>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+<span dir="ltr" style="flex: 1 1 220px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(36px, 6vw, 52px); line-height: 1.1">{{ ff.sum }}</span>
+<div role="group" aria-label="Answers" style="flex: 1 1 300px; display: flex; gap: 12px">
+<sc-for list="{{ ff.choices }}" as="ch" hint-placeholder-count="3">
+<button type="button" onclick="{{ ch.tap }}" style="flex: 1 1 0; border: 0; padding: 0; min-width: 0; height: 76px; border-radius: 24px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 32px; color: #23204A; opacity: {{ ch.op }}; background: {{ ch.bg }}; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -7px 10px rgba(35,32,74,.16), inset 0 7px 10px rgba(255,255,255,.55)">{{ ch.label }}</button>
+</sc-for>
+</div>
+</div>
+<span role="status" aria-live="polite" style="font-weight: 800; min-height: 26px; color: {{ ff.msgColor }}">{{ ff.msg }}</span>
+</sc-if>
+
+<sc-if value="{{ ff.won }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.3">You reached the oasis!</span>
+<span style="font-size: 19px">{{ ff.wonText }}</span>
+</div>
+<button type="button" onclick="{{ ff.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #3FA9F5; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Fly again</button>
+</sc-if>
+
+<sc-if value="{{ ff.lost }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.3">The wind won this time.</span>
+<span style="font-size: 19px">{{ ff.lostText }}</span>
+</div>
+<button type="button" onclick="{{ ff.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #3FA9F5; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Fly again</button>
+</sc-if>
+</div>
+
+<!-- LETTER CATCH (playable) -->
+<div id="letter-catch" style="background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 4vw, 36px); box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 24px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">Letter Catch</h3>
+<span style="padding: 6px 14px; border-radius: 999px; background: #FFD0E2; font-weight: 800; font-size: 14px">Ages 2 to 5</span>
+</div>
+<div role="group" aria-label="Choose the letters" style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" onclick="{{ lc.setEn }}" aria-pressed="{{ lc.enOn }}" lang="en" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5); font-family: 'Nunito', sans-serif; background: {{ lc.enBg }}; color: {{ lc.enFg }}">English</button>
+<button type="button" onclick="{{ lc.setAr }}" aria-pressed="{{ lc.arOn }}" lang="ar" style="border: 0; padding: 12px 22px; min-height: 46px; border-radius: 999px; font-weight: 800; font-size: 16px; box-shadow: 0 10px 16px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.12), inset 0 5px 8px rgba(255,255,255,.5); font-family: 'Tajawal', sans-serif; background: {{ lc.arBg }}; color: {{ lc.arFg }}">العربية</button>
+</div>
+
+<sc-if value="{{ lc.idle }}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; color: #4B4870; max-width: 640px">Letters float down slowly. Listen to the word, then tap the letter it starts with. There is no timer and nothing to lose, so it works well for a child and a grown-up together.</p>
+<button type="button" onclick="{{ lc.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #FF6FA8; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Start catching</button>
+</sc-if>
+
+<sc-if value="{{ lc.playing }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">Tap the first letter of</span>
+<span style="font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 34px; line-height: 1.3">{{ lc.word }} <span style="font-weight: 500; font-size: 18px; color: #4B4870">{{ lc.gloss }}</span></span>
+</div>
+<span style="display: flex; align-items: center; gap: 8px; font-weight: 800"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="#FFC93C" stroke="#23204A" stroke-width="1.800" stroke-linejoin="round"><path d="M12 3l2.700 5.600 6.100.800-4.500 4.300 1.100 6.100L12 16.900 6.600 19.800l1.100-6.100L3.200 9.400l6.100-.800z"/></svg><span>Stars: {{ lc.stars }}</span></span>
+</div>
+<div dir="ltr" role="group" aria-label="Falling letters" style="position: relative; height: 340px; border-radius: 28px; background: #C4E4FC; overflow: hidden; box-shadow: inset 0 6px 10px rgba(35,32,74,.14)">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: #F4D9A0"></div>
+<sc-for list="{{ lc.tiles }}" as="t" hint-placeholder-count="3">
+<button type="button" data-lc onclick="{{ t.tap }}" style="position: absolute; top: 0; left: calc({{ t.left }}% - 42px); width: 84px; height: 84px; border: 0; padding: 0; border-radius: 28px; font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 46px; line-height: 1; touch-action: manipulation; transition: none; transform: translateY({{ t.y }}px); opacity: {{ t.op }}; background: {{ t.bg }}; color: {{ t.fg }}; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -7px 10px rgba(35,32,74,.16), inset 0 7px 10px rgba(255,255,255,.55)">{{ t.ch }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<button type="button" onclick="{{ lc.hear }}" style="border: 0; display: flex; align-items: center; gap: 10px; padding: 12px 22px; min-height: 48px; border-radius: 999px; background: #3FA9F5; color: #23204A; font-weight: 800; font-size: 16px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#23204A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.500v5h3.500l4.500 4v-13l-4.500 4z"/><path d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/></svg>
+<span>Hear it again</span>
+</button>
+<button type="button" onclick="{{ lc.stop }}" style="border: 0; padding: 12px 22px; min-height: 48px; border-radius: 999px; background: #FBF3E4; color: #23204A; font-weight: 800; font-size: 16px; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">Finish</button>
+<sc-if value="{{ lc.showHint }}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px; background: #FFE9A8; font-weight: 800">Look for <span style="font-family: 'Baloo Bhaijaan 2', 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; line-height: 1.2">{{ lc.hintCh }}</span></span>
+</sc-if>
+</div>
+<span role="status" aria-live="polite" style="font-weight: 800; min-height: 26px; color: {{ lc.msgColor }}">{{ lc.msg }}</span>
+</sc-if>
+</div>
+
+<!-- SOUQ DASH (playable) -->
+<div id="souq-dash" style="background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 4vw, 36px); box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 24px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">Souq Dash</h3>
+<span style="padding: 6px 14px; border-radius: 999px; background: #FFD3C0; font-weight: 800; font-size: 14px">Ages 10 to 14</span>
+</div>
+
+<sc-if value="{{ g.idle }}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; color: #4B4870; max-width: 640px">Customers are on their way. Work out what each one owes, then tap the notes and coins to give the right change. Serve as many as you can in 90 seconds.</p>
+<button type="button" onclick="{{ g.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #FF7A45; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Open the stall</button>
+</sc-if>
+
+<sc-if value="{{ g.playing }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+<div style="padding: 10px 16px; min-width: 64px; border-radius: 20px; background: #FFC93C; text-align: center; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.55)">
+<div id="sd-time" style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 22px; line-height: 1">{{ g.time }}</div>
+<div style="font-weight: 800; font-size: 12px">seconds</div>
+</div>
+<div style="padding: 10px 16px; min-width: 64px; border-radius: 20px; background: #2ED3A6; text-align: center; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.5)">
+<div style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 22px; line-height: 1">{{ g.served }}</div>
+<div style="font-weight: 800; font-size: 12px">served</div>
+</div>
+<div aria-hidden="true" style="flex: 1 1 200px; height: 22px; border-radius: 999px; background: #EADFC8; box-shadow: inset 0 5px 8px rgba(35,32,74,.16); overflow: hidden">
+<div id="sd-bar" style="height: 100%; width: {{ g.barW }}; border-radius: 999px; background: #FF7A45; box-shadow: inset 0 -5px 7px rgba(35,32,74,.2), inset 0 5px 7px rgba(255,255,255,.4)"></div>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<div style="flex: 1 1 300px; min-width: 0; background: #FBF3E4; border-radius: 28px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; box-shadow: inset 0 6px 10px rgba(35,32,74,.12)">
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">The customer buys</span>
+<sc-for list="{{ g.lines }}" as="ln" hint-placeholder-count="2">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 1.3">{{ ln.text }}</span>
+</sc-for>
+<span style="margin-top: 8px; font-weight: 800; font-size: 14px; color: #4B4870">and pays with</span>
+<span style="align-self: flex-start; padding: 8px 22px; border-radius: 16px; background: #0B6B3A; color: #FFFFFF; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 28px; line-height: 1.3; box-shadow: 0 12px 16px -10px rgba(35,32,74,.4), inset 0 -6px 8px rgba(35,32,74,.28), inset 0 6px 8px rgba(255,255,255,.3)">{{ g.paid }}</span>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<span style="font-weight: 800; font-size: 14px; color: #4B4870">Tap to count out the change</span>
+<div role="group" aria-label="Notes and coins" style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{ g.coins }}" as="cn" hint-placeholder-count="4">
+<button type="button" onclick="{{ cn.tap }}" aria-label="{{ cn.aria }}" style="border: 0; padding: 0 8px; min-width: 64px; height: 60px; border-radius: 18px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 24px; color: #23204A; background: {{ cn.bg }}; box-shadow: 0 10px 14px -8px rgba(35,32,74,.3), inset 0 -5px 8px rgba(35,32,74,.14), inset 0 5px 8px rgba(255,255,255,.5)">{{ cn.label }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px">
+<span style="font-weight: 800">Your change:</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 30px; line-height: 1.2">{{ g.give }}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" onclick="{{ g.submit }}" style="border: 0; padding: 12px 24px; min-height: 50px; border-radius: 999px; background: #0B6B3A; color: #FFFFFF; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.4), inset 0 -6px 8px rgba(35,32,74,.25), inset 0 6px 8px rgba(255,255,255,.35)">Give change</button>
+<button type="button" onclick="{{ g.clear }}" style="border: 0; padding: 12px 24px; min-height: 50px; border-radius: 999px; background: #FBF3E4; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 10px 14px -8px rgba(35,32,74,.25), inset 0 -5px 8px rgba(35,32,74,.08), inset 0 5px 8px rgba(255,255,255,.7)">Clear</button>
+</div>
+<span role="status" aria-live="polite" style="font-weight: 800; min-height: 26px; color: {{ g.msgColor }}">{{ g.msg }}</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ g.over }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.3">The stall is closed for the day.</span>
+<span style="font-size: 19px">{{ g.result }}</span>
+<span style="font-weight: 800; color: #0B6B3A">{{ g.best }}</span>
+</div>
+<button type="button" onclick="{{ g.start }}" style="align-self: flex-start; border: 0; padding: 14px 26px; min-height: 52px; border-radius: 999px; background: #FF7A45; color: #23204A; font-weight: 800; font-size: 17px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.5)">Play again</button>
+</sc-if>
+</div>
+<div style="background: #FFFFFF; border-radius: 40px; padding: clamp(22px, 4vw, 36px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 36px; box-shadow: 0 30px 44px -16px rgba(35,32,74,.3), inset 0 -12px 18px rgba(35,32,74,.07), inset 0 12px 18px rgba(255,255,255,.9)">
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">Weave your own pattern</h3>
+<p style="margin: 0; color: #4B4870">A free-play game for every age. Tap a square to change its colour and build a pattern of your own.</p>
+<p style="margin: 0; font-weight: 800; color: #0B6B3A">Try it: tap the squares.</p>
+<button type="button" onclick="{{ clearWeave }}" style="align-self: flex-start; border: 0; padding: 12px 22px; min-height: 48px; border-radius: 999px; background: #FFC93C; color: #23204A; font-weight: 800; font-size: 16px; box-shadow: 0 12px 16px -8px rgba(35,32,74,.35), inset 0 -6px 8px rgba(35,32,74,.16), inset 0 6px 8px rgba(255,255,255,.6)">Start again</button>
+</div>
+<div dir="ltr" style="flex: 1 1 340px; min-width: 0; max-width: 460px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; padding: 16px; border-radius: 28px; background: #FBF3E4; box-shadow: inset 0 6px 10px rgba(35,32,74,.14)">
+<sc-for list="{{ cells }}" as="c" hint-placeholder-count="24">
+<button type="button" onclick="{{ c.tap }}" aria-label="{{ c.label }}" style="border: 0; padding: 0; aspect-ratio: 1; min-height: 44px; border-radius: 14px; background: {{ c.bg }}; box-shadow: 0 6px 8px -4px rgba(35,32,74,.3), inset 0 -4px 6px rgba(35,32,74,.18), inset 0 4px 6px rgba(255,255,255,.4)"></button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px); display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.1">What families say</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 28px">
+<figure style="margin: 0; flex: 1 1 300px; min-width: 0; background: #FFC93C; border-radius: 36px; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; transform: rotate(-1.5deg); box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.14), inset 0 12px 18px rgba(255,255,255,.55)">
+<blockquote style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 22px; line-height: 1.3">"We sing the letter songs together every morning. She points at letters on shop signs now."</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px; font-weight: 800">
+<span aria-hidden="true" style="width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14)"></span>
+<span>[Parent name], parent of a [age]-year-old</span>
+</figcaption>
+</figure>
+<figure style="margin: 0; flex: 1 1 300px; min-width: 0; background: #2ED3A6; border-radius: 36px; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; transform: rotate(1deg); box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.14), inset 0 12px 18px rgba(255,255,255,.5)">
+<blockquote style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 22px; line-height: 1.3">"My falcon game has three levels and my little brother can't beat the last one."</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px; font-weight: 800">
+<span aria-hidden="true" style="width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14)"></span>
+<span>[Student name], [age]</span>
+</figcaption>
+</figure>
+<figure style="margin: 0; flex: 1 1 300px; min-width: 0; background: #FF6FA8; border-radius: 36px; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; transform: rotate(-1deg); box-shadow: 0 26px 40px -16px rgba(35,32,74,.32), inset 0 -12px 18px rgba(35,32,74,.16), inset 0 12px 18px rgba(255,255,255,.5)">
+<blockquote style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 22px; line-height: 1.3">"The lessons are short, so I do one on the bus and one after football."</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px; font-weight: 800">
+<span aria-hidden="true" style="width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; box-shadow: inset 0 -5px 8px rgba(35,32,74,.14)"></span>
+<span>[Student name], [age]</span>
+</figcaption>
+</figure>
+</div>
+</section>
+
+<div aria-hidden="true" style="max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); box-sizing: border-box"><svg width="100%" height="30" style="display: block"><defs><pattern id="najd2" width="60" height="30" patternUnits="userSpaceOnUse"><path d="M0 30L15 4l15 26z" fill="#0B6B3A"/><path d="M30 30L45 4l15 26z" fill="#FFC93C"/></pattern></defs><rect width="100%" height="30" fill="url(#najd2)"/></svg></div>
+
+<!-- ENROLL -->
+<section id="enroll" style="max-width: 1180px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px) 72px">
+<div style="position: relative; background: {{accent}}; color: #FFFFFF; border-radius: 48px; padding: clamp(32px, 6vw, 72px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px; box-shadow: 0 40px 56px -20px rgba(35,32,74,.5), inset 0 -18px 26px rgba(35,32,74,.3), inset 0 18px 26px rgba(255,255,255,.3)">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(34px, 4.5vw, 54px); line-height: 1.05">Ready for the first quest?</h2>
+<p style="margin: 0; font-size: 19px; max-width: 460px">Enroll today and open the first lesson of every course. Free for 10 days, then 24 SAR a month.</p>
+</div>
+<form action="#enroll" style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; color: #23204A; border-radius: 32px; padding: 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 22px 30px -14px rgba(35,32,74,.45), inset 0 -8px 12px rgba(35,32,74,.08), inset 0 8px 12px rgba(255,255,255,.9)">
+<label for="enroll-email" style="font-weight: 800">Parent or guardian email</label>
+<input id="enroll-email" type="email" placeholder="name@example.com" autocomplete="email" style="border: 0; outline-offset: 3px; padding: 16px 18px; min-height: 24px; border-radius: 18px; background: #FBF3E4; font-size: 17px; color: #23204A; box-shadow: inset 0 5px 8px rgba(35,32,74,.14)">
+<button type="button" onclick="{{ enroll }}" style="border: 0; padding: 16px 24px; min-height: 56px; border-radius: 999px; background: #FFC93C; color: #23204A; font-weight: 800; font-size: 18px; box-shadow: 0 14px 20px -10px rgba(35,32,74,.4), inset 0 -7px 10px rgba(35,32,74,.16), inset 0 7px 10px rgba(255,255,255,.6)">Enroll now</button>
+<span style="font-size: 14px; color: #4B4870">No card needed to start. Cancel any time.</span>
+<span role="status" aria-live="polite" style="font-weight: 800; min-height: 24px; color: {{ enrollMsg.color }}">{{ enrollMsg.text }}</span>
+</form>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="max-width: 1180px; margin: 0 auto; padding: 8px clamp(20px, 5vw, 48px) 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; color: #4B4870; font-weight: 700; font-size: 15px">
+<span>© Sadu</span>
+<nav aria-label="Footer" style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="#courses" style="padding: 12px 10px">Courses</a>
+<a href="#phonics" style="padding: 12px 10px">Phonics</a>
+<a href="#progress" style="padding: 12px 10px">Progress</a>
+<a href="#games" style="padding: 12px 10px">Games</a>
+<a href="#stories" style="padding: 12px 10px">Stories</a>
+<a href="#enroll" style="padding: 12px 10px">Enroll</a>
+</nav>
+</footer>
+
+</div>
+</template>
+
+<script src="js/runtime.js"></script>
+<script src="js/falcon-flight.js"></script>
+<script src="js/letter-catch.js"></script>
+<script src="js/souq-dash.js"></script>
+<script src="js/page-en.js"></script>
+</body>
+</html>
