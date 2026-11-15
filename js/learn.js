@@ -81,6 +81,10 @@
         arabic: ['The Golden Pen', 'Grandpa\'s golden pen writes only correct Arabic. Help Saqr answer the questions so the pen will write again!'],
         art: ['The Colour Festival', 'The colour festival is tonight, but the painters need help with colours and shapes. Be Saqr\'s art helper!'],
         animals: ['The Night Zoo', 'The animals at the night zoo are making sounds in the dark. Help Saqr find out who is who!'],
+        'math-plus': ['The Engineer\'s Challenge', 'A team is building a new park in Riyadh and needs a sharp maths mind for fractions, areas and equations. Can you help Saqr solve their plans?'],
+        'science-plus': ['The Space Station Mission', 'Saqr has been invited to a space station! To get on board, you must answer the science crew\'s questions about the body, forces, energy and Earth.'],
+        'english-plus': ['The Editor\'s Desk', 'The school newspaper is full of mistakes! Help Saqr fix the grammar and punctuation before it is printed.'],
+        'arabic-plus': ['The Poet\'s Market', 'At the poets\' market in Souq Okaz, only those who know their Arabic grammar may recite. Help Saqr win a place on the stage!'],
         world: ['The Explorer\'s Backpack', 'Saqr is packing for a big trip around the world. Answer the questions to fill the explorer\'s backpack!']
       },
       plOffer: 'New here? Take a 2-minute starting test so Saqr knows where to begin in each subject.', plStart: '🎯 Starting test', plSkip: 'Start from the beginning',
@@ -282,6 +286,10 @@
         arabic: ['القلم الذهبي', 'قلم الجدّ الذهبي لا يكتب إلا العربية الصحيحة. ساعد صقرًا على الإجابة ليكتب القلم من جديد!'],
         art: ['مهرجان الألوان', 'مهرجان الألوان الليلة، والرسّامون يحتاجون مساعدة في الألوان والأشكال. كن مساعد صقر الفنّي!'],
         animals: ['حديقة الليل', 'الحيوانات في حديقة الليل تصدر أصواتًا في الظلام. ساعد صقرًا على معرفة من هو من!'],
+        'math-plus': ['تحدّي المهندس', 'فريق يبني حديقة جديدة في الرياض ويحتاج عقلًا رياضيًا ماهرًا في الكسور والمساحات والمعادلات. هل تساعد صقرًا في حلّ مخطّطاتهم؟'],
+        'science-plus': ['مهمّة المحطة الفضائية', 'دُعي صقر إلى محطة فضائية! لتصعد إليها أجب عن أسئلة فريق العلوم عن الجسم والقوى والطاقة والأرض.'],
+        'english-plus': ['مكتب المحرّر', 'صحيفة المدرسة مليئة بالأخطاء! ساعد صقرًا على تصحيح القواعد وعلامات الترقيم قبل الطباعة.'],
+        'arabic-plus': ['سوق الشعراء', 'في سوق عكاظ لا يُلقي الشعر إلا من يعرف قواعد العربية. ساعد صقرًا على الفوز بمكان على المنصّة!'],
         world: ['حقيبة المستكشف', 'يجهّز صقر حقيبته لرحلة كبيرة حول العالم. أجب عن الأسئلة لتملأ حقيبة المستكشف!']
       },
       plOffer: 'جديد هنا؟ قم باختبار بداية مدته دقيقتان ليعرف صقر من أين تبدأ في كل مادة.', plStart: '🎯 اختبار البداية', plSkip: 'ابدأ من البداية',

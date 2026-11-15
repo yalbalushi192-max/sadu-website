@@ -1360,11 +1360,92 @@
             {"q": {"en": "What is the main message of the story?", "ar": "ما الفكرة الرئيسة للقصة؟"}, "opts": ["keep trying and you can succeed", "gardens are boring", "never listen to grandparents"]}
           ] }
       ]
+    },
+    {
+      id: 'arabic-plus', stickers: ['🔠', '🧱', '⏱️', '👥', '✒️', '🔗', '🙋', '🧶'], name: { en: 'Arabic Grammar and Reading', ar: 'النحو والقراءة' }, age: { en: 'Ages 10 to 14', ar: 'من 10 إلى 14 سنة' }, ages: [10, 14],
+      color: '#B3261E', tint: '#F6D5D2',
+      tip: { en: 'Read an Arabic story or the newspaper together and hunt for a nominal sentence, a verb in the past, and a preposition.', ar: 'اقرآ معًا قصة عربية أو صحيفة، وابحثا عن جملة اسمية وفعل ماضٍ وحرف جر.' },
+      icon: 'M5 4h10l4 4v12H5zM14 4v5h5M8 13h8M8 16h5',
+      lessons: [
+        { id: "ag-1", title: {"en": "Noun, verb and particle", "ar": "الاسم والفعل والحرف"},
+          teach: {"en": "Every Arabic word is a noun (اسم: a person, animal, thing or place), a verb (فعل: an action in a time) or a particle (حرف: a small word that only has meaning with others, like في، إلى، على).", "ar": "الكلمة في العربية ثلاثة أقسام: اسم يدل على إنسان أو حيوان أو شيء أو مكان، وفعل يدل على حدث في زمن، وحرف لا يظهر معناه إلا مع غيره مثل: في، إلى، على."},
+          hint: {"en": "Does it name something, show an action, or only link words?", "ar": "هل تسمّي الكلمة شيئًا، أم تدل على حدث، أم تربط بين الكلمات فقط؟"},
+          questions: [
+            {"q": {"en": "Which word is a verb?", "ar": "أي كلمة فعل؟"}, "opts": ["يكتبُ", "الطالبُ", "الدرسَ"], "show": "يكتبُ الطالبُ الدرسَ"},
+            {"q": {"en": "Which word is a particle?", "ar": "أي كلمة حرف؟"}, "opts": ["إلى", "ذهبتُ", "المدرسةِ"], "show": "ذهبتُ إلى المدرسةِ"},
+            {"q": {"en": "Which word is a noun?", "ar": "أي كلمة اسم؟"}, "opts": ["الصقرُ", "سافرَ", "بعيدًا ثم"], "show": "سافرَ الصقرُ بعيدًا"},
+            {"q": {"en": "What does a verb show?", "ar": "على ماذا يدل الفعل؟"}, "opts": ["حدث في زمن", "اسم مكان", "معنى مع غيره فقط"]}
+          ] },
+        { id: "ag-2", title: {"en": "Nominal and verbal sentences", "ar": "الجملة الاسمية والجملة الفعلية"},
+          teach: {"en": "A nominal sentence (جملة اسمية) starts with a noun: subject (مبتدأ) + predicate (خبر), as in الشمسُ مشرقةٌ. A verbal sentence (جملة فعلية) starts with a verb: verb + doer (فاعل), as in طارَ الصقرُ.", "ar": "الجملة الاسمية تبدأ باسم وتتكوّن من مبتدأ وخبر، مثل: الشمسُ مشرقةٌ. والجملة الفعلية تبدأ بفعل وتتكوّن من فعل وفاعل، مثل: طارَ الصقرُ."},
+          hint: {"en": "Look at the first word: a noun or a verb?", "ar": "انظر إلى الكلمة الأولى: اسم أم فعل؟"},
+          questions: [
+            {"q": {"en": "What kind of sentence is this?", "ar": "ما نوع هذه الجملة؟"}, "opts": ["جملة اسمية", "جملة فعلية", "ليست جملة"], "show": "الشمسُ مشرقةٌ"},
+            {"q": {"en": "What kind of sentence is this?", "ar": "ما نوع هذه الجملة؟"}, "opts": ["جملة فعلية", "جملة اسمية", "ليست جملة"], "show": "طارَ الصقرُ"},
+            {"q": {"en": "Which word is the subject (مبتدأ)?", "ar": "ما المبتدأ في الجملة؟"}, "opts": ["السماءُ", "صافيةٌ", "لا يوجد"], "show": "السماءُ صافيةٌ"},
+            {"q": {"en": "Which word is the doer (فاعل)?", "ar": "ما الفاعل في الجملة؟"}, "opts": ["عليٌّ", "كتبَ", "الرسالةَ"], "show": "كتبَ عليٌّ الرسالةَ"}
+          ] },
+        { id: "ag-3", title: {"en": "Past, present and command verbs", "ar": "الماضي والمضارع والأمر"},
+          teach: {"en": "The past verb (الماضي) tells what happened: لعبَ. The present verb (المضارع) tells what is happening or happens: يلعبُ. The command (الأمر) asks someone to do something: العبْ.", "ar": "الفعل الماضي يدل على حدث مضى: لعبَ. والمضارع يدل على حدث يحدث الآن أو دائمًا: يلعبُ. والأمر يطلب فعل شيء: العبْ."},
+          hint: {"en": "Did it already happen, is it happening, or is someone being asked?", "ar": "هل حدث وانتهى، أم يحدث الآن، أم هو طلب؟"},
+          questions: [
+            {"q": {"en": "Which verb is in the past?", "ar": "أي فعل ماضٍ؟"}, "opts": ["لعبَ", "يلعبُ", "العبْ"]},
+            {"q": {"en": "What is the command form of كتبَ?", "ar": "ما فعل الأمر من «كتبَ»؟"}, "opts": ["اكتبْ", "يكتبُ", "كاتب"]},
+            {"q": {"en": "What tense is this verb?", "ar": "ما زمن هذا الفعل؟"}, "opts": ["مضارع", "ماضٍ", "أمر"], "show": "يقرأُ"},
+            {"q": {"en": "Which sentence has a command verb?", "ar": "أي جملة فيها فعل أمر؟"}, "opts": ["ادرسْ جيدًا", "درسَ أحمدُ", "يدرسُ أحمدُ"]}
+          ] },
+        { id: "ag-4", title: {"en": "Singular, dual and plural", "ar": "المفرد والمثنى والجمع"},
+          teach: {"en": "Singular is one: كتاب. Dual is two, adding ان or ين: كتابان. Plural is three or more: sound masculine (معلّمون), sound feminine (طالبات), or broken plural (أقلام).", "ar": "المفرد يدل على واحد: كتاب. والمثنى على اثنين بزيادة ان أو ين: كتابان. والجمع على ثلاثة فأكثر: جمع مذكر سالم (معلّمون)، وجمع مؤنث سالم (طالبات)، وجمع تكسير (أقلام)."},
+          hint: {"en": "How many? And does the word keep its shape or change it?", "ar": "كم العدد؟ وهل تبقى الكلمة على صورتها أم تتغيّر؟"},
+          questions: [
+            {"q": {"en": "What is the dual of this word?", "ar": "ما مثنى هذه الكلمة؟"}, "opts": ["كتابان", "كُتب", "كتابات"], "show": "كتاب"},
+            {"q": {"en": "What is the sound masculine plural of this word?", "ar": "ما جمع المذكر السالم لهذه الكلمة؟"}, "opts": ["معلّمون", "معلّمات", "معلّمان"], "show": "معلّم"},
+            {"q": {"en": "What is the plural of this word?", "ar": "ما جمع هذه الكلمة؟"}, "opts": ["طالبات", "طالبون", "طالبتان"], "show": "طالبة"},
+            {"q": {"en": "What kind of plural is this?", "ar": "ما نوع هذا الجمع؟"}, "opts": ["جمع تكسير", "جمع مذكر سالم", "مثنى"], "show": "أقلام"}
+          ] },
+        { id: "ag-5", title: {"en": "Case endings", "ar": "علامات الإعراب"},
+          teach: {"en": "The ending of a singular noun shows its job in the sentence. Ḍamma (ـُ) for raf' (the subject or doer), fatḥa (ـَ) for naṣb (the object), and kasra (ـِ) for jarr (after a preposition).", "ar": "تدل حركة آخر الاسم المفرد على موقعه في الجملة: الضمة علامة الرفع (للمبتدأ والفاعل)، والفتحة علامة النصب (للمفعول به)، والكسرة علامة الجر (بعد حرف الجر)."},
+          hint: {"en": "Raf' → ḍamma, naṣb → fatḥa, jarr → kasra.", "ar": "الرفع بالضمة، والنصب بالفتحة، والجر بالكسرة."},
+          questions: [
+            {"q": {"en": "What is the sign of raf' for a singular noun?", "ar": "ما علامة رفع الاسم المفرد؟"}, "opts": ["الضمة", "الفتحة", "الكسرة"]},
+            {"q": {"en": "What is the sign of naṣb for a singular noun?", "ar": "ما علامة نصب الاسم المفرد؟"}, "opts": ["الفتحة", "الضمة", "السكون"]},
+            {"q": {"en": "What is the sign of jarr for a singular noun?", "ar": "ما علامة جرّ الاسم المفرد؟"}, "opts": ["الكسرة", "الضمة", "الفتحة"]},
+            {"q": {"en": "In this sentence, the word الماءَ is…", "ar": "في هذه الجملة، كلمة «الماءَ»…"}, "opts": ["منصوبة بالفتحة", "مرفوعة بالضمة", "مجرورة بالكسرة"], "show": "شربتُ الماءَ"}
+          ] },
+        { id: "ag-6", title: {"en": "Prepositions", "ar": "حروف الجر"},
+          teach: {"en": "Prepositions (حروف الجر) like من، إلى، عن، على، في and الباء link words together. The noun after a preposition is majrūr (مجرور) and usually ends in a kasra: ذهبتُ إلى السوقِ.", "ar": "حروف الجر مثل: من، إلى، عن، على، في، والباء، تربط بين الكلمات. والاسم الذي يأتي بعد حرف الجر يكون مجرورًا، وعلامته غالبًا الكسرة: ذهبتُ إلى السوقِ."},
+          hint: {"en": "Find the small linking word, then the noun right after it.", "ar": "ابحث عن كلمة الربط الصغيرة، ثم الاسم الذي بعدها مباشرة."},
+          questions: [
+            {"q": {"en": "Which word is a preposition?", "ar": "أي كلمة حرف جر؟"}, "opts": ["على", "جلستُ", "الكرسيِّ"], "show": "جلستُ على الكرسيِّ"},
+            {"q": {"en": "Which word is majrūr (after the preposition)?", "ar": "ما الاسم المجرور؟"}, "opts": ["السوقِ", "ذهبتُ", "إلى"], "show": "ذهبتُ إلى السوقِ"},
+            {"q": {"en": "The noun after a preposition is…", "ar": "الاسم بعد حرف الجر يكون…"}, "opts": ["مجرورًا", "مرفوعًا", "فعلًا"]},
+            {"q": {"en": "Choose the preposition that fits.", "ar": "اختر حرف الجر المناسب."}, "opts": ["إلى", "لم", "هل"], "show": "سافرتُ ___ جدّة"}
+          ] },
+        { id: "ag-7", title: {"en": "Pronouns", "ar": "الضمائر"},
+          teach: {"en": "Separate pronouns (الضمائر المنفصلة): أنا (I), نحن (we), أنتَ/أنتِ (you), هو (he), هي (she), هما (they two), هم (they, masculine), هنّ (they, feminine).", "ar": "الضمائر المنفصلة: أنا، نحن، أنتَ، أنتِ، أنتما، أنتم، أنتنّ، هو، هي، هما، هم، هنّ. يحلّ الضمير محل الاسم فلا نكرّره."},
+          hint: {"en": "Who are we talking about: one, two or more? Male or female?", "ar": "عمّن نتحدّث: واحد أم اثنان أم أكثر؟ مذكر أم مؤنث؟"},
+          questions: [
+            {"q": {"en": "Which pronoun fits this name?", "ar": "ما الضمير المناسب لهذا الاسم؟"}, "opts": ["هو", "هي", "هم"], "show": "محمد"},
+            {"q": {"en": "Which pronoun fits?", "ar": "ما الضمير المناسب؟"}, "opts": ["هما", "هو", "أنا"], "show": "فاطمة وسارة"},
+            {"q": {"en": "Which pronoun fits?", "ar": "ما الضمير المناسب؟"}, "opts": ["هم", "هي", "نحن"], "show": "الطلابُ"},
+            {"q": {"en": "Complete with a pronoun.", "ar": "أكمل بالضمير المناسب."}, "opts": ["نحن", "هو", "هي"], "show": "___ نحبُّ وطننا"}
+          ] },
+        { id: "ag-8", title: {"en": "Reading: Souq Al-Zal", "ar": "القراءة: سوق الزلّ"},
+          teach: {"en": "Read the passage carefully (in Arabic): \"في صباحٍ مشمسٍ زارَ فيصلٌ مع جدّه سوقَ الزلّ في الرياض. رأى السجاجيدَ الملوّنة والبُسُطَ المنسوجة بنقوشِ السدو، واشترى جدُّه دلّةَ قهوةٍ نحاسية. قال الجدّ: هذه النقوش يصنعها النسّاجون بأيديهم منذ زمنٍ بعيد، وهي جزءٌ من تراثنا. ابتسم فيصل وقرّر أن يتعلّم نقشةً من نقوش السدو.\"", "ar": "اقرأ النص بعناية: في صباحٍ مشمسٍ زارَ فيصلٌ مع جدّه سوقَ الزلّ في الرياض. رأى السجاجيدَ الملوّنة والبُسُطَ المنسوجة بنقوشِ السدو، واشترى جدُّه دلّةَ قهوةٍ نحاسية. قال الجدّ: هذه النقوش يصنعها النسّاجون بأيديهم منذ زمنٍ بعيد، وهي جزءٌ من تراثنا. ابتسم فيصل وقرّر أن يتعلّم نقشةً من نقوش السدو."},
+          hint: {"en": "Read the passage again and find the sentence with the answer.", "ar": "اقرأ النص مرة أخرى وابحث عن الجملة التي فيها الجواب."},
+          questions: [
+            {"q": {"en": "Where did Faisal go?", "ar": "إلى أين ذهب فيصل؟"}, "opts": ["سوق الزلّ في الرياض", "شاطئ جدة", "مدرسته"]},
+            {"q": {"en": "What did the grandfather buy?", "ar": "ماذا اشترى الجدّ؟"}, "opts": ["دلّة قهوة نحاسية", "سجادة حمراء", "كتابًا"]},
+            {"q": {"en": "Who makes the Sadu patterns?", "ar": "من يصنع نقوش السدو؟"}, "opts": ["النسّاجون بأيديهم", "آلات المصانع فقط", "الأطفال في المدرسة"]},
+            {"q": {"en": "What did Faisal decide?", "ar": "ماذا قرّر فيصل؟"}, "opts": ["أن يتعلّم نقشة من نقوش السدو", "أن يبيع السجاجيد", "ألّا يعود إلى السوق"]}
+          ] }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'ag-1': 1, 'ag-2': 1, 'ag-3': 1, 'ag-4': 2, 'ag-5': 2, 'ag-6': 2, 'ag-7': 3, 'ag-8': 3,
     'eg-1': 1, 'eg-2': 1, 'eg-3': 1, 'eg-4': 2, 'eg-5': 2, 'eg-6': 2, 'eg-7': 3, 'eg-8': 3,
     'sx-1': 1, 'sx-2': 1, 'sx-3': 1, 'sx-4': 2, 'sx-5': 2, 'sx-6': 2, 'sx-7': 3, 'sx-8': 3,
     'mp-1': 1, 'mp-2': 1, 'mp-3': 1, 'mp-4': 2, 'mp-5': 2, 'mp-6': 2, 'mp-7': 3, 'mp-8': 3,
