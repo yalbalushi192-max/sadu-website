@@ -227,7 +227,7 @@
       ]
     },
     {
-      id: 'math', stickers: ['🧮', '🔢', '🎯', '⚖️', '🧩', '👯', '🔟', '🍀', '🍰', '🧺'], name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'math', stickers: ['🧮', '🔢', '🎯', '⚖️', '🧩', '👯', '🔟', '🍀', '🍰', '🦘', '🍕', '🔷', '🕒', '🛒', '🧺'], name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#FFC93C', tint: '#FFE9A8',
       tip: { en: 'Count and share things at home: dates at snack time, steps on the stairs. Ask: how many more to make 10?', ar: 'عُدّوا الأشياء في البيت وتقاسموها: التمر وقت الوجبة، ودرجات السلّم. واسأل: كم نحتاج لنصل إلى 10؟' },
       icon: 'M6 4v6M3 7h6M15 7h6M4 15l5 5M9 15l-5 5M15 16h6M15 20h6',
@@ -271,11 +271,37 @@
           make: four(function () { var b = 2 + rand(4), a = 1 + rand(6); return sum((a * b) + ' ÷ ' + b, a, { en: 'Which number times ' + b + ' makes ' + (a * b) + '?', ar: 'أي عدد إذا ضربناه في ' + b + ' يعطي ' + (a * b) + '؟' }); }) },
         { id: 'math-6', title: { en: 'Count the dates', ar: 'عُدّ التمر' },
           teach: { en: 'Counting means saying one number for each thing. Touch each date as you count it: 1, 2, 3… The last number you say tells you how many there are.', ar: 'العدّ أن نقول عددًا واحدًا لكل شيء. المس كل تمرة وأنت تعدّها: 1، 2، 3… وآخر عدد تقوله يخبرك كم تمرة عندك.' },
-          make: countDates }
+          make: countDates },
+        { id: 'math-11', title: { en: 'Counting in 2s, 5s and 10s', ar: 'العدّ بالقفز 2 و5 و10' },
+          teach: { en: 'Skip counting means jumping by the same number each time: 2, 4, 6, 8… or 5, 10, 15, 20… or 10, 20, 30, 40…', ar: 'العدّ بالقفز يعني أن نقفز بالعدد نفسه كل مرة: 2، 4، 6، 8… أو 5، 10، 15، 20… أو 10، 20، 30، 40…' },
+          make: four(function () { var st = [2, 5, 10][rand(3)], k = 1 + rand(5), seq = [k * st, (k + 1) * st, (k + 2) * st];
+            var q = sum(seq.join(', ') + ', ?', (k + 3) * st, { en: 'Add ' + st + ' each time.', ar: 'أضف ' + st + ' في كل مرة.' }); q.q = { en: 'What comes next?', ar: 'ما العدد التالي؟' }; return q; }) },
+        { id: 'math-12', title: { en: 'Halves', ar: 'النصف' },
+          teach: { en: 'Half means splitting into two equal parts. Half of 8 is 4, because 4 + 4 = 8.', ar: 'النصف يعني أن نقسم إلى جزأين متساويين. نصف 8 هو 4، لأن 4 + 4 = 8.' },
+          make: four(function () { var h = 1 + rand(10), q = sum(String(h * 2), h, { en: 'Which number added to itself makes ' + (h * 2) + '?', ar: 'أي عدد إذا جمعناه مع نفسه يعطي ' + (h * 2) + '؟' }); q.q = { en: 'What is half of this number?', ar: 'ما نصف هذا العدد؟' }; return q; }) },
+        { id: 'math-13', title: { en: 'Shapes and sides', ar: 'الأشكال وأضلاعها' },
+          teach: { en: 'A triangle has 3 sides, a square has 4, a pentagon has 5 and a hexagon has 6. Count the straight sides!', ar: 'للمثلث 3 أضلاع، وللمربع 4، وللمخمّس 5، وللمسدّس 6. عُدّ الأضلاع المستقيمة!' },
+          hint: { en: 'Touch each side as you count it.', ar: 'المس كل ضلع وأنت تعدّه.' },
+          questions: [
+            { q: { en: 'How many sides does this shape have?', ar: 'كم ضلعًا لهذا الشكل؟' }, show: '▲', opts: ['3', '4', '5'] },
+            { q: { en: 'How many sides does this shape have?', ar: 'كم ضلعًا لهذا الشكل؟' }, show: '■', opts: ['4', '3', '6'] },
+            { q: { en: 'How many sides does this shape have?', ar: 'كم ضلعًا لهذا الشكل؟' }, show: '⬟', opts: ['5', '4', '6'] },
+            { q: { en: 'How many sides does this shape have?', ar: 'كم ضلعًا لهذا الشكل؟' }, show: '⬢', opts: ['6', '5', '8'] }
+          ] },
+        { id: 'math-14', title: { en: 'Telling the time', ar: 'قراءة الساعة' },
+          teach: { en: 'On a clock, the short hand shows the hour. When the long hand points straight up to 12, it is exactly that hour: 3:00 means three o\'clock.', ar: 'في الساعة يشير العقرب القصير إلى الساعة. وعندما يشير العقرب الطويل إلى 12 تمامًا تكون الساعة بالضبط: 3:00 تعني الساعة الثالثة.' },
+          make: four(function () { var h = 1 + rand(12), opts = [h + ':00'];
+            while (opts.length < 3) { var x = 1 + rand(12); if (opts.indexOf(x + ':00') === -1) opts.push(x + ':00'); }
+            return { q: { en: 'What time does the clock show?', ar: 'كم الساعة؟' }, show: String.fromCodePoint(0x1F54F + h), opts: opts,
+              hint: { en: 'Look where the short hand points.', ar: 'انظر إلى أين يشير العقرب القصير.' } }; }) },
+        { id: 'math-15', title: { en: 'Shopping sums', ar: 'حساب التسوّق' },
+          teach: { en: 'At the souq we add and take away. If you have 15 coins and a toy costs 6, you have 15 − 6 = 9 coins left.', ar: 'في السوق نجمع ونطرح. إذا كان معك 15 قطعة نقدية وثمن اللعبة 6، يبقى معك 15 − 6 = 9.' },
+          make: four(function () { var a = 11 + rand(10), b = 2 + rand(8), q = sum(a + ' − ' + b, a - b, { en: 'Start at ' + a + ' and count back ' + b + '.', ar: 'ابدأ من ' + a + ' وعُدّ ' + b + ' للخلف.' });
+            q.q = { en: 'You have ' + a + ' coins and buy a toy that costs ' + b + '. How many coins are left?', ar: 'معك ' + a + ' قطعة نقدية واشتريت لعبة ثمنها ' + b + '. كم بقي معك؟' }; return q; }) }
       ]
     },
     {
-      id: 'science', stickers: ['🌱', '🐪', '🌗', '🧊', '🔬', '🐞', '🌦️', '🥕', '🛟', '🧲'], name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'science', stickers: ['🌱', '🐪', '🌗', '🧊', '🔬', '🐞', '🌦️', '🥕', '🛟', '🧲', '🦴', '🔦', '🐛', '♻️', '🌍'], name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#2ED3A6', tint: '#B9F3E2',
       tip: { en: 'Ask why questions together: why does ice melt, why do we see the Moon at night? Let your child guess first.', ar: 'اطرحا معًا أسئلة «لماذا»: لماذا يذوب الثلج؟ لماذا نرى القمر ليلًا؟ دع طفلك يخمّن أولًا.' },
       icon: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M7.5 15h9',
@@ -360,6 +386,51 @@
             { q: { en: 'What are the two ends of a magnet called?', ar: 'ماذا يسمّى طرفا المغناطيس؟' }, opts: [{ en: 'poles', ar: 'القطبان' }, { en: 'wheels', ar: 'العجلتان' }, { en: 'roots', ar: 'الجذران' }] },
             { q: { en: 'You push two north poles together. What happens?', ar: 'قرّبتَ قطبين شماليين. ماذا يحدث؟' }, opts: [{ en: 'They push apart', ar: 'يتنافران' }, { en: 'They stick', ar: 'يلتصقان' }, { en: 'They disappear', ar: 'يختفيان' }] },
             { q: { en: 'Which of these is NOT pulled by a magnet?', ar: 'أي من هذه لا يجذبه المغناطيس؟' }, opts: [{ en: 'paper', ar: 'الورق' }, { en: 'a nail', ar: 'مسمار' }, { en: 'a steel pin', ar: 'دبوس فولاذي' }] }
+          ] },
+        { id: 'science-11', title: { en: 'Bones and muscles', ar: 'العظام والعضلات' },
+          teach: { en: 'Your skeleton is made of bones. It holds your body up and protects the parts inside, like the skull around your brain. Muscles pull on bones to help you move.', ar: 'الهيكل العظمي مكوّن من العظام. يسند جسمك ويحمي الأعضاء الداخلية، مثل الجمجمة التي تحمي الدماغ. والعضلات تشدّ العظام لتساعدك على الحركة.' },
+          hint: { en: 'Think about what is hard inside you, and what helps you move.', ar: 'فكّر فيما هو صلب داخلك، وفيما يساعدك على الحركة.' },
+          questions: [
+            { q: { en: 'What holds your body up?', ar: 'ما الذي يسند جسمك؟' }, opts: [{ en: 'the skeleton', ar: 'الهيكل العظمي' }, { en: 'the hair', ar: 'الشعر' }, { en: 'the nails', ar: 'الأظافر' }] },
+            { q: { en: 'What pulls on bones to help you move?', ar: 'ما الذي يشدّ العظام لتتحرّك؟' }, opts: [{ en: 'muscles', ar: 'العضلات' }, { en: 'teeth', ar: 'الأسنان' }, { en: 'eyelashes', ar: 'الرموش' }] },
+            { q: { en: 'What protects your brain?', ar: 'ما الذي يحمي دماغك؟' }, opts: [{ en: 'the skull', ar: 'الجمجمة' }, { en: 'the knee', ar: 'الركبة' }, { en: 'the elbow', ar: 'المرفق' }] },
+            { q: { en: 'Where is your heart?', ar: 'أين يوجد قلبك؟' }, opts: [{ en: 'in your chest', ar: 'في صدرك' }, { en: 'in your foot', ar: 'في قدمك' }, { en: 'in your hand', ar: 'في يدك' }] }
+          ] },
+        { id: 'science-12', title: { en: 'Light and shadow', ar: 'الضوء والظل' },
+          teach: { en: 'Light comes from things like the Sun, a lamp or a torch. When something blocks the light, it makes a dark shape behind it: a shadow. Shadows are long in the morning and evening and short at midday.', ar: 'يأتي الضوء من أشياء مثل الشمس والمصباح والكشّاف. وعندما يحجب شيء الضوء يتكوّن خلفه شكل داكن هو الظل. والظلال طويلة في الصباح والمساء وقصيرة عند الظهر.' },
+          hint: { en: 'Does it block the light, or let the light through?', ar: 'هل يحجب الضوء، أم يسمح له بالمرور؟' },
+          questions: [
+            { q: { en: 'What makes a shadow?', ar: 'ما الذي يصنع الظل؟' }, opts: [{ en: 'something blocking the light', ar: 'شيء يحجب الضوء' }, { en: 'the wind', ar: 'الريح' }, { en: 'a loud sound', ar: 'صوت عالٍ' }] },
+            { q: { en: 'Which of these gives light?', ar: 'أي من هذه يعطي ضوءًا؟' }, opts: [{ en: 'a torch', ar: 'الكشّاف' }, { en: 'a stone', ar: 'الحجر' }, { en: 'a book', ar: 'الكتاب' }] },
+            { q: { en: 'Which one makes the darkest shadow?', ar: 'أيّها يصنع أغمق ظل؟' }, opts: [{ en: 'a wooden door', ar: 'باب خشبي' }, { en: 'a clear glass window', ar: 'نافذة زجاجية شفافة' }, { en: 'clean water', ar: 'ماء صافٍ' }] },
+            { q: { en: 'When is your shadow shortest?', ar: 'متى يكون ظلّك أقصر؟' }, opts: [{ en: 'at midday', ar: 'عند الظهر' }, { en: 'early morning', ar: 'في الصباح الباكر' }, { en: 'in the evening', ar: 'في المساء' }] }
+          ] },
+        { id: 'science-13', title: { en: 'Life cycles', ar: 'دورة الحياة' },
+          teach: { en: 'Living things grow and change. A frog starts as an egg, becomes a tadpole, then a frog. A butterfly starts as a caterpillar. A chick hatches from an egg. A seed grows into a plant.', ar: 'الكائنات الحية تنمو وتتغيّر. الضفدع يبدأ بيضة، ثم يصير شُرغوفًا، ثم ضفدعًا. والفراشة تبدأ يرقة. والكتكوت يفقس من البيضة. والبذرة تنمو فتصير نبتة.' },
+          hint: { en: 'What does it look like when it is very young?', ar: 'كيف يبدو عندما يكون صغيرًا جدًّا؟' },
+          questions: [
+            { q: { en: 'What does a tadpole grow into?', ar: 'إلامَ يتحوّل الشُّرغوف؟' }, opts: ['🐸', '🐟', '🦋'] },
+            { q: { en: 'What does a caterpillar become?', ar: 'إلامَ تتحوّل اليرقة؟' }, opts: ['🦋', '🐝', '🐞'] },
+            { q: { en: 'What hatches from this egg?', ar: 'ماذا يفقس من هذه البيضة؟' }, show: '🥚', opts: ['🐥', '🐸', '🐛'] },
+            { q: { en: 'What does a seed grow into?', ar: 'إلامَ تنمو البذرة؟' }, opts: ['🌱', '🪨', '🐛'] }
+          ] },
+        { id: 'science-14', title: { en: 'Recycling', ar: 'إعادة التدوير' },
+          teach: { en: 'Recycling means making old things into new ones. Paper, plastic bottles and cans can be recycled. Saving water and switching off lights also helps our planet.', ar: 'إعادة التدوير تعني أن نصنع من الأشياء القديمة أشياء جديدة. يمكن تدوير الورق وزجاجات البلاستيك والعلب المعدنية. وتوفير الماء وإطفاء الأنوار يساعدان كوكبنا أيضًا.' },
+          hint: { en: 'Which choice is kindest to the Earth?', ar: 'أي اختيار هو الألطف بالأرض؟' },
+          questions: [
+            { q: { en: 'Where should an empty plastic bottle go?', ar: 'أين نضع زجاجة البلاستيك الفارغة؟' }, opts: [{ en: 'the recycling bin', ar: 'سلة إعادة التدوير' }, { en: 'the sea', ar: 'البحر' }, { en: 'the sand', ar: 'الرمل' }] },
+            { q: { en: 'Which of these can be recycled?', ar: 'أي من هذه يمكن تدويره؟' }, opts: [{ en: 'paper', ar: 'الورق' }, { en: 'banana peel', ar: 'قشر الموز' }, { en: 'a leaf', ar: 'ورقة شجر' }] },
+            { q: { en: 'You leave a room. What should you do?', ar: 'خرجت من الغرفة. ماذا تفعل؟' }, opts: [{ en: 'switch off the light', ar: 'أطفئ النور' }, { en: 'open the window', ar: 'افتح النافذة' }, { en: 'turn on the TV', ar: 'شغّل التلفاز' }] },
+            { q: { en: 'You are brushing your teeth. What saves water?', ar: 'تنظّف أسنانك. ما الذي يوفّر الماء؟' }, opts: [{ en: 'turning off the tap', ar: 'إغلاق الصنبور' }, { en: 'leaving the tap on', ar: 'ترك الصنبور مفتوحًا' }, { en: 'a long shower', ar: 'استحمام طويل' }] }
+          ] },
+        { id: 'science-15', title: { en: 'Land and water', ar: 'اليابسة والماء' },
+          teach: { en: 'Our Earth has land and water. Most of the Earth is covered by water, mostly in big oceans. The Arabian Gulf is a sea next to our land. Deserts, mountains and plains are kinds of land.', ar: 'على الأرض يابسة وماء. ومعظم سطح الأرض مغطّى بالماء، وأغلبه في المحيطات الكبيرة. والخليج العربي بحر بجوار أرضنا. والصحارى والجبال والسهول أنواع من اليابسة.' },
+          hint: { en: 'Picture a globe: what colour is most of it?', ar: 'تخيّل مجسّم الكرة الأرضية: ما اللون الذي يغطّي معظمه؟' },
+          questions: [
+            { q: { en: 'What covers most of the Earth?', ar: 'ما الذي يغطّي معظم سطح الأرض؟' }, opts: [{ en: 'water', ar: 'الماء' }, { en: 'sand', ar: 'الرمل' }, { en: 'ice cream', ar: 'المثلّجات' }] },
+            { q: { en: 'What is the biggest kind of water?', ar: 'ما أكبر المسطّحات المائية؟' }, opts: [{ en: 'an ocean', ar: 'المحيط' }, { en: 'a pond', ar: 'البركة' }, { en: 'a puddle', ar: 'بِركة المطر الصغيرة' }] },
+            { q: { en: 'Which of these is a kind of land?', ar: 'أي من هذه نوع من اليابسة؟' }, opts: [{ en: 'a desert', ar: 'الصحراء' }, { en: 'a sea', ar: 'البحر' }, { en: 'a river', ar: 'النهر' }] },
+            { q: { en: 'The Arabian Gulf is…', ar: 'الخليج العربي…' }, opts: [{ en: 'a sea', ar: 'بحر' }, { en: 'a mountain', ar: 'جبل' }, { en: 'a desert', ar: 'صحراء' }] }
           ] },
         { id: 'science-6', title: { en: 'Animal match', ar: 'مطابقة الحيوانات' },
           teach: { en: 'Every animal has a home and food that suit it. Camels live in the desert, fish live in the sea and bees live in a hive. Cows eat grass and bees drink from flowers.', ar: 'لكل حيوان بيت وطعام يناسبانه. الجِمال تعيش في الصحراء، والسمك في البحر، والنحل في الخلية. والبقرة تأكل العشب، والنحلة تمتصّ رحيق الأزهار.' },
@@ -665,6 +736,8 @@
     'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3, 'phonics-14': 1, 'phonics-15': 2, 'phonics-16': 2, 'phonics-17': 2, 'phonics-18': 2, 'phonics-19': 3, 'phonics-20': 3,
     'math-1': 1, 'math-2': 1, 'math-6': 1, 'math-4': 2, 'math-5': 2, 'math-7': 2, 'math-8': 2, 'math-3': 3, 'math-9': 3, 'math-10': 3,
     'science-1': 1, 'science-5': 1, 'science-2': 2, 'science-6': 2, 'science-4': 2, 'science-3': 3,
+    'math-11': 1, 'math-13': 1, 'math-12': 2, 'math-14': 2, 'math-15': 3,
+    'science-14': 1, 'science-15': 1, 'science-11': 2, 'science-12': 2, 'science-13': 3,
     'science-7': 1, 'science-8': 1, 'science-9': 2, 'science-10': 3,
     'english-7': 1, 'english-8': 1, 'english-9': 2, 'english-10': 3,
     'english-1': 1, 'english-6': 1, 'english-2': 2, 'english-3': 2, 'english-4': 3, 'english-5': 3,
