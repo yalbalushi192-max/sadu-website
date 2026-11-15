@@ -70,6 +70,12 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navPet: 'My pet', ptTitle: 'My pet', ptPick: 'Choose an egg! Who is inside?', ptKinds: { falcon: 'Falcon', camel: 'Camel', oryx: 'Oryx' },
+      ptTap: 'Tap the egg to help it hatch! (%A more taps)', ptName: 'It hatched! What will you call your baby %K?', ptNameBtn: 'That\'s the name!',
+      ptStages: ['Baby', 'Young', 'Grown up', 'Champion'], ptGrow: 'Finish lessons to help %N grow: %A of %B lessons to the next stage.', ptMax: '%N is a champion! Amazing learning!',
+      ptFeed: 'Feed a date (⭐1)', ptFedAll: '%N is full for today. Come back tomorrow!', ptNoStars: 'Earn stars in lessons to buy treats.', ptPlay: 'Play',
+      ptSay: { hello: 'Hello! I am %N. Let\'s learn together and grow big!', hungry: '%N is hungry. Do you have a date treat?', happy: '%N is happy! Thank you for the treat.', play: '%N loves playing with you!', grew: 'Wow! %N grew up: now %S!' },
+      ptStars: '⭐ %A stars to spend', ptTreats: 'Treats today: %A of 3',
       aiProjects: { colours: '🎨 Colours', words: '💬 Words', numbers: '🌡️ Numbers' },
       awTitle: 'Happy or sad?', awIntro: 'Teach the robot to tell happy sentences from sad ones. Tap a sentence (or write your own), then tap a basket.',
       awHappy: '😊 Happy', awSad: '😢 Sad', awOwn: 'Write your own sentence', awAddTo: 'Put in', awTest: 'Test the robot: type any sentence', awTestBtn: 'What does the robot think?',
@@ -231,6 +237,12 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navPet: 'حيواني', ptTitle: 'حيواني الأليف', ptPick: 'اختر بيضة! من في داخلها؟', ptKinds: { falcon: 'صقر', camel: 'جمل', oryx: 'مها' },
+      ptTap: 'اضغط على البيضة لتساعدها على الفقس! (باقي %A ضغطات)', ptName: 'فقست البيضة! ماذا ستسمّي صغير ال%K؟', ptNameBtn: 'هذا هو الاسم!',
+      ptStages: ['صغير', 'يافع', 'كبير', 'بطل'], ptGrow: 'أكمل الدروس ليكبر %N: %A من %B دروس للمرحلة التالية.', ptMax: '%N صار بطلًا! تعلّم رائع!',
+      ptFeed: 'أطعمه تمرة (⭐1)', ptFedAll: '%N شبعان اليوم. عُد غدًا!', ptNoStars: 'اربح نجومًا في الدروس لتشتري الحلوى.', ptPlay: 'العب',
+      ptSay: { hello: 'مرحبًا! أنا %N. لنتعلّم معًا ونكبر!', hungry: '%N جائع. هل عندك تمرة؟', happy: '%N سعيد! شكرًا على التمرة.', play: '%N يحب اللعب معك!', grew: 'رائع! كبر %N، وهو الآن: %S!' },
+      ptStars: '⭐ %A نجمة للصرف', ptTreats: 'الحلوى اليوم: %A من 3',
       aiProjects: { colours: '🎨 الألوان', words: '💬 الكلمات', numbers: '🌡️ الأرقام' },
       awTitle: 'سعيد أم حزين؟', awIntro: 'علّم الروبوت أن يميّز الجمل السعيدة من الحزينة. اضغط على جملة (أو اكتب جملتك)، ثم اضغط على سلة.',
       awHappy: '😊 سعيد', awSad: '😢 حزين', awOwn: 'اكتب جملتك', awAddTo: 'ضعها في', awTest: 'اختبر الروبوت: اكتب أي جملة', awTestBtn: 'ماذا يظن الروبوت؟',
@@ -458,6 +470,10 @@
     Object.keys(data.stories || {}).forEach(function (k) { n += (data.stories[k] && data.stories[k].stars) || 0; });
     return n;
   }
+  // ---- pet: grows with finished lessons; treats cost stars from the same wallet as Dress up ----
+  var PET_LOOK = { falcon: ['🐣', '🐥', '🦅', '🦅'], camel: ['🐪', '🐪', '🐫', '🐫'], oryx: ['🐐', '🐐', '🦌', '🦌'] };
+  var PET_STEPS = [0, 5, 15, 35];
+  function petStage(data) { var n = Object.keys(data.lessons || {}).length, st = 0; PET_STEPS.forEach(function (x, i) { if (n >= x) st = i; }); return { stage: st, done: n }; }
   var outfitShown = null;
   function applyOutfit(data) {
     var o = data.outfit || {}, key = JSON.stringify(o);
@@ -1105,6 +1121,7 @@
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isDisc: s.view === 'discover', discOn: (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') ? 'page' : 'false', goDisc: function () { self.go('discover'); },
         isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
+        isPet: s.view === 'pet', petOn: s.view === 'pet' ? 'page' : 'false', goPet: function () { self.go('pet'); },
         isWard: s.view === 'ward', wardOn: s.view === 'ward' ? 'page' : 'false', goWard: function () { self.go('ward'); },
         isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
         isVibeSet: s.view === 'vibeset', isRest: s.view === 'rest', isRestMore: s.view === 'restmore',
@@ -1477,6 +1494,54 @@
               close: function () { self.go('discover'); }
             };
           }
+        }
+      }
+
+      // ---- my pet ----
+      if (s.view === 'pet') {
+        var pet = data.pet || null, pv = s.pv || {}, today = dayKey(new Date());
+        var wallet2 = Math.max(0, starsEarned(data) - (data.spent || 0));
+        var savePet = function (patch, pvx) { var d = Object.assign({}, self.state.data, patch); save(d); self.setState({ data: d, pv: Object.assign({}, self.state.pv || {}, pvx || {}) }); };
+        out.pt = { none: !pet && !pv.egg, cracking: !pet && !!pv.egg && (pv.taps || 0) < 5, naming: !pet && !!pv.egg && (pv.taps || 0) >= 5, has: !!pet };
+        if (!pet) {
+          out.pt.eggs = ['falcon', 'camel', 'oryx'].map(function (k) { return { kind: k, label: T.ptKinds[k], cls: 'pt-egg pt-egg-' + k, pick: function () { sfx('tap'); self.setState({ pv: { egg: k, taps: 0 } }); } }; });
+          if (pv.egg) {
+            out.pt.eggCls = 'pt-egg big pt-egg-' + pv.egg + ' crack' + Math.min(4, pv.taps || 0);
+            out.pt.tapText = fill(T.ptTap, { A: 5 - (pv.taps || 0) });
+            out.pt.tap = function () { var n = (self.state.pv.taps || 0) + 1; sfx(n >= 5 ? 'done' : 'pop'); if (n >= 5) setTimeout(function () { burst(document.querySelector('.pt-stage'), 120); }, 50); self.setState({ pv: Object.assign({}, self.state.pv, { taps: n }) }); };
+            out.pt.baby = PET_LOOK[pv.egg][0];
+            out.pt.nameAsk = fill(T.ptName, { K: T.ptKinds[pv.egg] });
+            out.pt.saveName = function () {
+              var nm = ((document.getElementById('pet-name') || {}).value || '').trim().slice(0, 20) || T.ptKinds[pv.egg];
+              savePet({ pet: { kind: pv.egg, name: nm, born: Date.now(), fed: {}, stage: petStage(self.state.data).stage } }, { say: 'hello' });
+            };
+          }
+        } else {
+          var ps = petStage(data), next = PET_STEPS[ps.stage + 1], fedToday = (pet.fed || {})[today] || 0;
+          if (ps.stage > (pet.stage || 0)) {
+            var dg = Object.assign({}, data, { pet: Object.assign({}, pet, { stage: ps.stage }) }); save(dg); self.state.data = dg; data = dg; pet = dg.pet;
+            setTimeout(function () { sfx('done'); burst(document.querySelector('.pt-pet'), 160); }, 100);
+            pv = Object.assign({}, pv, { say: 'grew' }); self.state.pv = pv;
+          }
+          var mood = pv.say || (fedToday ? 'happy' : 'hungry');
+          out.pt.name = pet.name; out.pt.look = PET_LOOK[pet.kind][ps.stage]; out.pt.stage = T.ptStages[ps.stage];
+          out.pt.petCls = 'pt-pet stage' + ps.stage + (mood === 'hungry' ? ' hungry' : '') + (pv.bounce ? ' bounce' + (pv.bounce % 2) : '');
+          out.pt.crown = ps.stage === 3;
+          out.pt.say = fill(T.ptSay[mood], { N: pet.name, S: T.ptStages[ps.stage] });
+          out.pt.grow = next != null ? fill(T.ptGrow, { N: pet.name, A: ps.done - PET_STEPS[ps.stage], B: next - PET_STEPS[ps.stage] }) : fill(T.ptMax, { N: pet.name });
+          out.pt.growPct = next != null ? Math.round((ps.done - PET_STEPS[ps.stage]) / (next - PET_STEPS[ps.stage]) * 100) + '%' : '100%';
+          out.pt.stars = fill(T.ptStars, { A: wallet2 }); out.pt.treats = fill(T.ptTreats, { A: fedToday });
+          out.pt.canFeed = fedToday < 3 && wallet2 >= 1; out.pt.cantFeed = out.pt.canFeed ? 'false' : 'true';
+          out.pt.feedNote = fedToday >= 3 ? fill(T.ptFedAll, { N: pet.name }) : wallet2 < 1 ? T.ptNoStars : '';
+          out.pt.feed = function () {
+            if (!(fedToday < 3 && wallet2 >= 1)) return;
+            var f = Object.assign({}, pet.fed || {}); f[today] = fedToday + 1;
+            Object.keys(f).forEach(function (k) { if (k < dayKey(new Date(Date.now() - 30 * 864e5))) delete f[k]; });
+            sfx('pop'); setTimeout(function () { burst(document.querySelector('.pt-pet'), 40); }, 30);
+            savePet({ pet: Object.assign({}, pet, { fed: f }), spent: (data.spent || 0) + 1 }, { say: 'happy', bounce: (pv.bounce || 0) + 1 });
+          };
+          out.pt.play = function () { sfx('tap'); var b = (self.state.pv && self.state.pv.bounce || 0) + 1; self.setState({ pv: Object.assign({}, self.state.pv || {}, { say: 'play', bounce: b, hearts: b }) }); };
+          out.pt.hearts = pv.hearts ? '💗 💖 💗' : '';
         }
       }
 

@@ -88,6 +88,7 @@
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
 <button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
+<button type="button" onclick="{{ goPet }}" aria-current="{{ petOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3c-4 0-7 5-7 10a7 7 0 0 0 14 0c0-5-3-10-7-10z"/><path d="M9 13l2 2 2-2 2 2"/></svg><span>{{ t.navPet }}</span></button>
 <button type="button" onclick="{{ goDisc }}" aria-current="{{ discOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>{{ t.navDisc }}</span></button>
 <button type="button" onclick="{{ goWard }}" aria-current="{{ wardOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6a2 2 0 1 1 2 2c-1 0-2 .8-2 2l9 6c.8.6.4 2-.6 2H3.6c-1 0-1.4-1.4-.6-2l9-6"/></svg><span>{{ t.navWard }}</span></button>
 <button type="button" onclick="{{ goVibe }}" aria-current="{{ vibeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 14h.01"/></svg><span>{{ t.navVibe }}</span></button>
@@ -390,6 +391,29 @@
 <div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
 </div>
 </sc-if>
+</section>
+</sc-if>
+
+<!-- MY PET: hatch, name, feed and play -->
+<sc-if value="{{ isPet }}">
+<section class="page pt-page">
+<header class="page-head"><h1 class="h1">🥚 {{ t.ptTitle }}</h1></header>
+<div class="card pt-stage">
+<sc-if value="{{ pt.none }}"><p class="lead">{{ t.ptPick }}</p><div class="pt-eggs"><sc-for list="{{ pt.eggs }}" as="e"><button type="button" class="pt-egg-btn" onclick="{{ e.pick }}"><span class="{{ e.cls }}" aria-hidden="true"></span><b>{{ e.label }}</b></button></sc-for></div></sc-if>
+<sc-if value="{{ pt.cracking }}"><button type="button" class="pt-egg-btn" onclick="{{ pt.tap }}" aria-label="{{ pt.tapText }}"><span class="{{ pt.eggCls }}" aria-hidden="true"></span></button><p class="lead" role="status">{{ pt.tapText }}</p></sc-if>
+<sc-if value="{{ pt.naming }}"><div class="pt-pet stage0" aria-hidden="true">{{ pt.baby }}</div><p class="lead">{{ pt.nameAsk }}</p>
+<label class="ed-field pt-namebox"><input id="pet-name" class="input" maxlength="20" dir="auto" autocomplete="off"></label>
+<div class="actions center"><button type="button" class="btn primary lg" onclick="{{ pt.saveName }}">{{ t.ptNameBtn }}</button></div></sc-if>
+<sc-if value="{{ pt.has }}">
+<h2 class="h2 pt-name">{{ pt.name }} <span class="tag">{{ pt.stage }}</span></h2>
+<button type="button" class="pt-pet-btn" onclick="{{ pt.play }}" aria-label="{{ t.ptPlay }}"><sc-if value="{{ pt.crown }}"><span class="pt-crown" aria-hidden="true">👑</span></sc-if><span class="{{ pt.petCls }}" aria-hidden="true">{{ pt.look }}</span><span class="pt-hearts" aria-hidden="true">{{ pt.hearts }}</span></button>
+<div class="bubble pt-bubble"><p role="status">{{ pt.say }}</p></div>
+<div class="pt-grow"><span class="small">{{ pt.grow }}</span><div class="vd-bar"><span class="pt-bar" style="width: {{ pt.growPct }}"></span></div></div>
+<div class="pt-wallet small muted"><span>{{ pt.stars }}</span><span>{{ pt.treats }}</span></div>
+<div class="actions center"><button type="button" class="btn primary lg" onclick="{{ pt.feed }}" aria-disabled="{{ pt.cantFeed }}">🟤 {{ t.ptFeed }}</button><button type="button" class="btn secondary lg" onclick="{{ pt.play }}">💗 {{ t.ptPlay }}</button></div>
+<sc-if value="{{ pt.feedNote }}"><p class="small muted">{{ pt.feedNote }}</p></sc-if>
+</sc-if>
+</div>
 </section>
 </sc-if>
 
