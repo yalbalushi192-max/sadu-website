@@ -383,6 +383,21 @@
 </section>
 </sc-if>
 
+<!-- GATE: grown-ups only -->
+<sc-if value="{{ isGate }}">
+<section class="page gate-page">
+<div class="card gate-card">
+<span class="gate-lock" aria-hidden="true">🔒</span>
+<h1 class="h2">{{ t.gateTitle }}</h1>
+<p class="muted">{{ t.gateText }}</p>
+<label class="gate-q" for="gate-answer">{{ gate.q }}</label>
+<input id="gate-answer" class="input gate-input" type="text" inputmode="numeric" autocomplete="off" dir="ltr" onkeydown="{{ gate.key }}">
+<sc-if value="{{ gate.wrong }}"><p class="confirm" role="alert">{{ t.gateWrong }}</p></sc-if>
+<div class="actions center"><button type="button" class="btn primary lg" onclick="{{ gate.check }}">{{ t.gateGo }}</button><button type="button" class="btn ghost lg" onclick="{{ gate.back }}">{{ t.gateBack }}</button></div>
+</div>
+</section>
+</sc-if>
+
 <!-- CERTIFICATE: printable, for a finished level or course -->
 <sc-if value="{{ isCert }}">
 <section class="page cert-page" style="--c: {{ cert.color }}; --t: {{ cert.tint }}">

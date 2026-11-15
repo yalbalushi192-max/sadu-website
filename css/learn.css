@@ -661,3 +661,10 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 @media (prefers-reduced-motion: reduce){.blend-tile,.blend-word{animation:none}}
 .py-editor{width:100%;box-sizing:border-box;min-height:150px;padding:12px 14px;border-radius:var(--r-md);border:2px solid var(--ink);background:#1E1B3A;color:#F4E9D3;font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:18px;line-height:1.6;tab-size:2;resize:vertical}
 .py-help{font-family:ui-monospace,Consolas,monospace;font-size:13px}
+
+/* ---------- grown-ups gate ---------- */
+.gate-page{max-width:520px;padding-top:12vh}
+.gate-card{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.gate-lock{font-size:46px}
+.gate-q{font-family:'Fredoka','Baloo Bhaijaan 2',sans-serif;font-size:28px;font-weight:700}
+.gate-input{max-width:160px;text-align:center;font-size:26px}

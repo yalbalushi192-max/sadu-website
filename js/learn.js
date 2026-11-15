@@ -70,6 +70,8 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      gateTitle: 'For grown-ups', gateText: 'This part is for parents and teachers. Please answer to continue.', gateQ: 'What is %A × %B?',
+      gateGo: 'Continue', gateWrong: 'Not quite. Please ask a grown-up.', gateBack: 'Back',
       pyUnknown: 'Line %A: I don\'t know "%B". Try up(), down(), left(), right() or a for loop.', pyNumber: 'Line %A: use a number from 1 to 9 inside the brackets.',
       pyColon: 'Line %A: a for line must end with a colon (:).', pyIndent: 'Line %A: put two spaces before the lines inside the loop.', pyEmptyLoop: 'Line %A: the loop needs at least one indented line under it.',
       pyNoCode: 'Type some code first.', pyTooMany: 'Try to do it in %A lines or fewer. A for loop can help!', pyLines: 'Lines: %A of %B', pyCode: 'Your code', pyHelp: 'Commands: up(2), down(1), left(3), right(1), for i in range(3):',
@@ -170,6 +172,8 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      gateTitle: 'للكبار', gateText: 'هذا الجزء لأولياء الأمور والمعلّمين. أجب من فضلك لتتابع.', gateQ: 'كم يساوي %A × %B؟',
+      gateGo: 'متابعة', gateWrong: 'ليست صحيحة. اطلب المساعدة من شخص كبير.', gateBack: 'رجوع',
       pyUnknown: 'السطر %A: لا أعرف «%B». جرّب up() أو down() أو left() أو right() أو حلقة for.', pyNumber: 'السطر %A: اكتب عددًا من 1 إلى 9 بين القوسين.',
       pyColon: 'السطر %A: يجب أن ينتهي سطر for بنقطتين (:).', pyIndent: 'السطر %A: ضع مسافتين قبل الأسطر التي داخل الحلقة.', pyEmptyLoop: 'السطر %A: تحتاج الحلقة إلى سطر واحد على الأقل تحتها بعد مسافتين.',
       pyNoCode: 'اكتب شيئًا من الشيفرة أولًا.', pyTooMany: 'حاول أن تحلّها في %A أسطر أو أقل. حلقة for تساعدك!', pyLines: 'الأسطر: %A من %B', pyCode: 'شيفرتك', pyHelp: 'الأوامر: up(2) و down(1) و left(3) و right(1) و for i in range(3):',
@@ -253,6 +257,9 @@
     });
   }
   mergeCustom();
+
+  // pages for parents and teachers only
+  var PARENT_VIEWS = ['report', 'week', 'editor', 'video'];
 
   // ---- child profiles ----
   function keyFor(id) { return id === 'p1' ? KEY : KEY + ':' + id; }
@@ -635,7 +642,8 @@
   class Component extends DCLogic {
     constructor(props) {
       super(props);
-      this.state = { view: location.hash === '#report' ? 'report' : profiles.list.length > 1 ? 'who' : 'journey', ci: 0, ls: null, data: load(), confirming: false };
+      this.state = { view: location.hash === '#report' ? 'gate' : profiles.list.length > 1 ? 'who' : 'journey',
+        gate: location.hash === '#report' ? { view: 'report', extra: {}, a: 7, b: 8, wrong: false } : null, ci: 0, ls: null, data: load(), confirming: false };
       var self = this;
       if (SPEECH) speechSynthesis.addEventListener('voiceschanged', function () { self.setState({}); });
       // keyboard: 1, 2, 3 pick an answer; Enter moves on
@@ -648,6 +656,10 @@
     }
 
     go(view, extra) {
+      if (PARENT_VIEWS.indexOf(view) !== -1 && !(this._grownUntil > Date.now())) {
+        var a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
+        extra = { gate: { view: view, extra: extra || {}, a: a, b: b, wrong: false } }; view = 'gate';
+      }
       hush(); clearInterval(this._codeTimer);
       bits = [];  // confetti stops when the child moves to another page
       this._said = null;
@@ -780,12 +792,13 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isGate: s.view === 'gate',
         isCert: s.view === 'cert',
         isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
         goJourney: function () { self.go('journey'); },
         isWho: s.view === 'who', goWho: function () { self.go('who', { adding: false }); },
         isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
-        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' || s.view === 'cert' ? 'shell focus' : 'shell',
+        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' || s.view === 'cert' || s.view === 'gate' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
         gamesHref: (LANG === 'ar' ? 'ar.html' : 'index.html') + '#games',
@@ -1076,6 +1089,21 @@
             return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
           });
         }
+      }
+
+      // ---- grown-ups gate ----
+      if (s.view === 'gate' && s.gate) {
+        var gt = s.gate;
+        out.gate = {
+          q: fill(T.gateQ, { A: gt.a, B: gt.b }), wrong: gt.wrong,
+          check: function () {
+            var el = document.getElementById('gate-answer'), v = el ? parseInt(el.value, 10) : NaN;
+            if (v === gt.a * gt.b) { self._grownUntil = Date.now() + 10 * 60 * 1000; if (el) el.value = ''; self.go(gt.view, gt.extra); }
+            else { sfx('wrong'); if (el) el.value = ''; self.setState({ gate: Object.assign({}, gt, { wrong: true }) }); }
+          },
+          key: function (e) { if (e.key === 'Enter') out.gate.check(); },
+          back: function () { self.go('journey'); }
+        };
       }
 
       // ---- certificate ----

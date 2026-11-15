@@ -46,7 +46,7 @@ A. Ideas from the best children's learning apps (owner's request; Sadu's own loo
    - [ ] Build your own AI lab (owner's idea from CodaKid's AI Builder): the child sorts examples into two groups (colours or drawn shapes), presses Train, and a tiny on-device learner guesses new ones; explains mistakes; nothing leaves the device.
    - [ ] Next steps for parents: a page about what comes after Sadu (robot kits, block-coding apps, beginner AI tools), by age, with what to look for; general advice, no paid endorsements.
    - [ ] Watch, then trace (like letter-writing apps): a dotted demo moves along the shape first; a green start dot shows where to begin.
-   - [ ] Parent gate and break timer (like Khan Academy Kids, ABCmouse): a grown-ups-only question before the Family report and settings; an optional daily time limit with Saqr suggesting a break.
+   - [ ] Parent gate and break timer (like Khan Academy Kids, ABCmouse): a grown-ups-only question before the Family report and settings; an optional daily time limit with Saqr suggesting a break. Parent gate done: Family report, weekly summary, lesson editor and the coming Video Studio ask a times-table question; open for 10 minutes after a right answer. Break timer still to do.
    - [ ] Dress up Saqr (like avatar rewards in ABCmouse, Lingokids): spend stars on hats and scarves for Saqr.
 2. [ ] More stories: 2 or 3 new illustrated stories with questions.
 3. [ ] Polish and bug check: every lesson, story and activity on phone and desktop in both languages; accessibility (keyboard, labels, contrast).
