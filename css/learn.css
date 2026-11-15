@@ -737,3 +737,16 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .q-img{display:block;width:min(220px,60vw);height:auto;aspect-ratio:1;object-fit:contain;margin:0 auto}
 .sound-btn{margin:8px auto 0}
 .show-box .show:empty{display:none}
+
+/* ---------- typed code in Hopscotch colours (scheme by Jan T. Sott, CC0) ---------- */
+.py-wrap{position:relative}
+.py-wrap .py-editor,.py-hl{margin:0;width:100%;box-sizing:border-box;min-height:150px;padding:12px 14px;border-radius:var(--r-md);font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:18px;line-height:1.6;tab-size:2;white-space:pre-wrap;word-wrap:break-word;overflow-wrap:break-word;letter-spacing:0}
+.py-hl{position:absolute;inset:0;overflow:hidden;pointer-events:none;border:2px solid transparent;color:#FFFFFF;background:transparent}
+.py-wrap .py-editor{position:relative;display:block;background:#322931;border:2px solid #433B42;color:transparent;caret-color:#FFFFFF;-webkit-text-fill-color:transparent}
+.py-wrap .py-hl{z-index:1}
+.py-wrap .py-editor::selection{background:rgba(253,204,89,.35)}
+.py-wrap .py-editor:focus-visible{outline:3px solid #FDCC59;outline-offset:2px}
+.hs-num{color:#FD8B19}.hs-key{color:#C85E7C}.hs-fn{color:#149B93}.hs-cmd{color:#1290BF}
+.hs-var{color:#FDCC59}.hs-punct{color:#B9B5B8}.hs-comment{color:#989498;font-style:italic}
+.hs-bad{color:#DD464C;text-decoration:underline wavy #DD464C;text-underline-offset:4px}
+.hs-cmd{filter:brightness(1.35)}.hs-key{filter:brightness(1.25)}.hs-fn{filter:brightness(1.4)}

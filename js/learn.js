@@ -664,6 +664,29 @@
     return out;
   }
   // Python-style code: up(n), down(n), left(n), right(n) and one level of 'for i in range(n):' with indented lines
+  // Hopscotch colours for typed code (colour scheme by Jan T. Sott, public domain CC0): every token gets a class
+  var PY_CMDS = { up: 1, down: 1, left: 1, right: 1 };
+  function pyHighlight(text) {
+    var esc = function (t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    var span = function (cls, t) { return '<span class="hs-' + cls + '">' + esc(t) + '</span>'; };
+    return String(text || '').split('\n').map(function (line) {
+      var hash = line.indexOf('#'), code = hash === -1 ? line : line.slice(0, hash), rest = hash === -1 ? '' : line.slice(hash);
+      var isFor = /^\s*for\b/.test(code), missingColon = isFor && code.trim() && !/:\s*$/.test(code);
+      var html = code.replace(/[A-Za-z_]\w*|\d+|[^\sA-Za-z_\d]+|\s+/g, function (tok) {
+        if (/^\s+$/.test(tok)) return tok;
+        if (/^\d+$/.test(tok)) return span('num', tok);
+        if (tok === 'for' || tok === 'in') return span('key', tok);
+        if (tok === 'range') return span('fn', tok);
+        if (PY_CMDS[tok]) return span('cmd', tok);
+        if (/^[A-Za-z_]/.test(tok)) return span(isFor ? 'var' : 'bad', tok);
+        return span('punct', tok);
+      });
+      if (missingColon) html += '<span class="hs-bad hs-gap"> </span>';
+      return html + (rest ? span('comment', rest) : '');
+    }).join('\n') + '\n';
+  }
+  function paintPy(text) { var pre = document.getElementById('py-hl'); if (pre) pre.innerHTML = pyHighlight(text); }
+
   function parsePy(text) {
     var NAMES = { up: 'U', down: 'D', left: 'L', right: 'R' }, out = [], loop = null, count = 0, lines = String(text || '').split('\n');
     function closeLoop(lineNo) {
@@ -1989,11 +2012,12 @@
             }),
             clear: function () {
               if (act.running) return;
-              if (q.kind === 'pycode') { self._py.text = q.startText || ''; var ta = document.getElementById('py-code'); if (ta) ta.value = self._py.text; }
+              if (q.kind === 'pycode') { self._py.text = q.startText || ''; var ta = document.getElementById('py-code'); if (ta) ta.value = self._py.text; paintPy(self._py.text); }
               setAct({ prog: [], pos: -1, why: '', msg: '' });
             },
-            pyText: self._py && q.kind === 'pycode' ? self._py.text : '',
-            pyInput: function (e) { self._py.text = e.target.value; },
+            pyText: self._py && q.kind === 'pycode' ? (setTimeout(function () { if (self._py) paintPy(self._py.text); }, 0), self._py.text) : '',
+            pyInput: function (e) { self._py.text = e.target.value; paintPy(e.target.value); },
+            pyScroll: function (e) { var pre = document.getElementById('py-hl'); if (pre) { pre.scrollTop = e.target.scrollTop; pre.scrollLeft = e.target.scrollLeft; } },
             pyLines: q.maxLines ? fill(T.pyLines, { A: (String(self._py && self._py.text || '').split('\n').filter(function (x) { return x.replace(/#.*$/, '').trim(); }).length), B: q.maxLines }) : '',
             pyHasMax: !!q.maxLines,
             run: function () {

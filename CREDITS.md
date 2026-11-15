@@ -37,6 +37,11 @@ monkey, rabbit, sheep, snake, squirrel, tiger, zebra. Birds: bulbul, crow, duck,
 hummingbird, kingfisher, ostrich, owl, parrot, pigeon, robin, seagull, sparrow, swan, vulture,
 woodpecker.
 
+## Code colours
+
+The colours of typed code in the Coding course are the **Hopscotch** colour scheme by Jan T. Sott
+(https://github.com/idleberg/Hopscotch), public domain (CC0 1.0).
+
 ## Libraries
 
 - **three.js** r160 (MIT License, https://threejs.org), in `js/vendor/three.min.js`, draws Sadu Bay in 3D.

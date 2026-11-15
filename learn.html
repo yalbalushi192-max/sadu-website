@@ -910,7 +910,8 @@
 <sc-if value="{{ ls.isPy }}">
 <div class="prog-box">
 <div class="prog-head"><b>{{ t.pyCode }}</b><sc-if value="{{ ls.cd.pyHasMax }}"><span class="small muted">{{ ls.cd.pyLines }}</span></sc-if></div>
-<textarea id="py-code" class="py-editor" dir="ltr" rows="6" spellcheck="false" autocapitalize="off" autocomplete="off" oninput="{{ ls.cd.pyInput }}" aria-label="{{ t.pyCode }}">{{ ls.cd.pyText }}</textarea>
+<div class="py-wrap" dir="ltr"><pre class="py-hl" id="py-hl" aria-hidden="true"></pre>
+<textarea id="py-code" class="py-editor" dir="ltr" rows="6" spellcheck="false" autocapitalize="off" autocomplete="off" oninput="{{ ls.cd.pyInput }}" onscroll="{{ ls.cd.pyScroll }}" aria-label="{{ t.pyCode }}">{{ ls.cd.pyText }}</textarea></div>
 <span class="small muted py-help" dir="ltr">{{ t.pyHelp }}</span>
 </div>
 </sc-if>
