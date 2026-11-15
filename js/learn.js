@@ -70,6 +70,10 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      wkTitle: 'This week', wkBtn: 'Weekly summary', wkRange: '%A to %B', wkLessons: 'lessons finished', wkMinutes: 'minutes learning', wkDays: 'days active',
+      wkStories: 'stories read', wkWell: 'What went well', wkWellNone: 'Finish a few lessons this week to see highlights here.', wkPractise: 'Practise next',
+      wkPractiseNone: 'Nothing to repeat from this week. Great work!', wkNext: 'Next week', wkNextText: 'Aim for %A lessons a day. %B',
+      wkByDay: 'Day by day', wkFor: 'for %N', wkFocus: 'Spend extra time on %S.',
       edTitle: 'Lesson editor', edBtn: 'Lesson editor', edIntro: 'Add your own lessons with a form. They are saved on this device and appear in the course and on the journey. Export them to keep a copy or share them.',
       edNew: 'New lesson', edEdit: 'Edit', edTry: 'Try', edDelete: 'Delete', edSure: 'Delete this lesson?', edYes: 'Yes, delete', edNone: 'No lessons of your own yet.',
       edCourse: 'Course', edLevel: 'Level', edTitleF: 'Lesson title', edTeach: 'What to learn (a short explanation)', edHint: 'Hint after a wrong answer',
@@ -156,6 +160,10 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      wkTitle: 'هذا الأسبوع', wkBtn: 'ملخّص الأسبوع', wkRange: 'من %A إلى %B', wkLessons: 'دروس مكتملة', wkMinutes: 'دقائق تعلّم', wkDays: 'أيام نشاط',
+      wkStories: 'قصص مقروءة', wkWell: 'ما أُنجز جيدًا', wkWellNone: 'أنهِ بعض الدروس هذا الأسبوع لترى أبرز الإنجازات هنا.', wkPractise: 'تدرّب بعد ذلك',
+      wkPractiseNone: 'لا شيء يحتاج إلى إعادة من هذا الأسبوع. عمل رائع!', wkNext: 'الأسبوع القادم', wkNextText: 'الهدف: %A دروس في اليوم. %B',
+      wkByDay: 'يومًا بيوم', wkFor: 'لـ %N', wkFocus: 'خصّص وقتًا إضافيًا لـ%S.',
       edTitle: 'محرّر الدروس', edBtn: 'محرّر الدروس', edIntro: 'أضف دروسك الخاصة عبر نموذج بسيط. تُحفظ على هذا الجهاز وتظهر في الدورة وفي الرحلة. صدّرها لتحتفظ بنسخة أو تشاركها.',
       edNew: 'درس جديد', edEdit: 'تعديل', edTry: 'جرّب', edDelete: 'حذف', edSure: 'هل تريد حذف هذا الدرس؟', edYes: 'نعم، احذف', edNone: 'لا توجد دروس خاصة بك بعد.',
       edCourse: 'الدورة', edLevel: 'المستوى', edTitleF: 'عنوان الدرس', edTeach: 'ماذا نتعلّم (شرح قصير)', edHint: 'تلميح بعد الإجابة الخاطئة',
@@ -623,6 +631,7 @@
       else if (!levelWas && levelDone(data, this.state.ci, lvl)) cert = { ci: this.state.ci, lv: lvl, msg: fill(T.certLevelDone, { L: T.levelNames[lvl] }) };
       }
       data.seconds += secs;
+      data.daySecs = data.daySecs || {}; data.daySecs[dayKey(new Date())] = (data.daySecs[dayKey(new Date())] || 0) + secs;
       var today = dayKey(new Date()), goal = data.goal || 2, before = data.days[today] || 0;
       data.days[today] = before + 1;
       var goalHit = before < goal && before + 1 >= goal;
@@ -645,6 +654,7 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isCert: s.view === 'cert',
         isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
@@ -843,6 +853,31 @@
           self._keys = { opts: [], next: allDone ? null : go };
         }
       })();
+
+      // ---- weekly summary for parents: the last 7 days ----
+      if (s.view === 'week') {
+        var now = new Date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6), since = start.getTime();
+        var wDays = [], wLessons = 0, wSecs = 0, active = 0;
+        for (var wi = 6; wi >= 0; wi--) {
+          var wd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - wi), wk = dayKey(wd), wn = (data.days || {})[wk] || 0;
+          wLessons += wn; wSecs += (data.daySecs || {})[wk] || 0; if (wn) active++;
+          wDays.push({ label: weekday(wd), n: String(wn), h: Math.max(8, Math.min(100, wn * 25)) + '%', bar: wn ? 'wk-bar on' : 'wk-bar', cls: wi === 0 ? 'wk today' : 'wk' });
+        }
+        var thisWeek = [];
+        COURSES.forEach(function (c) { c.lessons.forEach(function (l) { var rec = data.lessons[l.id]; if (rec && rec.when >= since) thisWeek.push({ c: c, l: l, rec: rec, acc: accuracy(rec) }); }); });
+        var well = thisWeek.filter(function (x) { return x.acc >= 0.85; }).sort(function (a, b) { return b.acc - a.acc; }).slice(0, 5)
+          .map(function (x) { return { text: fill(T.rLine, { C: tx(x.c.name), L: tx(x.l.title) }), note: T.mlv[masteryOf(x.rec)] }; });
+        var weak = thisWeek.filter(function (x) { return x.acc < 0.7; }).slice(0, 5)
+          .map(function (x) { return { text: fill(T.rLine, { C: tx(x.c.name), L: tx(x.l.title) }), note: (x.rec.missed || []).join(' · ') || fill(T.rStarsShort, { A: x.rec.stars }) }; });
+        var storiesWeek = Object.keys(data.stories || {}).filter(function (k) { return data.stories[k].when >= since; }).length;
+        out.week = {
+          range: fill(T.wkRange, { A: day(since), B: day(now.getTime()) }), who: (data.name || '').trim() ? fill(T.wkFor, { N: data.name.trim() }) : '',
+          lessons: String(wLessons), minutes: wSecs ? String(Math.round(wSecs / 60)) : '–', days: active + ' / 7', stories: String(storiesWeek),
+          bars: wDays, well: well, hasWell: well.length > 0, noWell: well.length === 0, weak: weak, hasWeak: weak.length > 0, noWeak: weak.length === 0,
+          next: fill(T.wkNextText, { A: data.goal || 2, B: out.plan && out.plan.focus ? fill(T.wkFocus, { S: out.plan.focus }) : T.planAllGood }),
+          print: function () { window.print(); }, back: function () { self.go('report'); }
+        };
+      }
 
       // ---- lesson editor ----
       if (s.view === 'editor') {

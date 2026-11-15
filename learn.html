@@ -302,6 +302,39 @@
 </section>
 </sc-if>
 
+<!-- WEEK: a printable summary of the last 7 days for parents -->
+<sc-if value="{{ isWeek }}">
+<section class="page week-page">
+<div class="actions no-print"><button type="button" class="back" onclick="{{ week.back }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.rTitle }}</button><button type="button" class="btn primary" onclick="{{ week.print }}">{{ t.print }}</button></div>
+<header class="page-head">
+<p class="eyebrow">{{ week.range }}</p>
+<h1 class="h1">📅 {{ t.wkTitle }} <span class="muted wk-who">{{ week.who }}</span></h1>
+</header>
+<div class="stats">
+<div class="stat"><span class="stat-ic" style="background: #DDF3E6; color: #0B6B3A"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span><div><b>{{ week.lessons }}</b><span>{{ t.wkLessons }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #DCEEFD; color: #145E96"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>{{ week.minutes }}</b><span>{{ t.wkMinutes }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFE7D9; color: #9A3412"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b dir="ltr">{{ week.days }}</b><span>{{ t.wkDays }}</span></div></div>
+<div class="stat"><span class="stat-ic" style="background: #FFF1C7; color: #8A5A00"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg></span><div><b>{{ week.stories }}</b><span>{{ t.wkStories }}</span></div></div>
+</div>
+<div class="card">
+<h2 class="h3 card-title">{{ t.wkByDay }}</h2>
+<div class="wk-row week-bars" dir="ltr"><sc-for list="{{ week.bars }}" as="w"><div class="{{ w.cls }}"><b class="small">{{ w.n }}</b><div class="wk-track"><div class="{{ w.bar }}" style="height: {{ w.h }}"></div></div><span>{{ w.label }}</span></div></sc-for></div>
+</div>
+<div class="two">
+<div class="card"><h2 class="h3 card-title">🌟 {{ t.wkWell }}</h2>
+<sc-if value="{{ week.hasWell }}"><ul class="lines"><sc-for list="{{ week.well }}" as="x"><li><span>{{ x.text }}</span><span>{{ x.note }}</span></li></sc-for></ul></sc-if>
+<sc-if value="{{ week.noWell }}"><p class="empty">{{ t.wkWellNone }}</p></sc-if></div>
+<div class="card"><h2 class="h3 card-title">🎯 {{ t.wkPractise }}</h2>
+<sc-if value="{{ week.hasWeak }}"><ul class="lines"><sc-for list="{{ week.weak }}" as="x"><li><span>{{ x.text }}</span><span dir="auto">{{ x.note }}</span></li></sc-for></ul></sc-if>
+<sc-if value="{{ week.noWeak }}"><p class="empty">{{ t.wkPractiseNone }}</p></sc-if></div>
+</div>
+<div class="guide">
+<svg class="saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<div class="bubble"><p><b>{{ t.wkNext }}:</b> {{ week.next }}</p></div>
+</div>
+</section>
+</sc-if>
+
 <!-- EDITOR: parents and teachers add their own lessons -->
 <sc-if value="{{ isEditor }}">
 <section class="page editor">
@@ -810,6 +843,7 @@
 
 <div class="actions no-print">
 <button type="button" class="btn secondary" onclick="{{ r.print }}">{{ t.print }}</button>
+<button type="button" class="btn secondary" onclick="{{ goWeek }}">📅 {{ t.wkBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goEditor }}">✏️ {{ t.edBtn }}</button>
 <sc-if value="{{ r_remove.can }}"><button type="button" class="btn ghost" onclick="{{ r_remove.ask }}">{{ t.removeChild }}</button></sc-if>
 <sc-if value="{{ r_remove.asking }}"><span role="alert" class="confirm">{{ t.removeSure }}</span><button type="button" class="btn danger" onclick="{{ r_remove.yes }}">{{ t.yesRemove }}</button><button type="button" class="btn ghost" onclick="{{ r_remove.cancel }}">{{ t.cancel }}</button></sc-if>

@@ -615,3 +615,10 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .chip-btn{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:800;color:var(--ink-2)}
 .chip-btn.on{background:var(--ink);color:#FFFFFF;border-color:var(--ink)}
 @media (max-width:560px){.ed-two{grid-template-columns:1fr}}
+
+/* ---------- weekly summary ---------- */
+.week-page{max-width:900px}
+.wk-who{font-size:.6em;font-weight:600}
+.week-bars .wk-track{height:110px;max-width:40px}
+.week-bars .wk b{color:var(--ink)}
+@media print{.week-page .wk-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
