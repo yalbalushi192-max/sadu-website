@@ -69,6 +69,16 @@ A. Ideas from the best children's learning apps (owner's request; Sadu's own loo
 4. [x] Landing page refresh: index.html and ar.html in the new look, with Saqr, the real six courses, stories and ages. Done: new title/description, hero text (ages 3-14, both languages) and a Today's six card; Courses now lists the real courses live from js/courses.js (name, ages, lesson count, first lessons); the placeholder testimonials ([Parent name]) became What is inside Sadu (8 real features); the enroll form (which promised 24 SAR/month and an email that was never sent) became an honest Start section (free, no account, progress on the device) with Start learning and Teacher guide; nav/footer Enroll → Start. Owner: add real prices here if Sadu will be paid.
 5. [x] Lessons for ages 10 to 14 (in parts; part 1 done: Maths Plus, mp-1 to mp-8, ages 10-14: simplifying fractions, adding fractions, decimals, percentages, negative numbers, area and perimeter, order of operations, simple equations; every lesson makes fresh questions with 3 difficulty levels; 3,600 generated questions checked. Part 2 done: Science Explorers, sx-1 to sx-8: cells, the human body, forces and motion, energy, electric circuits, the water cycle, Earth and space, food chains. Part 3 done: English Grammar and Reading, eg-1 to eg-8: parts of speech, verb tenses, subject and verb agreement, punctuation, synonyms and antonyms, prefixes and suffixes, similes and metaphors, a reading passage (The Desert Garden). Part 4 done: Arabic Grammar and Reading, ag-1 to ag-8: noun/verb/particle, nominal and verbal sentences, past/present/command, singular/dual/plural, case endings, prepositions, pronouns, reading (Souq Al-Zal). Daily quest stories and teacher-guide questions added for all four new courses. 14 courses, 160 lessons; full sweep clean): harder courses (for example fractions, grammar, science topics, Arabic reading) so older children get their own lessons.
 
+## Next wave (owner's choice, 2026-11-15)
+
+6. [ ] More lessons, part 1: Islamic manners (adab) for ages 4-9: greetings, kindness to parents, sharing, honesty, table manners, cleanliness (gentle, positive, no rulings).
+7. [ ] More lessons, part 2: Saudi and Gulf history and geography for ages 8-14: regions and cities, the founding of the Kingdom, the Hejaz, Najd, the Red Sea and the Gulf, maps.
+8. [ ] More lessons, part 3: Arabic reading for ages 5-9 (harakat, short words, reading short verses-style sentences) and more for ages 3-5 (shapes, colours, counting to 10, animals).
+9. [ ] More games, part 1: a spelling bee (hear a word, tap the letters) and a times-table race, in the browser, both languages.
+10. [ ] More games, part 2: a Sadu weaving pattern game (continue and design patterns) and Sadu Bay extras (new fish, a boat shop for coins).
+11. [ ] Real voice audio (owner has ElevenLabs connected): natural voices for Saqr in English and Arabic for the fixed texts (lesson explanations, stories), played instead of the browser voice when a recording exists. ASK THE OWNER before generating (it spends ElevenLabs credits): show the number of texts and a sample first.
+12. [ ] (with the owner) Set up the keys step by step: Supabase (accounts and sync), a Claude API key (Make a game), BytePlus (Video Studio).
+
 ## Done
 
 - Redesigned learn.html (dashboard, course path, lesson player, family report).
