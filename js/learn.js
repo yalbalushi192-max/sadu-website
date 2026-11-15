@@ -70,6 +70,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      glClose: 'Got it!', glTitle: 'What does it mean?',
       stuck1: '🤔 I\'m stuck', stuck2: '🤔 Still stuck', stuck3: '⏭️ Skip for now', stuckHint: 'Read the question again slowly. What is it really asking?',
       stuckElim: 'I took away one wrong answer for you. You can do it!',
       stuckWork: { count: 'Count out loud as you put each date in: 1, 2, 3… and stop at the number asked.', trace: 'Press Watch again, then start at the green dot and follow the line slowly.',
@@ -254,6 +255,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      glClose: 'فهمت!', glTitle: 'ماذا تعني؟',
       stuck1: '🤔 أحتاج مساعدة', stuck2: '🤔 ما زلت محتارًا', stuck3: '⏭️ تخطَّ الآن', stuckHint: 'اقرأ السؤال مرة أخرى ببطء. ماذا يطلب حقًّا؟',
       stuckElim: 'أزلت لك جوابًا خاطئًا. تستطيع فعلها!',
       stuckWork: { count: 'عُدّ بصوت عالٍ وأنت تضع كل تمرة: 1، 2، 3… وتوقّف عند العدد المطلوب.', trace: 'اضغط «شاهد مرة أخرى»، ثم ابدأ من النقطة الخضراء واتبع الخط ببطء.',
@@ -751,6 +753,28 @@
   }
 
   // ---- quick review (spaced practice): questions missed recently, newest lessons first ----
+  // ---- tap-a-word meanings: split a text into plain parts and glossary words (first time each word appears) ----
+  function glossKey(w) {
+    var k = w.toLowerCase().replace(/[\u064B-\u0652\u0640]/g, ''), G = window.SADU_GLOSSARY || {};
+    if (G[k]) return k;
+    var bare = k.replace(/^(و|ف|ب|ل)?(ال)?/, ''); if (bare.length > 1 && G[bare]) return bare;
+    var bare2 = k.replace(/^(و|ف|ب|ل)?(ل)?/, ''); if (bare2.length > 1 && G[bare2]) return bare2;
+    return null;
+  }
+  function glossParts(text, onTap) {
+    var parts = [], seen = {}, buf = '';
+    String(text || '').split(/([A-Za-z\u0600-\u06FF\u064B-\u0652']+)/).forEach(function (piece) {
+      var key = piece && /[A-Za-z\u0600-\u06FF]/.test(piece) ? glossKey(piece) : null;
+      if (key && !seen[key]) {
+        seen[key] = 1;
+        if (buf) parts.push({ t: buf, plain: true }); buf = '';
+        parts.push({ t: piece, word: true, tap: function (e) { if (e && e.stopPropagation) e.stopPropagation(); onTap(piece, key); } });
+      } else buf += piece;
+    });
+    if (buf) parts.push({ t: buf, plain: true });
+    return parts;
+  }
+
   // ---- smart review days (spaced repetition): box 0..4 → back after 1, 3, 7, 21, 60 days ----
   var BOX_DAYS = [1, 3, 7, 21, 60];
   function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return dayKey(d); }
@@ -1081,7 +1105,7 @@
       hush(); clearInterval(this._codeTimer);
       bits = [];  // confetti stops when the child moves to another page
       this._said = null;
-      this.setState(Object.assign({ view: view, confirming: false }, extra || {}));
+      this.setState(Object.assign({ view: view, confirming: false, gl: null }, extra || {}));
       window.scrollTo(0, 0);
       var main = document.getElementById('main');
       if (main) main.focus({ preventScroll: true });
@@ -1226,6 +1250,8 @@
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isDisc: s.view === 'discover', discOn: (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') ? 'page' : 'false', goDisc: function () { self.go('discover'); },
         isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
+        gl: s.gl ? { word: s.gl.word, meaning: (window.SADU_GLOSSARY[s.gl.key] || {})[LANG] || '', close: function () { self.setState({ gl: null }); },
+          say: function () { speak([s.gl.word, (window.SADU_GLOSSARY[s.gl.key] || {})[LANG] || '']); } } : null, hasGl: !!s.gl,
         isHouse: s.view === 'house', houseOn: s.view === 'house' ? 'page' : 'false', goHouse: function () { self.go('house'); },
         isToday: s.view === 'today', todayOn: s.view === 'today' ? 'page' : 'false', goToday: function () { self._todayRun = false; self.go('today'); },
         isPet: s.view === 'pet', petOn: s.view === 'pet' ? 'page' : 'false', goPet: function () { self.go('pet'); },
@@ -1593,7 +1619,7 @@
               place: tx(quest.place), emoji: quest.emoji, style: '--c:' + quest.color, won: !!qs2.won, playing: !qs2.won,
               stageText: st ? fill(T.dsStage, { A: qs2.stage + 1, B: quest.stages.length }) : '',
               dots: quest.stages.map(function (x, i) { return { cls: i < qs2.stage || qs2.won ? 'seg on' : i === qs2.stage ? 'seg now' : 'seg' }; }),
-              scene: st ? st.scene : '', text: st ? tx(st.text) : '', q: st ? tx(st.q.q) : '',
+              scene: st ? st.scene : '', text: st ? tx(st.text) : '', textParts: st ? glossParts(tx(st.text), function (w, k) { sfx('pop'); self.setState({ gl: { word: w, key: k } }); }) : [], q: st ? tx(st.q.q) : '',
               say: function () { if (st) speak([tx(st.text), tx(st.q.q)]); },
               right: !!qs2.right, notRight: !qs2.right, msg: qs2.right ? T.dsRight : qs2.wrong.length ? T.dsTry : '', hasMsg: !!qs2.right || qs2.wrong.length > 0,
               msgCls: qs2.right ? 'ds-msg ok' : 'ds-msg no',
@@ -2109,7 +2135,7 @@
         var st = STORIES[s.si], pg = st.pages[s.page], lastPage = s.page === st.pages.length - 1;
         var pageText = tx(pg.text);
         out.story = {
-          title: tx(st.title), color: st.color, tint: st.tint, art: scene(pg), text: pageText,
+          title: tx(st.title), color: st.color, tint: st.tint, art: scene(pg), text: pageText, textParts: glossParts(pageText, function (w, k) { sfx('pop'); self.setState({ gl: { word: w, key: k } }); }),
           of: fill(T.pageOf, { A: s.page + 1, B: st.pages.length }),
           dots: st.pages.map(function (x, k) { return { cls: k <= s.page ? 'seg on' : 'seg' }; }),
           hasPrev: s.page > 0, isLast: lastPage, notLast: !lastPage,
@@ -2202,7 +2228,7 @@
         }
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
-          title: tx(lesson.title), teach: tx(lesson.teach),
+          title: tx(lesson.title), teach: tx(lesson.teach), teachParts: glossParts(tx(lesson.teach), function (w, k) { sfx('pop'); self.setState({ gl: { word: w, key: k } }); }),
           lessonVideo: ((loadJSON(VIDEOS_KEY, { lessons: {} }).lessons || {})[lesson.id] || {}).url || '',
           diffNote: ls.diff === 0 && (data.lessons[lesson.id] || {}).diff === 0 ? T.dfEasy : ls.diff === 2 ? T.dfHard : '',
           diffCls: ls.diff === 2 ? 'diff-note up' : 'diff-note',

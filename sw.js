@@ -2,11 +2,11 @@
    It keeps a copy of the site's files on the device so Sadu opens without internet.
    Pages are served from the copy at once, then refreshed from the internet in the background,
    so an update reaches the device on the next visit. Raise VERSION when files are added or removed. */
-var VERSION = 'sadu-v4';
+var VERSION = 'sadu-v5';
 var FILES = [
   './', 'learn.html', 'index.html', 'ar.html', 'bay.html', 'manifest.webmanifest',
   'css/site.css', 'css/learn.css',
-  'js/runtime.js', 'js/courses.js', 'js/stories.js', 'js/discover.js', 'js/learn.js',
+  'js/runtime.js', 'js/courses.js', 'js/stories.js', 'js/discover.js', 'js/glossary.js', 'js/learn.js',
   'js/page-en.js', 'js/page-ar.js', 'js/falcon-flight.js', 'js/letter-catch.js', 'js/souq-dash.js', 'js/bay.js', 'js/vendor/three.min.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png'
 ];
