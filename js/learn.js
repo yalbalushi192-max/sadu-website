@@ -70,6 +70,11 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navHouse: 'Saqr\'s house', hsTitle: 'Saqr\'s house', hsIntro: 'Everything you make and win hangs on the walls of Saqr\'s house. Keep learning to fill them up!',
+      hsWall: 'On the walls', hsEmpty: 'An empty frame. Finish lessons, quests and games to fill it!', hsJournal: 'My discovery journal', hsJournalEmpty: 'Your journal is empty. Start a lesson or a story to write the first page!',
+      hsFrames: { sticker: 'Newest sticker', cert: 'Course certificate', cards: 'Knowledge cards', game: 'My game', story: 'Stories read', pet: 'My pet' },
+      hsCardsN: 'Collected: %A', hsStoriesN: 'Read: %A', hsLesson: 'Finished the lesson “%A”', hsStory: 'Read the story “%A”', hsQuest: 'Explored %A', hsPetBorn: 'Hatched %A', hsGame: 'Made the game “%A”',
+      hsSaqr: 'Welcome to my house, %N! Look at everything you have done.', hsPlayGame: 'Play',
       navToday: 'Today\'s six', tdTitle: 'Today\'s six', tdIntro: 'Six short activities picked just for you today. Press play and do them one after another!',
       tdPlay: '▶ Play next', tdOf: '%A of 6 done', tdDone: 'All six done! Fantastic learning today. New ones come tomorrow.', tdNextIn: 'Next in Today\'s six ▶', tdBack: 'Back to Today\'s six',
       tdKinds: { lesson: 'Lesson', story: 'Story', quest: 'Discover' }, tdGo: 'Play',
@@ -240,6 +245,11 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navHouse: 'بيت صقر', hsTitle: 'بيت صقر', hsIntro: 'كل ما تصنعه وتربحه يُعلَّق على جدران بيت صقر. واصل التعلّم لتملأها!',
+      hsWall: 'على الجدران', hsEmpty: 'إطار فارغ. أكمل الدروس والمهامّ والألعاب لتملأه!', hsJournal: 'دفتر اكتشافاتي', hsJournalEmpty: 'دفترك فارغ. ابدأ درسًا أو قصة لتكتب الصفحة الأولى!',
+      hsFrames: { sticker: 'أحدث ملصق', cert: 'شهادة دورة', cards: 'بطاقات المعرفة', game: 'لعبتي', story: 'القصص المقروءة', pet: 'حيواني' },
+      hsCardsN: 'جمعت: %A', hsStoriesN: 'قرأت: %A', hsLesson: 'أنهيت درس «%A»', hsStory: 'قرأت قصة «%A»', hsQuest: 'استكشفت %A', hsPetBorn: 'فقس %A', hsGame: 'صنعت لعبة «%A»',
+      hsSaqr: 'أهلًا بك في بيتي يا %N! انظر إلى كل ما أنجزته.', hsPlayGame: 'العب',
       navToday: 'ستّ اليوم', tdTitle: 'ستّ اليوم', tdIntro: 'ستة أنشطة قصيرة اخترناها لك اليوم. اضغط «العب» وأنجزها واحدًا بعد الآخر!',
       tdPlay: 'العب التالي ◀', tdOf: 'أنجزت %A من 6', tdDone: 'أنجزت الستة كلها! تعلّم رائع اليوم. أنشطة جديدة غدًا.', tdNextIn: 'التالي في ستّ اليوم ◀', tdBack: 'العودة إلى ستّ اليوم',
       tdKinds: { lesson: 'درس', story: 'قصة', quest: 'اكتشف' }, tdGo: 'العب',
@@ -1172,6 +1182,7 @@
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isDisc: s.view === 'discover', discOn: (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') ? 'page' : 'false', goDisc: function () { self.go('discover'); },
         isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
+        isHouse: s.view === 'house', houseOn: s.view === 'house' ? 'page' : 'false', goHouse: function () { self.go('house'); },
         isToday: s.view === 'today', todayOn: s.view === 'today' ? 'page' : 'false', goToday: function () { self._todayRun = false; self.go('today'); },
         isPet: s.view === 'pet', petOn: s.view === 'pet' ? 'page' : 'false', goPet: function () { self.go('pet'); },
         isWard: s.view === 'ward', wardOn: s.view === 'ward' ? 'page' : 'false', goWard: function () { self.go('ward'); },
@@ -1547,6 +1558,37 @@
             };
           }
         }
+      }
+
+      // ---- Saqr's house: frames on the walls and a discovery journal ----
+      if (s.view === 'house') {
+        var frames = [], journal = [], fmtDay = function (ms) { try { return new Date(ms).toLocaleDateString(LANG === 'ar' ? 'ar' : 'en-GB', { day: 'numeric', month: 'short' }); } catch (e) { return ''; } };
+        var latest = null;
+        COURSES.forEach(function (c, ci) { c.lessons.forEach(function (l, li) { var rec = data.lessons[l.id]; if (!rec) return;
+          if (rec.when && (!latest || rec.when > latest.when)) latest = { when: rec.when, emoji: stickerOf(ci, li) };
+          if (rec.when) journal.push({ when: rec.when, icon: stickerOf(ci, li), text: fill(T.hsLesson, { A: tx(l.title) }) }); }); });
+        if (latest) frames.push({ icon: latest.emoji, label: T.hsFrames.sticker, sub: '' });
+        COURSES.forEach(function (c, ci) { if (levelDone(data, ci, 0)) frames.push({ icon: '🏅', label: T.hsFrames.cert, sub: tx(c.name) }); });
+        var storiesRead = STORIES.filter(function (st) { var r = data.stories[st.id]; if (r && r.when) journal.push({ when: r.when, icon: st.sticker, text: fill(T.hsStory, { A: tx(st.title) }) }); return !!r; }).length;
+        if (storiesRead) frames.push({ icon: '📚', label: T.hsFrames.story, sub: fill(T.hsStoriesN, { A: storiesRead }) });
+        var QS = window.SADU_QUESTS || [], cardsN = 0;
+        QS.forEach(function (q) { var r = (data.discover || {})[q.id]; if (r && r.done) { cardsN += q.cards.length; if (r.when) journal.push({ when: r.when, icon: q.emoji, text: fill(T.hsQuest, { A: tx(q.place) }) }); } });
+        if (cardsN) frames.push({ icon: '🃏', label: T.hsFrames.cards, sub: fill(T.hsCardsN, { A: cardsN }), go: function () { self.go('cards'); } });
+        if (data.pet) { frames.push({ icon: PET_LOOK[data.pet.kind][petStage(data).stage], label: T.hsFrames.pet, sub: data.pet.name, go: function () { self.go('pet'); } });
+          if (data.pet.born) journal.push({ when: data.pet.born, icon: '🥚', text: fill(T.hsPetBorn, { A: data.pet.name }) }); }
+        loadJSON(VIBE_GAMES_KEY, []).slice(0, 3).forEach(function (gm) {
+          frames.push({ icon: '🎮', label: T.hsFrames.game, sub: gm.title, go: function () { self.go('vibe', { vb: { status: 'play', gameId: gm.id } }); } });
+          if (gm.when) journal.push({ when: gm.when, icon: '🎮', text: fill(T.hsGame, { A: gm.title }) });
+        });
+        while (frames.length < 6) frames.push({ icon: '🖼️', label: T.hsEmpty, sub: '', empty: true });
+        journal.sort(function (a, b) { return b.when - a.when; });
+        out.hs = {
+          saqr: fill(T.hsSaqr, { N: data.name || '' }),
+          pet: data.pet ? PET_LOOK[data.pet.kind][petStage(data).stage] : '', hasPet: !!data.pet,
+          frames: frames.map(function (f) { return { icon: f.icon, label: f.label, sub: f.sub, cls: 'hs-frame' + (f.empty ? ' empty' : ''), canGo: !!f.go, noGo: !f.go, go: f.go || function () {} }; }),
+          journal: journal.slice(0, 20).map(function (j) { return { icon: j.icon, text: j.text, day: fmtDay(j.when) }; }),
+          hasJournal: journal.length > 0, noJournal: journal.length === 0
+        };
       }
 
       // ---- Today's six ----

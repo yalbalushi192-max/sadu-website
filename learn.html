@@ -88,6 +88,7 @@
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
 <button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
+<button type="button" onclick="{{ goHouse }}" aria-current="{{ houseOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10M10 20v-5h4v5"/></svg><span>{{ t.navHouse }}</span></button>
 <button type="button" onclick="{{ goToday }}" aria-current="{{ todayOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/></svg><span>{{ t.navToday }}</span></button>
 <button type="button" onclick="{{ goPet }}" aria-current="{{ petOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3c-4 0-7 5-7 10a7 7 0 0 0 14 0c0-5-3-10-7-10z"/><path d="M9 13l2 2 2-2 2 2"/></svg><span>{{ t.navPet }}</span></button>
 <button type="button" onclick="{{ goDisc }}" aria-current="{{ discOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>{{ t.navDisc }}</span></button>
@@ -392,6 +393,32 @@
 <div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
 </div>
 </sc-if>
+</section>
+</sc-if>
+
+<!-- SAQR'S HOUSE: the child's creations on the walls, and a discovery journal -->
+<sc-if value="{{ isHouse }}">
+<section class="page hs-page">
+<header class="page-head"><h1 class="h1">🏠 {{ t.hsTitle }}</h1><p class="lead">{{ t.hsIntro }}</p></header>
+<div class="hs-room" aria-label="{{ t.hsWall }}">
+<div class="hs-wall">
+<div class="hs-window" aria-hidden="true"><span>☀️</span><span>🌴</span></div>
+<div class="hs-frames"><sc-for list="{{ hs.frames }}" as="f">
+<sc-if value="{{ f.canGo }}"><button type="button" class="{{ f.cls }}" onclick="{{ f.go }}"><span class="hs-pic" aria-hidden="true">{{ f.icon }}</span><b>{{ f.label }}</b><span class="small">{{ f.sub }}</span></button></sc-if>
+<sc-if value="{{ f.noGo }}"><div class="{{ f.cls }}"><span class="hs-pic" aria-hidden="true">{{ f.icon }}</span><b>{{ f.label }}</b><span class="small">{{ f.sub }}</span></div></sc-if>
+</sc-for></div>
+</div>
+<div class="hs-floor">
+<svg class="saqr hs-saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<sc-if value="{{ hs.hasPet }}"><span class="hs-pet" aria-hidden="true">{{ hs.pet }}</span></sc-if>
+<span class="hs-rug" aria-hidden="true"></span>
+<div class="bubble hs-bubble"><p>{{ hs.saqr }}</p></div>
+</div>
+</div>
+<article class="card hs-journal"><h2 class="h3">📔 {{ t.hsJournal }}</h2>
+<sc-if value="{{ hs.noJournal }}"><p class="muted">{{ t.hsJournalEmpty }}</p></sc-if>
+<sc-if value="{{ hs.hasJournal }}"><ol class="hs-list"><sc-for list="{{ hs.journal }}" as="j"><li><span class="hs-ji" aria-hidden="true">{{ j.icon }}</span><span class="hs-jt">{{ j.text }}</span><span class="small muted">{{ j.day }}</span></li></sc-for></ol></sc-if>
+</article>
 </section>
 </sc-if>
 
