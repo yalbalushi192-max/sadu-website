@@ -647,3 +647,15 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .pal{min-width:60px;height:60px}
 .pal[aria-disabled=true]{opacity:.45;cursor:default}
 @media (max-width:560px){.cell{width:52px;font-size:28px}.saqr-mini{width:44px;height:44px}}
+
+/* ---------- animated blending ---------- */
+.blend-box{gap:14px}
+.blend-tiles{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.blend-tile{min-width:76px;height:86px;padding:0 10px;border-radius:16px;border:3px solid var(--ink);border-bottom-width:6px;background:#FFFFFF;font-family:'Baloo Bhaijaan 2','Fredoka',sans-serif;font-weight:700;font-size:52px;line-height:1;color:var(--ink);animation:tilein .45s cubic-bezier(.3,1.6,.6,1) backwards}
+.blend-tile.boing{animation:boing .4s ease-out}
+.blend-word{animation:joinup .5s cubic-bezier(.3,1.6,.6,1)}
+@keyframes tilein{from{transform:translateY(-20px) scale(.5);opacity:0}to{transform:none;opacity:1}}
+@keyframes boing{0%,100%{transform:scale(1)}40%{transform:scale(1.18) translateY(-6px)}}
+@keyframes joinup{from{letter-spacing:.8em;opacity:.3;transform:scale(.8)}to{letter-spacing:normal;opacity:1;transform:none}}
+@media (max-width:560px){.blend-tiles{gap:12px}.blend-tile{min-width:60px;height:72px;font-size:42px}}
+@media (prefers-reduced-motion: reduce){.blend-tile,.blend-word{animation:none}}

@@ -638,7 +638,14 @@
 <sc-if value="{{ ls.hasSay }}">
 <button type="button" class="say-btn" onclick="{{ ls.sayWord }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>{{ t.listenBtn }}</span></button>
 </sc-if>
-<sc-if value="{{ ls.hasShow }}">
+<sc-if value="{{ ls.isBlend }}">
+<div class="show-box blend-box">
+<sc-if value="{{ ls.blendApart }}"><div class="blend-tiles" dir="{{ ls.blendDir }}"><sc-for list="{{ ls.blendTiles }}" as="bt"><button type="button" class="blend-tile" style="{{ bt.style }}" onclick="{{ bt.tap }}">{{ bt.ch }}</button></sc-for></div></sc-if>
+<sc-if value="{{ ls.blendJoined }}"><div class="show blend-word" dir="auto">{{ ls.blendWord }}</div></sc-if>
+<button type="button" class="btn secondary blend-btn" onclick="{{ ls.blendToggle }}"><sc-if value="{{ ls.blendApart }}">🔗 {{ t.blendBtn }}</sc-if><sc-if value="{{ ls.blendJoined }}">↔️ {{ t.blendSplit }}</sc-if></button>
+</div>
+</sc-if>
+<sc-if value="{{ ls.notBlendShow }}">
 <div class="show-box"><span class="show" dir="auto">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span></div>
 </sc-if>
 <sc-if value="{{ ls.hasSeq }}">

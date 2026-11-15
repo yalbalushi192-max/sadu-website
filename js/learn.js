@@ -70,6 +70,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      blendBtn: 'Push the sounds together', blendSplit: 'Split them again',
       cdRun: 'Run', cdClear: 'Clear', cdProgram: 'Your program', cdEmpty: 'Tap the arrows to add steps.', cdBlocks: 'Blocks: %A of %B',
       cdCrash: 'Bump! Saqr hit a rock or the edge. Change the program and try again.', cdShort: 'Saqr stopped before the palm tree. Add or change some steps.',
       cdArrow: { U: 'Up', D: 'Down', L: 'Left', R: 'Right' }, cdRepeat: 'Repeat %A times', cdRemove: 'remove',
@@ -166,6 +167,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      blendBtn: 'اجمع الأصوات', blendSplit: 'افصلها مرة أخرى',
       cdRun: 'شغّل', cdClear: 'امسح', cdProgram: 'برنامجك', cdEmpty: 'اضغط على الأسهم لتضيف خطوات.', cdBlocks: 'الكتل: %A من %B',
       cdCrash: 'بُم! اصطدم صقر بصخرة أو بالحافة. غيّر البرنامج وحاول مرة أخرى.', cdShort: 'توقّف صقر قبل النخلة. أضف خطوات أو غيّرها.',
       cdArrow: { U: 'أعلى', D: 'أسفل', L: 'يسار', R: 'يمين' }, cdRepeat: 'كرّر %A مرات', cdRemove: 'احذف',
@@ -1225,6 +1227,20 @@
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
           prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)), gloss: tx(q.gloss),
           isCode: q.kind === 'code',
+          // blending: letters shown as tiles that slide together into the word
+          isBlend: q.kind === 'choice' && !!q.show && q.show.indexOf(' · ') !== -1,
+          notBlendShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)) && !(q.show && q.show.indexOf(' · ') !== -1),
+          blendJoined: !!act.blended, blendApart: !act.blended,
+          blendWord: q.show ? q.show.split(' · ').join('') : '',
+          blendDir: q.show && /[\u0600-\u06FF]/.test(q.show) ? 'rtl' : 'ltr',
+          blendTiles: q.show && q.show.indexOf(' · ') !== -1 ? q.show.split(' · ').map(function (ch, i) {
+            return { ch: ch, style: 'animation-delay: ' + (i * 0.12) + 's', tap: function (e) { sfx('tap'); var el = e.currentTarget; el.classList.remove('boing'); void el.offsetWidth; el.classList.add('boing'); } };
+          }) : [],
+          blendToggle: function () {
+            var joined = !act.blended; sfx(joined ? 'pop' : 'tap');
+            self.setState({ ls: Object.assign({}, ls, { act: Object.assign({}, act, { blended: joined }) }) });
+            if (joined && out.speakOk) speak([q.show.split(' · ').join('')]);
+          },
           isChoice: q.kind === 'choice', optsCls: ls.wrong.length || ls.solved ? 'opts' : 'opts fresh', isCount: q.kind === 'count', isTrace: q.kind === 'trace', isMatch: q.kind === 'match',
           hasSay: !!q.say && out.speakOk, sayWord: function () { speak([q.say]); },
           seq: seq, hasSeq: seq.length > 0,
