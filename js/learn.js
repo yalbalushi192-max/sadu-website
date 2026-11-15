@@ -139,7 +139,7 @@
       vbErr: { 'not-allowed': 'Let\'s pick a kinder idea for the game. Try again!', 'too-short': 'Tell me a little more about your game.', 'too-long': 'That is a long idea! Please make it shorter.',
         'wrong-pin': 'The PIN is not right. Ask a grown-up to connect again.', 'not-configured': 'The helper has no Claude key yet (see server/README.md).', busy: 'Claude is busy right now. Try again in a minute.',
         'too-big': 'That game got too big. Try a simpler idea.', network: 'Could not reach the game helper. Check the internet and try again.', failed: 'Something went wrong making the game. Try again!' },
-      nxBtn: 'Next steps', nxTitle: 'Next steps after Sadu', nxIntro: 'Ideas for what your child can try next in coding, robots and AI, by age. This is general advice: Sadu is not paid to recommend anything.',
+      tgBtn: 'Teacher guide', nxBtn: 'Next steps', nxTitle: 'Next steps after Sadu', nxIntro: 'Ideas for what your child can try next in coding, robots and AI, by age. This is general advice: Sadu is not paid to recommend anything.',
       nxBands: [
         { icon: '🧸', age: 'Ages 3 to 5', items: ['Floor robots that move with arrow buttons (a first taste of coding, no screen).', 'Unplugged games: play "robot" by giving each other step-by-step directions; sort toys by colour and size; copy and continue patterns.', 'Short picture books read aloud every day, in Arabic and English.'] },
         { icon: '🧩', age: 'Ages 5 to 8', items: ['Free block-coding apps for young children, such as ScratchJr, and the free beginner courses on Code.org.', 'Simple robot kits that use arrow cards or coloured blocks to program moves.', 'Sadu\'s Coding course and AI Lab, then talk together about how apps and robots follow instructions.'] },
@@ -340,7 +340,7 @@
       vbErr: { 'not-allowed': 'لنختر فكرة ألطف للعبة. حاول مرة أخرى!', 'too-short': 'أخبرني أكثر قليلًا عن لعبتك.', 'too-long': 'فكرة طويلة! اجعلها أقصر من فضلك.',
         'wrong-pin': 'الرمز السري غير صحيح. اطلب من شخص كبير الاتّصال مرة أخرى.', 'not-configured': 'لا يوجد مفتاح Claude في المساعد بعد (انظر server/README.md).', busy: 'Claude مشغول الآن. حاول بعد دقيقة.',
         'too-big': 'أصبحت اللعبة كبيرة جدًا. جرّب فكرة أبسط.', network: 'تعذّر الوصول إلى مساعد الألعاب. تحقّق من الإنترنت وحاول مرة أخرى.', failed: 'حدث خطأ أثناء صنع اللعبة. حاول مرة أخرى!' },
-      nxBtn: 'الخطوات التالية', nxTitle: 'الخطوات التالية بعد سدو', nxIntro: 'أفكار لما يمكن أن يجرّبه طفلك بعد ذلك في البرمجة والروبوتات والذكاء الاصطناعي، حسب العمر. هذه نصائح عامة: لا يتقاضى سدو أي مقابل للترشيح.',
+      tgBtn: 'دليل المعلّم', nxBtn: 'الخطوات التالية', nxTitle: 'الخطوات التالية بعد سدو', nxIntro: 'أفكار لما يمكن أن يجرّبه طفلك بعد ذلك في البرمجة والروبوتات والذكاء الاصطناعي، حسب العمر. هذه نصائح عامة: لا يتقاضى سدو أي مقابل للترشيح.',
       nxBands: [
         { icon: '🧸', age: 'من 3 إلى 5 سنوات', items: ['روبوتات أرضية تتحرّك بأزرار الأسهم (أول تجربة للبرمجة بلا شاشة).', 'ألعاب بلا شاشة: العبوا لعبة «الروبوت» بإعطاء تعليمات خطوة بخطوة، ورتّبوا الألعاب حسب اللون والحجم، وأكملوا الأنماط.', 'قصص مصوّرة قصيرة تُقرأ بصوت عالٍ كل يوم، بالعربية والإنجليزية.'] },
         { icon: '🧩', age: 'من 5 إلى 8 سنوات', items: ['تطبيقات مجانية للبرمجة بالكتل للصغار مثل ScratchJr، ودورات المبتدئين المجانية في Code.org.', 'مجموعات روبوت بسيطة تُبرمج حركاتها ببطاقات الأسهم أو مكعبات ملوّنة.', 'دورة البرمجة ومختبر الذكاء في سدو، ثم تحدّثوا معًا عن كيف تتبع التطبيقات والروبوتات التعليمات.'] },
@@ -1385,7 +1385,7 @@
         shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' || s.view === 'cert' || s.view === 'gate' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
-        bayHref: 'bay.html' + (LANG === 'ar' ? '?lang=ar' : ''),
+        bayHref: 'bay.html' + (LANG === 'ar' ? '?lang=ar' : ''), teacherHref: 'teacher.html' + (LANG === 'ar' ? '?lang=ar' : ''),
         gamesHref: (LANG === 'ar' ? 'ar.html' : 'index.html') + '#games',
         goHome: function () { self.go('home'); },
         goReport: function () { self.go('report'); },

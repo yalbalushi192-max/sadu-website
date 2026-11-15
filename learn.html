@@ -1334,6 +1334,7 @@
 <button type="button" class="btn secondary" onclick="{{ goEditor }}">✏️ {{ t.edBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goVideo }}">🎬 {{ t.vdBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goNext }}">🧭 {{ t.nxBtn }}</button>
+<a class="btn secondary" href="{{ teacherHref }}">📘 {{ t.tgBtn }}</a>
 <sc-if value="{{ r_remove.can }}"><button type="button" class="btn ghost" onclick="{{ r_remove.ask }}">{{ t.removeChild }}</button></sc-if>
 <sc-if value="{{ r_remove.asking }}"><span role="alert" class="confirm">{{ t.removeSure }}</span><button type="button" class="btn danger" onclick="{{ r_remove.yes }}">{{ t.yesRemove }}</button><button type="button" class="btn ghost" onclick="{{ r_remove.cancel }}">{{ t.cancel }}</button></sc-if>
 <sc-if value="{{ r.notConfirming }}"><button type="button" class="btn ghost" onclick="{{ r.askReset }}">{{ t.reset }}</button></sc-if>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sadu Teacher Guide</title>
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#23204A;--ink-2:#4B4870;--line:#E6DFCF;--paper:#FFFDF8;--accent:#FFC93C;--green:#0F6B3E}
+  *{box-sizing:border-box}
+  body{margin:0;background:#F6F1E6;color:var(--ink);font:16px/1.6 'Nunito','Tajawal',system-ui,sans-serif}
+  [dir=rtl] body{font-family:'Tajawal','Nunito',system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .bar a,.bar button{font:inherit;font-weight:800;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:8px 16px;text-decoration:none;cursor:pointer}
+  .bar button.primary{background:var(--ink);color:#fff}
+  .sheet{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,4vw,40px);box-shadow:0 10px 30px -18px rgba(35,32,74,.35)}
+  h1{font-family:'Fredoka','Tajawal',sans-serif;font-size:clamp(28px,5vw,40px);margin:0 0 6px}
+  h2{font-family:'Fredoka','Tajawal',sans-serif;font-size:24px;margin:28px 0 8px;padding-top:10px;border-top:3px solid var(--accent)}
+  h3{font-size:18px;margin:16px 0 6px}
+  p,li{color:var(--ink-2)}
+  .lead{font-size:18px}
+  ol,ul{padding-inline-start:22px}
+  li{margin:4px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .box{border:2px solid var(--line);border-radius:16px;padding:14px;background:#fff;break-inside:avoid}
+  .box h3{margin-top:0}
+  .tag{display:inline-block;font-size:13px;font-weight:800;border-radius:999px;padding:2px 10px;background:#F1ECE0;color:var(--ink);margin-inline-end:6px}
+  .course{border-inline-start:8px solid var(--c);}
+  table{width:100%;border-collapse:collapse;margin:8px 0}
+  td,th{border:1px solid var(--line);padding:8px;text-align:start;vertical-align:top}
+  th{background:#F1ECE0;white-space:nowrap;width:1%}
+  .note{background:#E8F6EE;border:2px solid #A8DDBE;border-radius:14px;padding:12px 14px}
+  footer{margin-top:24px;font-size:13px;color:var(--ink-2)}
+  @media print{body{background:#fff}.bar{display:none}.sheet{border:0;box-shadow:none;padding:0}.wrap{padding:0}h2{break-after:avoid}.box,.course{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"><a id="back" href="learn.html">‹ Sadu</a><span><a id="lang" href="teacher.html?lang=ar">العربية</a> <button type="button" class="primary" id="print">🖨️ Print</button></span></div>
+  <main class="sheet" id="guide"></main>
+</div>
+<script src="js/courses.js"></script>
+<script>
+(function () {
+  'use strict';
+  var AR = /[?&]lang=ar\b/.test(location.search), L = AR ? 'ar' : 'en';
+  document.documentElement.lang = L; document.documentElement.dir = AR ? 'rtl' : 'ltr';
+  var tx = function (o) { return o == null ? '' : typeof o === 'string' ? o : (o[L] || o.en || ''); };
+  var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  document.getElementById('back').href = 'learn.html' + (AR ? '?lang=ar' : '');
+  document.getElementById('lang').href = AR ? 'teacher.html' : 'teacher.html?lang=ar';
+  document.getElementById('lang').textContent = AR ? 'English' : 'العربية';
+  document.getElementById('print').textContent = AR ? '🖨️ اطبع' : '🖨️ Print';
+  document.getElementById('print').onclick = function () { window.print(); };
+
+  // discussion questions for each course, to ask the class after a lesson
+  var TALK = {
+    phonics: [['Which words start with the same sound as your name?', 'ما الكلمات التي تبدأ بالصوت نفسه الذي يبدأ به اسمك؟'], ['Can you find something in the classroom that starts with "s"?', 'هل تجد في الصف شيئًا يبدأ بصوت «س»؟'], ['Clap the sounds in "cat". How many claps?', 'صفّق لأصوات كلمة «cat». كم تصفيقة؟']],
+    'arabic-phonics': [['Which letters have dots above them, and which below?', 'أي الحروف عليها نقاط فوقها وأيها تحتها؟'], ['Say a word that starts with ب. Who has another?', 'قل كلمة تبدأ بحرف الباء. من عنده كلمة أخرى؟'], ['How does a letter change shape at the start and end of a word?', 'كيف يتغيّر شكل الحرف في أول الكلمة وآخرها؟']],
+    coding: [['Give a friend step-by-step directions to the door. Did it work the first time?', 'أعطِ صديقك تعليمات خطوة بخطوة للوصول إلى الباب. هل نجحت من أول مرة؟'], ['What is a bug, and how did you find one today?', 'ما الخطأ البرمجي، وكيف وجدت واحدًا اليوم؟'], ['When is a loop (repeat) better than writing the same step again?', 'متى يكون التكرار أفضل من كتابة الخطوة نفسها مرة أخرى؟']],
+    math: [['Where do we use numbers at home or at the souq?', 'أين نستعمل الأعداد في البيت أو في السوق؟'], ['Show two different ways to make 10.', 'أرِنا طريقتين مختلفتين لتكوين العدد 10.'], ['How did you check your answer?', 'كيف تحقّقت من جوابك؟']],
+    science: [['What do plants need to grow? How could we test it in class?', 'ماذا يحتاج النبات لينمو؟ كيف نختبر ذلك في الصف؟'], ['Name something solid, something liquid and a gas.', 'سمِّ شيئًا صلبًا وشيئًا سائلًا وغازًا.'], ['Why do you think ice melts in the sun?', 'لماذا تظن أن الثلج يذوب في الشمس؟']],
+    english: [['Tell your partner one sentence about your weekend in English.', 'قل لزميلك جملة واحدة بالإنجليزية عن عطلتك.'], ['Which new word did you learn today? Use it in a sentence.', 'ما الكلمة الجديدة التي تعلّمتها اليوم؟ استعملها في جملة.'], ['What is the opposite of "big", "hot" and "happy"?', 'ما عكس «big» و«hot» و«happy»؟']],
+    arabic: [['Read a short sentence aloud. Which word was hardest?', 'اقرأ جملة قصيرة بصوت عالٍ. أي كلمة كانت الأصعب؟'], ['Say the plural of بيت، ولد، جمل.', 'قل جمع: بيت، ولد، جمل.'], ['Write the days of the week in order.', 'اكتب أيام الأسبوع بالترتيب.']],
+    art: [['Which two colours make green? Try it with paint.', 'أي لونين يكوّنان الأخضر؟ جرّب ذلك بالألوان.'], ['Find a pattern in the classroom or on Sadu weaving.', 'ابحث عن نقشة في الصف أو في نسيج السدو.'], ['Which shape has three sides? Draw it in the air.', 'أي شكل له ثلاثة أضلاع؟ ارسمه في الهواء.']],
+    animals: [['Which animals live on a farm, and which live in the wild?', 'أي الحيوانات تعيش في المزرعة وأيها في البرية؟'], ['Copy an animal sound. Can the class guess it?', 'قلّد صوت حيوان. هل يعرفه الصف؟'], ['Why can\'t the ostrich fly, even though it is a bird?', 'لماذا لا تطير النعامة مع أنها طائر؟']],
+    world: [['Point to your elbow, knee and chin!', 'أشر إلى مرفقك وركبتك وذقنك!'], ['Which fruits and vegetables did you eat this week?', 'ما الفواكه والخضار التي أكلتها هذا الأسبوع؟'], ['What job would you like to do, and how does it help people?', 'ما المهنة التي تحبّ أن تعملها، وكيف تساعد الناس؟']]
+  };
+  var T = {
+    en: {
+      title: 'Sadu Teacher Guide', lead: 'How to use Sadu in a classroom or learning group, with a simple lesson plan and questions to talk about after each course. Free to print and share.',
+      setupH: 'Getting started (10 minutes)', setup: ['Open Sadu at the website address and choose English or Arabic.', 'Add each child under "Switch child" (first name and age). Progress stays on that device; one tablet can hold several children.', 'Optional: in the Family report (grown-ups question) set a Daily time limit.', 'Each new child can take the 2-minute Starting test, so lessons begin at the right level.', 'Show the class Saqr, the friendly falcon guide, and the 🤔 I\'m stuck button: it gives a hint, then help, then lets them skip with no penalty.'],
+      planH: 'A 25-minute session', plan: [['5 min', 'Warm-up together: read a Sadu story aloud on the big screen, or play one Discover Saudi Arabia stop as a class.'], ['12 min', 'Children (alone or in pairs) play Today\'s six or their journey. Walk around and use the discussion questions below.'], ['5 min', 'Talk: ask two questions from the course they played. Let children explain to each other.'], ['3 min', 'Celebrate: stickers, Saqr\'s house, and a printed certificate when a course is finished.']],
+      toolsH: 'Useful tools for teachers', tools: [['Family report', 'Strengths, weak spots, a learning plan and a printable summary for each child.'], ['Worksheets', 'Print-and-practise sheets made from any lesson (open a lesson card → Worksheet).'], ['Review days', 'Lessons come back after 1, 3, 7, 21 and 60 days, so learning sticks.'], ['Today\'s quest', 'A short story quest each day from each child\'s weakest subject.'], ['Lesson editor', 'Add your own lessons and questions without coding (in the Family report).'], ['AI Lab', 'Children teach a robot with colours, words or numbers: a first look at machine learning.']],
+      coursesH: 'Courses and questions to talk about', lessons: 'lessons', ages: 'Ages',
+      discoverH: 'Discover Saudi Arabia: class ideas', discover: ['Before a quest, find the place on a real map of Saudi Arabia.', 'After a quest, each pair draws one knowledge card on paper and presents it.', 'Make a class "card wall" as children collect the 15 knowledge cards.', 'Al-Qatt Al-Asiri quest: paint triangle patterns with crayons.'],
+      aiH: 'Talking about AI (AI Lab)', ai: ['AI learns from examples, like the robot in the AI Lab. What happens when we teach it a wrong example?', 'Is AI always right? Why should a grown-up check what it says?', 'What kinds of examples would make a fair robot?'],
+      safeH: 'Safety and privacy', safe: ['Children never type an email or make an account. Progress stays on the device.', 'Grown-up areas (reports, editor, video and game helpers) are behind a grown-ups question.', 'There are no adverts and no chat with strangers.', 'Make a game and Video Studio only work when a grown-up connects them, and every idea is checked for child-safe words.'],
+      foot: 'Sadu · a bilingual learning platform for children. This guide may be printed and shared freely.'
+    },
+    ar: {
+      title: 'دليل المعلّم لسدو', lead: 'كيف تستعمل سدو في الصف أو مجموعة التعلّم، مع خطة درس بسيطة وأسئلة للنقاش بعد كل دورة. مجاني للطباعة والمشاركة.',
+      setupH: 'البداية (10 دقائق)', setup: ['افتح سدو من عنوان الموقع واختر العربية أو الإنجليزية.', 'أضف كل طفل من «تبديل الطفل» (الاسم الأول والعمر). يبقى التقدّم على الجهاز نفسه، ويمكن لجهاز واحد أن يحفظ عدة أطفال.', 'اختياري: من تقرير الأسرة (سؤال الكبار) حدّد الحدّ اليومي للوقت.', 'يمكن لكل طفل جديد أن يقوم باختبار البداية (دقيقتان) لتبدأ الدروس من المستوى المناسب.', 'عرّف الصف بصقر، الصقر المرشد اللطيف، وبزر «أحتاج مساعدة» 🤔: يعطي تلميحًا ثم مساعدة ثم يسمح بالتخطّي بلا عقوبة.'],
+      planH: 'حصة من 25 دقيقة', plan: [['5 د', 'تمهيد جماعي: اقرأ قصة من سدو بصوت عالٍ على الشاشة الكبيرة، أو العبوا محطة من «اكتشف المملكة» معًا.'], ['12 د', 'يلعب الأطفال (فرادى أو أزواجًا) «ستّ اليوم» أو رحلتهم. تجوّل بينهم واستعمل أسئلة النقاش أدناه.'], ['5 د', 'نقاش: اطرح سؤالين من الدورة التي لعبوها. دع الأطفال يشرحون لبعضهم.'], ['3 د', 'احتفال: الملصقات، وبيت صقر، وشهادة مطبوعة عند إكمال دورة.']],
+      toolsH: 'أدوات مفيدة للمعلّم', tools: [['تقرير الأسرة', 'نقاط القوة ومواطن الضعف وخطة تعلّم وملخّص قابل للطباعة لكل طفل.'], ['أوراق العمل', 'أوراق للطباعة والتدريب من أي درس (افتح بطاقة الدرس ← ورقة عمل).'], ['أيام المراجعة', 'تعود الدروس بعد 1 و3 و7 و21 و60 يومًا ليثبت التعلّم.'], ['مهمّة اليوم', 'مهمّة قصصية قصيرة كل يوم من أضعف مادة لكل طفل.'], ['محرّر الدروس', 'أضف دروسك وأسئلتك بلا برمجة (في تقرير الأسرة).'], ['مختبر الذكاء', 'يعلّم الأطفال روبوتًا بالألوان أو الكلمات أو الأرقام: نظرة أولى على تعلّم الآلة.']],
+      coursesH: 'الدورات وأسئلة للنقاش', lessons: 'درسًا', ages: 'الأعمار',
+      discoverH: 'اكتشف المملكة العربية السعودية: أفكار للصف', discover: ['قبل المهمة، ابحثوا عن المكان على خريطة حقيقية للمملكة.', 'بعد المهمة، يرسم كل زوج بطاقة معرفة على الورق ويعرضها.', 'اصنعوا «جدار بطاقات» للصف كلما جمع الأطفال بطاقات المعرفة الخمس عشرة.', 'مهمة القطّ العسيري: لوّنوا نقوش المثلثات بالألوان الشمعية.'],
+      aiH: 'الحديث عن الذكاء الاصطناعي (مختبر الذكاء)', ai: ['يتعلّم الذكاء الاصطناعي من الأمثلة، مثل الروبوت في المختبر. ماذا يحدث إذا علّمناه مثالًا خاطئًا؟', 'هل الذكاء الاصطناعي على حق دائمًا؟ لماذا يجب أن يتحقّق شخص كبير مما يقوله؟', 'ما الأمثلة التي تصنع روبوتًا عادلًا؟'],
+      safeH: 'الأمان والخصوصية', safe: ['لا يكتب الأطفال بريدًا إلكترونيًا ولا ينشئون حسابات. يبقى التقدّم على الجهاز.', 'مناطق الكبار (التقارير والمحرّر ومساعدا الفيديو والألعاب) خلف سؤال للكبار.', 'لا إعلانات ولا محادثة مع الغرباء.', '«اصنع لعبة» و«استوديو الفيديو» لا يعملان إلا إذا وصّلهما شخص كبير، وكل فكرة تُفحص بحثًا عن كلمات غير مناسبة.'],
+      foot: 'سدو · منصّة تعلّم ثنائية اللغة للأطفال. يمكن طباعة هذا الدليل ومشاركته بحرية.'
+    }
+  }[L];
+  var list = function (a) { return '<ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; };
+  var html = '<h1>📘 ' + esc(T.title) + '</h1><p class="lead">' + esc(T.lead) + '</p>';
+  html += '<h2>🚀 ' + esc(T.setupH) + '</h2><ol>' + T.setup.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>';
+  html += '<h2>🕒 ' + esc(T.planH) + '</h2><table><tbody>' + T.plan.map(function (r) { return '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</tbody></table>';
+  html += '<h2>🧰 ' + esc(T.toolsH) + '</h2><div class="grid">' + T.tools.map(function (r) { return '<div class="box"><h3>' + esc(r[0]) + '</h3><p>' + esc(r[1]) + '</p></div>'; }).join('') + '</div>';
+  html += '<h2>📚 ' + esc(T.coursesH) + '</h2><div class="grid">' + (window.SADU_COURSES || []).map(function (c) {
+    var qs = (TALK[c.id] || []).map(function (q) { return q[AR ? 1 : 0]; });
+    return '<div class="box course" style="--c:' + esc(c.color) + '"><h3>' + esc(tx(c.name)) + '</h3><p><span class="tag">' + esc(tx(c.age)) + '</span><span class="tag">' + c.lessons.length + ' ' + esc(T.lessons) + '</span></p>' +
+      (qs.length ? list(qs) : '') + (c.tip ? '<p><i>' + esc(tx(c.tip)) + '</i></p>' : '') + '</div>';
+  }).join('') + '</div>';
+  html += '<h2>🗺️ ' + esc(T.discoverH) + '</h2>' + list(T.discover);
+  html += '<h2>🤖 ' + esc(T.aiH) + '</h2>' + list(T.ai);
+  html += '<h2>🛡️ ' + esc(T.safeH) + '</h2><div class="note">' + list(T.safe) + '</div>';
+  html += '<footer>' + esc(T.foot) + '</footer>';
+  document.getElementById('guide').innerHTML = html;
+  document.title = T.title;
+})();
+</script>
+</body>
+</html>
