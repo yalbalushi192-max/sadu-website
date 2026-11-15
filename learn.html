@@ -295,6 +295,10 @@
 <sc-if value="{{ journey.hasNext }}"><button type="button" class="btn primary lg point go-btn" onclick="{{ journey.go }}">{{ t.jGo }}</button></sc-if>
 </div>
 <sc-if value="{{ review.has }}"><div class="review-offer"><span class="review-ic" aria-hidden="true">🔁</span><p>{{ review.text }}</p><button type="button" class="btn accent" onclick="{{ review.start }}">{{ t.rvBtn }}</button></div></sc-if>
+<sc-if value="{{ dq.show }}"><div class="review-offer dq-card"><span class="review-ic" aria-hidden="true">🌙</span>
+<sc-if value="{{ dq.open }}"><p><b>{{ dq.text }}</b><sc-if value="{{ dq.medals }}"><br><span class="small">{{ dq.medals }}</span></sc-if></p><button type="button" class="btn accent" onclick="{{ dq.start }}">{{ t.dqGo }}</button></sc-if>
+<sc-if value="{{ dq.done }}"><p>{{ t.dqDoneCard }}<sc-if value="{{ dq.medals }}"><br><span class="small">{{ dq.medals }}</span></sc-if></p></sc-if>
+</div></sc-if>
 <sc-if value="{{ placeOffer }}"><div class="review-offer pl-offer"><span class="review-ic" aria-hidden="true">🎯</span><p>{{ t.plOffer }}</p><div class="actions"><button type="button" class="btn accent" onclick="{{ placeStart }}">{{ t.plStart }}</button><button type="button" class="btn ghost" onclick="{{ placeSkip }}">{{ t.plSkip }}</button></div></div></sc-if>
 <sc-if value="{{ journey.hasEarlier }}"><p class="small muted road-earlier">✓ {{ journey.earlier }}</p></sc-if>
 <ol class="road">

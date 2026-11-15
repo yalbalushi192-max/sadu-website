@@ -70,6 +70,19 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      dqCard: '🌙 Today\'s quest: %T', dqGo: 'Start the quest', dqDoneCard: '🏅 Quest done! You won a medal. A new quest comes tomorrow.', dqMedals: 'Quest medals: %A', dqWon: '🏅 Quest complete! You won a quest medal.',
+      dqHooks: {
+        phonics: ['The Lost Letters', 'Oh no! The wind blew the letters out of Saqr\'s alphabet book. Answer the sound questions to catch them and put them back!'],
+        'arabic-phonics': ['The Letter Caravan', 'A caravan of Arabic letters is crossing the desert, but some letters got lost in the dunes. Help Saqr find them by their sounds!'],
+        coding: ['The Robot Repair', 'Saqr\'s robot friend is mixed up and keeps walking into rocks. Fix its thinking with your coding skills!'],
+        math: ['The Souq Counting Machine', 'The counting machine in the souq is broken! The shopkeepers need you to work out the numbers before the market opens.'],
+        science: ['The Science Tent', 'Strange things are happening at the science tent: ice melting, plants growing, magnets pulling. Help Saqr explain them!'],
+        english: ['The Word Treasure Map', 'A treasure map is written in English words. Read the clues with Saqr to find the treasure chest!'],
+        arabic: ['The Golden Pen', 'Grandpa\'s golden pen writes only correct Arabic. Help Saqr answer the questions so the pen will write again!'],
+        art: ['The Colour Festival', 'The colour festival is tonight, but the painters need help with colours and shapes. Be Saqr\'s art helper!'],
+        animals: ['The Night Zoo', 'The animals at the night zoo are making sounds in the dark. Help Saqr find out who is who!'],
+        world: ['The Explorer\'s Backpack', 'Saqr is packing for a big trip around the world. Answer the questions to fill the explorer\'s backpack!']
+      },
       plOffer: 'New here? Take a 2-minute starting test so Saqr knows where to begin in each subject.', plStart: '🎯 Starting test', plSkip: 'Start from the beginning',
       plTitle: 'Starting test', plIntro: 'Just answer what you know. It is fine to say "I don\'t know yet"!', plIdk: 'I don\'t know yet', plOf: 'Question %A of %B',
       plDone: 'All done! Here is where you will start:', plGo: 'Start my journey', plRedo: '🎯 Do the starting test again',
@@ -81,7 +94,7 @@
       stuckSkipped: 'No problem! We will try this one again tomorrow.',
       navHouse: 'Saqr\'s house', hsTitle: 'Saqr\'s house', hsIntro: 'Everything you make and win hangs on the walls of Saqr\'s house. Keep learning to fill them up!',
       hsWall: 'On the walls', hsEmpty: 'An empty frame. Finish lessons, quests and games to fill it!', hsJournal: 'My discovery journal', hsJournalEmpty: 'Your journal is empty. Start a lesson or a story to write the first page!',
-      hsFrames: { sticker: 'Newest sticker', cert: 'Course certificate', cards: 'Knowledge cards', game: 'My game', story: 'Stories read', pet: 'My pet' },
+      hsFrames: { medal: 'Quest medals', sticker: 'Newest sticker', cert: 'Course certificate', cards: 'Knowledge cards', game: 'My game', story: 'Stories read', pet: 'My pet' },
       hsCardsN: 'Collected: %A', hsStoriesN: 'Read: %A', hsLesson: 'Finished the lesson “%A”', hsStory: 'Read the story “%A”', hsQuest: 'Explored %A', hsPetBorn: 'Hatched %A', hsGame: 'Made the game “%A”',
       hsSaqr: 'Welcome to my house, %N! Look at everything you have done.', hsPlayGame: 'Play',
       navToday: 'Today\'s six', tdTitle: 'Today\'s six', tdIntro: 'Six short activities picked just for you today. Press play and do them one after another!',
@@ -258,6 +271,19 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      dqCard: '🌙 مهمّة اليوم: %T', dqGo: 'ابدأ المهمّة', dqDoneCard: '🏅 أنجزت المهمّة! ربحت وسامًا. مهمّة جديدة غدًا.', dqMedals: 'أوسمة المهامّ: %A', dqWon: '🏅 اكتملت المهمّة! ربحت وسام المهمّة.',
+      dqHooks: {
+        phonics: ['الحروف الضائعة', 'يا للهول! أطارت الريح الحروف من كتاب صقر. أجب عن أسئلة الأصوات لتلتقطها وتعيدها إلى مكانها!'],
+        'arabic-phonics': ['قافلة الحروف', 'قافلة من الحروف العربية تعبر الصحراء، لكن بعض الحروف ضاعت بين الكثبان. ساعد صقرًا على إيجادها بأصواتها!'],
+        coding: ['إصلاح الروبوت', 'صديق صقر الروبوت مرتبك ويصطدم بالصخور. أصلح تفكيره بمهارات البرمجة!'],
+        math: ['آلة العدّ في السوق', 'تعطّلت آلة العدّ في السوق! يحتاج الباعة إلى مساعدتك في حساب الأعداد قبل أن يفتح السوق.'],
+        science: ['خيمة العلوم', 'أشياء غريبة تحدث في خيمة العلوم: ثلج يذوب، ونبات ينمو، ومغناطيس يجذب. ساعد صقرًا على تفسيرها!'],
+        english: ['خريطة كنز الكلمات', 'خريطة كنز مكتوبة بكلمات إنجليزية. اقرأ الأدلة مع صقر لتجد صندوق الكنز!'],
+        arabic: ['القلم الذهبي', 'قلم الجدّ الذهبي لا يكتب إلا العربية الصحيحة. ساعد صقرًا على الإجابة ليكتب القلم من جديد!'],
+        art: ['مهرجان الألوان', 'مهرجان الألوان الليلة، والرسّامون يحتاجون مساعدة في الألوان والأشكال. كن مساعد صقر الفنّي!'],
+        animals: ['حديقة الليل', 'الحيوانات في حديقة الليل تصدر أصواتًا في الظلام. ساعد صقرًا على معرفة من هو من!'],
+        world: ['حقيبة المستكشف', 'يجهّز صقر حقيبته لرحلة كبيرة حول العالم. أجب عن الأسئلة لتملأ حقيبة المستكشف!']
+      },
       plOffer: 'جديد هنا؟ قم باختبار بداية مدته دقيقتان ليعرف صقر من أين تبدأ في كل مادة.', plStart: '🎯 اختبار البداية', plSkip: 'ابدأ من البداية',
       plTitle: 'اختبار البداية', plIntro: 'أجب عمّا تعرفه فقط. لا بأس أن تقول «لا أعرف بعد»!', plIdk: 'لا أعرف بعد', plOf: 'السؤال %A من %B',
       plDone: 'انتهينا! هذا مكان بدايتك:', plGo: 'ابدأ رحلتي', plRedo: '🎯 أعِد اختبار البداية',
@@ -269,7 +295,7 @@
       stuckSkipped: 'لا بأس! سنجرّب هذا السؤال مرة أخرى غدًا.',
       navHouse: 'بيت صقر', hsTitle: 'بيت صقر', hsIntro: 'كل ما تصنعه وتربحه يُعلَّق على جدران بيت صقر. واصل التعلّم لتملأها!',
       hsWall: 'على الجدران', hsEmpty: 'إطار فارغ. أكمل الدروس والمهامّ والألعاب لتملأه!', hsJournal: 'دفتر اكتشافاتي', hsJournalEmpty: 'دفترك فارغ. ابدأ درسًا أو قصة لتكتب الصفحة الأولى!',
-      hsFrames: { sticker: 'أحدث ملصق', cert: 'شهادة دورة', cards: 'بطاقات المعرفة', game: 'لعبتي', story: 'القصص المقروءة', pet: 'حيواني' },
+      hsFrames: { medal: 'أوسمة المهامّ', sticker: 'أحدث ملصق', cert: 'شهادة دورة', cards: 'بطاقات المعرفة', game: 'لعبتي', story: 'القصص المقروءة', pet: 'حيواني' },
       hsCardsN: 'جمعت: %A', hsStoriesN: 'قرأت: %A', hsLesson: 'أنهيت درس «%A»', hsStory: 'قرأت قصة «%A»', hsQuest: 'استكشفت %A', hsPetBorn: 'فقس %A', hsGame: 'صنعت لعبة «%A»',
       hsSaqr: 'أهلًا بك في بيتي يا %N! انظر إلى كل ما أنجزته.', hsPlayGame: 'العب',
       navToday: 'ستّ اليوم', tdTitle: 'ستّ اليوم', tdIntro: 'ستة أنشطة قصيرة اخترناها لك اليوم. اضغط «العب» وأنجزها واحدًا بعد الآخر!',
@@ -513,6 +539,41 @@
     return n;
   }
   // ---- Today's six: picked once a day per child (kept in data.todayPlan so it does not change while playing) ----
+  // ---- daily quest: written ahead of time (story hooks above), built each day from the child's weakest subject ----
+  function weakestCourse(data) {
+    var best = null;
+    COURSES.forEach(function (c, ci) {
+      if (!fitsAge(c, data.age) || !(T.dqHooks || {})[c.id]) return;
+      var played = c.lessons.filter(function (l) { return data.lessons[l.id]; });
+      var score = played.length ? played.reduce(function (n, l) { return n + accuracy(data.lessons[l.id]); }, 0) / played.length : 2;
+      if (!best || score < best.score) best = { ci: ci, score: score };
+    });
+    return best ? best.ci : 0;
+  }
+  function questItems(data, ci) {
+    var c = COURSES[ci], out = [], used = {};
+    var pickFrom = function (l, li, label) {
+      window.SADU_DIFF = 1;
+      var pool = (l.make ? l.make() : l.questions || []).filter(function (q) { return (!q.kind || q.kind === 'choice') && q.opts && q.opts.length > 1; });
+      if (label) pool = pool.filter(function (q) { var lab = q.say ? q.say : q.show ? q.show + (tx(q.gloss) ? ' (' + tx(q.gloss) + ')' : '') : tx(q.q); return lab === label; }).concat(pool.slice(0, 1));
+      var q = pool.filter(function (x) { return !used[JSON.stringify(x.q) + (x.show || '')]; })[0];
+      if (!q) return false;
+      used[JSON.stringify(q.q) + (q.show || '')] = 1;
+      out.push({ q: q, ci: ci, li: li, label: label || '', hint: l.hint });
+      return true;
+    };
+    var order = orderOf(ci);
+    // warm-up: two from easier or strong lessons
+    order.slice(0, 4).some(function (li) { pickFrom(c.lessons[li], li); return out.length >= 2; });
+    // the tricky part: missed questions first, then lessons that are not strong yet
+    c.lessons.forEach(function (l, li) { var rec = data.lessons[l.id]; (rec && rec.missed || []).forEach(function (lab) { if (out.length < 5) pickFrom(l, li, lab); }); });
+    order.forEach(function (li) { var rec = data.lessons[c.lessons[li].id]; if (out.length < 5 && (!rec || accuracy(rec) < 0.85)) pickFrom(c.lessons[li], li); });
+    order.forEach(function (li) { if (out.length < 5) pickFrom(c.lessons[li], li); });
+    // the boss: one from the hardest level
+    var top = order.slice().reverse();
+    top.some(function (li) { return pickFrom(c.lessons[li], li); });
+    return out.slice(0, 6);
+  }
   function placedOrder(data, ci) {
     var o = orderOf(ci), lv = (data.place || {})[COURSES[ci].id] || 1;
     var keep = o.filter(function (li) { return (COURSES[ci].lessons[li].level || 1) >= lv; });
@@ -1149,6 +1210,13 @@
       this.go('worksheet', { ci: ci, wsLi: li, wsItems: worksheetItems(COURSES[ci].lessons[li]) });
     }
 
+    startDailyQuest() {
+      var data = this.state.data, ci = weakestCourse(data), items = questItems(data, ci), hook = T.dqHooks[COURSES[ci].id];
+      if (!items.length) return;
+      var qs = items.map(function (it) { var x = prepQ(it.q, it.hint); x.ci = it.ci; x.li = it.li; x.label = it.label; return x; });
+      this.go('lesson', { ci: ci, ls: { review: true, dq: { title: hook[0], intro: hook[1], ci: ci }, li: 0, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], results: [], act: freshAct(qs[0]) } });
+    }
+
     startReview() {
       var items = reviewItems(this.state.data, 6);
       if (!items.length) return;
@@ -1218,6 +1286,7 @@
           rec.acc = Math.min(1, (rec.acc != null ? rec.acc : accuracy(rec)) + 0.25);
         });
         levelMsg = fill(T.rvCleared, { A: cleared + ' / ' + n }); levelCls = 'mlv l3';
+        if (ls.dq) { data.dailyQuest = { day: dayKey(new Date()), done: true, ci: ls.dq.ci }; data.questMedals = (data.questMedals || 0) + 1; levelMsg = T.dqWon; }
       } else if (ls.challenge) {
         var c = COURSES[this.state.ci], per = {};
         (results || []).forEach(function (ok, k) { var li = ls.qs[k].li; per[li] = per[li] || { n: 0, ok: 0 }; per[li].n++; if (ok) per[li].ok++; });
@@ -1499,6 +1568,9 @@
         var lead = allDone ? T.jAllDone : fill(who ? T.jLeadName : T.jLead, { N: who, L: tx(nl.title), C: tx(nc.name) });
         var go = function () { sfx('pop'); if (next) self.startLesson(next.ci, next.li, true); };
         out.placeOffer = !Object.keys(data.lessons).length && !data.placed;
+        var dqDone = !!(data.dailyQuest && data.dailyQuest.day === dayKey(new Date()) && data.dailyQuest.done), dqCi = weakestCourse(data);
+        out.dq = { show: !out.placeOffer, done: dqDone, open: !dqDone, text: fill(T.dqCard, { T: (T.dqHooks[COURSES[dqCi].id] || [''])[0] }),
+          medals: data.questMedals ? fill(T.dqMedals, { A: data.questMedals }) : '', start: function () { sfx('pop'); self.startDailyQuest(); } };
         out.placeStart = function () { sfx('pop'); self.go('placement', { pl: { qs: placementQuestions(self.state.data), i: 0, right: [], picked: -1, done: false } }); };
         out.placeSkip = function () { var d = Object.assign({}, self.state.data, { placed: true }); save(d); self.setState({ data: d }); };
         out.journey = {
@@ -1706,6 +1778,7 @@
           if (rec.when && (!latest || rec.when > latest.when)) latest = { when: rec.when, emoji: stickerOf(ci, li) };
           if (rec.when) journal.push({ when: rec.when, icon: stickerOf(ci, li), text: fill(T.hsLesson, { A: tx(l.title) }) }); }); });
         if (latest) frames.push({ icon: latest.emoji, label: T.hsFrames.sticker, sub: '' });
+        if (data.questMedals) frames.push({ icon: '🏅', label: T.hsFrames.medal, sub: '× ' + data.questMedals });
         COURSES.forEach(function (c, ci) { if (levelDone(data, ci, 0)) frames.push({ icon: '🏅', label: T.hsFrames.cert, sub: tx(c.name) }); });
         var storiesRead = STORIES.filter(function (st) { var r = data.stories[st.id]; if (r && r.when) journal.push({ when: r.when, icon: st.sticker, text: fill(T.hsStory, { A: tx(st.title) }) }); return !!r; }).length;
         if (storiesRead) frames.push({ icon: '📚', label: T.hsFrames.story, sub: fill(T.hsStoriesN, { A: storiesRead }) });
@@ -2228,9 +2301,9 @@
         var isChallenge = !!ls.challenge, isReview = !!ls.review;
         var lesson = isStoryQuiz ? { id: 'story-' + story.id, title: story.title, teach: '' }
           : isChallenge ? { id: 'challenge-' + COURSES[s.ci].id, title: T.chTitle, teach: '' }
-          : isReview ? { id: 'review', title: T.rvTitle, teach: '' } : COURSES[s.ci].lessons[ls.li];
+          : isReview ? (ls.dq ? { id: 'quest', title: ls.dq.title, teach: ls.dq.intro } : { id: 'review', title: T.rvTitle, teach: '' }) : COURSES[s.ci].lessons[ls.li];
         var lessonCount = isStoryQuiz || isChallenge || isReview ? 1 : COURSES[s.ci].lessons.length;
-        if (isReview) out.course = { name: T.rvTitle, color: '#B9A8FF', tint: '#E4DDFF' };
+        if (isReview) out.course = ls.dq ? { name: '🌙 ' + ls.dq.title, color: '#7B5CD6', tint: '#E2D9FF' } : { name: T.rvTitle, color: '#B9A8FF', tint: '#E4DDFF' };
         if (isStoryQuiz) out.course = { name: T.storiesTitle, color: story.color, tint: story.tint };
         var q = ls.qs[ls.qi], last = ls.qi === ls.qs.length - 1;
         var seq = (q.seq || []).map(function (name) { return { hex: COLOURS[name].hex, name: COLOURS[name][LANG] }; });
@@ -2347,7 +2420,7 @@
           backLabel: ls.fromJourney ? T.jBack : isStoryQuiz ? T.backStories : isReview ? T.backHome : T.backCourse,
           startQuiz: startQuiz,
           next: next,
-          again: function () { if (isReview) self.startReview(); else if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
+          again: function () { if (ls.dq) self.startDailyQuest(); else if (isReview) self.startReview(); else if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
           hasCert: !!ls.cert, certMsg: ls.cert ? ls.cert.msg : '',
           openCert: function () { if (ls.cert) self.go('cert', { certCi: ls.cert.ci, certLv: ls.cert.lv }); },
           isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),

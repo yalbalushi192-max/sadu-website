@@ -896,3 +896,7 @@ button.hs-frame{cursor:pointer}button.hs-frame:hover{transform:rotate(-1.5deg)}
 .pl-done{display:flex;flex-direction:column;gap:14px}
 .pl-results{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .pl-results li{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:12px;background:var(--sunk);border-inline-start:6px solid var(--c)}
+
+/* ---------- daily quest ---------- */
+.dq-card{background:linear-gradient(135deg,#2A2560,#4A3E9C);color:#FFFFFF;border-color:#7B5CD6}
+.dq-card p,.dq-card .small{color:#FFFFFF}
