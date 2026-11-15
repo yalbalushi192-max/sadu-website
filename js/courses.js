@@ -133,6 +133,22 @@
     });
   }
 
+
+  // ---- Maths Plus (ages 10 to 14): every lesson makes fresh questions ----
+  function gcd(a, b) { return b ? gcd(b, a % b) : Math.abs(a); }
+  function frac(n, d) { var g = gcd(n, d); n /= g; d /= g; return d === 1 ? String(n) : n + '/' + d; }
+  function pick3(right, wrongs, hint, q, show) {
+    var opts = [String(right)];
+    wrongs.forEach(function (w) { w = String(w); if (opts.indexOf(w) === -1 && opts.length < 3) opts.push(w); });
+    var k = 1; while (opts.length < 3) { var extra = String(right) + ' ' + '?'.repeat(k++); if (typeof right === 'number') extra = String(right + opts.length + 2); if (opts.indexOf(extra) === -1) opts.push(extra); }
+    return { q: q, show: show, opts: opts, hint: hint };
+  }
+  var MP_ANS = { en: 'What is the answer?', ar: 'ما الجواب؟' };
+  var MP_SIMPLE = { en: 'Simplify this fraction.', ar: 'بسّط هذا الكسر.' };
+  var MP_FIND_X = { en: 'What is x?', ar: 'ما قيمة x؟' };
+  var MP_AREA = { en: 'What is the area of this rectangle?', ar: 'ما مساحة هذا المستطيل؟' };
+  var MP_PERIM = { en: 'What is the perimeter of this rectangle?', ar: 'ما محيط هذا المستطيل؟' };
+
   var WHICH_STARTS = { en: 'Which word starts with this letter?', ar: 'أي كلمة تبدأ بهذا الحرف؟' };
   var RHYMES = { en: 'Which word rhymes with this one?', ar: 'أي كلمة لها القافية نفسها؟' };
   var OPPOSITE = { en: 'What is the opposite of this word?', ar: 'ما عكس هذه الكلمة؟' };
@@ -1115,11 +1131,81 @@
           hint: { en: 'Red is Mars, rings mean Saturn, and the biggest is Jupiter.', ar: 'الأحمر هو المريخ، والحلقات تعني زحل، والأكبر هو المشتري.' },
           make: picQuiz(SKY, WHICH_SKY) }
       ]
+    },
+    {
+      id: 'math-plus', stickers: ['🍕', '🔢', '💯', '⚖️', '🌡️', '📐', '🧮', '🔍'], name: { en: 'Maths Plus', ar: 'رياضيات متقدّمة' }, age: { en: 'Ages 10 to 14', ar: 'من 10 إلى 14 سنة' }, ages: [10, 14],
+      color: '#E0A040', tint: '#FBE6C2',
+      tip: { en: 'Use maths in real life: work out a discount at the shop, share a pizza in fractions, or measure a room for a new rug.', ar: 'استعمل الرياضيات في الحياة: احسب الخصم في المتجر، وقسّم البيتزا بالكسور، أو قِس الغرفة لسجّادة جديدة.' },
+      icon: 'M4 4h16v16H4zM8 8h3M9.5 6.5v3M13 9h3M8 15l3 3M11 15l-3 3M13 16h3M13 18h3',
+      lessons: [
+        { id: 'mp-1', title: { en: 'Simplifying fractions', ar: 'تبسيط الكسور' },
+          teach: { en: 'A fraction is simplest when the top and bottom share no common factor. Divide both by the same number: 6/8 ÷ 2 = 3/4.', ar: 'يكون الكسر في أبسط صورة عندما لا يشترك البسط والمقام في عامل. اقسم الاثنين على العدد نفسه: 6/8 ÷ 2 = 3/4.' },
+          make: four(function () {
+            var d = [4, 6, 8, 9, 10, 12][rand(hard(3, 5, 6))], n = 1 + rand(d - 1), m = 2 + rand(hard(2, 3, 5));
+            if (gcd(n, d) !== 1) { n = 1; }
+            var right = frac(n, d);
+            return pick3(right, [frac(n * m, d), n + '/' + (d * m - 1), (n + 1) + '/' + d], { en: 'Find a number that divides both ' + n * m + ' and ' + d * m + '.', ar: 'ابحث عن عدد يقسم ' + n * m + ' و' + d * m + ' معًا.' }, MP_SIMPLE, (n * m) + '/' + (d * m));
+          }) },
+        { id: 'mp-2', title: { en: 'Adding fractions', ar: 'جمع الكسور' },
+          teach: { en: 'To add fractions, make the bottoms the same first. 1/2 + 1/4 = 2/4 + 1/4 = 3/4.', ar: 'لجمع الكسور اجعل المقامات متساوية أولًا. 1/2 + 1/4 = 2/4 + 1/4 = 3/4.' },
+          make: four(function () {
+            var ds = hard([[2, 4], [3, 6], [2, 8]], [[2, 4], [3, 6], [4, 8], [2, 3], [3, 4]], [[3, 4], [2, 5], [4, 6], [3, 5], [6, 8]]), pr = ds[rand(ds.length)];
+            var a = 1 + rand(pr[0] - 1), b = 1 + rand(pr[1] - 1), L = pr[0] * pr[1] / gcd(pr[0], pr[1]);
+            var num = a * (L / pr[0]) + b * (L / pr[1]);
+            return pick3(frac(num, L), [(a + b) + '/' + (pr[0] + pr[1]), frac(num + 1, L), frac(a * b, L)], { en: 'Change both fractions to have ' + L + ' on the bottom.', ar: 'حوّل الكسرين ليصبح المقام ' + L + '.' }, MP_ANS, a + '/' + pr[0] + ' + ' + b + '/' + pr[1]);
+          }) },
+        { id: 'mp-3', title: { en: 'Decimals', ar: 'الأعداد العشرية' },
+          teach: { en: 'Decimals are another way to write tenths and hundredths: 0.5 = 5/10 = 1/2. Line up the decimal points to add.', ar: 'الأعداد العشرية طريقة أخرى لكتابة الأعشار والأجزاء من مئة: 0.5 = 5/10 = 1/2. رتّب الفواصل تحت بعضها عند الجمع.' },
+          make: four(function () {
+            var a = (1 + rand(hard(9, 50, 99))) / 10, b = (1 + rand(hard(9, 50, 99))) / 10, ans = Math.round((a + b) * 10) / 10;
+            var f = function (x) { return x.toFixed(1); };
+            return pick3(f(ans), [f(ans + 1), f(ans - 0.1), f(Math.round((a * 10 + b) * 10) / 100)], { en: 'Add the whole numbers, then the tenths.', ar: 'اجمع الأعداد الصحيحة، ثم الأعشار.' }, MP_ANS, f(a) + ' + ' + f(b));
+          }) },
+        { id: 'mp-4', title: { en: 'Percentages', ar: 'النسب المئوية' },
+          teach: { en: 'Per cent means "out of 100". 10% of 50 is 5, because 50 ÷ 10 = 5. 25% is a quarter and 50% is a half.', ar: 'النسبة المئوية تعني «من 100». 10% من 50 تساوي 5 لأن 50 ÷ 10 = 5. و25% ربع، و50% نصف.' },
+          make: four(function () {
+            var ps = hard([10, 50], [10, 25, 50], [5, 20, 25, 75]), pc = ps[rand(ps.length)], base = (2 + rand(hard(8, 15, 30))) * 20;
+            var ans = base * pc / 100;
+            return pick3(ans, [base - ans, ans * 2, ans + 10], { en: 'Find 1% or 10% first, then multiply.', ar: 'احسب 1% أو 10% أولًا، ثم اضرب.' }, MP_ANS, pc + '% × ' + base);
+          }) },
+        { id: 'mp-5', title: { en: 'Negative numbers', ar: 'الأعداد السالبة' },
+          teach: { en: 'Numbers below zero are negative, like −5 °C on a cold night. On a number line, adding moves right and subtracting moves left: −3 + 5 = 2.', ar: 'الأعداد الأصغر من الصفر سالبة، مثل −5 درجات في ليلة باردة. على خط الأعداد الجمع يتحرّك يمينًا والطرح يسارًا: −3 + 5 = 2.' },
+          make: four(function () {
+            var a = -(1 + rand(hard(6, 10, 20))), b = 1 + rand(hard(6, 12, 25)), sub = rand(2) === 1;
+            var ans = sub ? a - b : a + b, show = '(' + a + ')' + (sub ? ' − ' : ' + ') + b;
+            return pick3(String(ans).replace('-', '−'), [String(-ans).replace('-', '−'), String(ans + 1).replace('-', '−'), String(sub ? a + b : a - b).replace('-', '−')], { en: 'Start at ' + a + ' on a number line and move ' + b + (sub ? ' left.' : ' right.'), ar: 'ابدأ من ' + a + ' على خط الأعداد وتحرّك ' + b + (sub ? ' يسارًا.' : ' يمينًا.') }, MP_ANS, show.replace(/-/g, '−'));
+          }) },
+        { id: 'mp-6', title: { en: 'Area and perimeter', ar: 'المساحة والمحيط' },
+          teach: { en: 'Perimeter is the distance around a shape: add all the sides. Area is the space inside: for a rectangle, length × width.', ar: 'المحيط هو المسافة حول الشكل: اجمع كل الأضلاع. والمساحة هي الحيّز داخله: للمستطيل الطول × العرض.' },
+          make: four(function () {
+            var l = 2 + rand(hard(6, 10, 18)), w = 1 + rand(hard(5, 8, 12)), area = rand(2) === 1;
+            var ans = area ? l * w : 2 * (l + w);
+            return pick3(ans + (area ? ' cm²' : ' cm'), [(area ? 2 * (l + w) : l * w) + (area ? ' cm²' : ' cm'), (l + w) + (area ? ' cm²' : ' cm'), (ans + 2) + (area ? ' cm²' : ' cm')],
+              area ? { en: 'Multiply the length by the width.', ar: 'اضرب الطول في العرض.' } : { en: 'Add all four sides: two lengths and two widths.', ar: 'اجمع الأضلاع الأربعة: طولين وعرضين.' }, area ? MP_AREA : MP_PERIM, l + ' cm × ' + w + ' cm');
+          }) },
+        { id: 'mp-7', title: { en: 'Order of operations', ar: 'ترتيب العمليات' },
+          teach: { en: 'Brackets first, then × and ÷, then + and −. So 2 + 3 × 4 = 2 + 12 = 14, but (2 + 3) × 4 = 20.', ar: 'الأقواس أولًا، ثم الضرب والقسمة، ثم الجمع والطرح. لذلك 2 + 3 × 4 = 2 + 12 = 14، لكن (2 + 3) × 4 = 20.' },
+          make: four(function () {
+            var a = 1 + rand(hard(5, 9, 12)), b = 2 + rand(hard(3, 6, 9)), c = 2 + rand(hard(3, 6, 9)), br = hard(0, rand(2), 1) === 1 && rand(2) === 1;
+            var ans = br ? (a + b) * c : a + b * c, wrong = br ? a + b * c : (a + b) * c;
+            return pick3(ans, [wrong, a * b + c, ans + c], { en: br ? 'Work out the brackets first.' : 'Multiply before you add.', ar: br ? 'احسب ما بين القوسين أولًا.' : 'اضرب قبل أن تجمع.' }, MP_ANS, br ? '(' + a + ' + ' + b + ') × ' + c : a + ' + ' + b + ' × ' + c);
+          }) },
+        { id: 'mp-8', title: { en: 'Simple equations', ar: 'المعادلات البسيطة' },
+          teach: { en: 'An equation is a balance. To find x, do the same thing to both sides: x + 7 = 12, take 7 from both sides, x = 5.', ar: 'المعادلة ميزان. لإيجاد x افعل الشيء نفسه بالطرفين: x + 7 = 12، اطرح 7 من الطرفين، x = 5.' },
+          make: four(function () {
+            var x = 1 + rand(hard(9, 15, 30)), kind = rand(hard(1, 2, 3)), show, a;
+            if (kind === 0) { a = 2 + rand(15); show = 'x + ' + a + ' = ' + (x + a); }
+            else if (kind === 1) { a = 2 + rand(8); show = a + 'x = ' + (a * x); }
+            else { a = 2 + rand(5); var b = 1 + rand(10); show = a + 'x + ' + b + ' = ' + (a * x + b); }
+            return pick3(x, [x + 1, kind === 1 ? a * x - a : x + a, Math.max(0, x - 2)], { en: 'Undo each step: subtract, then divide.', ar: 'تراجع عن كل خطوة: اطرح، ثم اقسم.' }, MP_FIND_X, show);
+          }) }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'mp-1': 1, 'mp-2': 1, 'mp-3': 1, 'mp-4': 2, 'mp-5': 2, 'mp-6': 2, 'mp-7': 3, 'mp-8': 3,
     'world-1': 1, 'world-2': 1, 'world-3': 1, 'world-4': 2, 'world-5': 2, 'world-6': 2, 'world-7': 3,
     'animals-1': 1, 'animals-2': 1, 'animals-3': 2, 'animals-4': 2, 'animals-5': 3, 'animals-6': 3,
     'phonics-1': 1, 'phonics-2': 1, 'phonics-3': 1, 'phonics-8': 2, 'phonics-4': 2, 'phonics-5': 3, 'phonics-9': 3,
