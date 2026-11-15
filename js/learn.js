@@ -72,6 +72,9 @@
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
       mlv: ['Not started', 'Attempted', 'Familiar', 'Proficient', 'Mastered'], masteryWord: 'Mastery', masteryPct: 'Mastery %A%',
       levelUp: 'Level up: from %A to %B!', levelNow: 'Mastery: %B', masteryKey: 'Mastery levels: a lesson moves up with good scores and can slip back if it is forgotten. Mastered comes from the course challenge.',
+      wsBtn: 'Worksheet', wsTitle: 'Worksheet', wsName: 'Name', wsDate: 'Date', wsPrint: 'Print the worksheet', wsTick: 'Circle the right answer.',
+      wsSay: 'Say the word out loud, then circle its sound.', wsCount: 'Colour %A dates.', wsTrace: 'Trace the dotted shape, then draw it yourself in the empty box.',
+      wsMatch: 'Draw a line to join each pair.', wsAnswers: 'Answers for grown-ups', wsLearn: 'Learn',
       chTitle: 'Course challenge', chText: 'Mixed questions from the lessons you have played. Get them right to reach Mastered!',
       chStart: 'Start the challenge', chLocked: 'Play 2 lessons in this course to unlock the challenge.', chBest: 'Best score: %A%',
       chChanges: 'Mastery changes', chLine: '%L: %A → %B', chSame: 'No change this time. Practise and try again!',
@@ -140,6 +143,9 @@
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
       mlv: ['لم يبدأ', 'حاول', 'مألوف', 'متمكّن', 'متقن'], masteryWord: 'الإتقان', masteryPct: 'الإتقان %A%',
       levelUp: 'ارتقيت من %A إلى %B!', levelNow: 'الإتقان: %B', masteryKey: 'مستويات الإتقان: يرتقي الدرس مع الدرجات الجيدة وقد ينخفض إذا نُسي. ومستوى «متقن» يأتي من تحدّي الدورة.',
+      wsBtn: 'ورقة عمل', wsTitle: 'ورقة عمل', wsName: 'الاسم', wsDate: 'التاريخ', wsPrint: 'اطبع ورقة العمل', wsTick: 'ضع دائرة حول الإجابة الصحيحة.',
+      wsSay: 'انطق الكلمة بصوت عالٍ، ثم ضع دائرة حول صوتها.', wsCount: 'لوّن %A تمرات.', wsTrace: 'تتبّع الشكل المنقّط، ثم ارسمه وحدك في المربع الفارغ.',
+      wsMatch: 'ارسم خطًا يصل كل زوج.', wsAnswers: 'الإجابات للكبار', wsLearn: 'تعلَّم',
       chTitle: 'تحدّي الدورة', chText: 'أسئلة منوّعة من الدروس التي لعبتها. أجب عنها صحيحة لتصل إلى «متقن»!',
       chStart: 'ابدأ التحدّي', chLocked: 'العب درسين في هذه الدورة لفتح التحدّي.', chBest: 'أفضل نتيجة: %A%',
       chChanges: 'تغيّرات الإتقان', chLine: '%L: %A ← %B', chSame: 'لا تغيير هذه المرة. تدرّب وحاول مرة أخرى!',
@@ -314,6 +320,34 @@
   }
   function mastClass(level) { return 'mlv l' + level; }
 
+  // ---- printable worksheets (idea from Khan Academy Kids printables) ----
+  var SHAPE_PATHS = { '▲': 'M150 45L255 245H45Z', '■': 'M60 60H240V240H60Z', '●': 'M150 55a95 95 0 1 0 .1 0Z', '◆': 'M150 40L255 150L150 260L45 150Z' };
+  function optText(o) { return o && o.colour ? COLOURS[o.colour][LANG] : tx(o); }
+  function worksheetItems(lesson) {
+    var raw = lesson.make ? lesson.make().concat(lesson.make()) : lesson.questions.slice();
+    var seen = {}, items = [];
+    raw.forEach(function (q) {
+      var key = JSON.stringify([q.show, q.say, q.n, q.q, q.pairs]); if (seen[key] || items.length >= 6) return; seen[key] = true;
+      var it = { kind: q.kind || 'choice', prompt: tx(q.q) };
+      if (it.kind === 'choice') {
+        it.show = q.show || ''; it.say = q.say || ''; it.gloss = tx(q.gloss);
+        it.seq = (q.seq || []).map(function (n) { return COLOURS[n].hex; });
+        it.opts = shuffle(q.opts.map(function (o) { return { label: optText(o), sw: o && o.colour ? COLOURS[o.colour].hex : '' }; }));
+        it.answer = optText(q.opts[0]);
+      } else if (it.kind === 'count') {
+        it.n = q.n; it.total = Math.min(12, q.n + 3); it.answer = String(q.n);
+      } else if (it.kind === 'trace') {
+        it.glyph = q.show; it.path = SHAPE_PATHS[q.show] || ''; it.answer = q.show;
+      } else if (it.kind === 'match') {
+        it.lefts = q.pairs.map(function (pr) { return tx(pr[0]); });
+        it.rights = shuffle(q.pairs.map(function (pr) { return tx(pr[1]); }));
+        it.answer = q.pairs.map(function (pr) { return tx(pr[0]) + ' – ' + tx(pr[1]); }).join(', ');
+      }
+      items.push(it);
+    });
+    return items;
+  }
+
   // ---- stickers: one per lesson (from the course's list) and one per story ----
   function stickerOf(ci, li) { var st = COURSES[ci].stickers; return st && st.length ? st[li % st.length] : '⭐'; }
 
@@ -463,6 +497,10 @@
       this.go('home', { data: load(), ls: null, saqrN: 0, adding: false, removing: false });
     }
 
+    openWorksheet(ci, li) {
+      this.go('worksheet', { ci: ci, wsLi: li, wsItems: worksheetItems(COURSES[ci].lessons[li]) });
+    }
+
     startChallenge(ci) {
       var c = COURSES[ci], data = this.state.data, pools = [];
       c.lessons.forEach(function (l, li) {
@@ -549,9 +587,10 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isWorksheet: s.view === 'worksheet',
         isWho: s.view === 'who', goWho: function () { self.go('who', { adding: false }); },
         isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
-        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' ? 'shell focus' : 'shell',
+        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
         gamesHref: (LANG === 'ar' ? 'ar.html' : 'index.html') + '#games',
@@ -595,7 +634,8 @@
             reportNote: rec ? fill(T.rStarsShort, { A: rec.stars }) + ' · ' + day(rec.when) : T.rNew,
             btn: rec ? T.again : T.start, done: !!rec,
             mLabel: T.mlv[masteryOf(rec)], mCls: mastClass(masteryOf(rec)),
-            start: function () { self.startLesson(ci, li); }
+            start: function () { self.startLesson(ci, li); },
+            sheet: function () { self.openWorksheet(ci, li); }
           };
           flat.push({ rec: rec, course: tx(c.name), title: row.title, ci: ci, li: li });
           return row;
@@ -699,6 +739,31 @@
       out.dash.saqrCls = funN ? (funN % 2 ? 'saqr cheer' : 'saqr cheer2') : 'saqr';
       out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
       out.dash.say = function () { speak([out.dash.guide]); };
+
+      // ---- worksheet ----
+      if (s.view === 'worksheet') {
+        var wc = COURSES[s.ci], wl = wc.lessons[s.wsLi];
+        var dateSvg = '';
+        out.ws = {
+          course: tx(wc.name), title: tx(wl.title), teach: tx(wl.teach), color: wc.color, tint: wc.tint,
+          child: (data.name || '').trim(),
+          items: s.wsItems.map(function (it, k) {
+            var v = { num: String(k + 1), prompt: it.prompt, answer: it.answer,
+              isChoice: it.kind === 'choice', isCount: it.kind === 'count', isTrace: it.kind === 'trace', isMatch: it.kind === 'match' };
+            if (v.isChoice) {
+              v.word = it.show || it.say; v.hasWord = !!v.word; v.gloss = it.gloss; v.note = it.say ? T.wsSay : T.wsTick;
+              v.seq = it.seq.map(function (h) { return { hex: h }; }); v.hasSeq = it.seq.length > 0;
+              v.opts = it.opts.map(function (o) { return { label: o.label, sw: o.sw, hasSw: !!o.sw, cls: 'ws-opt' + (/[0-9A-Za-z\u0600-\u06FF]/.test(o.label) ? '' : ' pic') }; });
+            }
+            if (v.isCount) { v.note = fill(T.wsCount, { A: it.n }); v.dates = []; for (var d = 0; d < it.total; d++) v.dates.push({}); }
+            if (v.isTrace) { v.note = T.wsTrace; v.glyph = it.glyph; v.isShape = !!it.path; v.isLetter = !it.path; v.path = it.path; }
+            if (v.isMatch) { v.note = T.wsMatch; v.lefts = it.lefts.map(function (x) { return { label: x }; }); v.rights = it.rights.map(function (x) { return { label: x }; }); }
+            return v;
+          }),
+          print: function () { window.print(); },
+          back: function () { self.go('course'); }
+        };
+      }
 
       // ---- who is learning ----
       out.who = {
