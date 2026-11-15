@@ -32,7 +32,7 @@ B. Full learning platform (owner's request; profiles first):
    - [x] Certificates: a printable certificate when a course or level is finished. Done: offered on the result screen when a level or course is finished; certificate buttons on finished levels and courses; Sadu border, child's name and photo, stars, date, Saqr seal, signature line; prints on one page.
    - [x] Weekly summary for parents: a "this week" page (lessons, minutes, strengths, what to practise), printable. Done: Family report → Weekly summary; last 7 days: lessons, minutes (kept per day from now on), active days, stories, day-by-day bars, what went well, practise next (with missed questions), Saqr's tip for next week; prints on one page.
    - [ ] Grow every course to 15 lessons (keep ids stable; new lessons get a level, hint and sticker).
-   - [ ] Plan for accounts, syncing across devices, teacher classes with a class code, and putting the site online (a written plan with options and costs for the owner to decide; nothing set up without the owner).
+   - [x] Plan for accounts, syncing across devices, teacher classes with a class code, and putting the site online (a written plan with options and costs for the owner to decide; nothing set up without the owner). Done: ONLINE-PLAN.md.
 A. Ideas from the best children's learning apps (owner's request; Sadu's own look and content, nothing copied):
    - [x] Split Phonics into English Phonics and Arabic Phonics (lesson ids and stickers kept).
    - [x] Daily goal (like Duolingo ABC, Lingokids): pick 1, 2 or 3 lessons a day; a goal ring on the dashboard; a celebration when it is reached. Done: in the This week card.
