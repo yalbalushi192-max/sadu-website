@@ -70,6 +70,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      levelNames: ['', 'Level 1 · Starter', 'Level 2 · Explorer', 'Level 3 · Champion'],
       mlv: ['Not started', 'Attempted', 'Familiar', 'Proficient', 'Mastered'], masteryWord: 'Mastery', masteryPct: 'Mastery %A%',
       levelUp: 'Level up: from %A to %B!', levelNow: 'Mastery: %B', masteryKey: 'Mastery levels: a lesson moves up with good scores and can slip back if it is forgotten. Mastered comes from the course challenge.',
       wsBtn: 'Worksheet', wsTitle: 'Worksheet', wsName: 'Name', wsDate: 'Date', wsPrint: 'Print the worksheet', wsTick: 'Circle the right answer.',
@@ -141,6 +142,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      levelNames: ['', 'المستوى 1 · مبتدئ', 'المستوى 2 · مستكشف', 'المستوى 3 · بطل'],
       mlv: ['لم يبدأ', 'حاول', 'مألوف', 'متمكّن', 'متقن'], masteryWord: 'الإتقان', masteryPct: 'الإتقان %A%',
       levelUp: 'ارتقيت من %A إلى %B!', levelNow: 'الإتقان: %B', masteryKey: 'مستويات الإتقان: يرتقي الدرس مع الدرجات الجيدة وقد ينخفض إذا نُسي. ومستوى «متقن» يأتي من تحدّي الدورة.',
       wsBtn: 'ورقة عمل', wsTitle: 'ورقة عمل', wsName: 'الاسم', wsDate: 'التاريخ', wsPrint: 'اطبع ورقة العمل', wsTick: 'ضع دائرة حول الإجابة الصحيحة.',
@@ -346,6 +348,12 @@
       items.push(it);
     });
     return items;
+  }
+
+  // ---- levels: the order lessons are shown and played in (by level, then as written) ----
+  function orderOf(ci) {
+    var ls = COURSES[ci].lessons;
+    return ls.map(function (l, i) { return i; }).sort(function (a, b) { return (ls[a].level || 1) - (ls[b].level || 1) || a - b; });
   }
 
   // ---- stickers: one per lesson (from the course's list) and one per story ----
@@ -621,14 +629,14 @@
       var doneAll = 0, starsAll = 0, lessonsAll = 0, lastAll = 0, started = 0, flat = [];
       out.courses = COURSES.map(function (c, ci) {
         var done = 0, st = 0, nextIdx = -1, mPts = 0;
-        var lessons = c.lessons.map(function (l, li) {
-          var rec = data.lessons[l.id];
+        var lessons = orderOf(ci).map(function (li, pos) {
+          var l = c.lessons[li], rec = data.lessons[l.id];
           lessonsAll += 1;
           if (rec) { done += 1; st += rec.stars; if (rec.when > lastAll) lastAll = rec.when; }
           else if (nextIdx === -1) nextIdx = li;
           mPts += MASTERY_POINTS[masteryOf(rec)];
           var row = {
-            num: String(li + 1), title: tx(l.title), stars: stars(rec ? rec.stars : 0),
+            num: String(pos + 1), li: li, level: l.level || 1, title: tx(l.title), stars: stars(rec ? rec.stars : 0), mPts: MASTERY_POINTS[masteryOf(rec)],
             starsText: fill(T.rStarsShort, { A: rec ? rec.stars : 0 }),
             note: rec ? fill(T.doneOn, { D: day(rec.when) }) : T.lessonMeta,
             reportNote: rec ? fill(T.rStarsShort, { A: rec.stars }) + ' · ' + day(rec.when) : T.rNew,
@@ -640,8 +648,8 @@
           flat.push({ rec: rec, course: tx(c.name), title: row.title, ci: ci, li: li });
           return row;
         });
-        lessons.forEach(function (row, li) {
-          row.isNext = li === nextIdx;
+        lessons.forEach(function (row) {
+          row.isNext = row.li === nextIdx;
           row.state = row.done ? 'step done' : row.isNext ? 'step next' : 'step';
           row.btnCls = row.isNext ? 'btn primary' : 'btn ghost';
         });
@@ -650,6 +658,12 @@
         var pct = Math.round((done / c.lessons.length) * 100), mPct = Math.round(mPts / (c.lessons.length * 100) * 100);
         return {
           name: tx(c.name), age: tx(c.age), color: c.color, tint: c.tint, icon: c.icon, lessons: lessons,
+          levels: [1, 2, 3].map(function (lv) {
+            var rows = lessons.filter(function (r) { return r.level === lv; });
+            var pts = rows.reduce(function (n, r) { return n + r.mPts; }, 0);
+            return { name: T.levelNames[lv], rows: rows, has: rows.length > 0, cls: 'level-head lv' + lv,
+              mastery: rows.length ? fill(T.masteryPct, { A: Math.round(pts / (rows.length * 100) * 100) }) : '' };
+          }).filter(function (g) { return g.has; }),
           doneText: fill(T.xOfY, { A: done, B: c.lessons.length }),
           starsText: fill(T.rStarsOf, { A: st, B: c.lessons.length * 3 }),
           pct: pct + '%', pctNum: String(pct), starsNum: st,
@@ -714,7 +728,7 @@
         hello: data.name && data.name.trim() ? fill(T.hello, { N: data.name.trim() }) : T.helloAnon,
         label: label, course: tx(pc.name), color: pc.color, tint: pc.tint, icon: pc.icon,
         title: tx(pc.lessons[pick.li].title),
-        of: fill(T.lessonOf, { A: pick.li + 1, B: pc.lessons.length }),
+        of: fill(T.lessonOf, { A: orderOf(pick.ci).indexOf(pick.li) + 1, B: pc.lessons.length }),
         btn: pick.rec ? T.resumeLesson : T.startLesson,
         start: function () { self.startLesson(pick.ci, pick.li); },
         week: week, streak: String(streak),
@@ -905,7 +919,7 @@
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
           title: tx(lesson.title), teach: tx(lesson.teach),
-          of: fill(T.lessonOf, { A: ls.li + 1, B: lessonCount }),
+          of: fill(T.lessonOf, { A: isStoryQuiz || isChallenge ? 1 : orderOf(s.ci).indexOf(ls.li) + 1, B: lessonCount }),
           // the podcast file for this lesson and language, without its ending (see audio/README.md)
           audio: 'audio/' + lesson.id + '-' + LANG,
           audioReady: function (e) { e.target.parentNode.hidden = false; },
@@ -935,14 +949,14 @@
           levelMsg: ls.levelMsg || '', hasLevel: !!ls.levelMsg, levelCls: ls.levelCls || '',
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
-          hasNext: !isStoryQuiz && !isChallenge && ls.li < lessonCount - 1,
-          isLast: !isStoryQuiz && !isChallenge && ls.li === lessonCount - 1,
+          hasNext: !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) < lessonCount - 1,
+          isLast: !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) === lessonCount - 1,
           backLabel: isStoryQuiz ? T.backStories : T.backCourse,
           startQuiz: startQuiz,
           next: next,
           again: function () { if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
           isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),
-          nextLesson: function () { self.startLesson(s.ci, ls.li + 1); },
+          nextLesson: function () { var o = orderOf(s.ci); self.startLesson(s.ci, o[o.indexOf(ls.li) + 1]); },
           backCourse: function () { self.go(isStoryQuiz ? 'stories' : 'course'); }
         };
         out.ls.opts = q.opts.map(function (opt, k) {

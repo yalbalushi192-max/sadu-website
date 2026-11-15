@@ -522,3 +522,10 @@ button.who{border:0;background:none;padding:0;text-align:start;cursor:pointer;fo
   .ws-sheet{border:0;box-shadow:none;padding:0}
   .ws-learn{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ---------- levels on the course page ---------- */
+.level-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.level-head .h3::before{display:inline-block;margin-inline-end:8px}
+.level-head.lv1 .h3::before{content:'🌱'}
+.level-head.lv2 .h3::before{content:'🧭'}
+.level-head.lv3 .h3::before{content:'🏆'}

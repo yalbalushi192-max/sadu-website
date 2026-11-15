@@ -184,7 +184,7 @@
       ]
     },
     {
-      id: 'math', stickers: ['🧮', '🔢', '🎯', '⚖️', '🧩', '🧺'], name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'math', stickers: ['🧮', '🔢', '🎯', '⚖️', '🧩', '👯', '🔟', '🍀', '🍰', '🧺'], name: { en: 'Maths', ar: 'الرياضيات' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#FFC93C', tint: '#FFE9A8',
       tip: { en: 'Count and share things at home: dates at snack time, steps on the stairs. Ask: how many more to make 10?', ar: 'عُدّوا الأشياء في البيت وتقاسموها: التمر وقت الوجبة، ودرجات السلّم. واسأل: كم نحتاج لنصل إلى 10؟' },
       icon: 'M6 4v6M3 7h6M15 7h6M4 15l5 5M9 15l-5 5M15 16h6M15 20h6',
@@ -214,6 +214,18 @@
         { id: 'math-5', title: { en: 'The missing number', ar: 'العدد الناقص' },
           teach: { en: 'Sometimes a number is hidden. In 7 + ? = 12, ask: what do I add to 7 to make 12? Count on from 7: 8, 9, 10, 11, 12. That is 5 steps, so the missing number is 5.', ar: 'أحيانًا يختبئ عدد. في 7 + ? = 12 اسأل نفسك: كم أضيف إلى 7 لأحصل على 12؟ عُدّ من 7: 8، 9، 10، 11، 12. هذه 5 خطوات، فالعدد الناقص هو 5.' },
           make: four(missing) },
+        { id: 'math-7', title: { en: 'Doubles', ar: 'الضِّعف' },
+          teach: { en: 'A double is a number added to itself. Double 4 is 4 + 4 = 8. Your two hands are a double: 5 + 5 = 10.', ar: 'الضِّعف هو أن نجمع العدد مع نفسه. ضِعف 4 هو 4 + 4 = 8. ويداك ضِعف: 5 + 5 = 10.' },
+          make: four(function () { var a = 1 + rand(10); return sum(a + ' + ' + a, a + a, { en: 'Count on ' + a + ' more from ' + a + '.', ar: 'عُدّ ' + a + ' للأمام بدءًا من ' + a + '.' }); }) },
+        { id: 'math-8', title: { en: 'Make 10', ar: 'كوِّن 10' },
+          teach: { en: 'Pairs of numbers that make 10 are very useful: 1 + 9, 2 + 8, 3 + 7, 4 + 6 and 5 + 5. Use your ten fingers to find the partner.', ar: 'أزواج الأعداد التي مجموعها 10 مفيدة جدًّا: 1 + 9، و2 + 8، و3 + 7، و4 + 6، و5 + 5. استعمل أصابعك العشرة لتجد الشريك.' },
+          make: four(function () { var a = 1 + rand(9), q = sum(a + ' + ? = 10', 10 - a, { en: 'Hold up ' + a + ' fingers. How many are still down?', ar: 'ارفع ' + a + ' أصابع. كم إصبعًا بقي مضمومًا؟' }); q.q = MISSING; return q; }) },
+        { id: 'math-9', title: { en: 'Times 3 and 4', ar: 'الضرب في 3 و4' },
+          teach: { en: 'Times 3 means three of the same group, and times 4 means four groups. 4 × 3 is four threes: 3 + 3 + 3 + 3 = 12.', ar: 'الضرب في 3 يعني ثلاث مجموعات متساوية، والضرب في 4 يعني أربع مجموعات. 4 × 3 تعني أربع ثلاثات: 3 + 3 + 3 + 3 = 12.' },
+          make: four(function () { var a = 1 + rand(10), b = 3 + rand(2), rp = []; for (var i = 0; i < a; i++) rp.push(b); return sum(a + ' × ' + b, a * b, { en: 'Add ' + b + ', ' + a + (a === 1 ? ' time: ' : ' times: ') + rp.join(' + '), ar: 'اجمع: ' + rp.join(' + ') }); }) },
+        { id: 'math-10', title: { en: 'Sharing equally', ar: 'القسمة بالتساوي' },
+          teach: { en: 'Sharing equally means everyone gets the same. 12 dates shared by 3 children: each child gets 4, because 3 × 4 = 12. We write it 12 ÷ 3 = 4.', ar: 'القسمة بالتساوي تعني أن يأخذ الجميع العدد نفسه. 12 تمرة بين 3 أطفال: يأخذ كل طفل 4، لأن 3 × 4 = 12. ونكتبها 12 ÷ 3 = 4.' },
+          make: four(function () { var b = 2 + rand(4), a = 1 + rand(6); return sum((a * b) + ' ÷ ' + b, a, { en: 'Which number times ' + b + ' makes ' + (a * b) + '?', ar: 'أي عدد إذا ضربناه في ' + b + ' يعطي ' + (a * b) + '؟' }); }) },
         { id: 'math-6', title: { en: 'Count the dates', ar: 'عُدّ التمر' },
           teach: { en: 'Counting means saying one number for each thing. Touch each date as you count it: 1, 2, 3… The last number you say tells you how many there are.', ar: 'العدّ أن نقول عددًا واحدًا لكل شيء. المس كل تمرة وأنت تعدّها: 1، 2، 3… وآخر عدد تقوله يخبرك كم تمرة عندك.' },
           make: countDates }
@@ -458,4 +470,16 @@
       ]
     }
   ];
+
+  // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
+  var LEVELS = {
+    'phonics-1': 1, 'phonics-2': 1, 'phonics-3': 1, 'phonics-8': 2, 'phonics-4': 2, 'phonics-5': 3, 'phonics-9': 3,
+    'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3,
+    'math-1': 1, 'math-2': 1, 'math-6': 1, 'math-4': 2, 'math-5': 2, 'math-7': 2, 'math-8': 2, 'math-3': 3, 'math-9': 3, 'math-10': 3,
+    'science-1': 1, 'science-5': 1, 'science-2': 2, 'science-6': 2, 'science-4': 2, 'science-3': 3,
+    'english-1': 1, 'english-6': 1, 'english-2': 2, 'english-3': 2, 'english-4': 3, 'english-5': 3,
+    'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
+    'art-1': 1, 'art-4': 1, 'art-6': 1, 'art-2': 2, 'art-5': 2, 'art-3': 3
+  };
+  window.SADU_COURSES.forEach(function (c) { c.lessons.forEach(function (l) { l.level = l.level || LEVELS[l.id] || 1; }); });
 })();

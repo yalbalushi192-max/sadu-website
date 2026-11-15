@@ -408,8 +408,10 @@
 <div class="bar" role="progressbar" aria-label="{{ course.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ course.pctNum }}"><div style="width: {{ course.pct }}"></div></div>
 </div>
 </header>
+<sc-for list="{{ course.levels }}" as="g">
+<div class="{{ g.cls }}"><h2 class="h3">{{ g.name }}</h2><span class="small muted">{{ g.mastery }}</span></div>
 <ol class="path" style="--c: {{ course.color }}; --t: {{ course.tint }}">
-<sc-for list="{{ course.lessons }}" as="l">
+<sc-for list="{{ g.rows }}" as="l">
 <li class="{{ l.state }}">
 <span class="marker" aria-hidden="true"><span class="num">{{ l.num }}</span><svg class="tick" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
 <div class="step-card">
@@ -426,6 +428,7 @@
 </li>
 </sc-for>
 </ol>
+</sc-for>
 <div class="card challenge" style="--c: {{ course.color }}; --t: {{ course.tint }}">
 <span class="challenge-ic" aria-hidden="true">🏆</span>
 <div class="challenge-text">
