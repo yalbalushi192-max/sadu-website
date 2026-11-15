@@ -131,6 +131,13 @@ right and two wrong answers, in English, Arabic or both (an empty language copie
 this browser (`sadu-custom-v1`); **Export my lessons** saves them to a file and **Import lessons** loads a
 file, so they can be moved to another device or shared.
 
+## Make a game (Vibe Studio, Claude Fable 5.2)
+
+In the side menu, **Make a game** lets a child describe a game idea; Claude Fable 5.2 builds it and the
+child plays it at once, then asks for changes. Games run in a locked box with no internet and no access
+to Sadu's data. The Claude key lives in a small helper (`server/vibe-worker.js`); see `server/README.md`.
+Until a grown-up connects it, the page says it is not connected yet.
+
 ## Video Studio (Seedance 2.5)
 
 For grown-ups only (behind the grown-ups question): Family report → **Video Studio** makes a short

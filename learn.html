@@ -83,6 +83,7 @@
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
 <button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
+<button type="button" onclick="{{ goVibe }}" aria-current="{{ vibeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 14h.01"/></svg><span>{{ t.navVibe }}</span></button>
 <button type="button" onclick="{{ goAI }}" aria-current="{{ aiOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16.5h5"/></svg><span>{{ t.navAI }}</span></button>
 <a href="{{ gamesHref }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><span>{{ t.navGames }}</span></a>
 <a href="{{ langHref }}" class="lang"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span>{{ t.langLabel }}</span></a>
@@ -381,6 +382,53 @@
 <div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
 </div>
 </sc-if>
+</section>
+</sc-if>
+
+<!-- VIBE STUDIO: the child describes a game, Claude Fable 5.2 builds it (through server/vibe-worker.js) -->
+<sc-if value="{{ isVibe }}">
+<section class="page vibe-page">
+<header class="page-head"><h1 class="h1">🎮 {{ t.vbTitle }}</h1><p class="lead">{{ t.vbIntro }}</p></header>
+<sc-if value="{{ vb.notConnected }}">
+<div class="card vb-card"><div class="guide"><svg class="saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg><div class="bubble"><p>{{ t.vbNotConnected }}</p></div></div>
+<div class="actions"><button type="button" class="btn secondary" onclick="{{ vb.goSet }}">🔒 {{ t.vbConnectBtn }}</button></div></div>
+</sc-if>
+<sc-if value="{{ vb.connected }}">
+<sc-if value="{{ vb.hasMsg }}"><p class="ed-msg" role="alert">{{ vb.msg }}</p></sc-if>
+<sc-if value="{{ vb.idle }}">
+<div class="card vb-card">
+<div class="chip-row"><sc-for list="{{ vb.ideas }}" as="i"><button type="button" class="chip-btn" onclick="{{ i.use }}">💡 {{ i.label }}</button></sc-for></div>
+<label class="ed-field"><span>{{ t.vbPrompt }}</span><textarea id="vibe-idea" class="input" rows="3" dir="auto" maxlength="400" placeholder="{{ t.vbPromptPh }}">{{ vb.idea }}</textarea></label>
+<div class="actions"><button type="button" class="btn primary lg point" onclick="{{ vb.make }}">✨ {{ t.vbMake }}</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ vb.working }}">
+<div class="card vd-working" role="status"><svg class="saqr cheer" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg><p><b>{{ t.vbWorking }}</b></p><div class="vd-bar" aria-hidden="true"><span></span></div></div>
+</sc-if>
+<sc-if value="{{ vb.playing }}">
+<div class="card vb-card">
+<h2 class="h3">🎮 {{ vb.title }}</h2>
+<iframe id="vibe-frame" class="vb-frame" title="{{ vb.title }}" sandbox="allow-scripts"></iframe>
+<label class="ed-field"><span>{{ t.vbChange }}</span><input id="vibe-change" class="input" dir="auto" maxlength="400" placeholder="{{ t.vbChangePh }}" autocomplete="off"></label>
+<div class="actions"><button type="button" class="btn primary" onclick="{{ vb.change }}">🪄 {{ t.vbApply }}</button><button type="button" class="btn ghost" onclick="{{ vb.fresh }}">{{ t.vbNew }}</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ vb.hasMine }}"><div class="card"><h2 class="h3 card-title">{{ t.vbMine }}</h2><div class="chip-row"><sc-for list="{{ vb.mine }}" as="g"><button type="button" class="{{ g.cls }}" onclick="{{ g.open }}">🎮 {{ g.title }}</button></sc-for></div></div></sc-if>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ isVibeSet }}">
+<section class="page vibe-page">
+<button type="button" class="back" onclick="{{ vb.back }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.vbBack }}</button>
+<header class="page-head"><h1 class="h1">🔌 {{ t.vbSetTitle }}</h1><p class="lead">{{ t.vbSetText }}</p></header>
+<div class="card vd-connect">
+<sc-if value="{{ vb.connected }}"><p class="small muted vd-status">✅ <span dir="ltr">{{ vb.url }}</span> · <button type="button" class="linkish" onclick="{{ vb.disconnect }}">{{ t.vdDisconnect }}</button></p></sc-if>
+<label class="ed-field"><span>{{ t.vdUrl }}</span><input id="vibe-url" class="input" type="url" dir="ltr" placeholder="https://sadu-vibe.example.workers.dev" autocomplete="off"></label>
+<label class="ed-field"><span>{{ t.vdPin }}</span><input id="vibe-pin" class="input" type="password" dir="ltr" autocomplete="off"></label>
+<sc-if value="{{ vb.saved }}"><p class="goal-ok">✓ {{ t.vbSaved }}</p></sc-if>
+<div class="actions"><button type="button" class="btn primary" onclick="{{ vb.connect }}">{{ t.vdConnect }}</button></div>
+</div>
 </section>
 </sc-if>
 

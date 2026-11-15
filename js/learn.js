@@ -70,6 +70,17 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navVibe: 'Make a game', vbTitle: 'Make your own game', vbIntro: 'Tell Saqr your game idea and Claude will build it for you to play. Then ask for changes to make it even better!',
+      vbIdeas: ['Saqr catches falling dates in a basket', 'Pop the balloons that show the number 7', 'Help a camel find the way through a maze', 'Match each animal to its sound', 'Catch the letters that spell CAT'],
+      vbPrompt: 'Your game idea', vbPromptPh: 'For example: a falcon flies over the desert and collects stars', vbMake: 'Make my game',
+      vbChange: 'What should change?', vbChangePh: 'For example: make it faster, add more stars, make the falcon blue', vbApply: 'Change my game',
+      vbWorking: 'Claude is building your game… this can take a minute or two.', vbPlay: 'Play!', vbNew: 'New idea', vbMine: 'My games',
+      vbNotConnected: 'Vibe Studio is not connected yet. Ask a grown-up to connect it.', vbConnectBtn: 'For grown-ups: connect',
+      vbSetTitle: 'Connect Vibe Studio', vbSetText: 'Vibe Studio uses Claude Fable 5.2 through your own small helper, so your Claude key stays secret. See server/README.md in the project folder. Each game costs a few cents from your Claude credit.',
+      vbSaved: 'Connected! Your child can now make games.', vbBack: 'Back to Make a game',
+      vbErr: { 'not-allowed': 'Let\'s pick a kinder idea for the game. Try again!', 'too-short': 'Tell me a little more about your game.', 'too-long': 'That is a long idea! Please make it shorter.',
+        'wrong-pin': 'The PIN is not right. Ask a grown-up to connect again.', 'not-configured': 'The helper has no Claude key yet (see server/README.md).', busy: 'Claude is busy right now. Try again in a minute.',
+        'too-big': 'That game got too big. Try a simpler idea.', network: 'Could not reach the game helper. Check the internet and try again.', failed: 'Something went wrong making the game. Try again!' },
       nxBtn: 'Next steps', nxTitle: 'Next steps after Sadu', nxIntro: 'Ideas for what your child can try next in coding, robots and AI, by age. This is general advice: Sadu is not paid to recommend anything.',
       nxBands: [
         { icon: '🧸', age: 'Ages 3 to 5', items: ['Floor robots that move with arrow buttons (a first taste of coding, no screen).', 'Unplugged games: play "robot" by giving each other step-by-step directions; sort toys by colour and size; copy and continue patterns.', 'Short picture books read aloud every day, in Arabic and English.'] },
@@ -198,6 +209,17 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navVibe: 'اصنع لعبة', vbTitle: 'اصنع لعبتك', vbIntro: 'أخبر صقرًا بفكرة لعبتك وسيبنيها Claude لتلعبها. ثم اطلب تغييرات لتصبح أجمل!',
+      vbIdeas: ['صقر يلتقط التمر المتساقط في سلة', 'فرقع البالونات التي عليها الرقم 7', 'ساعد الجمل في الخروج من المتاهة', 'طابق كل حيوان مع صوته', 'التقط حروف كلمة قطة'],
+      vbPrompt: 'فكرة لعبتك', vbPromptPh: 'مثلًا: صقر يطير فوق الصحراء ويجمع النجوم', vbMake: 'اصنع لعبتي',
+      vbChange: 'ماذا تريد أن تغيّر؟', vbChangePh: 'مثلًا: اجعلها أسرع، أضف نجومًا أكثر، اجعل الصقر أزرق', vbApply: 'غيّر لعبتي',
+      vbWorking: 'يبني Claude لعبتك… قد يستغرق ذلك دقيقة أو دقيقتين.', vbPlay: 'العب!', vbNew: 'فكرة جديدة', vbMine: 'ألعابي',
+      vbNotConnected: 'استوديو الألعاب غير متّصل بعد. اطلب من شخص كبير توصيله.', vbConnectBtn: 'للكبار: اتّصال',
+      vbSetTitle: 'توصيل استوديو الألعاب', vbSetText: 'يستخدم استوديو الألعاب Claude Fable 5.2 عبر مساعد صغير خاص بك، فيبقى مفتاح Claude سريًا. انظر server/README.md في مجلد المشروع. تكلّف كل لعبة بضعة سنتات من رصيد Claude.',
+      vbSaved: 'تم الاتّصال! يستطيع طفلك الآن صنع الألعاب.', vbBack: 'العودة إلى اصنع لعبة',
+      vbErr: { 'not-allowed': 'لنختر فكرة ألطف للعبة. حاول مرة أخرى!', 'too-short': 'أخبرني أكثر قليلًا عن لعبتك.', 'too-long': 'فكرة طويلة! اجعلها أقصر من فضلك.',
+        'wrong-pin': 'الرمز السري غير صحيح. اطلب من شخص كبير الاتّصال مرة أخرى.', 'not-configured': 'لا يوجد مفتاح Claude في المساعد بعد (انظر server/README.md).', busy: 'Claude مشغول الآن. حاول بعد دقيقة.',
+        'too-big': 'أصبحت اللعبة كبيرة جدًا. جرّب فكرة أبسط.', network: 'تعذّر الوصول إلى مساعد الألعاب. تحقّق من الإنترنت وحاول مرة أخرى.', failed: 'حدث خطأ أثناء صنع اللعبة. حاول مرة أخرى!' },
       nxBtn: 'الخطوات التالية', nxTitle: 'الخطوات التالية بعد سدو', nxIntro: 'أفكار لما يمكن أن يجرّبه طفلك بعد ذلك في البرمجة والروبوتات والذكاء الاصطناعي، حسب العمر. هذه نصائح عامة: لا يتقاضى سدو أي مقابل للترشيح.',
       nxBands: [
         { icon: '🧸', age: 'من 3 إلى 5 سنوات', items: ['روبوتات أرضية تتحرّك بأزرار الأسهم (أول تجربة للبرمجة بلا شاشة).', 'ألعاب بلا شاشة: العبوا لعبة «الروبوت» بإعطاء تعليمات خطوة بخطوة، ورتّبوا الألعاب حسب اللون والحجم، وأكملوا الأنماط.', 'قصص مصوّرة قصيرة تُقرأ بصوت عالٍ كل يوم، بالعربية والإنجليزية.'] },
@@ -338,7 +360,17 @@
   }
 
   // pages for parents and teachers only
-  var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next'];
+  var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next', 'vibeset'];
+  // ---- Vibe Studio: games made by Claude Fable 5.2 through the helper in server/vibe-worker.js ----
+  var VIBE_CFG_KEY = 'sadu-vibe-cfg', VIBE_GAMES_KEY = 'sadu-vibe-games-v1';
+  // the game runs in a sandboxed frame (scripts only, no access to Sadu) and this rule blocks all network use
+  var VIBE_CSP = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data: blob:; media-src data: blob:; font-src data:">';
+  function vibeDoc(html) {
+    var h = String(html || '');
+    if (/<head[^>]*>/i.test(h)) return h.replace(/<head[^>]*>/i, function (m) { return m + VIBE_CSP; });
+    if (/<html[^>]*>/i.test(h)) return h.replace(/<html[^>]*>/i, function (m) { return m + '<head>' + VIBE_CSP + '</head>'; });
+    return VIBE_CSP + h;
+  }
 
   // ---- child profiles ----
   function keyFor(id) { return id === 'p1' ? KEY : KEY + ':' + id; }
@@ -736,6 +768,7 @@
 
     go(view, extra) {
       clearTimeout(this._vdTimer);
+      if (view === 'vibe' && this.state.view === 'vibeset') this.state.vb = { status: 'idle' };
       if (PARENT_VIEWS.indexOf(view) !== -1 && !(this._grownUntil > Date.now())) {
         var a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
         extra = { gate: { view: view, extra: extra || {}, a: a, b: b, wrong: false } }; view = 'gate';
@@ -872,6 +905,8 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
+        isVibeSet: s.view === 'vibeset',
         isNext: s.view === 'next', goNext: function () { self.go('next'); },
         isAI: s.view === 'ailab', aiOn: s.view === 'ailab' ? 'page' : 'false', goAI: function () { self.go('ailab'); },
         isVideo: s.view === 'video', goVideo: function () { self.go('video'); },
@@ -1171,6 +1206,62 @@
           out.ed.qs = d.questions.map(function (q, i) {
             return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
           });
+        }
+      }
+
+      // ---- Vibe Studio ----
+      if (s.view === 'vibe' || s.view === 'vibeset') {
+        var vcfg = loadJSON(VIBE_CFG_KEY, null), vb = s.vb || { status: 'idle' };
+        var games = loadJSON(VIBE_GAMES_KEY, []);
+        var setVb = function (extra) { self.setState({ vb: Object.assign({}, self.state.vb || vb, extra) }); };
+        var current = vb.gameId ? games.filter(function (g) { return g.id === vb.gameId; })[0] : null;
+        var vfail = function (code) { sfx('wrong'); setVb({ status: current ? 'play' : 'idle', msg: T.vbErr[code] || T.vbErr.failed }); };
+        var ask = function (idea, code) {
+          if (idea.length < 3) return vfail('too-short');
+          if (idea.length > 400) return vfail('too-long');
+          if (hasBlockedWord(idea)) return vfail('not-allowed');
+          var c = loadJSON(VIBE_CFG_KEY, null); if (!c) return;
+          setVb({ status: 'working', msg: '' });
+          fetch(c.url + '/game', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Sadu-Pin': c.pin },
+            body: JSON.stringify({ idea: idea, lang: LANG, code: code || "" }) })
+            .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+            .then(function (res) {
+              if (self.state.view !== 'vibe') return;
+              if (!res.ok || !res.j.html) return vfail(res.j.error);
+              var all = loadJSON(VIBE_GAMES_KEY, []), id = (current && code) ? current.id : 'g' + Date.now();
+              var game = { id: id, title: res.j.title || idea.slice(0, 40), idea: (current && code) ? current.idea : idea, html: res.j.html, when: Date.now() };
+              all = [game].concat(all.filter(function (g) { return g.id !== id; })).slice(0, 8);
+              saveJSON(VIBE_GAMES_KEY, all);
+              sfx('done'); burst(null, 70);
+              setVb({ status: 'play', gameId: id, msg: '' });
+            }).catch(function () { vfail('network'); });
+        };
+        out.vb = {
+          connected: !!vcfg, notConnected: !vcfg, msg: vb.msg || '', hasMsg: !!vb.msg,
+          goSet: function () { self.go('vibeset'); },
+          back: function () { self.go('vibe'); },
+          url: vcfg ? vcfg.url : '', saved: !!vb.saved,
+          connect: function () {
+            var u = ((document.getElementById('vibe-url') || {}).value || '').trim().replace(/\/+$/, ''), pin = ((document.getElementById('vibe-pin') || {}).value || '').trim();
+            if (!/^https?:\/\//.test(u) || !pin) return;
+            saveJSON(VIBE_CFG_KEY, { url: u, pin: pin }); sfx('pop'); setVb({ saved: true });
+          },
+          disconnect: function () { try { localStorage.removeItem(VIBE_CFG_KEY); } catch (e) {} self.setState({ vb: { status: 'idle' } }); },
+          idle: vb.status === 'idle', working: vb.status === 'working', playing: vb.status === 'play' && !!current,
+          ideas: T.vbIdeas.map(function (txt) { return { label: txt, use: function () { sfx('tap'); var el = document.getElementById('vibe-idea'); if (el) el.value = txt; setVb({ idea: txt }); } }; }),
+          idea: vb.idea || '',
+          make: function () { ask(((document.getElementById('vibe-idea') || {}).value || '').trim()); },
+          change: function () { if (current) ask(((document.getElementById('vibe-change') || {}).value || '').trim(), current.html); },
+          title: current ? current.title : '',
+          fresh: function () { self.setState({ vb: { status: 'idle' } }); },
+          mine: games.map(function (g) { return { title: g.title, cls: current && current.id === g.id ? 'chip-btn on' : 'chip-btn', open: function () { sfx('tap'); self.setState({ vb: { status: 'play', gameId: g.id } }); } }; }),
+          hasMine: games.length > 0
+        };
+        if (current && vb.status === 'play') {
+          setTimeout(function () {
+            var f = document.getElementById('vibe-frame'), key = current.id + ':' + current.when;
+            if (f && f.getAttribute('data-k') !== key) { f.setAttribute('data-k', key); f.srcdoc = vibeDoc(current.html); }
+          }, 0);
         }
       }
 
