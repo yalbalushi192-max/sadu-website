@@ -1440,11 +1440,92 @@
             {"q": {"en": "What did Faisal decide?", "ar": "ماذا قرّر فيصل؟"}, "opts": ["أن يتعلّم نقشة من نقوش السدو", "أن يبيع السجاجيد", "ألّا يعود إلى السوق"]}
           ] }
       ]
+    },
+    {
+      id: 'adab', stickers: ['👋', '🍽️', '❤️', '🤝', '✅', '🧼', '🐈', '🙌'], name: { en: 'Good Manners', ar: 'الآداب' }, age: { en: 'Ages 4 to 9', ar: 'من 4 إلى 9 سنوات' }, ages: [4, 9],
+      color: '#2E9E6B', tint: '#CFEFDC',
+      tip: { en: 'Praise good manners when you see them: "That was kind of you to share!" Children copy what we do, so greet, thank and share in front of them.', ar: 'امدح الأدب الحسن عندما تراه: «كان لطيفًا منك أن تشارك!» الأطفال يقلّدون ما نفعل، فحيِّ واشكر وشارك أمامهم.' },
+      icon: 'M12 21s-7-4.4-9.3-9C1.2 8.8 3.3 5 7 5c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 3.7 0 5.8 3.8 4.3 7-2.3 4.6-9.3 9-9.3 9z',
+      lessons: [
+        { id: "adab-1", title: {"en": "Greeting people", "ar": "تحيّة الناس"},
+          teach: {"en": "When we meet someone we smile and say \"As-salamu alaykum\" (peace be upon you), and they answer \"Wa alaykum as-salam\". A warm greeting makes everyone feel welcome.", "ar": "عندما نلقى أحدًا نبتسم ونقول: «السلام عليكم»، فيردّ: «وعليكم السلام». التحيّة الدافئة تُشعر الجميع بالترحيب."},
+          hint: {"en": "What do we say when we meet someone, and how do they answer?", "ar": "ماذا نقول عندما نلقى أحدًا، وبماذا يردّ؟"},
+          questions: [
+            {"q": {"en": "What do we say when we meet someone?", "ar": "ماذا نقول عندما نلقى أحدًا؟"}, "opts": [{"en": "As-salamu alaykum", "ar": "السلام عليكم"}, {"en": "Go away", "ar": "ابتعد"}, {"en": "Nothing at all", "ar": "لا شيء"}]},
+            {"q": {"en": "How do we answer \"As-salamu alaykum\"?", "ar": "بماذا نردّ على «السلام عليكم»؟"}, "opts": [{"en": "Wa alaykum as-salam", "ar": "وعليكم السلام"}, {"en": "Goodbye", "ar": "مع السلامة"}, {"en": "Thank you for the food", "ar": "شكرًا على الطعام"}]},
+            {"q": {"en": "What should our face do when we greet someone?", "ar": "كيف يكون وجهنا عندما نحيّي أحدًا؟"}, "opts": [{"en": "smile", "ar": "نبتسم"}, {"en": "frown", "ar": "نعبس"}, {"en": "look away", "ar": "ننظر بعيدًا"}]},
+            {"q": {"en": "A new child joins your class. What is kind to do?", "ar": "انضمّ طفل جديد إلى صفّك. ما التصرّف اللطيف؟"}, "opts": [{"en": "greet them and say hello", "ar": "أحيّيه وأرحّب به"}, {"en": "ignore them", "ar": "أتجاهله"}, {"en": "laugh at them", "ar": "أضحك عليه"}]}
+          ] },
+        { id: "adab-2", title: {"en": "Before and after eating", "ar": "آداب الطعام"},
+          teach: {"en": "Before eating we wash our hands and say \"Bismillah\". We eat with our right hand, take food that is near us, and do not waste it. After eating we say \"Alhamdulillah\" and thank the person who made the food.", "ar": "قبل الطعام نغسل أيدينا ونقول: «بسم الله». نأكل بيدنا اليمنى ومما يلينا، ولا نُسرف في الطعام. وبعد الأكل نقول: «الحمد لله»، ونشكر من أعدّ الطعام."},
+          hint: {"en": "Think about the start of the meal and the end of the meal.", "ar": "فكّر في بداية الوجبة ونهايتها."},
+          questions: [
+            {"q": {"en": "What do we say before we eat?", "ar": "ماذا نقول قبل أن نأكل؟"}, "opts": [{"en": "Bismillah", "ar": "بسم الله"}, {"en": "Good night", "ar": "تصبح على خير"}, {"en": "Hurry up", "ar": "أسرع"}]},
+            {"q": {"en": "What do we say after we finish eating?", "ar": "ماذا نقول بعد أن ننتهي من الأكل؟"}, "opts": [{"en": "Alhamdulillah", "ar": "الحمد لله"}, {"en": "Again!", "ar": "مرة أخرى!"}, {"en": "Nothing", "ar": "لا شيء"}]},
+            {"q": {"en": "What should we do before a meal?", "ar": "ماذا نفعل قبل الوجبة؟"}, "opts": [{"en": "wash our hands", "ar": "نغسل أيدينا"}, {"en": "play in the sand", "ar": "نلعب في الرمل"}, {"en": "run around the table", "ar": "نركض حول المائدة"}]},
+            {"q": {"en": "There is too much food on your plate. What is best?", "ar": "في صحنك طعام كثير جدًّا. ما الأفضل؟"}, "opts": [{"en": "take a little and not waste it", "ar": "آخذ قليلًا ولا أهدر الطعام"}, {"en": "throw it away", "ar": "أرميه"}, {"en": "take even more", "ar": "آخذ أكثر"}]}
+          ] },
+        { id: "adab-3", title: {"en": "Kindness to parents", "ar": "الإحسان إلى الوالدين"},
+          teach: {"en": "Our parents look after us with love. We are kind to them by speaking softly, listening when they talk, helping at home, and saying \"thank you\". Making them happy makes us happy too.", "ar": "والدانا يرعياننا بحبّ. ونُحسن إليهما بالكلام اللطيف، والإصغاء عندما يتكلّمان، والمساعدة في البيت، وقول «شكرًا». إسعادهما يُسعدنا نحن أيضًا."},
+          hint: {"en": "What would make your mother or father smile?", "ar": "ما الذي يجعل أمك أو أباك يبتسم؟"},
+          questions: [
+            {"q": {"en": "How should we speak to our parents?", "ar": "كيف نتكلّم مع والدينا؟"}, "opts": [{"en": "softly and kindly", "ar": "بلطف وهدوء"}, {"en": "by shouting", "ar": "بالصراخ"}, {"en": "we do not answer", "ar": "لا نجيب"}]},
+            {"q": {"en": "Mum is carrying heavy bags. What can you do?", "ar": "أمك تحمل أكياسًا ثقيلة. ماذا تفعل؟"}, "opts": [{"en": "help her carry them", "ar": "أساعدها في حملها"}, {"en": "keep playing", "ar": "أستمر في اللعب"}, {"en": "ask for sweets", "ar": "أطلب الحلوى"}]},
+            {"q": {"en": "Dad is talking to you. What should you do?", "ar": "أبوك يكلّمك. ماذا تفعل؟"}, "opts": [{"en": "listen and look at him", "ar": "أصغي إليه وأنظر إليه"}, {"en": "walk away", "ar": "أذهب بعيدًا"}, {"en": "cover my ears", "ar": "أغطّي أذنيّ"}]},
+            {"q": {"en": "Which word should we say often to our parents?", "ar": "أي كلمة نقولها كثيرًا لوالدينا؟"}, "opts": [{"en": "thank you", "ar": "شكرًا"}, {"en": "no way", "ar": "مستحيل"}, {"en": "later, later", "ar": "لاحقًا لاحقًا"}]}
+          ] },
+        { id: "adab-4", title: {"en": "Sharing and taking turns", "ar": "المشاركة وانتظار الدور"},
+          teach: {"en": "Sharing means letting others use our things too. Taking turns means waiting patiently until it is our go. When we share and take turns, games are fair and everyone has fun.", "ar": "المشاركة أن ندع الآخرين يستعملون أشياءنا أيضًا. وانتظار الدور أن نصبر حتى يأتي دورنا. عندما نتشارك وننتظر دورنا تصبح الألعاب عادلة ويستمتع الجميع."},
+          hint: {"en": "What would make the game fair for everyone?", "ar": "ما الذي يجعل اللعبة عادلة للجميع؟"},
+          questions: [
+            {"q": {"en": "Your friend wants to play with your ball. What is kind?", "ar": "صديقك يريد اللعب بكرتك. ما التصرّف اللطيف؟"}, "opts": [{"en": "share it and play together", "ar": "أشاركه ونلعب معًا"}, {"en": "hide it", "ar": "أخبّئها"}, {"en": "say \"never\"", "ar": "أقول «أبدًا»"}]},
+            {"q": {"en": "There is a line for the slide. What should you do?", "ar": "هناك صفّ للعب على الزلّاقة. ماذا تفعل؟"}, "opts": [{"en": "wait for my turn", "ar": "أنتظر دوري"}, {"en": "push to the front", "ar": "أدفع لأصل إلى الأمام"}, {"en": "go home crying", "ar": "أعود إلى البيت باكيًا"}]},
+            {"q": {"en": "You have 4 dates and your brother has none. What is kind?", "ar": "معك 4 تمرات وأخوك ليس معه شيء. ما التصرّف اللطيف؟"}, "opts": [{"en": "give him some", "ar": "أعطيه بعضها"}, {"en": "eat them all quickly", "ar": "آكلها كلها بسرعة"}, {"en": "show them and laugh", "ar": "أريه إياها وأضحك"}]},
+            {"q": {"en": "Why is taking turns good?", "ar": "لماذا انتظار الدور جيد؟"}, "opts": [{"en": "it is fair and everyone has fun", "ar": "لأنه عادل ويستمتع الجميع"}, {"en": "it is boring", "ar": "لأنه مملّ"}, {"en": "only one person plays", "ar": "لأن واحدًا فقط يلعب"}]}
+          ] },
+        { id: "adab-5", title: {"en": "Telling the truth", "ar": "الصدق"},
+          teach: {"en": "Being honest means telling the truth, even when it is hard. If we make a mistake, we say so and try to fix it. People trust us when we are honest.", "ar": "الصدق أن نقول الحقيقة حتى لو كان ذلك صعبًا. وإذا أخطأنا نعترف ونحاول الإصلاح. يثق الناس بنا عندما نكون صادقين."},
+          hint: {"en": "What would an honest person do?", "ar": "ماذا يفعل الشخص الصادق؟"},
+          questions: [
+            {"q": {"en": "You broke a cup by accident. What should you do?", "ar": "كسرت كوبًا دون قصد. ماذا تفعل؟"}, "opts": [{"en": "tell the truth and say sorry", "ar": "أقول الحقيقة وأعتذر"}, {"en": "hide the pieces", "ar": "أخبّئ القطع"}, {"en": "blame my sister", "ar": "ألوم أختي"}]},
+            {"q": {"en": "Why do people trust honest children?", "ar": "لماذا يثق الناس بالأطفال الصادقين؟"}, "opts": [{"en": "because they tell the truth", "ar": "لأنهم يقولون الحقيقة"}, {"en": "because they are tall", "ar": "لأنهم طوال"}, {"en": "because they are loud", "ar": "لأن صوتهم عالٍ"}]},
+            {"q": {"en": "You found money on the floor at school. What is best?", "ar": "وجدت نقودًا على الأرض في المدرسة. ما الأفضل؟"}, "opts": [{"en": "give it to the teacher", "ar": "أعطيها للمعلّم"}, {"en": "keep it secretly", "ar": "أحتفظ بها سرًّا"}, {"en": "throw it away", "ar": "أرميها"}]},
+            {"q": {"en": "Which one is honest?", "ar": "أي تصرّف صادق؟"}, "opts": [{"en": "\"I did not finish my homework yet.\"", "ar": "«لم أُنهِ واجبي بعد.»"}, {"en": "\"The cat ate my homework!\" (not true)", "ar": "«القطة أكلت واجبي!» (وهذا غير صحيح)"}, {"en": "saying nothing and hiding", "ar": "السكوت والاختباء"}]}
+          ] },
+        { id: "adab-6", title: {"en": "Keeping clean", "ar": "النظافة"},
+          teach: {"en": "Keeping clean keeps us healthy. We wash our hands before eating and after the toilet, brush our teeth morning and night, and put rubbish in the bin. A clean home and a clean street are nice for everyone.", "ar": "النظافة تحفظ صحّتنا. نغسل أيدينا قبل الطعام وبعد دخول الحمّام، وننظّف أسناننا صباحًا ومساءً، ونضع النفايات في سلّتها. البيت النظيف والشارع النظيف جميلان للجميع."},
+          hint: {"en": "What keeps our bodies and our places clean?", "ar": "ما الذي يحافظ على نظافة أجسامنا وأماكننا؟"},
+          questions: [
+            {"q": {"en": "When do we brush our teeth?", "ar": "متى ننظّف أسناننا؟"}, "opts": [{"en": "morning and night", "ar": "صباحًا ومساءً"}, {"en": "once a month", "ar": "مرة في الشهر"}, {"en": "never", "ar": "أبدًا"}]},
+            {"q": {"en": "Where does rubbish go?", "ar": "أين نضع النفايات؟"}, "opts": [{"en": "in the bin", "ar": "في سلّة النفايات"}, {"en": "on the street", "ar": "في الشارع"}, {"en": "under the bed", "ar": "تحت السرير"}]},
+            {"q": {"en": "When must we wash our hands?", "ar": "متى يجب أن نغسل أيدينا؟"}, "opts": [{"en": "before eating and after the toilet", "ar": "قبل الطعام وبعد الحمّام"}, {"en": "only on holidays", "ar": "في العطلات فقط"}, {"en": "never", "ar": "أبدًا"}]},
+            {"q": {"en": "After playing, your room is messy. What should you do?", "ar": "بعد اللعب صارت غرفتك فوضى. ماذا تفعل؟"}, "opts": [{"en": "tidy up my toys", "ar": "أرتّب ألعابي"}, {"en": "leave it for days", "ar": "أتركها أيامًا"}, {"en": "make more mess", "ar": "أزيد الفوضى"}]}
+          ] },
+        { id: "adab-7", title: {"en": "Kindness to animals", "ar": "الرفق بالحيوان"},
+          teach: {"en": "Animals feel hungry, thirsty and scared just like us. We are gentle with them, give them water and food, and never hurt them. Saqr says: be kind to every creature!", "ar": "الحيوانات تجوع وتعطش وتخاف مثلنا. نكون لطفاء معها، ونعطيها الماء والطعام، ولا نؤذيها أبدًا. يقول صقر: كن رحيمًا بكل مخلوق!"},
+          hint: {"en": "How would you like to be treated if you were that animal?", "ar": "كيف تحبّ أن يعاملك الناس لو كنت ذلك الحيوان؟"},
+          questions: [
+            {"q": {"en": "A cat looks thirsty on a hot day. What can you do?", "ar": "قطة تبدو عطشى في يوم حارّ. ماذا تفعل؟"}, "opts": [{"en": "give it some water", "ar": "أعطيها بعض الماء"}, {"en": "chase it away", "ar": "أطاردها"}, {"en": "throw stones", "ar": "أرميها بالحجارة"}]},
+            {"q": {"en": "How should we touch a pet?", "ar": "كيف نلمس الحيوان الأليف؟"}, "opts": [{"en": "gently", "ar": "بلطف"}, {"en": "roughly", "ar": "بقسوة"}, {"en": "by pulling its tail", "ar": "بشدّ ذيله"}]},
+            {"q": {"en": "You see a bird nest in a tree. What is kind?", "ar": "رأيت عشّ طائر على شجرة. ما التصرّف اللطيف؟"}, "opts": [{"en": "watch it quietly from far away", "ar": "أراقبه بهدوء من بعيد"}, {"en": "take the eggs", "ar": "آخذ البيض"}, {"en": "shake the tree", "ar": "أهزّ الشجرة"}]},
+            {"q": {"en": "Why should we be kind to animals?", "ar": "لماذا نرفق بالحيوانات؟"}, "opts": [{"en": "they feel pain and fear like us", "ar": "لأنها تتألّم وتخاف مثلنا"}, {"en": "they are toys", "ar": "لأنها ألعاب"}, {"en": "there is no reason", "ar": "لا يوجد سبب"}]}
+          ] },
+        { id: "adab-8", title: {"en": "Helping others", "ar": "مساعدة الآخرين"},
+          teach: {"en": "We help others when we see they need it: carrying something for a grandparent, helping a friend who fell, or helping at home without being asked. Helping makes our community strong and kind.", "ar": "نساعد الآخرين عندما نرى أنهم يحتاجون إلى المساعدة: نحمل شيئًا عن جدّنا، ونساعد صديقًا وقع، ونساعد في البيت دون أن يُطلب منّا. المساعدة تجعل مجتمعنا قويًا ورحيمًا."},
+          hint: {"en": "Who needs help here, and what could you do?", "ar": "من يحتاج إلى المساعدة هنا، وماذا يمكنك أن تفعل؟"},
+          questions: [
+            {"q": {"en": "Your friend fell over in the playground. What do you do?", "ar": "وقع صديقك في الملعب. ماذا تفعل؟"}, "opts": [{"en": "help them up and ask if they are OK", "ar": "أساعده على النهوض وأسأله إن كان بخير"}, {"en": "laugh", "ar": "أضحك"}, {"en": "run away", "ar": "أهرب"}]},
+            {"q": {"en": "Grandpa wants his glasses from the other room. What is kind?", "ar": "جدّك يريد نظّارته من الغرفة الأخرى. ما التصرّف اللطيف؟"}, "opts": [{"en": "bring them for him", "ar": "أحضرها له"}, {"en": "pretend not to hear", "ar": "أتظاهر بأني لم أسمع"}, {"en": "say \"get them yourself\"", "ar": "أقول «أحضرها بنفسك»"}]},
+            {"q": {"en": "Which is a way to help at home?", "ar": "أي عمل يساعد في البيت؟"}, "opts": [{"en": "setting the table for dinner", "ar": "ترتيب المائدة للعشاء"}, {"en": "leaving clothes on the floor", "ar": "ترك الملابس على الأرض"}, {"en": "making noise while others sleep", "ar": "إحداث ضجيج والآخرون نائمون"}]},
+            {"q": {"en": "How do we feel after helping someone?", "ar": "كيف نشعر بعد مساعدة أحد؟"}, "opts": [{"en": "happy and proud", "ar": "سعداء وفخورين"}, {"en": "angry", "ar": "غاضبين"}, {"en": "nothing at all", "ar": "لا شيء"}]}
+          ] }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'adab-1': 1, 'adab-2': 1, 'adab-3': 1, 'adab-4': 2, 'adab-5': 2, 'adab-6': 2, 'adab-7': 3, 'adab-8': 3,
     'ag-1': 1, 'ag-2': 1, 'ag-3': 1, 'ag-4': 2, 'ag-5': 2, 'ag-6': 2, 'ag-7': 3, 'ag-8': 3,
     'eg-1': 1, 'eg-2': 1, 'eg-3': 1, 'eg-4': 2, 'eg-5': 2, 'eg-6': 2, 'eg-7': 3, 'eg-8': 3,
     'sx-1': 1, 'sx-2': 1, 'sx-3': 1, 'sx-4': 2, 'sx-5': 2, 'sx-6': 2, 'sx-7': 3, 'sx-8': 3,

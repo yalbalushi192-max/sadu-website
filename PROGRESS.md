@@ -71,7 +71,7 @@ A. Ideas from the best children's learning apps (owner's request; Sadu's own loo
 
 ## Next wave (owner's choice, 2026-11-15)
 
-6. [ ] More lessons, part 1: Islamic manners (adab) for ages 4-9: greetings, kindness to parents, sharing, honesty, table manners, cleanliness (gentle, positive, no rulings).
+6. [x] More lessons, part 1: Islamic manners (adab) for ages 4-9: greetings, kindness to parents, sharing, honesty, table manners, cleanliness (gentle, positive, no rulings). Done: course Good Manners / الآداب (adab-1 to adab-8): greetings, before and after eating, kindness to parents, sharing and turns, honesty, keeping clean, kindness to animals, helping others; Today's quest story and teacher-guide questions.
 7. [ ] More lessons, part 2: Saudi and Gulf history and geography for ages 8-14: regions and cities, the founding of the Kingdom, the Hejaz, Najd, the Red Sea and the Gulf, maps.
 8. [ ] More lessons, part 3: Arabic reading for ages 5-9 (harakat, short words, reading short verses-style sentences) and more for ages 3-5 (shapes, colours, counting to 10, animals).
 9. [ ] More games, part 1: a spelling bee (hear a word, tap the letters) and a times-table race, in the browser, both languages.
