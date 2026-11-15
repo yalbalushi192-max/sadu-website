@@ -444,7 +444,7 @@
       ]
     },
     {
-      id: 'english', stickers: ['🔤', '🎶', '🎈', '🐶', '📖', '🖼️', '🎨', '🔢', '🏃', '🗣️'], name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
+      id: 'english', stickers: ['🔤', '🎶', '🎈', '🐶', '📖', '🖼️', '🎨', '🔢', '🏃', '🗣️', '🍓', '🖐️', '🐘', '❓', '⏮️'], name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
       color: '#3FA9F5', tint: '#C4E4FC',
       tip: { en: 'Play I spy with first sounds: I spy something starting with s. Read a short English picture book together.', ar: 'العبا لعبة «أرى شيئًا يبدأ بصوت s». واقرآ معًا قصة إنجليزية قصيرة مصوّرة.' },
       icon: 'M4 5h16v11H10l-5 4v-4H4zM8 9h8M8 12h5',
@@ -538,11 +538,56 @@
             { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'The dog ___ big.', opts: ['is', 'am', 'are'] },
             { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'We ___ friends.', opts: ['are', 'is', 'am'] },
             { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'They ___ at school.', opts: ['are', 'am', 'is'] }
+          ] },
+        { id: 'english-11', title: { en: 'Fruit words', ar: 'أسماء الفواكه' },
+          teach: { en: 'Fruit words: apple, banana, grapes and orange.', ar: 'أسماء فواكه بالإنجليزية: apple تفاحة، و banana موزة، و grapes عنب، و orange برتقالة.' },
+          hint: { en: 'Read the word, then find the fruit.', ar: 'اقرأ الكلمة، ثم ابحث عن الفاكهة.' },
+          questions: [
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'apple', gloss: { en: '', ar: 'تفاحة' }, opts: ['🍎', '🍌', '🍇'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'banana', gloss: { en: '', ar: 'موزة' }, opts: ['🍌', '🍊', '🍎'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'grapes', gloss: { en: '', ar: 'عنب' }, opts: ['🍇', '🍎', '🍊'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'orange', gloss: { en: '', ar: 'برتقالة' }, opts: ['🍊', '🍇', '🍌'] }
+          ] },
+        { id: 'english-12', title: { en: 'Body parts', ar: 'أجزاء الجسم' },
+          teach: { en: 'Body words: hand, eye, nose and ear.', ar: 'أجزاء الجسم بالإنجليزية: hand يد، و eye عين، و nose أنف، و ear أذن.' },
+          hint: { en: 'Point to that part of your body, then find the picture.', ar: 'أشِر إلى ذلك الجزء من جسمك، ثم ابحث عن الصورة.' },
+          questions: [
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'hand', gloss: { en: '', ar: 'يد' }, opts: ['✋', '👁️', '👂'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'eye', gloss: { en: '', ar: 'عين' }, opts: ['👁️', '👃', '✋'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'nose', gloss: { en: '', ar: 'أنف' }, opts: ['👃', '👂', '👁️'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'ear', gloss: { en: '', ar: 'أذن' }, opts: ['👂', '✋', '👃'] }
+          ] },
+        { id: 'english-13', title: { en: 'Describing words', ar: 'كلمات الوصف' },
+          teach: { en: 'Describing words tell us what something is like: big or small, hot or cold.', ar: 'كلمات الوصف تخبرنا كيف يبدو الشيء: big كبير أو small صغير، و hot حارّ أو cold بارد.' },
+          hint: { en: 'Think of something that is very big, small, hot or cold.', ar: 'فكّر في شيء كبير جدًّا أو صغير أو حارّ أو بارد.' },
+          questions: [
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'big', gloss: { en: '', ar: 'كبير' }, opts: ['🐘', '🐭', '🐜'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'small', gloss: { en: '', ar: 'صغير' }, opts: ['🐭', '🐘', '🐋'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'hot', gloss: { en: '', ar: 'حارّ' }, opts: ['🔥', '🧊', '🐟'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'cold', gloss: { en: '', ar: 'بارد' }, opts: ['🧊', '🔥', '🌞'] }
+          ] },
+        { id: 'english-14', title: { en: 'Question words', ar: 'كلمات السؤال' },
+          teach: { en: 'Question words start questions: What asks about a thing, Where asks about a place, When asks about a time, and Who asks about a person.', ar: 'كلمات السؤال تبدأ بها الأسئلة: What ماذا (عن شيء)، و Where أين (عن مكان)، و When متى (عن وقت)، و Who من (عن شخص).' },
+          hint: { en: 'Is the question about a thing, a place, a time or a person?', ar: 'هل السؤال عن شيء أم مكان أم وقت أم شخص؟' },
+          questions: [
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: '___ is your name?', opts: ['What', 'Where', 'When'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: '___ do you live?', opts: ['Where', 'Who', 'What'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: '___ is your birthday?', opts: ['When', 'Who', 'Where'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: '___ is that boy?', opts: ['Who', 'When', 'Where'] }
+          ] },
+        { id: 'english-15', title: { en: 'Yesterday words (-ed)', ar: 'الماضي بإضافة ed' },
+          teach: { en: 'To talk about yesterday, many action words add -ed: play becomes played, walk becomes walked.', ar: 'للحديث عن الماضي نضيف ed إلى كثير من الأفعال: play تصير played، و walk تصير walked.' },
+          hint: { en: 'The sentence is about yesterday or last week, so look for -ed.', ar: 'الجملة عن الأمس أو الأسبوع الماضي، فابحث عن ed.' },
+          questions: [
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'Yesterday I ___ football.', opts: ['played', 'play', 'plays'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'Last week we ___ a cake.', opts: ['baked', 'bake', 'bakes'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'Yesterday she ___ home.', opts: ['walked', 'walk', 'walks'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'Last night they ___ a film.', opts: ['watched', 'watch', 'watches'] }
           ] }
       ]
     },
     {
-      id: 'arabic', stickers: ['📜', '🌓', '🔟', '🕌', '✌️', '✍️', '🌈', '🐫', '🏷️', '📅'], name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
+      id: 'arabic', stickers: ['📜', '🌓', '🔟', '🕌', '✌️', '✍️', '🌈', '🐫', '🏷️', '📅', '👪', '👂', '👧', '📚', '💬'], name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
       color: '#FF6FA8', tint: '#FFD0E2',
       tip: { en: 'Point to letters on signs and packets, and ask for a word that starts or ends with the same letter.', ar: 'أشِر إلى الحروف على اللافتات والعلب، واطلب كلمة تبدأ أو تنتهي بالحرف نفسه.' },
       icon: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M9 8h6',
@@ -631,6 +676,51 @@
             { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الأحد', gloss: { en: 'Sunday', ar: '' }, opts: ['الاثنين', 'الأربعاء', 'السبت'] },
             { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الثلاثاء', gloss: { en: 'Tuesday', ar: '' }, opts: ['الأربعاء', 'الخميس', 'الأحد'] },
             { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الخميس', gloss: { en: 'Thursday', ar: '' }, opts: ['الجمعة', 'السبت', 'الاثنين'] }
+          ] },
+        { id: 'arabic-11', title: { en: 'Family', ar: 'العائلة' },
+          teach: { en: 'Family words in Arabic: أم mother, أب father, جدّ grandfather, طفل baby.', ar: 'كلمات العائلة: أم، وأب، وجدّ، وطفل.' },
+          hint: { en: 'Read the word slowly and think of your own family.', ar: 'اقرأ الكلمة ببطء وفكّر في عائلتك.' },
+          questions: [
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'أم', gloss: { en: 'mother', ar: '' }, opts: ['👩', '👴', '👶'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'أب', gloss: { en: 'father', ar: '' }, opts: ['👨', '👶', '👵'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'جدّ', gloss: { en: 'grandfather', ar: '' }, opts: ['👴', '👩', '👶'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'طفل', gloss: { en: 'baby', ar: '' }, opts: ['👶', '👨', '👴'] }
+          ] },
+        { id: 'arabic-12', title: { en: 'Body parts in Arabic', ar: 'أجزاء الجسم' },
+          teach: { en: 'Body words in Arabic: يد hand, عين eye, أنف nose, أذن ear.', ar: 'أجزاء الجسم: يد، وعين، وأنف، وأذن.' },
+          hint: { en: 'Point to that part of your body, then find the picture.', ar: 'أشِر إلى ذلك الجزء من جسمك، ثم ابحث عن الصورة.' },
+          questions: [
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'يد', gloss: { en: 'hand', ar: '' }, opts: ['✋', '👁️', '👂'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'عين', gloss: { en: 'eye', ar: '' }, opts: ['👁️', '👃', '✋'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'أنف', gloss: { en: 'nose', ar: '' }, opts: ['👃', '👂', '👁️'] },
+            { q: { en: 'Which picture matches the word?', ar: 'أي صورة تناسب الكلمة؟' }, show: 'أذن', gloss: { en: 'ear', ar: '' }, opts: ['👂', '✋', '👃'] }
+          ] },
+        { id: 'arabic-13', title: { en: 'Words for girls (ة)', ar: 'المذكّر والمؤنّث' },
+          teach: { en: 'In Arabic, many words for a girl or a woman end in ة: معلّم (a male teacher) becomes معلّمة (a female teacher).', ar: 'كثير من الكلمات تصير مؤنّثة بإضافة التاء المربوطة «ة»: معلّم ← معلّمة، وطالب ← طالبة.' },
+          hint: { en: 'Look for the word that ends with ة.', ar: 'ابحث عن الكلمة التي تنتهي بـ «ة».' },
+          questions: [
+            { q: { en: 'Which word is for a girl or a woman?', ar: 'ما المؤنث من هذه الكلمة؟' }, show: 'معلّم', gloss: { en: 'teacher', ar: '' }, opts: ['معلّمة', 'معلّمون', 'معلّمان'] },
+            { q: { en: 'Which word is for a girl or a woman?', ar: 'ما المؤنث من هذه الكلمة؟' }, show: 'طالب', gloss: { en: 'student', ar: '' }, opts: ['طالبة', 'طلاب', 'طالبان'] },
+            { q: { en: 'Which word is for a girl or a woman?', ar: 'ما المؤنث من هذه الكلمة؟' }, show: 'صديق', gloss: { en: 'friend', ar: '' }, opts: ['صديقة', 'أصدقاء', 'صديقان'] },
+            { q: { en: 'Which word is for a girl or a woman?', ar: 'ما المؤنث من هذه الكلمة؟' }, show: 'طبيب', gloss: { en: 'doctor', ar: '' }, opts: ['طبيبة', 'أطبّاء', 'طبيبان'] }
+          ] },
+        { id: 'arabic-14', title: { en: 'Many (plural)', ar: 'الجمع' },
+          teach: { en: 'For three or more, Arabic often changes the word: كتاب (book) becomes كتب (books), and ولد (boy) becomes أولاد (boys). Two is different again: كتابان.', ar: 'للثلاثة أو أكثر نستعمل الجمع، وكثيرًا ما تتغيّر الكلمة: كتاب ← كتب، وولد ← أولاد. أما الاثنان فلهما المثنّى: كتابان.' },
+          hint: { en: 'The plural is for three or more, not two (ان) and not "my" (ي).', ar: 'الجمع لثلاثة أو أكثر، فهو ليس المثنّى (ان) ولا «ي» الملكية.' },
+          questions: [
+            { q: { en: 'Which word means three or more?', ar: 'ما جمع هذه الكلمة؟' }, show: 'كتاب', gloss: { en: 'book', ar: '' }, opts: ['كتب', 'كتابان', 'كتابي'] },
+            { q: { en: 'Which word means three or more?', ar: 'ما جمع هذه الكلمة؟' }, show: 'قلم', gloss: { en: 'pen', ar: '' }, opts: ['أقلام', 'قلمان', 'قلمي'] },
+            { q: { en: 'Which word means three or more?', ar: 'ما جمع هذه الكلمة؟' }, show: 'بيت', gloss: { en: 'house', ar: '' }, opts: ['بيوت', 'بيتان', 'بيتي'] },
+            { q: { en: 'Which word means three or more?', ar: 'ما جمع هذه الكلمة؟' }, show: 'ولد', gloss: { en: 'boy', ar: '' }, opts: ['أولاد', 'ولدان', 'ولدي'] }
+          ] },
+        { id: 'arabic-15', title: { en: 'Little sentences', ar: 'جمل قصيرة' },
+          teach: { en: 'A sentence tells us who does what: أنا أشرب الماء means "I drink water". Choose the action word that makes sense.', ar: 'الجملة تخبرنا من يفعل ماذا: «أنا أشرب الماء». اختر الفعل الذي يجعل المعنى صحيحًا.' },
+          hint: { en: 'Read the whole sentence. Which action makes sense?', ar: 'اقرأ الجملة كلها. أي فعل يجعل المعنى صحيحًا؟' },
+          questions: [
+            { q: { en: 'Which word completes the sentence?', ar: 'أي كلمة تكمل الجملة؟' }, show: 'أنا ___ الماء.', gloss: { en: 'I ___ water.', ar: '' }, opts: ['أشرب', 'آكل', 'أنام'] },
+            { q: { en: 'Which word completes the sentence?', ar: 'أي كلمة تكمل الجملة؟' }, show: 'القطة ___ الحليب.', gloss: { en: 'The cat ___ milk.', ar: '' }, opts: ['تشرب', 'تكتب', 'تقرأ'] },
+            { q: { en: 'Which word completes the sentence?', ar: 'أي كلمة تكمل الجملة؟' }, show: 'أنا ___ الكتاب.', gloss: { en: 'I ___ the book.', ar: '' }, opts: ['أقرأ', 'أشرب', 'أركض'] },
+            { q: { en: 'Which word completes the sentence?', ar: 'أي كلمة تكمل الجملة؟' }, show: 'الطائر ___ في السماء.', gloss: { en: 'The bird ___ in the sky.', ar: '' }, opts: ['يطير', 'يسبح', 'يأكل'] }
           ] }
       ]
     },
@@ -739,6 +829,8 @@
     'math-11': 1, 'math-13': 1, 'math-12': 2, 'math-14': 2, 'math-15': 3,
     'science-14': 1, 'science-15': 1, 'science-11': 2, 'science-12': 2, 'science-13': 3,
     'science-7': 1, 'science-8': 1, 'science-9': 2, 'science-10': 3,
+    'english-11': 1, 'english-12': 1, 'english-13': 2, 'english-14': 3, 'english-15': 3,
+    'arabic-11': 1, 'arabic-12': 1, 'arabic-13': 2, 'arabic-14': 3, 'arabic-15': 3,
     'english-7': 1, 'english-8': 1, 'english-9': 2, 'english-10': 3,
     'english-1': 1, 'english-6': 1, 'english-2': 2, 'english-3': 2, 'english-4': 3, 'english-5': 3,
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
