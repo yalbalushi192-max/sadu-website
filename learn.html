@@ -846,7 +846,7 @@
 <sc-if value="{{ ls.isTrace }}">
 <div class="trace-act">
 <canvas class="trace" width="300" height="300" onpointerdown="{{ ls.trc.down }}" role="img" aria-label="{{ ls.prompt }}"></canvas>
-<sc-if value="{{ ls.trc.notSolved }}"><div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.trc.clear }}">{{ t.clear }}</button><button type="button" class="btn primary lg point" onclick="{{ ls.trc.check }}">{{ t.check }}</button></div></sc-if>
+<sc-if value="{{ ls.trc.notSolved }}"><div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.trc.watch }}">👀 {{ t.watchAgain }}</button><button type="button" class="btn ghost lg" onclick="{{ ls.trc.clear }}">{{ t.clear }}</button><button type="button" class="btn primary lg point" onclick="{{ ls.trc.check }}">{{ t.check }}</button></div></sc-if>
 </div>
 </sc-if>
 

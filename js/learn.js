@@ -66,7 +66,7 @@
       storyQuiz: 'Answer the questions', backStories: 'Back to stories', storyDone: 'Read %A of %B stories', storyQs: 'Questions about the story',
       check: 'Check', clear: 'Start again', basket: 'Basket', tray: 'Dates', dateLabel: 'a date', takeBack: 'take a date out',
       countHint: 'You put %A. Count again: you need %B.', dragTip: 'Drag the dates into the basket, or tap them.',
-      traceTip: 'Draw over the grey line.', matchTip: 'Tap one on the left, then its partner on the right.',
+      traceTip: 'Watch first, then start at the green dot and draw over the grey line.', watchAgain: 'Watch again', matchTip: 'Tap one on the left, then its partner on the right.',
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
@@ -205,7 +205,7 @@
       storyQuiz: 'أجب عن الأسئلة', backStories: 'العودة إلى القصص', storyDone: 'قرأت %A من %B قصص', storyQs: 'أسئلة عن القصة',
       check: 'تحقّق', clear: 'ابدأ من جديد', basket: 'السلة', tray: 'التمر', dateLabel: 'تمرة', takeBack: 'أخرج تمرة',
       countHint: 'وضعت %A. عُدّ مرة أخرى: تحتاج إلى %B.', dragTip: 'اسحب التمرات إلى السلة، أو اضغط عليها.',
-      traceTip: 'ارسم فوق الخط الرمادي.', matchTip: 'اضغط على عنصر من اليمين، ثم على ما يناسبه من اليسار.',
+      traceTip: 'شاهد أولًا، ثم ابدأ من النقطة الخضراء وارسم فوق الخط الرمادي.', watchAgain: 'شاهد مرة أخرى', matchTip: 'اضغط على عنصر من اليمين، ثم على ما يناسبه من اليسار.',
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
@@ -678,6 +678,50 @@
     });
     g.restore();
   }
+  // the demo path for "watch, then trace": thin the guide down to a centre line (Zhang-Suen) on a 100 × 100 grid,
+  // then walk along it; it works for any letter or shape. Returns strokes of [x, y] points on the 300 × 300 canvas.
+  function traceDemo(q) {
+    var N = 100, c = document.createElement('canvas'); c.width = c.height = N;
+    var g = c.getContext('2d'); g.scale(N / 300, N / 300); drawGuide(g, q, '#000', 22);
+    var d = g.getImageData(0, 0, N, N).data, on = new Uint8Array(N * N), x, y, i;
+    for (i = 0; i < N * N; i++) on[i] = d[i * 4 + 3] > 110 ? 1 : 0;
+    var nb = function (x, y) { return [on[(y - 1) * N + x], on[(y - 1) * N + x + 1], on[y * N + x + 1], on[(y + 1) * N + x + 1], on[(y + 1) * N + x], on[(y + 1) * N + x - 1], on[y * N + x - 1], on[(y - 1) * N + x - 1]]; };
+    var changed = true, guard = 0;
+    while (changed && guard++ < 60) {
+      changed = false;
+      for (var pass = 0; pass < 2; pass++) {
+        var del = [];
+        for (y = 1; y < N - 1; y++) for (x = 1; x < N - 1; x++) {
+          if (!on[y * N + x]) continue;
+          var P = nb(x, y), B = P.reduce(function (a, b) { return a + b; }, 0), A = 0;
+          for (var k = 0; k < 8; k++) if (!P[k] && P[(k + 1) % 8]) A++;
+          if (B < 2 || B > 6 || A !== 1) continue;
+          if (pass === 0 ? (P[0] * P[2] * P[4] || P[2] * P[4] * P[6]) : (P[0] * P[2] * P[6] || P[0] * P[4] * P[6])) continue;
+          del.push(y * N + x);
+        }
+        if (del.length) { changed = true; del.forEach(function (j) { on[j] = 0; }); }
+      }
+    }
+    var left = [];
+    for (i = 0; i < N * N; i++) if (on[i]) left.push([i % N, Math.floor(i / N)]);
+    if (!left.length) return [];
+    var rtl = /[\u0600-\u06FF]/.test(q.show);
+    // begin at the top (right-most for Arabic, left-most otherwise), preferring a line end
+    var ends = left.filter(function (pt) { var P = nb(pt[0], pt[1]); return P.reduce(function (a, b) { return a + b; }, 0) === 1; });
+    var pickStart = function (list) { return list.slice().sort(function (a, b) { return (a[1] - b[1]) * 3 + (rtl ? b[0] - a[0] : a[0] - b[0]); })[0]; };
+    var cur = pickStart(ends.length ? ends : left), strokes = [], stroke = [];
+    var used = {}, key = function (pt) { return pt[0] + ',' + pt[1]; };
+    while (cur) {
+      used[key(cur)] = 1; stroke.push([cur[0] * 3 + 1.5, cur[1] * 3 + 1.5]);
+      var best = null, bd = 1e9;
+      left.forEach(function (pt) { if (used[key(pt)]) return; var dd = (pt[0] - cur[0]) * (pt[0] - cur[0]) + (pt[1] - cur[1]) * (pt[1] - cur[1]); if (dd < bd) { bd = dd; best = pt; } });
+      if (best && bd > 8) { if (stroke.length > 3) strokes.push(stroke); stroke = []; }
+      cur = best;
+    }
+    if (stroke.length > 3) strokes.push(stroke);
+    return strokes;
+  }
+
   // how much of the guide the child covered, and how much they drew outside it
   function traceScore(q, paths) {
     function layer(fn) { var c = document.createElement('canvas'); c.width = c.height = 300; var g = c.getContext('2d'); fn(g); return g.getImageData(0, 0, 300, 300).data; }
@@ -1712,20 +1756,55 @@
 
         if (q.kind === 'trace' && ls.step === 'quiz') {
           var tkey = lesson.id + '|' + ls.qi;
-          if (!self._trace || self._trace.key !== tkey) self._trace = { key: tkey, paths: [] };
+          if (!self._trace || self._trace.key !== tkey) { if (self._trace) cancelAnimationFrame(self._trace.raf); self._trace = { key: tkey, paths: [] }; }
           var tr = self._trace, colour = (out.course && out.course.color) || '#B9A8FF';
-          var paint = function () {
+          var paint = function (demoUpTo) {
             var cv = document.querySelector('canvas.trace'); if (!cv) return;
             var g = cv.getContext('2d'); g.clearRect(0, 0, 300, 300);
             drawGuide(g, q, '#E6DFCF', 22);
             g.save(); g.setLineDash([2, 12]); g.lineCap = 'round'; drawGuide(g, q, '#B9B0A0', 3); g.restore();
             drawStrokes(g, tr.paths, colour, 22);
+            var demo = tr.demo || [];
+            if (demoUpTo != null) {
+              // the demo: a dotted trail and a moving dot along the letter
+              var n = 0, tip = null;
+              g.save(); g.setLineDash([1, 10]); g.lineCap = 'round'; g.lineWidth = 9; g.strokeStyle = '#2E9E6B';
+              demo.forEach(function (st) {
+                if (n >= demoUpTo) return;
+                var part = st.slice(0, Math.max(1, Math.min(st.length, demoUpTo - n))); n += st.length;
+                g.beginPath(); g.moveTo(part[0][0], part[0][1]); part.forEach(function (pt) { g.lineTo(pt[0], pt[1]); }); g.stroke();
+                tip = part[part.length - 1];
+              });
+              g.restore();
+              if (tip) { g.save(); g.fillStyle = '#FFB020'; g.strokeStyle = '#FFFFFF'; g.lineWidth = 4; g.beginPath(); g.arc(tip[0], tip[1], 13, 0, Math.PI * 2); g.fill(); g.stroke(); g.restore(); }
+            } else if (!tr.paths.length && demo.length && !ls.solved) {
+              // the green start dot
+              var s0 = demo[0][0];
+              g.save(); g.fillStyle = '#2E9E6B'; g.strokeStyle = '#FFFFFF'; g.lineWidth = 4; g.beginPath(); g.arc(s0[0], s0[1], 14, 0, Math.PI * 2); g.fill(); g.stroke(); g.restore();
+            }
           };
-          setTimeout(function () { if (document.fonts && document.fonts.load) document.fonts.load(TRACE_FONT).then(paint, paint); paint(); }, 0);
+          var play = function () {
+            cancelAnimationFrame(tr.raf);
+            if (!tr.demo) tr.demo = traceDemo(q);
+            var total = tr.demo.reduce(function (a, st) { return a + st.length; }, 0), t0 = null, dur = Math.min(3200, 900 + total * 9);
+            tr.playing = true;
+            var frame = function (t) {
+              if (!tr.playing || self._trace !== tr) return;
+              if (t0 == null) t0 = t;
+              var k = Math.min(1, (t - t0) / dur);
+              paint(Math.ceil(total * k));
+              if (k < 1) tr.raf = requestAnimationFrame(frame); else { tr.playing = false; setTimeout(function () { if (self._trace === tr && !tr.playing) paint(); }, 500); }
+            };
+            tr.raf = requestAnimationFrame(frame);
+          };
+          var ready = function () { if (!tr.demo) tr.demo = traceDemo(q); if (!tr.played && !ls.solved) { tr.played = true; play(); } else if (!tr.playing) paint(); };
+          setTimeout(function () { paint(); if (document.fonts && document.fonts.load) document.fonts.load(TRACE_FONT).then(ready, ready); else ready(); }, 0);
           out.ls.trc = {
             notSolved: !ls.solved,
+            watch: function () { tr.paths = []; play(); },
             down: function (e) {
               if (ls.solved) return;
+              if (tr.playing) { tr.playing = false; cancelAnimationFrame(tr.raf); }
               var cv = e.currentTarget, r = cv.getBoundingClientRect(), k = 300 / r.width;
               var pt = function (ev) { return [(ev.clientX - r.left) * k, (ev.clientY - r.top) * k]; };
               var path = [pt(e)]; tr.paths.push(path); cv.setPointerCapture(e.pointerId); paint();
