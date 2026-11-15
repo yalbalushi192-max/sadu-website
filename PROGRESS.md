@@ -6,7 +6,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 ## Rules for unattended work
 
 - Work on one item at a time: build it, test it in a browser (English and Arabic, desktop and phone width), then save a version.
-- Never publish or upload the site, connect online services, or delete the owner's files.
+- Never publish or upload the site, connect online services, or delete the owner's files, unless the owner has logged in to their own account in this session and said yes to that specific step (the owner asked on 2026-11-15 for the site to go online, with accounts).
 - Keep saved progress working: lesson ids stay the same, and new data fields are optional.
 - Arabic text written here should still be reviewed by a teacher before publishing.
 
@@ -14,6 +14,13 @@ This file is updated after each finished item. Each item is also saved as a git 
 
 0. [x] Make it interactive for kids (owner's request, first): (a) sound effects, confetti, tappable Saqr with fun facts, bouncy answers; (b) sticker book: a sticker for every finished lesson. Part (a) done: sound effects (switch in the lesson bar), confetti, tap Saqr for fun facts, bouncy answers. Part (b) done: sticker book page (menu: Stickers), a sticker per lesson and story, gold for 3 stars, "New sticker!" on the result screen, latest stickers on the dashboard.
 1. [x] More phonics: English digraphs (sh, ch, th, ck), more first-sound sets, and Arabic short vowels (fatha, kasra, damma). Done: phonics-8 (r h b f), phonics-9 (sh ch th ck), phonics-10 (fatha, kasra, damma); missed words now show in the plan; single letters shown large.
+C. Updatable website (owner's request, first):
+   - [ ] Install like an app: web app manifest, icons, offline cache (works once the site is online over https).
+   - [ ] Lesson editor: a page to add or change lessons, questions and stories with a form (no code); saved on this device and exportable, until accounts exist.
+   - [ ] Go online: GitHub Pages with automatic updates. NEEDS THE OWNER: a GitHub account and `gh auth login`; ask before making the repository public.
+   - [ ] Accounts and sync: parent sign-in and progress synced across devices (Supabase). NEEDS THE OWNER: a free Supabase project URL and public (anon) key.
+   - [ ] Editor saves online: lessons added in the editor reach every family (after accounts).
+
 B. Full learning platform (owner's request; profiles first):
    - [x] Child profiles: several children on one device, each with their own name, photo, age, progress, stickers and settings; a "Who is learning?" screen; existing progress becomes the first profile. Done: "Switch child" in the side menu; add a child with name and age; remove a child from the Family report.
    - [x] Mastery levels (idea from Khan Academy): each lesson moves through Not started, Attempted, Familiar, Proficient, Mastered with good scores and can slip back; shown on the course path and in the report; a course mastery %. Done: practice reaches Proficient; Mastered waits for the course challenge.
