@@ -5,7 +5,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 
 ## Rules for unattended work
 
-- Work on one item at a time: build it, test it in a browser (English and Arabic, desktop and phone width), then save a version.
+- Work on one item at a time: build it, test it in a browser (English and Arabic, desktop and phone width), then save a version and `git push` it (the site is live on GitHub Pages).
 - Never publish or upload the site, connect online services, or delete the owner's files, unless the owner has logged in to their own account in this session and said yes to that specific step (the owner asked on 2026-11-15 for the site to go online, with accounts).
 - Keep saved progress working: lesson ids stay the same, and new data fields are optional.
 - Arabic text written here should still be reviewed by a teacher before publishing.
@@ -17,7 +17,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 C. Updatable website (owner's request, first):
    - [x] Install like an app: web app manifest, icons, offline cache (works once the site is online over https). Done: manifest.webmanifest, icons/ (192, 512, maskable, Apple), sw.js; Chrome reports it installable and all pages open offline. Raise VERSION in sw.js when files are added or removed.
    - [x] Lesson editor: a page to add or change lessons, questions and stories with a form (no code); saved on this device and exportable, until accounts exist. Done: Family report → Lesson editor; course and level, title, learn text, hint, 4 questions with a right and two wrong answers, English and Arabic; save and try; edit, delete, export and import a file; lessons appear in their course, on the journey, with a ✏️ sticker.
-   - [ ] (waiting for the owner) Go online: GitHub Pages with automatic updates. Owner's GitHub username: yalbalushi192-max. The owner installs and logs in with `! sudo apt install -y gh` and `! gh auth login`, and confirms a public repository. NEEDS THE OWNER: a GitHub account and `gh auth login`; ask before making the repository public.
+   - [x] Go online: done on 2026-11-15. Live at https://yalbalushi192-max.github.io/sadu-website/ (repository github.com/yalbalushi192-max/sadu-website, public, GitHub Pages from main). The owner approved publishing. From now on, after each saved version run `git push` so it goes live within about a minute.
    - [ ] (waiting for the owner) Accounts and sync: parent sign-in and progress synced across devices (Supabase). NEEDS THE OWNER: a free Supabase project URL and public (anon) key.
    - [ ] (waiting for accounts) Editor saves online: lessons added in the editor reach every family (after accounts).
 
