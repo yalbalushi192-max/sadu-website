@@ -75,6 +75,7 @@
 <span class="brand-name">{{ t.brand }}</span>
 </a>
 <nav class="side-nav" aria-label="Main">
+<button type="button" onclick="{{ goJourney }}" aria-current="{{ journeyOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg><span>{{ t.navJourney }}</span></button>
 <button type="button" onclick="{{ goHome }}" aria-current="{{ homeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"/></svg><span>{{ t.navHome }}</span></button>
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
@@ -262,6 +263,42 @@
 </section>
 </sc-if>
 
+<!-- JOURNEY: the child walks a road of lessons; Saqr explains what to do -->
+<sc-if value="{{ isJourney }}">
+<section class="page journey">
+<header class="page-head">
+<h1 class="h1">{{ t.jTitle }}</h1>
+<p class="lead">{{ t.jIntro }}</p>
+</header>
+<div class="guide lead-guide">
+<svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg>
+<div class="bubble" aria-live="polite"><p>{{ journey.lead }}</p>
+<sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ journey.say }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if>
+</div>
+<sc-if value="{{ journey.hasNext }}"><button type="button" class="btn primary lg point go-btn" onclick="{{ journey.go }}">{{ t.jGo }}</button></sc-if>
+</div>
+<sc-if value="{{ journey.hasEarlier }}"><p class="small muted road-earlier">✓ {{ journey.earlier }}</p></sc-if>
+<ol class="road">
+<sc-for list="{{ journey.stops }}" as="st">
+<li class="{{ st.cls }}" style="--c: {{ st.color }}; --t: {{ st.tint }}">
+<span class="decor" aria-hidden="true">{{ st.decor }}</span>
+<div class="stop-body">
+<sc-if value="{{ st.isCurrent }}"><div class="hero-me"><span class="me-av" aria-hidden="true"><sc-if value="{{ hasPhoto }}"><img src="{{ photo }}" alt=""></sc-if><sc-if value="{{ noPhoto }}">{{ initial }}</sc-if></span><span class="you">{{ t.jYou }}</span></div></sc-if>
+<button type="button" class="stop-btn" onclick="{{ st.tap }}" aria-disabled="{{ st.dis }}" aria-label="{{ st.num }}. {{ st.title }} · {{ st.course }}">
+<svg aria-hidden="true" viewBox="0 0 24 24"><path d="{{ st.icon }}"/></svg>
+<span class="stop-num">{{ st.num }}</span>
+<sc-if value="{{ st.isDone }}"><span class="stop-tick" aria-hidden="true">✓</span></sc-if>
+</button>
+<b class="stop-title">{{ st.title }}</b>
+<span class="small muted">{{ st.course }}</span>
+<sc-if value="{{ st.isDone }}"><span class="stars" aria-hidden="true"><sc-for list="{{ st.stars }}" as="s"><svg width="16" height="16" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span></sc-if>
+</div>
+</li>
+</sc-for>
+</ol>
+</section>
+</sc-if>
+
 <!-- WORKSHEET: a printable page for one lesson -->
 <sc-if value="{{ isWorksheet }}">
 <section class="page ws-page" style="--c: {{ ws.color }}; --t: {{ ws.tint }}">
@@ -389,7 +426,7 @@
 </div>
 <div class="actions story-nav">
 <sc-if value="{{ story.hasPrev }}"><button type="button" class="btn ghost lg" onclick="{{ story.prev }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.prevPage }}</button></sc-if>
-<sc-if value="{{ story.notLast }}"><button type="button" class="btn primary lg" onclick="{{ story.next }}">{{ t.nextPage }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></sc-if>
+<sc-if value="{{ story.notLast }}"><button type="button" class="btn primary lg point" onclick="{{ story.next }}">{{ t.nextPage }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></sc-if>
 <sc-if value="{{ story.isLast }}"><button type="button" class="btn primary lg" onclick="{{ story.quiz }}">{{ t.storyQuiz }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></sc-if>
 </div>
 </div>
@@ -478,7 +515,7 @@
 <source src="{{ ls.audio }}.wav" type="audio/wav">
 </audio>
 </div>
-<div class="actions"><button type="button" class="btn primary lg" onclick="{{ ls.startQuiz }}">{{ t.startQuiz }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+<div class="actions"><button type="button" class="btn primary lg point" onclick="{{ ls.startQuiz }}">{{ t.startQuiz }}<svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
 </div>
 </sc-if>
 
@@ -519,7 +556,7 @@
 <sc-for list="{{ ls.cnt.basket }}" as="d"><button type="button" class="date in" onclick="{{ d.out }}" aria-label="{{ t.takeBack }}"><svg viewBox="0 0 40 52" aria-hidden="true"><use href="#p-date"/></svg></button></sc-for>
 <sc-if value="{{ ls.cnt.empty }}"><span class="basket-hint">{{ t.basket }}</span></sc-if>
 </div>
-<sc-if value="{{ ls.cnt.notSolved }}"><div class="actions center"><button type="button" class="btn primary lg" onclick="{{ ls.cnt.check }}">{{ t.check }}</button></div></sc-if>
+<sc-if value="{{ ls.cnt.notSolved }}"><div class="actions center"><button type="button" class="btn primary lg point" onclick="{{ ls.cnt.check }}">{{ t.check }}</button></div></sc-if>
 </div>
 </sc-if>
 
@@ -527,7 +564,7 @@
 <sc-if value="{{ ls.isTrace }}">
 <div class="trace-act">
 <canvas class="trace" width="300" height="300" onpointerdown="{{ ls.trc.down }}" role="img" aria-label="{{ ls.prompt }}"></canvas>
-<sc-if value="{{ ls.trc.notSolved }}"><div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.trc.clear }}">{{ t.clear }}</button><button type="button" class="btn primary lg" onclick="{{ ls.trc.check }}">{{ t.check }}</button></div></sc-if>
+<sc-if value="{{ ls.trc.notSolved }}"><div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.trc.clear }}">{{ t.clear }}</button><button type="button" class="btn primary lg point" onclick="{{ ls.trc.check }}">{{ t.check }}</button></div></sc-if>
 </div>
 </sc-if>
 
@@ -549,7 +586,7 @@
 </div>
 <sc-if value="{{ ls.hasHint }}"><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ ls.sayHint }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></sc-if>
 </div>
-<sc-if value="{{ ls.solved }}"><button type="button" class="btn primary lg" onclick="{{ ls.next }}">{{ ls.nextLabel }}</button></sc-if>
+<sc-if value="{{ ls.solved }}"><button type="button" class="btn primary lg point up" onclick="{{ ls.next }}">{{ ls.nextLabel }}</button></sc-if>
 </div>
 </div>
 </sc-if>
@@ -574,10 +611,11 @@
 <div><b dir="ltr">{{ ls.time }}</b><span>{{ t.timeTaken }}</span></div>
 </div>
 <div class="actions center">
+<sc-if value="{{ ls.fromJourney }}"><button type="button" class="btn primary lg point" onclick="{{ ls.backCourse }}">{{ t.jBack }}</button></sc-if>
 <sc-if value="{{ ls.hasNext }}"><button type="button" class="btn primary lg" onclick="{{ ls.nextLesson }}">{{ t.nextLesson }}</button></sc-if>
 <sc-if value="{{ ls.isLast }}"><button type="button" class="btn primary lg" onclick="{{ goHome }}">{{ t.backHome }}</button></sc-if>
 <button type="button" class="btn secondary lg" onclick="{{ ls.again }}">{{ t.tryAgain }}</button>
-<button type="button" class="btn ghost lg" onclick="{{ ls.backCourse }}">{{ ls.backLabel }}</button>
+<sc-if value="{{ ls.notJourney }}"><button type="button" class="btn ghost lg" onclick="{{ ls.backCourse }}">{{ ls.backLabel }}</button></sc-if>
 </div>
 </div>
 </sc-if>

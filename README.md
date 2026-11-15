@@ -19,6 +19,8 @@ The page opens on a **dashboard**: a "continue learning" card, this week's activ
 totals, the learning plan and the five courses. A lesson plays full screen: learn the idea, then
 answer four questions (keys 1, 2, 3 and Enter work too), then see the stars won.
 
+**My journey:** the start page. The child's photo (or first letter) stands on a winding road of lessons taken in turn from the courses for their age, easiest levels first. Saqr says the next stop out loud and a bouncing hand points at Go. After a lesson, "Back to my journey" moves the child on to the next stop. Inside lessons a hand points at the next button to press.
+
 **Ages:** on the first visit the dashboard asks how old the child is (3 to 12, or "show all").
 Each course has `ages` in `js/courses.js` (phonics 3–7, Arabic 3–8, art 3–10, English 5–9, maths and
 science 6–10). Courses for the child's age are shown first; the rest are listed under "Courses for

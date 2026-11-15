@@ -70,6 +70,10 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navJourney: 'My journey', jTitle: 'My journey', jIntro: 'Follow the road with Saqr. Every stop is a lesson.',
+      jLeadName: '%N, our next stop is %L (%C). Tap Go when you are ready!', jLead: 'Our next stop is %L (%C). Tap Go when you are ready!',
+      jGo: 'Go!', jBack: 'Back to my journey', jYou: 'You', jEarlier: '%A stops done',
+      jAllDone: 'You reached the end of the road! Amazing! Try a course challenge to master your lessons.',
       levelNames: ['', 'Level 1 · Starter', 'Level 2 · Explorer', 'Level 3 · Champion'],
       mlv: ['Not started', 'Attempted', 'Familiar', 'Proficient', 'Mastered'], masteryWord: 'Mastery', masteryPct: 'Mastery %A%',
       levelUp: 'Level up: from %A to %B!', levelNow: 'Mastery: %B', masteryKey: 'Mastery levels: a lesson moves up with good scores and can slip back if it is forgotten. Mastered comes from the course challenge.',
@@ -142,6 +146,10 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navJourney: 'رحلتي', jTitle: 'رحلتي', jIntro: 'اتبع الطريق مع صقر. كل محطة درس.',
+      jLeadName: '%N، محطتنا التالية هي %L (%C). اضغط «انطلق» عندما تكون مستعدًا!', jLead: 'محطتنا التالية هي %L (%C). اضغط «انطلق» عندما تكون مستعدًا!',
+      jGo: 'انطلق!', jBack: 'العودة إلى رحلتي', jYou: 'أنت', jEarlier: 'أنجزت %A محطات',
+      jAllDone: 'وصلت إلى نهاية الطريق! رائع! جرّب تحدّي الدورة لتتقن دروسك.',
       levelNames: ['', 'المستوى 1 · مبتدئ', 'المستوى 2 · مستكشف', 'المستوى 3 · بطل'],
       mlv: ['لم يبدأ', 'حاول', 'مألوف', 'متمكّن', 'متقن'], masteryWord: 'الإتقان', masteryPct: 'الإتقان %A%',
       levelUp: 'ارتقيت من %A إلى %B!', levelNow: 'الإتقان: %B', masteryKey: 'مستويات الإتقان: يرتقي الدرس مع الدرجات الجيدة وقد ينخفض إذا نُسي. ومستوى «متقن» يأتي من تحدّي الدورة.',
@@ -477,7 +485,7 @@
   class Component extends DCLogic {
     constructor(props) {
       super(props);
-      this.state = { view: location.hash === '#report' ? 'report' : profiles.list.length > 1 ? 'who' : 'home', ci: 0, ls: null, data: load(), confirming: false };
+      this.state = { view: location.hash === '#report' ? 'report' : profiles.list.length > 1 ? 'who' : 'journey', ci: 0, ls: null, data: load(), confirming: false };
       var self = this;
       if (SPEECH) speechSynthesis.addEventListener('voiceschanged', function () { self.setState({}); });
       // keyboard: 1, 2, 3 pick an answer; Enter moves on
@@ -502,7 +510,7 @@
     switchTo(id) {
       profiles.active = id; saveProfiles();
       this._trace = null; this._said = null;
-      this.go('home', { data: load(), ls: null, saqrN: 0, adding: false, removing: false });
+      this.go('journey', { data: load(), ls: null, saqrN: 0, adding: false, removing: false });
     }
 
     openWorksheet(ci, li) {
@@ -531,13 +539,13 @@
       this.go('lesson', { ls: { story: si, li: 0, step: 'quiz', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
     }
 
-    startLesson(ci, li) {
+    startLesson(ci, li, fromJourney) {
       var lesson = COURSES[ci].lessons[li];
       var raw = lesson.make ? lesson.make() : lesson.questions;
       var qs = raw.map(function (q) {
         return prepQ(q, lesson.hint);
       });
-      this.go('lesson', { ci: ci, ls: { li: li, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
+      this.go('lesson', { ci: ci, ls: { fromJourney: !!fromJourney || !!(this.state.ls && this.state.ls.fromJourney && this.state.view === 'lesson'), li: li, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
     }
 
     finishLesson(results) {
@@ -595,7 +603,8 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
-        isWorksheet: s.view === 'worksheet',
+        isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
+        goJourney: function () { self.go('journey'); },
         isWho: s.view === 'who', goWho: function () { self.go('who', { adding: false }); },
         isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
         shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' ? 'shell focus' : 'shell',
@@ -753,6 +762,40 @@
       out.dash.saqrCls = funN ? (funN % 2 ? 'saqr cheer' : 'saqr cheer2') : 'saqr';
       out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
       out.dash.say = function () { speak([out.dash.guide]); };
+
+      // ---- journey: lessons from the courses that suit the child, taking turns, easiest levels first ----
+      (function () {
+        var fit = COURSES.map(function (c, ci) { return ci; }).filter(function (ci) { return fitsAge(COURSES[ci], data.age); });
+        if (!fit.length) fit = COURSES.map(function (c, ci) { return ci; });
+        var orders = fit.map(orderOf), road = [], longest = Math.max.apply(null, orders.map(function (o) { return o.length; }));
+        for (var r = 0; r < longest; r++) fit.forEach(function (ci, k) { if (orders[k][r] != null) road.push({ ci: ci, li: orders[k][r] }); });
+        var cur = road.findIndex(function (st) { return !data.lessons[COURSES[st.ci].lessons[st.li].id]; });
+        var allDone = cur === -1; if (allDone) cur = road.length;
+        var from = Math.max(0, cur - 3), to = Math.min(road.length, from + 12);
+        var DECOR = ['🌴', '🐪', '🏜️', '⛺', '🌵', '⛵', '🐟', '🌙', '⭐', '🦅'];
+        var who = (data.name || '').trim();
+        var next = road[cur], nc = next ? COURSES[next.ci] : null, nl = next ? nc.lessons[next.li] : null;
+        var lead = allDone ? T.jAllDone : fill(who ? T.jLeadName : T.jLead, { N: who, L: tx(nl.title), C: tx(nc.name) });
+        var go = function () { sfx('pop'); if (next) self.startLesson(next.ci, next.li, true); };
+        out.journey = {
+          lead: lead, hasNext: !allDone, go: go, earlier: from > 0 ? fill(T.jEarlier, { A: from }) : '', hasEarlier: from > 0,
+          say: function () { speak([lead]); },
+          stops: road.slice(from, to).map(function (st, k) {
+            var i = from + k, c = COURSES[st.ci], l = c.lessons[st.li], rec = data.lessons[l.id];
+            var state = rec ? 'done' : i === cur ? 'current' : 'future';
+            return { num: String(i + 1), title: tx(l.title), course: tx(c.name), color: c.color, tint: c.tint, icon: c.icon,
+              cls: 'stop ' + state + ' side' + (i % 4), isCurrent: state === 'current', isDone: state === 'done',
+              stars: stars(rec ? rec.stars : 0), decor: DECOR[i % DECOR.length],
+              dis: state === 'future' ? 'true' : 'false',
+              tap: function () { if (state === 'future') { sfx('tap'); return; } sfx('pop'); self.startLesson(st.ci, st.li, true); } };
+          })
+        };
+        if (s.view === 'journey') {
+          var jKey = 'journey|' + cur;
+          if (data.autoRead !== false && out.speakOk && self._said !== jKey) { self._said = jKey; setTimeout(function () { speak([lead]); }, 300); }
+          self._keys = { opts: [], next: allDone ? null : go };
+        }
+      })();
 
       // ---- worksheet ----
       if (s.view === 'worksheet') {
@@ -949,15 +992,16 @@
           levelMsg: ls.levelMsg || '', hasLevel: !!ls.levelMsg, levelCls: ls.levelCls || '',
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
-          hasNext: !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) < lessonCount - 1,
-          isLast: !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) === lessonCount - 1,
-          backLabel: isStoryQuiz ? T.backStories : T.backCourse,
+          fromJourney: !!ls.fromJourney, notJourney: !ls.fromJourney,
+          hasNext: !ls.fromJourney && !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) < lessonCount - 1,
+          isLast: !ls.fromJourney && !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) === lessonCount - 1,
+          backLabel: ls.fromJourney ? T.jBack : isStoryQuiz ? T.backStories : T.backCourse,
           startQuiz: startQuiz,
           next: next,
           again: function () { if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
           isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),
           nextLesson: function () { var o = orderOf(s.ci); self.startLesson(s.ci, o[o.indexOf(ls.li) + 1]); },
-          backCourse: function () { self.go(isStoryQuiz ? 'stories' : 'course'); }
+          backCourse: function () { self.go(ls.fromJourney ? 'journey' : isStoryQuiz ? 'stories' : 'course'); }
         };
         out.ls.opts = q.opts.map(function (opt, k) {
           var isColour = !!(opt.o && opt.o.colour), col = isColour ? COLOURS[opt.o.colour] : null;
