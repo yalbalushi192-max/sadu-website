@@ -384,6 +384,22 @@
 </section>
 </sc-if>
 
+<!-- NEXT STEPS: advice for parents on what comes after Sadu -->
+<sc-if value="{{ isNext }}">
+<section class="page next-page">
+<button type="button" class="back" onclick="{{ goReport }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.rTitle }}</button>
+<header class="page-head"><h1 class="h1">🧭 {{ t.nxTitle }}</h1><p class="lead">{{ t.nxIntro }}</p></header>
+<div class="next-grid">
+<sc-for list="{{ t.nxBands }}" as="b">
+<article class="card next-band"><h2 class="h3"><span aria-hidden="true">{{ b.icon }}</span> {{ b.age }}</h2>
+<ul class="next-list"><sc-for list="{{ b.items }}" as="it"><li>{{ it }}</li></sc-for></ul></article>
+</sc-for>
+</div>
+<article class="card"><h2 class="h3 card-title">✅ {{ t.nxLookTitle }}</h2><ul class="next-list check"><sc-for list="{{ t.nxLook }}" as="it"><li>{{ it }}</li></sc-for></ul></article>
+<div class="guide"><svg class="saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg><div class="bubble"><p>{{ t.nxSaqr }}</p></div></div>
+</section>
+</sc-if>
+
 <!-- AI LAB: the child teaches a robot to sort colours -->
 <sc-if value="{{ isAI }}">
 <section class="page ai-page">
@@ -986,6 +1002,7 @@
 <button type="button" class="btn secondary" onclick="{{ goWeek }}">📅 {{ t.wkBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goEditor }}">✏️ {{ t.edBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goVideo }}">🎬 {{ t.vdBtn }}</button>
+<button type="button" class="btn secondary" onclick="{{ goNext }}">🧭 {{ t.nxBtn }}</button>
 <sc-if value="{{ r_remove.can }}"><button type="button" class="btn ghost" onclick="{{ r_remove.ask }}">{{ t.removeChild }}</button></sc-if>
 <sc-if value="{{ r_remove.asking }}"><span role="alert" class="confirm">{{ t.removeSure }}</span><button type="button" class="btn danger" onclick="{{ r_remove.yes }}">{{ t.yesRemove }}</button><button type="button" class="btn ghost" onclick="{{ r_remove.cancel }}">{{ t.cancel }}</button></sc-if>
 <sc-if value="{{ r.notConfirming }}"><button type="button" class="btn ghost" onclick="{{ r.askReset }}">{{ t.reset }}</button></sc-if>

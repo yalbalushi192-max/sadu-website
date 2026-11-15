@@ -70,6 +70,15 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      nxBtn: 'Next steps', nxTitle: 'Next steps after Sadu', nxIntro: 'Ideas for what your child can try next in coding, robots and AI, by age. This is general advice: Sadu is not paid to recommend anything.',
+      nxBands: [
+        { icon: '🧸', age: 'Ages 3 to 5', items: ['Floor robots that move with arrow buttons (a first taste of coding, no screen).', 'Unplugged games: play "robot" by giving each other step-by-step directions; sort toys by colour and size; copy and continue patterns.', 'Short picture books read aloud every day, in Arabic and English.'] },
+        { icon: '🧩', age: 'Ages 5 to 8', items: ['Free block-coding apps for young children, such as ScratchJr, and the free beginner courses on Code.org.', 'Simple robot kits that use arrow cards or coloured blocks to program moves.', 'Sadu\'s Coding course and AI Lab, then talk together about how apps and robots follow instructions.'] },
+        { icon: '🤖', age: 'Ages 8 to 11', items: ['Scratch (free) to make games and animations and share them safely.', 'A micro:bit or a beginner robotics kit to build things that light up, move and sense the world.', 'Online project-based coding courses (for example CodaKid and similar): try a free trial first and check that your child builds real projects.'] },
+        { icon: '🐍', age: 'Ages 11 to 14', items: ['Python for games and puzzles, then HTML, CSS and JavaScript to build their own website.', 'Arduino or Raspberry Pi for electronics and inventions.', 'Beginner AI tools such as Google\'s Teachable Machine (free, in the browser) to train a simple AI with pictures or sounds, together with a grown-up.'] }
+      ],
+      nxLookTitle: 'What to look for', nxLook: ['Made for your child\'s age, with no adverts.', 'Clear privacy: little personal data, and parent controls.', 'Building real projects, not only watching videos.', 'A healthy balance of screen time and active play.', 'Arabic support, or at least simple English with pictures.', 'A free trial before paying.'],
+      nxSaqr: 'Every expert started as a beginner. Keep it playful, build things together, and celebrate small wins!',
       navAI: 'AI Lab', aiTitle: 'Build your own AI', aiIntro: 'Teach the robot by putting colours into the right basket. Then press Train and see if it can sort colours it has never seen!',
       aiModes: { warm: 'Warm or cool', light: 'Light or dark' }, aiA: { warm: '🔥 Warm', light: '☀️ Light' }, aiB: { warm: '❄️ Cool', light: '🌙 Dark' },
       aiPick: 'Tap a colour, then tap a basket.', aiTrain: 'Train the robot', aiNeed: 'Put at least 2 colours in each basket.', aiTest: 'The robot is guessing new colours…',
@@ -189,6 +198,15 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      nxBtn: 'الخطوات التالية', nxTitle: 'الخطوات التالية بعد سدو', nxIntro: 'أفكار لما يمكن أن يجرّبه طفلك بعد ذلك في البرمجة والروبوتات والذكاء الاصطناعي، حسب العمر. هذه نصائح عامة: لا يتقاضى سدو أي مقابل للترشيح.',
+      nxBands: [
+        { icon: '🧸', age: 'من 3 إلى 5 سنوات', items: ['روبوتات أرضية تتحرّك بأزرار الأسهم (أول تجربة للبرمجة بلا شاشة).', 'ألعاب بلا شاشة: العبوا لعبة «الروبوت» بإعطاء تعليمات خطوة بخطوة، ورتّبوا الألعاب حسب اللون والحجم، وأكملوا الأنماط.', 'قصص مصوّرة قصيرة تُقرأ بصوت عالٍ كل يوم، بالعربية والإنجليزية.'] },
+        { icon: '🧩', age: 'من 5 إلى 8 سنوات', items: ['تطبيقات مجانية للبرمجة بالكتل للصغار مثل ScratchJr، ودورات المبتدئين المجانية في Code.org.', 'مجموعات روبوت بسيطة تُبرمج حركاتها ببطاقات الأسهم أو مكعبات ملوّنة.', 'دورة البرمجة ومختبر الذكاء في سدو، ثم تحدّثوا معًا عن كيف تتبع التطبيقات والروبوتات التعليمات.'] },
+        { icon: '🤖', age: 'من 8 إلى 11 سنة', items: ['Scratch (مجاني) لصنع الألعاب والرسوم المتحرّكة ومشاركتها بأمان.', 'لوحة micro:bit أو مجموعة روبوتات للمبتدئين لصنع أشياء تضيء وتتحرّك وتستشعر.', 'دورات برمجة عبر الإنترنت قائمة على المشاريع (مثل CodaKid وغيرها): جرّب النسخة المجانية أولًا وتأكّد أن طفلك يبني مشاريع حقيقية.'] },
+        { icon: '🐍', age: 'من 11 إلى 14 سنة', items: ['بايثون للألعاب والألغاز، ثم HTML و CSS و JavaScript لبناء موقعه الخاص.', 'Arduino أو Raspberry Pi للإلكترونيات والاختراعات.', 'أدوات ذكاء اصطناعي للمبتدئين مثل Teachable Machine من Google (مجانية في المتصفح) لتدريب ذكاء بسيط بالصور أو الأصوات، مع شخص كبير.'] }
+      ],
+      nxLookTitle: 'ماذا تختار', nxLook: ['مناسب لعمر طفلك وبلا إعلانات.', 'خصوصية واضحة: بيانات شخصية قليلة وتحكّم للوالدين.', 'بناء مشاريع حقيقية، لا مشاهدة مقاطع فقط.', 'توازن صحي بين الشاشة واللعب الحركي.', 'دعم للعربية، أو إنجليزية بسيطة مع صور.', 'تجربة مجانية قبل الدفع.'],
+      nxSaqr: 'كل خبير بدأ مبتدئًا. اجعلوها ممتعة، واصنعوا الأشياء معًا، واحتفلوا بالإنجازات الصغيرة!',
       navAI: 'مختبر الذكاء', aiTitle: 'اصنع ذكاءك الاصطناعي', aiIntro: 'علّم الروبوت بوضع الألوان في السلة الصحيحة. ثم اضغط «درّب» وانظر هل يستطيع ترتيب ألوان لم يرها من قبل!',
       aiModes: { warm: 'حارّ أم بارد', light: 'فاتح أم غامق' }, aiA: { warm: '🔥 حارّ', light: '☀️ فاتح' }, aiB: { warm: '❄️ بارد', light: '🌙 غامق' },
       aiPick: 'اضغط على لون، ثم على سلة.', aiTrain: 'درّب الروبوت', aiNeed: 'ضع لونين على الأقل في كل سلة.', aiTest: 'الروبوت يخمّن ألوانًا جديدة…',
@@ -320,7 +338,7 @@
   }
 
   // pages for parents and teachers only
-  var PARENT_VIEWS = ['report', 'week', 'editor', 'video'];
+  var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next'];
 
   // ---- child profiles ----
   function keyFor(id) { return id === 'p1' ? KEY : KEY + ':' + id; }
@@ -854,6 +872,7 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isNext: s.view === 'next', goNext: function () { self.go('next'); },
         isAI: s.view === 'ailab', aiOn: s.view === 'ailab' ? 'page' : 'false', goAI: function () { self.go('ailab'); },
         isVideo: s.view === 'video', goVideo: function () { self.go('video'); },
         isGate: s.view === 'gate',

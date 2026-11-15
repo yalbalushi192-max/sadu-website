@@ -697,3 +697,11 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .ai-result.ok{border-color:#A8DDBE}.ai-result.bad{border-color:#F1B8B3}
 .ai-sw{width:56px;height:56px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(35,32,74,.15)}
 .btn[aria-disabled=true]{opacity:.5}
+
+/* ---------- next steps for parents ---------- */
+.next-page{max-width:960px}
+.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.next-band{display:flex;flex-direction:column;gap:10px}
+.next-list{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:8px;line-height:1.55}
+.next-list.check{list-style:none;padding-inline-start:0}
+.next-list.check li::before{content:'✓ ';color:var(--green);font-weight:800}
