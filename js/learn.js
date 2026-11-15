@@ -1160,6 +1160,7 @@
       this.state = { view: location.hash === '#report' ? 'gate' : profiles.list.length > 1 ? 'who' : 'journey',
         gate: location.hash === '#report' ? { view: 'report', extra: {}, a: 7, b: 8, wrong: false } : null, ci: 0, ls: null, data: load(), confirming: false };
       var self = this;
+      window.__sadu = this;  // handle used by the automated tests
       if (overLimit(this.state.data) && FREE_VIEWS.indexOf(this.state.view) === -1) this.state.view = 'rest';
       // count time on screen every 15 seconds while a child page is showing
       setInterval(function () {

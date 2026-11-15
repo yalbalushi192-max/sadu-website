@@ -900,3 +900,6 @@ button.hs-frame{cursor:pointer}button.hs-frame:hover{transform:rotate(-1.5deg)}
 /* ---------- daily quest ---------- */
 .dq-card{background:linear-gradient(135deg,#2A2560,#4A3E9C);color:#FFFFFF;border-color:#7B5CD6}
 .dq-card p,.dq-card .small{color:#FFFFFF}
+
+/* ---------- keyboard focus: a clear outline on everything you can press or type in ---------- */
+:where(button,a[href],input,textarea,select,summary,[tabindex]:not([tabindex="-1"])):focus-visible{outline:3px solid #2C8FCB;outline-offset:3px}
