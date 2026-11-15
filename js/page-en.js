@@ -89,6 +89,12 @@ class Component extends DCLogic {
     out.g = souqDash(this, {"items": [["Box of dates", 12], ["Bag of coffee", 18], ["Bread", 2], ["Jar of honey", 35], ["Bottle of laban", 4], ["Bag of oranges", 6], ["Bag of cardamom", 25], ["Watermelon", 9]], "line": "%Q × %N (%P SAR each)", "sar": "%N SAR", "add": "Add %N SAR", "low": "Too little. Count again.", "high": "Too much. Count again.", "yes": "Right! %C SAR change. Next customer.", "result": "You served %N customers.", "result1": "You served 1 customer.", "best": "Best so far: %N"});
     out.lc = letterCatch(this, {"yes": "Yes! \"%W\" starts with %L.", "no": "Not this one. Try again."}, PH);
     out.ff = falconFlight(this, {"feathers": "Feathers left: %N", "yes": "Yes! On to the next dune.", "no": "Not quite. Try again.", "wind": "The wind changed. Here is a new sum.", "wonText": "Feathers left: %N of 3.", "lostText": "You flew %S of %G dunes."});
+    // the real courses (js/courses.js), for the Courses section
+    out.realCourses = (window.SADU_COURSES || []).map(function (c) {
+      var t = function (o) { return o == null ? '' : typeof o === 'string' ? o : o['en'] || o.en; };
+      return { name: t(c.name), age: t(c.age), count: c.lessons.length, color: c.color, tint: c.tint || '#F1ECE0',
+        sample: c.lessons.slice(0, 3).map(function (l) { return t(l.title); }).join(' · ') };
+    });
     var es = this.state.enroll;
     out.enrollMsg = { text: es === 'ok' ? "Thank you. Check your inbox for the first lesson." : es === 'bad' ? "Please enter a valid email address." : '', color: es === 'ok' ? '#0B6B3A' : '#B3261E' };
     out.enroll = function () {

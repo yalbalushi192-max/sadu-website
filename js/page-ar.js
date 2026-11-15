@@ -89,6 +89,12 @@ class Component extends DCLogic {
     out.g = souqDash(this, {"items": [["علبة تمر", 12], ["كيس قهوة", 18], ["خبز", 2], ["برطمان عسل", 35], ["علبة لبن", 4], ["كيس برتقال", 6], ["كيس هيل", 25], ["بطيخة", 9]], "line": "%Q × %N (سعر الواحد %P ريال)", "sar": "%N ريال", "add": "أضِف %N ريال", "low": "أقل من المطلوب. عُدَّ مرة أخرى.", "high": "أكثر من المطلوب. عُدَّ مرة أخرى.", "yes": "صحيح! الباقي %C ريال. الزبون التالي.", "result": "عدد الزبائن الذين خدمتهم: %N", "result1": "عدد الزبائن الذين خدمتهم: %N", "best": "أفضل نتيجة: %N"});
     out.lc = letterCatch(this, {"yes": "أحسنت! «%W» تبدأ بحرف %L.", "no": "ليس هذا. حاول مرة أخرى."}, PH);
     out.ff = falconFlight(this, {"feathers": "الريش الباقي: %N", "yes": "صحيح! إلى الكثيب التالي.", "no": "ليست صحيحة. حاول مرة أخرى.", "wind": "تغيّرت الريح. هذه مسألة جديدة.", "wonText": "الريش الباقي: %N من 3.", "lostText": "قطعتَ %S من %G كثبان."});
+    // the real courses (js/courses.js), for the Courses section
+    out.realCourses = (window.SADU_COURSES || []).map(function (c) {
+      var t = function (o) { return o == null ? '' : typeof o === 'string' ? o : o['ar'] || o.en; };
+      return { name: t(c.name), age: t(c.age), count: c.lessons.length, color: c.color, tint: c.tint || '#F1ECE0',
+        sample: c.lessons.slice(0, 3).map(function (l) { return t(l.title); }).join(' · ') };
+    });
     var es = this.state.enroll;
     out.enrollMsg = { text: es === 'ok' ? "شكرًا لك. تفقّد بريدك للحصول على الدرس الأول." : es === 'bad' ? "الرجاء إدخال بريد إلكتروني صحيح." : '', color: es === 'ok' ? '#0B6B3A' : '#B3261E' };
     out.enroll = function () {
