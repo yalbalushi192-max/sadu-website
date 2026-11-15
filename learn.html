@@ -299,6 +299,33 @@
 </section>
 </sc-if>
 
+<!-- CERTIFICATE: printable, for a finished level or course -->
+<sc-if value="{{ isCert }}">
+<section class="page cert-page" style="--c: {{ cert.color }}; --t: {{ cert.tint }}">
+<div class="actions no-print"><button type="button" class="back" onclick="{{ cert.back }}"><svg class="flip" aria-hidden="true" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>{{ t.backCourse }}</button><button type="button" class="btn primary" onclick="{{ cert.print }}">{{ t.certPrint }}</button></div>
+<article class="cert">
+<div class="cert-inner">
+<div class="cert-top"><span class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 48 48"><path d="M24 8L42 40H6z" fill="#B3261E"/></svg></span><b>{{ t.brand }}</b></div>
+<h1 class="cert-title">{{ t.certTitle }}</h1>
+<p class="cert-small">{{ t.certAwarded }}</p>
+<div class="cert-who">
+<span class="me-av cert-av" aria-hidden="true"><sc-if value="{{ hasPhoto }}"><img src="{{ photo }}" alt=""></sc-if><sc-if value="{{ noPhoto }}">{{ initial }}</sc-if></span>
+<sc-if value="{{ cert.hasName }}"><span class="cert-name">{{ cert.name }}</span></sc-if>
+<sc-if value="{{ cert.notName }}"><span class="cert-name blank"></span></sc-if>
+</div>
+<p class="cert-small">{{ t.certFor }}</p>
+<p class="cert-what">{{ cert.what }}</p>
+<p class="cert-stars">⭐ {{ cert.stars }}</p>
+<div class="cert-foot">
+<div><span class="cert-line">{{ cert.date }}</span><span class="cert-small">{{ t.wsDate }}</span></div>
+<div class="cert-seal" aria-hidden="true"><svg viewBox="0 0 120 120"><use href="#saqr"/></svg></div>
+<div><span class="cert-line"></span><span class="cert-small">{{ t.certSigned }}</span></div>
+</div>
+</div>
+</article>
+</section>
+</sc-if>
+
 <!-- WORKSHEET: a printable page for one lesson -->
 <sc-if value="{{ isWorksheet }}">
 <section class="page ws-page" style="--c: {{ ws.color }}; --t: {{ ws.tint }}">
@@ -442,11 +469,12 @@
 <div class="course-hero-text">
 <h1 class="h1">{{ course.name }}</h1>
 <p class="meta">{{ course.age }} · {{ course.doneText }} · {{ course.starsText }} · <b>{{ course.masteryText }}</b></p>
+<sc-if value="{{ course.allDone }}"><button type="button" class="btn secondary cert-btn" onclick="{{ course.courseCert }}">🎓 {{ t.certBtn }}</button></sc-if>
 <div class="bar" role="progressbar" aria-label="{{ course.name }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ course.pctNum }}"><div style="width: {{ course.pct }}"></div></div>
 </div>
 </header>
 <sc-for list="{{ course.levels }}" as="g">
-<div class="{{ g.cls }}"><h2 class="h3">{{ g.name }}</h2><span class="small muted">{{ g.mastery }}</span></div>
+<div class="{{ g.cls }}"><h2 class="h3">{{ g.name }}</h2><span class="level-right"><span class="small muted">{{ g.mastery }}</span><sc-if value="{{ g.done }}"><button type="button" class="btn ghost cert-btn" onclick="{{ g.cert }}">🎓 {{ t.certBtn }}</button></sc-if></span></div>
 <ol class="path" style="--c: {{ course.color }}; --t: {{ course.tint }}">
 <sc-for list="{{ g.rows }}" as="l">
 <li class="{{ l.state }}">
@@ -598,6 +626,7 @@
 <div class="guide cheer-guide"><svg class="saqr cheer" viewBox="0 0 120 120" role="img" aria-label="{{ t.guide }}"><use href="#saqr"/></svg><div class="bubble"><p>{{ ls.doneSay }}</p></div></div>
 </div>
 <span class="stars big-stars" aria-hidden="true"><sc-for list="{{ ls.earnedStars }}" as="s"><svg width="64" height="64" viewBox="0 0 24 24" fill="{{ s.fill }}"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></sc-for></span>
+<sc-if value="{{ ls.hasCert }}"><div class="cert-offer" role="status"><b>🎓 {{ ls.certMsg }}</b><button type="button" class="btn accent point" onclick="{{ ls.openCert }}">{{ t.certGet }}</button></div></sc-if>
 <sc-if value="{{ ls.hasChanges }}"><div class="changes" role="status"><b>{{ t.chChanges }}</b><sc-for list="{{ ls.changes }}" as="ch"><span class="{{ ch.cls }}">{{ ch.text }}</span></sc-for></div></sc-if>
 <sc-if value="{{ ls.noChanges }}"><p class="small muted">{{ t.chSame }}</p></sc-if>
 <sc-if value="{{ ls.hasLevel }}"><div class="{{ ls.levelCls }} level-msg" role="status">{{ ls.levelMsg }}</div></sc-if>

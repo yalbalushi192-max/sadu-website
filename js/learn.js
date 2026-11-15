@@ -70,6 +70,9 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      certTitle: 'Certificate of achievement', certAwarded: 'This certificate is proudly given to', certFor: 'for completing',
+      certLevelOf: '%L of %C', certCourse: 'the whole %C course', certSigned: 'Parent or teacher', certBtn: 'Certificate',
+      certGet: 'Get your certificate', certPrint: 'Print the certificate', certStars: '%A stars earned', certLevelDone: 'You finished %L!', certCourseDone: 'You finished the whole course!',
       navJourney: 'My journey', jTitle: 'My journey', jIntro: 'Follow the road with Saqr. Every stop is a lesson.',
       jLeadName: '%N, our next stop is %L (%C). Tap Go when you are ready!', jLead: 'Our next stop is %L (%C). Tap Go when you are ready!',
       jGo: 'Go!', jBack: 'Back to my journey', jYou: 'You', jEarlier: '%A stops done',
@@ -146,6 +149,9 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      certTitle: 'شهادة إنجاز', certAwarded: 'تُمنح هذه الشهادة بكل فخر إلى', certFor: 'لإتمام',
+      certLevelOf: '%L في %C', certCourse: 'دورة %C كاملة', certSigned: 'وليّ الأمر أو المعلّم', certBtn: 'الشهادة',
+      certGet: 'احصل على شهادتك', certPrint: 'اطبع الشهادة', certStars: 'حصلت على %A نجمة', certLevelDone: 'أنهيت %L!', certCourseDone: 'أنهيت الدورة كاملة!',
       navJourney: 'رحلتي', jTitle: 'رحلتي', jIntro: 'اتبع الطريق مع صقر. كل محطة درس.',
       jLeadName: '%N، محطتنا التالية هي %L (%C). اضغط «انطلق» عندما تكون مستعدًا!', jLead: 'محطتنا التالية هي %L (%C). اضغط «انطلق» عندما تكون مستعدًا!',
       jGo: 'انطلق!', jBack: 'العودة إلى رحلتي', jYou: 'أنت', jEarlier: 'أنجزت %A محطات',
@@ -358,6 +364,10 @@
     return items;
   }
 
+  function levelDone(data, ci, lv) {
+    return COURSES[ci].lessons.every(function (l) { return (lv && (l.level || 1) !== lv) || !!data.lessons[l.id]; });
+  }
+
   // ---- levels: the order lessons are shown and played in (by level, then as written) ----
   function orderOf(ci) {
     var ls = COURSES[ci].lessons;
@@ -549,7 +559,7 @@
     }
 
     finishLesson(results) {
-      var ls = this.state.ls, n = ls.qs.length, newSticker = '', levelMsg = '', levelCls = '', changes = null;
+      var ls = this.state.ls, n = ls.qs.length, newSticker = '', levelMsg = '', levelCls = '', changes = null, cert = null;
       var earned = ls.firstTry === n ? 3 : ls.firstTry === n - 1 ? 2 : 1;
       var secs = Math.min(900, Math.round((Date.now() - ls.t0) / 1000));
       var data = JSON.parse(JSON.stringify(this.state.data));
@@ -574,18 +584,21 @@
       var old = data.lessons[lesson.id] || { stars: 0, plays: 0 };
       newSticker = data.lessons[lesson.id] ? '' : stickerOf(this.state.ci, ls.li);
       // acc and missed describe the latest play; the learning plan uses them to find weak spots
+      var lvl = lesson.level || 1, levelWas = levelDone(data, this.state.ci, lvl), courseWas = levelDone(data, this.state.ci, 0);
       var lvFrom = masteryOf(data.lessons[lesson.id]), lvTo = nextMastery(lvFrom, ls.firstTry / n, false);
       data.lessons[lesson.id] = { stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
         acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4), mastery: lvTo };
       levelMsg = lvTo > lvFrom && lvFrom > 0 ? fill(T.levelUp, { A: T.mlv[lvFrom], B: T.mlv[lvTo] }) : fill(T.levelNow, { B: T.mlv[lvTo] });
       levelCls = mastClass(lvTo);
+      if (!courseWas && levelDone(data, this.state.ci, 0)) cert = { ci: this.state.ci, lv: 0, msg: T.certCourseDone };
+      else if (!levelWas && levelDone(data, this.state.ci, lvl)) cert = { ci: this.state.ci, lv: lvl, msg: fill(T.certLevelDone, { L: T.levelNames[lvl] }) };
       }
       data.seconds += secs;
       var today = dayKey(new Date()), goal = data.goal || 2, before = data.days[today] || 0;
       data.days[today] = before + 1;
       var goalHit = before < goal && before + 1 >= goal;
       save(data);
-      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit, levelMsg: levelMsg, levelCls: levelCls, changes: changes }) });
+      this.setState({ data: data, ls: Object.assign({}, ls, { step: 'done', earned: earned, secs: secs, newSticker: newSticker, goalHit: goalHit, levelMsg: levelMsg, levelCls: levelCls, changes: changes, cert: cert }) });
       sfx('done'); burst(null, goalHit ? 260 : 160);
       window.scrollTo(0, 0);
     }
@@ -603,11 +616,12 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isCert: s.view === 'cert',
         isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
         goJourney: function () { self.go('journey'); },
         isWho: s.view === 'who', goWho: function () { self.go('who', { adding: false }); },
         isStickers: s.view === 'stickers', stickersOn: s.view === 'stickers' ? 'page' : 'false', goStickers: function () { self.go('stickers'); },
-        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' ? 'shell focus' : 'shell',
+        shellCls: s.view === 'lesson' || s.view === 'story' || s.view === 'who' || s.view === 'worksheet' || s.view === 'cert' ? 'shell focus' : 'shell',
         langHref: LANG === 'ar' ? 'learn.html' : 'learn.html?lang=ar',
         siteHref: LANG === 'ar' ? 'ar.html' : 'index.html',
         gamesHref: (LANG === 'ar' ? 'ar.html' : 'index.html') + '#games',
@@ -670,7 +684,9 @@
           levels: [1, 2, 3].map(function (lv) {
             var rows = lessons.filter(function (r) { return r.level === lv; });
             var pts = rows.reduce(function (n, r) { return n + r.mPts; }, 0);
-            return { name: T.levelNames[lv], rows: rows, has: rows.length > 0, cls: 'level-head lv' + lv,
+            var lvDone = rows.length > 0 && rows.every(function (r) { return r.done; });
+            return { name: T.levelNames[lv], rows: rows, has: rows.length > 0, cls: 'level-head lv' + lv, done: lvDone,
+              cert: function () { self.go('cert', { certCi: ci, certLv: lv }); },
               mastery: rows.length ? fill(T.masteryPct, { A: Math.round(pts / (rows.length * 100) * 100) }) : '' };
           }).filter(function (g) { return g.has; }),
           doneText: fill(T.xOfY, { A: done, B: c.lessons.length }),
@@ -678,7 +694,8 @@
           pct: pct + '%', pctNum: String(pct), starsNum: st,
           dash: (RING * mPct / 100).toFixed(1) + ' ' + RING, mPct: mPct + '%', masteryText: fill(T.masteryPct, { A: mPct }),
           cta: done === 0 ? T.ctaStart : done === c.lessons.length ? T.ctaReview : T.ctaContinue, fits: fitsAge(c, data.age),
-          open: function () { self.go('course', { ci: ci }); }
+          open: function () { self.go('course', { ci: ci }); },
+          allDone: done === c.lessons.length, courseCert: function () { self.go('cert', { certCi: ci, certLv: 0 }); }
         };
       });
       out.course = out.courses[s.ci];
@@ -796,6 +813,19 @@
           self._keys = { opts: [], next: allDone ? null : go };
         }
       })();
+
+      // ---- certificate ----
+      if (s.view === 'cert') {
+        var kc = COURSES[s.certCi], kst = 0, klast = 0;
+        kc.lessons.forEach(function (l) { var rec = data.lessons[l.id]; if (rec && (!s.certLv || (l.level || 1) === s.certLv)) { kst += rec.stars; if (rec.when > klast) klast = rec.when; } });
+        out.cert = {
+          name: (data.name || '').trim(), hasName: !!(data.name || '').trim(), notName: !(data.name || '').trim(),
+          what: s.certLv ? fill(T.certLevelOf, { L: T.levelNames[s.certLv], C: tx(kc.name) }) : fill(T.certCourse, { C: tx(kc.name) }),
+          stars: fill(T.certStars, { A: kst }), date: day(klast || Date.now()), color: kc.color, tint: kc.tint, icon: kc.icon,
+          print: function () { window.print(); },
+          back: function () { self.go('course', { ci: s.certCi }); }
+        };
+      }
 
       // ---- worksheet ----
       if (s.view === 'worksheet') {
@@ -999,6 +1029,8 @@
           startQuiz: startQuiz,
           next: next,
           again: function () { if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
+          hasCert: !!ls.cert, certMsg: ls.cert ? ls.cert.msg : '',
+          openCert: function () { if (ls.cert) self.go('cert', { certCi: ls.cert.ci, certLv: ls.cert.lv }); },
           isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),
           nextLesson: function () { var o = orderOf(s.ci); self.startLesson(s.ci, o[o.indexOf(ls.li) + 1]); },
           backCourse: function () { self.go(ls.fromJourney ? 'journey' : isStoryQuiz ? 'stories' : 'course'); }

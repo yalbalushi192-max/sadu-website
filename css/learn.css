@@ -570,3 +570,30 @@ button.who{border:0;background:none;padding:0;text-align:start;cursor:pointer;fo
 @media (prefers-reduced-motion: reduce){.point::after,.hero-me,.stop.current .stop-btn{animation:none}}
 
 .road{overflow-x:clip}
+
+/* ---------- certificate ---------- */
+.level-right{display:flex;align-items:center;gap:10px}
+.cert-btn{min-height:36px;padding:6px 14px;font-size:14px}
+.cert-offer{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 20px;border-radius:var(--r-lg);background:var(--amber-soft);color:var(--ink)}
+.cert-page{max-width:900px}
+.cert{background:#FFFFFF;padding:14px;border-radius:12px;box-shadow:var(--sh-2);
+  background-image:repeating-linear-gradient(135deg,#B3261E 0 10px,#FFFFFF 10px 14px,#23204A 14px 24px,#FFFFFF 24px 28px);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-inner{background:#FFFDF6;border:3px solid var(--c);border-radius:8px;padding:clamp(20px,5vw,48px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#23204A}
+.cert-top{display:flex;align-items:center;gap:8px;font-size:18px}
+.cert-top .brand-mark{width:34px;height:34px;border-radius:9px}
+.cert-title{font-family:'Fredoka','Baloo Bhaijaan 2',sans-serif;font-weight:700;font-size:clamp(28px,5vw,46px);margin:6px 0;color:#23204A}
+html[lang=ar] .cert-title{font-family:'Baloo Bhaijaan 2',sans-serif}
+.cert-small{font-size:14px;color:#625F82;font-weight:700}
+.cert-who{display:flex;flex-direction:column;align-items:center;gap:8px}
+.cert-av{width:90px;height:90px;font-size:36px}
+.cert-name{font-family:'Fredoka','Baloo Bhaijaan 2',sans-serif;font-weight:700;font-size:clamp(30px,6vw,52px);border-bottom:3px solid var(--c);padding:0 24px;min-width:240px}
+.cert-name.blank{height:56px}
+.cert-what{font-size:clamp(18px,3vw,24px);font-weight:800}
+.cert-stars{font-weight:800;color:var(--amber)}
+.cert-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;width:100%;margin-top:16px}
+.cert-foot>div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.cert-line{display:block;min-width:150px;border-bottom:2px solid #23204A;font-weight:700;min-height:22px}
+.cert-seal{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#FFF6C9,#FFD54F 60%,#E0A800);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #FFFFFF,0 0 0 7px #E0A800;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-seal svg{width:72px;height:72px}
+@media print{.cert-page{max-width:none}.cert{box-shadow:none}}
+@media (max-width:560px){.cert-foot{flex-direction:column;align-items:center}}
