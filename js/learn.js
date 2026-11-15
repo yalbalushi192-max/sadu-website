@@ -70,6 +70,14 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      aiProjects: { colours: '🎨 Colours', words: '💬 Words', numbers: '🌡️ Numbers' },
+      awTitle: 'Happy or sad?', awIntro: 'Teach the robot to tell happy sentences from sad ones. Tap a sentence (or write your own), then tap a basket.',
+      awHappy: '😊 Happy', awSad: '😢 Sad', awOwn: 'Write your own sentence', awAddTo: 'Put in', awTest: 'Test the robot: type any sentence', awTestBtn: 'What does the robot think?',
+      awThinks: 'The robot thinks: %A (%B% sure)', awLearned: 'Words the robot learned', awNeedTrain: 'Put at least 2 sentences in each basket, then press Train.',
+      awTrained: 'The robot is trained! It looks at the words in your sentences.', awUnknown: 'The robot has never seen these words, so it is guessing.',
+      awExamples: [['I love playing with my friends', 'A'], ['What a sunny, beautiful day', 'A'], ['I got a gold star today', 'A'], ['We are going to the beach', 'A'], ['This cake is yummy', 'A'], ['I won the race', 'A'], ['Grandma gave me a big hug', 'A'], ['I lost my favourite toy', 'B'], ['My friend is not talking to me', 'B'], ['It is raining and I cannot play', 'B'], ['I fell and hurt my knee', 'B'], ['My ice cream fell on the floor', 'B'], ['I miss my grandma', 'B'], ['I am lonely and bored', 'B']],
+      awTests: [['I love the beach', 'A'], ['I hurt my hand and I am sad', 'B'], ['My friends gave me a gold star', 'A'], ['I am sad because I miss my friend', 'B']],
+      anTitle: 'Hot or cold?', anIntro: 'Teach the robot which temperatures feel hot and which feel cold. Tap a number, then tap a basket.', anHot: '🔥 Hot', anCold: '❄️ Cold', anDeg: '%A°C',
       navDisc: 'Discover', dsTitle: 'Discover Saudi Arabia', dsIntro: 'Fly with Saqr across the Kingdom! Each place is a short quest. Finish it to collect knowledge cards.',
       dsMapNote: 'Map drawing, not to scale', dsDone: 'Finished', dsGo: 'Start the quest', dsAgain: 'Play again', dsCards: 'My card book', dsCardsIntro: 'Cards you have collected on your quests.',
       dsCount: '%A of %B cards', dsTopics: { place: 'Places', nature: 'Nature', culture: 'Culture', history: 'History' }, dsLocked: 'Not found yet',
@@ -104,7 +112,7 @@
       ],
       nxLookTitle: 'What to look for', nxLook: ['Made for your child\'s age, with no adverts.', 'Clear privacy: little personal data, and parent controls.', 'Building real projects, not only watching videos.', 'A healthy balance of screen time and active play.', 'Arabic support, or at least simple English with pictures.', 'A free trial before paying.'],
       nxSaqr: 'Every expert started as a beginner. Keep it playful, build things together, and celebrate small wins!',
-      navAI: 'AI Lab', aiTitle: 'Build your own AI', aiIntro: 'Teach the robot by putting colours into the right basket. Then press Train and see if it can sort colours it has never seen!',
+      navAI: 'AI Lab', aiTitle: 'Build your own AI', aiIntro: 'Teach the robot with examples: colours, words or numbers. Then press Train and see if it can sort things it has never seen! This is how machine learning works.',
       aiModes: { warm: 'Warm or cool', light: 'Light or dark' }, aiA: { warm: '🔥 Warm', light: '☀️ Light' }, aiB: { warm: '❄️ Cool', light: '🌙 Dark' },
       aiPick: 'Tap a colour, then tap a basket.', aiTrain: 'Train the robot', aiNeed: 'Put at least 2 colours in each basket.', aiTest: 'The robot is guessing new colours…',
       aiScore: 'The robot got %A of %B right!', aiMore: 'Teach it more examples to make it even smarter.', aiPerfect: 'Brilliant teaching! The robot learned really well.',
@@ -223,6 +231,14 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      aiProjects: { colours: '🎨 الألوان', words: '💬 الكلمات', numbers: '🌡️ الأرقام' },
+      awTitle: 'سعيد أم حزين؟', awIntro: 'علّم الروبوت أن يميّز الجمل السعيدة من الحزينة. اضغط على جملة (أو اكتب جملتك)، ثم اضغط على سلة.',
+      awHappy: '😊 سعيد', awSad: '😢 حزين', awOwn: 'اكتب جملتك', awAddTo: 'ضعها في', awTest: 'اختبر الروبوت: اكتب أي جملة', awTestBtn: 'ماذا يظن الروبوت؟',
+      awThinks: 'يظن الروبوت: %A (متأكد بنسبة %B%)', awLearned: 'كلمات تعلّمها الروبوت', awNeedTrain: 'ضع جملتين على الأقل في كل سلة، ثم اضغط «درّب».',
+      awTrained: 'تدرّب الروبوت! إنه ينظر إلى الكلمات في جملك.', awUnknown: 'لم يرَ الروبوت هذه الكلمات من قبل، فهو يخمّن.',
+      awExamples: [['أحب اللعب مع أصدقائي', 'A'], ['يا له من يوم مشمس جميل', 'A'], ['حصلت على نجمة ذهبية اليوم', 'A'], ['سنذهب إلى الشاطئ', 'A'], ['هذه الكعكة لذيذة', 'A'], ['فزت في السباق', 'A'], ['عانقتني جدتي عناقًا كبيرًا', 'A'], ['أضعت لعبتي المفضلة', 'B'], ['صديقي لا يكلمني', 'B'], ['إنها تمطر ولا أستطيع اللعب', 'B'], ['وقعت وجرحت ركبتي', 'B'], ['سقطت مثلجاتي على الأرض', 'B'], ['اشتقت إلى جدتي', 'B'], ['أنا وحيد وأشعر بالملل', 'B']],
+      awTests: [['أحب الشاطئ', 'A'], ['جرحت يدي وأنا حزين', 'B'], ['أعطاني أصدقائي نجمة ذهبية', 'A'], ['أنا حزين لأن صديقي لا يكلمني', 'B']],
+      anTitle: 'حارّ أم بارد؟', anIntro: 'علّم الروبوت أي درجات الحرارة حارّة وأيها باردة. اضغط على رقم، ثم على سلة.', anHot: '🔥 حارّ', anCold: '❄️ بارد', anDeg: '%A°م',
       navDisc: 'اكتشف', dsTitle: 'اكتشف المملكة العربية السعودية', dsIntro: 'طِر مع صقر في أنحاء المملكة! كل مكان مهمة قصيرة. أكملها لتجمع بطاقات المعرفة.',
       dsMapNote: 'رسم للخريطة، ليس بمقياس دقيق', dsDone: 'مكتملة', dsGo: 'ابدأ المهمة', dsAgain: 'العب مرة أخرى', dsCards: 'كتاب بطاقاتي', dsCardsIntro: 'البطاقات التي جمعتها في مهامّك.',
       dsCount: '%A من %B بطاقة', dsTopics: { place: 'أماكن', nature: 'طبيعة', culture: 'ثقافة', history: 'تاريخ' }, dsLocked: 'لم تُكتشف بعد',
@@ -257,7 +273,7 @@
       ],
       nxLookTitle: 'ماذا تختار', nxLook: ['مناسب لعمر طفلك وبلا إعلانات.', 'خصوصية واضحة: بيانات شخصية قليلة وتحكّم للوالدين.', 'بناء مشاريع حقيقية، لا مشاهدة مقاطع فقط.', 'توازن صحي بين الشاشة واللعب الحركي.', 'دعم للعربية، أو إنجليزية بسيطة مع صور.', 'تجربة مجانية قبل الدفع.'],
       nxSaqr: 'كل خبير بدأ مبتدئًا. اجعلوها ممتعة، واصنعوا الأشياء معًا، واحتفلوا بالإنجازات الصغيرة!',
-      navAI: 'مختبر الذكاء', aiTitle: 'اصنع ذكاءك الاصطناعي', aiIntro: 'علّم الروبوت بوضع الألوان في السلة الصحيحة. ثم اضغط «درّب» وانظر هل يستطيع ترتيب ألوان لم يرها من قبل!',
+      navAI: 'مختبر الذكاء', aiTitle: 'اصنع ذكاءك الاصطناعي', aiIntro: 'علّم الروبوت بالأمثلة: ألوان أو كلمات أو أرقام. ثم اضغط «درّب» وانظر هل يستطيع ترتيب أشياء لم يرها من قبل! هكذا يعمل تعلّم الآلة.',
       aiModes: { warm: 'حارّ أم بارد', light: 'فاتح أم غامق' }, aiA: { warm: '🔥 حارّ', light: '☀️ فاتح' }, aiB: { warm: '❄️ بارد', light: '🌙 غامق' },
       aiPick: 'اضغط على لون، ثم على سلة.', aiTrain: 'درّب الروبوت', aiNeed: 'ضع لونين على الأقل في كل سلة.', aiTest: 'الروبوت يخمّن ألوانًا جديدة…',
       aiScore: 'أصاب الروبوت في %A من %B!', aiMore: 'علّمه أمثلة أكثر ليصبح أذكى.', aiPerfect: 'تعليم رائع! تعلّم الروبوت جيدًا.',
@@ -374,6 +390,30 @@
     var a = near.filter(function (e) { return e.g === 'A'; }).length;
     return a * 2 > near.length ? 'A' : 'B';
   }
+
+  // ---- AI Lab, words: a tiny naive Bayes text classifier (on the device) ----
+  function aiTokens(text) {
+    return String(text || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').split(/[^a-z\u0600-\u06FF]+/).filter(Boolean)
+      .map(function (w) { return w.length > 4 ? w.replace(/^(و|ف|ب)?ال/, '') : w; }).filter(function (w) { return ['i', 'a', 'the', 'is', 'my', 'me', 'and', 'to', 'on', 'of', 'am', 'it', 'we', 'are', 'in', 'this', 'at', 'with', 'what', 'و', 'في', 'على', 'من', 'إلى', 'أنا', 'مع', 'لا', 'يا', 'له', 'لها', 'إنها', 'هذه', 'هذا', 'أن', 'لأن', 'من'].indexOf(w) === -1; });
+  }
+  function aiTrainWords(examples) {
+    var m = { A: {}, B: {}, nA: 0, nB: 0, tA: 0, tB: 0, vocab: {} };
+    examples.forEach(function (e) { m['n' + e.g]++; aiTokens(e.text).forEach(function (w) { m[e.g][w] = (m[e.g][w] || 0) + 1; m['t' + e.g]++; m.vocab[w] = 1; }); });
+    return m;
+  }
+  function aiGuessWords(m, text) {
+    var V = Object.keys(m.vocab).length || 1, toks = aiTokens(text), known = toks.filter(function (w) { return m.vocab[w]; }).length;
+    var la = Math.log(m.nA / (m.nA + m.nB)), lb = Math.log(m.nB / (m.nA + m.nB));
+    toks.forEach(function (w) { la += Math.log(((m.A[w] || 0) + 1) / (m.tA + V)); lb += Math.log(((m.B[w] || 0) + 1) / (m.tB + V)); });
+    var pa = 1 / (1 + Math.exp(lb - la));
+    return { g: pa >= 0.5 ? 'A' : 'B', sure: Math.round(Math.max(pa, 1 - pa) * 100), known: known };
+  }
+  function aiTopWords(m, g) {
+    var other = g === 'A' ? 'B' : 'A';
+    return Object.keys(m[g]).sort(function (x, y) { return (m[g][y] - (m[other][y] || 0)) - (m[g][x] - (m[other][x] || 0)); }).filter(function (w) { return !m[other][w]; }).slice(0, 6);
+  }
+  var AI_TEMPS = [2, 5, 8, 10, 12, 15, 30, 32, 35, 38, 40, 45];
+  function aiTempTruth(n) { return n >= 25 ? 'A' : 'B'; }
 
   // ---- Video Studio: settings and videos are kept in this browser ----
   var VIDEO_CFG_KEY = 'sadu-video-cfg', VIDEOS_KEY = 'sadu-videos-v1';
@@ -1525,6 +1565,74 @@
 
       // ---- AI Lab ----
       if (s.view === 'ailab') {
+        var proj = s.aiProj || 'colours';
+        out.aiP = { colours: proj === 'colours', words: proj === 'words', numbers: proj === 'numbers',
+          tabs: ['colours', 'words', 'numbers'].map(function (k) { return { label: T.aiProjects[k], cls: proj === k ? 'chip-btn on' : 'chip-btn', set: function () { sfx('tap'); self.setState({ aiProj: k }); } }; }) };
+        // words project
+        var aw = s.aw || { ex: [], sel: -1, model: null, guess: null, tests: null };
+        var setAw = function (extra) { self.setState({ aw: Object.assign({}, self.state.aw || aw, extra) }); };
+        var wA = aw.ex.filter(function (e) { return e.g === 'A'; }), wB = aw.ex.filter(function (e) { return e.g === 'B'; });
+        var putW = function (g) {
+          var own = ((document.getElementById('aw-own') || {}).value || '').trim(), text = aw.sel >= 0 ? T.awExamples[aw.sel][0] : own;
+          if (!text) return; sfx('pop');
+          var el = document.getElementById('aw-own'); if (el && aw.sel < 0) el.value = '';
+          setAw({ ex: aw.ex.concat({ text: text, g: g, i: aw.sel }), sel: -1, model: null, guess: null, tests: null });
+        };
+        var usedW = {}; aw.ex.forEach(function (e) { if (e.i >= 0) usedW[e.i] = 1; });
+        out.aw = {
+          examples: T.awExamples.map(function (e, i) { return { label: e[0], cls: 'chip-btn aw-ex' + (usedW[i] ? ' used' : '') + (aw.sel === i ? ' on' : ''), dis: usedW[i] ? 'true' : 'false',
+            tap: function () { if (usedW[i]) return; sfx('tap'); setAw({ sel: aw.sel === i ? -1 : i }); } }; }),
+          a: wA.map(function (e) { return { text: e.text, out: function () { setAw({ ex: aw.ex.filter(function (x) { return x !== e; }), model: null, guess: null, tests: null }); } }; }),
+          b: wB.map(function (e) { return { text: e.text, out: function () { setAw({ ex: aw.ex.filter(function (x) { return x !== e; }), model: null, guess: null, tests: null }); } }; }),
+          putA: function () { putW('A'); }, putB: function () { putW('B'); },
+          cantTrain: !(wA.length >= 2 && wB.length >= 2), trained: !!aw.model, notTrained: !aw.model,
+          train: function () {
+            if (wA.length < 2 || wB.length < 2) return;
+            var m = aiTrainWords(aw.ex); sfx('done');
+            var tests = T.awTests.map(function (tt) { var gg = aiGuessWords(m, tt[0]); return { text: tt[0], g: gg.g, ok: gg.g === tt[1] }; });
+            setAw({ model: m, tests: tests, guess: null });
+          },
+          learnedA: aw.model ? aiTopWords(aw.model, 'A').join(', ') : '', learnedB: aw.model ? aiTopWords(aw.model, 'B').join(', ') : '',
+          results: (aw.tests || []).map(function (tt) { return { text: tt.text, guess: tt.g === 'A' ? T.awHappy : T.awSad, mark: tt.ok ? '✅' : '❌', cls: tt.ok ? 'ai-result ok' : 'ai-result bad' }; }),
+          score: aw.tests ? fill(T.aiScore, { A: aw.tests.filter(function (x) { return x.ok; }).length, B: aw.tests.length }) : '',
+          ask: function () {
+            var text = ((document.getElementById('aw-test') || {}).value || '').trim(); if (!text || !aw.model) return;
+            var gg = aiGuessWords(aw.model, text); sfx('pop');
+            setAw({ guess: { text: text, line: fill(T.awThinks, { A: gg.g === 'A' ? T.awHappy : T.awSad, B: gg.sure }), unknown: !gg.known } });
+          },
+          hasGuess: !!aw.guess, guessLine: aw.guess ? aw.guess.line : '', guessUnknown: !!(aw.guess && aw.guess.unknown),
+          reset: function () { setAw({ ex: [], sel: -1, model: null, guess: null, tests: null }); }
+        };
+        // numbers project
+        var an = s.an || { ex: [], sel: -1, tests: null };
+        var setAn = function (extra) { self.setState({ an: Object.assign({}, self.state.an || an, extra) }); };
+        var usedN = {}; an.ex.forEach(function (e) { usedN[e.n] = 1; });
+        var nA = an.ex.filter(function (e) { return e.g === 'A'; }), nB = an.ex.filter(function (e) { return e.g === 'B'; });
+        var putN = function (g) { if (an.sel < 0) return; sfx('pop'); setAn({ ex: an.ex.concat({ n: an.sel, g: g }), sel: -1, tests: null }); };
+        var anTests = an.tests || [], anRight = anTests.filter(function (x) { return x.ok; }).length, anWrongEx = an.ex.filter(function (e) { return aiTempTruth(e.n) !== e.g; }).length;
+        out.an = {
+          palette: AI_TEMPS.map(function (n) { return { label: fill(T.anDeg, { A: n }), cls: 'ai-num' + (usedN[n] ? ' used' : '') + (an.sel === n ? ' on' : '') + (n >= 25 ? ' warm' : ' cool'), dis: usedN[n] ? 'true' : 'false',
+            tap: function () { if (usedN[n]) return; sfx('tap'); setAn({ sel: an.sel === n ? -1 : n }); } }; }),
+          a: nA.map(function (e) { return { label: fill(T.anDeg, { A: e.n }), out: function () { setAn({ ex: an.ex.filter(function (x) { return x !== e; }), tests: null }); } }; }),
+          b: nB.map(function (e) { return { label: fill(T.anDeg, { A: e.n }), out: function () { setAn({ ex: an.ex.filter(function (x) { return x !== e; }), tests: null }); } }; }),
+          putA: function () { putN('A'); }, putB: function () { putN('B'); },
+          cantTrain: !(nA.length >= 2 && nB.length >= 2),
+          train: function () {
+            if (nA.length < 2 || nB.length < 2) return;
+            var picks = shuffle([0, 3, 7, 13, 16, 33, 36, 42, 48]).slice(0, 6);
+            sfx('done');
+            setAn({ tests: picks.map(function (n) {
+              var near = an.ex.slice().sort(function (p1, p2) { return Math.abs(p1.n - n) - Math.abs(p2.n - n); }).slice(0, 3);
+              var g = near.filter(function (e) { return e.g === 'A'; }).length * 2 > near.length ? 'A' : 'B';
+              return { n: n, g: g, ok: g === aiTempTruth(n) };
+            }) });
+          },
+          tested: anTests.length > 0,
+          results: anTests.map(function (tt) { return { label: fill(T.anDeg, { A: tt.n }), guess: fill(T.aiGuessA, { A: tt.g === 'A' ? T.anHot : T.anCold }), mark: tt.ok ? '✅' : '❌', cls: tt.ok ? 'ai-result ok' : 'ai-result bad' }; }),
+          score: fill(T.aiScore, { A: anRight, B: anTests.length }),
+          advice: anWrongEx ? fill(T.aiOops, { A: anWrongEx }) : anRight === anTests.length ? T.aiPerfect : T.aiMore,
+          reset: function () { setAn({ ex: [], sel: -1, tests: null }); }
+        };
         var ai = s.ai || { mode: 'warm', ex: [], sel: -1, tests: null };
         var setAi = function (extra) { self.setState({ ai: Object.assign({}, self.state.ai || ai, extra) }); };
         var used = {}; ai.ex.forEach(function (e) { used[e.i] = true; });
