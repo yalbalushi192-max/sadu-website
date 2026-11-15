@@ -659,3 +659,5 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 @keyframes joinup{from{letter-spacing:.8em;opacity:.3;transform:scale(.8)}to{letter-spacing:normal;opacity:1;transform:none}}
 @media (max-width:560px){.blend-tiles{gap:12px}.blend-tile{min-width:60px;height:72px;font-size:42px}}
 @media (prefers-reduced-motion: reduce){.blend-tile,.blend-word{animation:none}}
+.py-editor{width:100%;box-sizing:border-box;min-height:150px;padding:12px 14px;border-radius:var(--r-md);border:2px solid var(--ink);background:#1E1B3A;color:#F4E9D3;font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:18px;line-height:1.6;tab-size:2;resize:vertical}
+.py-help{font-family:ui-monospace,Consolas,monospace;font-size:13px}

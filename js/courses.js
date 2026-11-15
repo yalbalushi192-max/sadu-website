@@ -19,6 +19,8 @@
            'code'   coding puzzle: grid is a list of rows ('S' Saqr, 'G' goal, '#' rock, '.' sand);
                     blocks lists the blocks offered ('U', 'D', 'L', 'R' and repeat blocks 'x2'...'x5');
                     max (optional) is the most blocks allowed; start (optional) is a program to fix
+           'pycode' the same grid, but the child types Python-style code: up(n), down(n), left(n), right(n)
+                    and for i in range(n): with indented lines; maxLines (optional); startText (optional) to fix
      say   optional word Saqr says out loud (phonics: "listen, then choose"); shown as text if the
            device has no voice
      show  optional big word, letter or sum shown under the question
@@ -130,6 +132,9 @@
   var ARROWS = ['U', 'D', 'L', 'R'];
   var FIX = { en: 'This program has a bug! Fix it so Saqr reaches the palm tree, then press Run.', ar: 'في هذا البرنامج خطأ! أصلحه ليصل صقر إلى النخلة، ثم اضغط «شغّل».' };
   function fix(grid, start) { return { kind: 'code', q: FIX, grid: grid, blocks: ARROWS, start: start }; }
+  var PY = { en: 'Type code to fly Saqr to the palm tree, then press Run.', ar: 'اكتب شيفرة توصل صقرًا إلى النخلة، ثم اضغط «شغّل».' };
+  var PYFIX = { en: 'This code has a bug. Fix it, then press Run.', ar: 'في هذه الشيفرة خطأ. أصلحه، ثم اضغط «شغّل».' };
+  function py(grid, maxLines, startText) { var x = { kind: 'pycode', q: startText != null ? PYFIX : PY, grid: grid }; if (maxLines) x.maxLines = maxLines; if (startText != null) x.startText = startText; return x; }
   function code(grid, max, extra) { var x = { kind: 'code', q: CODE, grid: grid, blocks: extra ? ARROWS.concat(extra) : ARROWS }; if (max) x.max = max; return x; }
   function hear(word, letters, q) { return { q: q || HEAR_FIRST, say: word, opts: letters }; }
 
@@ -282,8 +287,8 @@
       ]
     },
     {
-      id: 'coding', stickers: ['🧭', '🪜', '🪨', '🔁', '🐞', '🚦', '🤖'], name: { en: 'Coding', ar: 'البرمجة' },
-      age: { en: 'Ages 5 to 10', ar: 'من 5 إلى 10 سنوات' }, ages: [5, 10],
+      id: 'coding', stickers: ['🧭', '🪜', '🪨', '🔁', '🐞', '🚦', '🤖', '⌨️', '🐍', '🔧'], name: { en: 'Coding', ar: 'البرمجة' },
+      age: { en: 'Ages 5 to 14', ar: 'من 5 إلى 14 سنة' }, ages: [5, 14],
       color: '#4DB6AC', tint: '#CDEFEA',
       tip: { en: 'Play "robot": your child gives you step-by-step instructions (two steps forward, turn right) to walk to the kitchen.', ar: 'العبا لعبة «الروبوت»: يعطيك طفلك تعليمات خطوة بخطوة (خطوتان إلى الأمام، استدر يمينًا) لتصل إلى المطبخ.' },
       icon: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',
@@ -325,7 +330,19 @@
             { q: { en: 'We want the robot to find cats in photos. What should we show it first?', ar: 'نريد أن يجد الروبوت القطط في الصور. ماذا نريه أولًا؟' }, opts: [{ en: 'many pictures of cats', ar: 'صورًا كثيرة للقطط' }, { en: 'one picture of a shoe', ar: 'صورة حذاء واحدة' }, { en: 'nothing at all', ar: 'لا شيء' }] },
             { q: { en: 'The robot only ever saw red apples. Now it sees a green apple and is not sure. Why?', ar: 'رأى الروبوت تفاحًا أحمر فقط. والآن يرى تفاحة خضراء ولا يعرفها. لماذا؟' }, show: '🍏', opts: [{ en: 'it never saw green apples', ar: 'لم يرَ تفاحًا أخضر من قبل' }, { en: 'it is hungry', ar: 'لأنه جائع' }, { en: 'green is not a colour', ar: 'لأن الأخضر ليس لونًا' }] },
             { q: { en: 'Is AI always right?', ar: 'هل الذكاء الاصطناعي دائمًا على صواب؟' }, opts: [{ en: 'No, it can make mistakes, so people check it', ar: 'لا، قد يخطئ، لذلك يتحقّق منه الناس' }, { en: 'Yes, always', ar: 'نعم، دائمًا' }, { en: 'Only on Fridays', ar: 'فقط يوم الجمعة' }] }
-          ] }
+          ] },
+        { id: 'coding-8', title: { en: 'Type your first code', ar: 'اكتب أول شيفرة' },
+          teach: { en: 'Real programmers type their code. In Python you can write right(3) to fly Saqr three squares to the right. Use up(), down(), left() and right(), each with a number, one command on each line.', ar: 'المبرمجون الحقيقيون يكتبون الشيفرة. في لغة بايثون تكتب right(3) ليطير صقر ثلاثة مربعات إلى اليمين. استعمل up() و down() و left() و right()، مع عدد داخل القوسين، وأمرًا واحدًا في كل سطر.' },
+          hint: { en: 'Count the squares, then write the direction with that number, like right(3).', ar: 'عُدّ المربعات، ثم اكتب الاتجاه مع العدد، مثل right(3).' },
+          questions: [py(['S..G']), py(['G..S']), py(['G', '.', 'S']), py(['S..', '..G'])] },
+        { id: 'coding-9', title: { en: 'Loops with for', ar: 'التكرار باستعمال for' },
+          teach: { en: 'A for loop repeats the lines under it. Put two spaces before each line inside the loop:\nfor i in range(3):\n  right(1)\n  up(1)\nThis climbs three steps!', ar: 'حلقة for تكرّر الأسطر التي تحتها. ضع مسافتين قبل كل سطر داخل الحلقة:\nfor i in range(3):\n  right(1)\n  up(1)\nهكذا يصعد صقر ثلاث درجات!' },
+          hint: { en: 'Find the pattern that repeats, put it inside a for loop, and count how many times.', ar: 'ابحث عن النمط الذي يتكرّر، وضعه داخل حلقة for، وعُدّ كم مرة يتكرّر.' },
+          questions: [py(['###G', '##..', '#..#', 'S.##'], 3), py(['S.##', '#..#', '##..', '###G'], 3), py(['S.......G'], 1), py(['G.##', '#..#', '##..', '###S'], 3)] },
+        { id: 'coding-10', title: { en: 'Debug the code', ar: 'أصلح الشيفرة' },
+          teach: { en: 'When code does not work, read the message: it tells you the line with the problem. Check spelling, numbers, the colon after for, and the two spaces inside a loop.', ar: 'عندما لا تعمل الشيفرة، اقرأ الرسالة: إنها تخبرك برقم السطر الذي فيه المشكلة. تأكّد من الإملاء والأعداد والنقطتين (:) بعد for والمسافتين داخل الحلقة.' },
+          hint: { en: 'Press Run, read the message, then fix that line.', ar: 'اضغط «شغّل»، واقرأ الرسالة، ثم أصلح ذلك السطر.' },
+          questions: [py(['S...G'], 0, 'right(2)'), py(['S..G'], 0, 'rigth(3)'), py(['S#.', '..G'], 0, 'right(2)\ndown(1)'), py(['S....G'], 0, 'for i in range(5)\n  right(1)')] }
       ]
     },
     {
@@ -983,7 +1000,7 @@
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
     'arabic-7': 1, 'arabic-8': 1, 'arabic-9': 2, 'arabic-10': 3,
     'art-7': 1, 'art-8': 2, 'art-9': 2, 'art-10': 3,
-    'coding-1': 1, 'coding-2': 1, 'coding-3': 2, 'coding-4': 2, 'coding-7': 2, 'coding-5': 3, 'coding-6': 3,
+    'coding-1': 1, 'coding-2': 1, 'coding-3': 2, 'coding-4': 2, 'coding-7': 2, 'coding-5': 3, 'coding-6': 3, 'coding-8': 3, 'coding-9': 3, 'coding-10': 3,
     'art-11': 1, 'art-12': 1, 'art-13': 2, 'art-14': 2, 'art-15': 3,
     'phonics-21': 2, 'phonics-23': 2, 'phonics-22': 3, 'phonics-24': 3, 'phonics-25': 3,
     'phonics-26': 2, 'phonics-29': 2, 'phonics-27': 3, 'phonics-28': 3, 'phonics-30': 3,

@@ -70,6 +70,9 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      pyUnknown: 'Line %A: I don\'t know "%B". Try up(), down(), left(), right() or a for loop.', pyNumber: 'Line %A: use a number from 1 to 9 inside the brackets.',
+      pyColon: 'Line %A: a for line must end with a colon (:).', pyIndent: 'Line %A: put two spaces before the lines inside the loop.', pyEmptyLoop: 'Line %A: the loop needs at least one indented line under it.',
+      pyNoCode: 'Type some code first.', pyTooMany: 'Try to do it in %A lines or fewer. A for loop can help!', pyLines: 'Lines: %A of %B', pyCode: 'Your code', pyHelp: 'Commands: up(2), down(1), left(3), right(1), for i in range(3):',
       blendBtn: 'Push the sounds together', blendSplit: 'Split them again',
       cdRun: 'Run', cdClear: 'Clear', cdProgram: 'Your program', cdEmpty: 'Tap the arrows to add steps.', cdBlocks: 'Blocks: %A of %B',
       cdCrash: 'Bump! Saqr hit a rock or the edge. Change the program and try again.', cdShort: 'Saqr stopped before the palm tree. Add or change some steps.',
@@ -167,6 +170,9 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      pyUnknown: 'السطر %A: لا أعرف «%B». جرّب up() أو down() أو left() أو right() أو حلقة for.', pyNumber: 'السطر %A: اكتب عددًا من 1 إلى 9 بين القوسين.',
+      pyColon: 'السطر %A: يجب أن ينتهي سطر for بنقطتين (:).', pyIndent: 'السطر %A: ضع مسافتين قبل الأسطر التي داخل الحلقة.', pyEmptyLoop: 'السطر %A: تحتاج الحلقة إلى سطر واحد على الأقل تحتها بعد مسافتين.',
+      pyNoCode: 'اكتب شيئًا من الشيفرة أولًا.', pyTooMany: 'حاول أن تحلّها في %A أسطر أو أقل. حلقة for تساعدك!', pyLines: 'الأسطر: %A من %B', pyCode: 'شيفرتك', pyHelp: 'الأوامر: up(2) و down(1) و left(3) و right(1) و for i in range(3):',
       blendBtn: 'اجمع الأصوات', blendSplit: 'افصلها مرة أخرى',
       cdRun: 'شغّل', cdClear: 'امسح', cdProgram: 'برنامجك', cdEmpty: 'اضغط على الأسهم لتضيف خطوات.', cdBlocks: 'الكتل: %A من %B',
       cdCrash: 'بُم! اصطدم صقر بصخرة أو بالحافة. غيّر البرنامج وحاول مرة أخرى.', cdShort: 'توقّف صقر قبل النخلة. أضف خطوات أو غيّرها.',
@@ -458,7 +464,8 @@
 
   // ---- activities ----
   function freshAct(q) { return q && q.kind === 'count' ? { placed: 0, tried: -1 } : q && q.kind === 'match' ? { sel: -1, side: '', done: [], badL: -1, badR: -1 }
-    : q && q.kind === 'code' ? { prog: (q.start || []).slice(), pos: -1, running: false, why: '' } : {}; }
+    : q && q.kind === 'code' ? { prog: (q.start || []).slice(), pos: -1, running: false, why: '' }
+    : q && q.kind === 'pycode' ? { prog: [], pos: -1, running: false, why: '', msg: '' } : {}; }
 
   // ---- coding puzzles: a program of arrow blocks (repeat blocks 'x2'...'x5' repeat the next arrow) ----
   var STEP = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] };
@@ -468,6 +475,41 @@
     prog.forEach(function (b) { if (/^x\d$/.test(b)) times = +b.slice(1); else { for (var i = 0; i < times; i++) out.push(b); times = 1; } });
     return out;
   }
+  // Python-style code: up(n), down(n), left(n), right(n) and one level of 'for i in range(n):' with indented lines
+  function parsePy(text) {
+    var NAMES = { up: 'U', down: 'D', left: 'L', right: 'R' }, out = [], loop = null, count = 0, lines = String(text || '').split('\n');
+    function closeLoop(lineNo) {
+      if (!loop) return null;
+      if (!loop.body.length) return fill(T.pyEmptyLoop, { A: loop.line });
+      for (var r = 0; r < loop.n; r++) out = out.concat(loop.body);
+      loop = null; return null;
+    }
+    for (var i = 0; i < lines.length; i++) {
+      var raw = lines[i].replace(/#.*$/, ''), body = raw.trim(), indent = raw.match(/^\s*/)[0].replace(/\t/g, '  ').length;
+      if (!body) continue;
+      count++;
+      var f = body.match(/^for\s+\w+\s+in\s+range\(\s*(\d+)\s*\)\s*(:?)$/);
+      var c = body.match(/^(\w+)\(\s*(\d*)\s*\)$/);
+      if (loop && indent <= loop.indent) { var e1 = closeLoop(i + 1); if (e1) return { error: e1 }; }
+      if (f) {
+        if (!f[2]) return { error: fill(T.pyColon, { A: i + 1 }) };
+        if (indent > 0 && !loop) return { error: fill(T.pyIndent, { A: i + 1 }) };
+        var n = +f[1]; if (n < 1 || n > 9) return { error: fill(T.pyNumber, { A: i + 1 }) };
+        loop = { n: n, body: [], indent: indent, line: i + 1 };
+        continue;
+      }
+      if (!c || !NAMES[c[1]]) return { error: fill(T.pyUnknown, { A: i + 1, B: c ? c[1] : body.split(/[\s(]/)[0] }) };
+      var k = c[2] === '' ? 1 : +c[2];
+      if (k < 1 || k > 9) return { error: fill(T.pyNumber, { A: i + 1 }) };
+      if (!loop && indent > 0) return { error: fill(T.pyIndent, { A: i + 1 }) };
+      var steps = []; for (var j = 0; j < k; j++) steps.push(NAMES[c[1]]);
+      if (loop) loop.body = loop.body.concat(steps); else out = out.concat(steps);
+    }
+    var e2 = closeLoop(lines.length); if (e2) return { error: e2 };
+    if (!count) return { error: T.pyNoCode };
+    return { prog: out, lines: count };
+  }
+
   // where Saqr goes: the squares he visits, and whether he bumped into something
   function runProgram(grid, prog) {
     var at = null, goal = null;
@@ -482,7 +524,7 @@
   }
   function prepQ(q, lessonHint) {
     var out = { kind: q.kind || 'choice', q: q.q, show: q.show, say: q.say, gloss: q.gloss, seq: q.seq, hint: q.hint || lessonHint,
-      n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max, start: q.start,
+      n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max, start: q.start, maxLines: q.maxLines, startText: q.startText,
       opts: shuffle((q.opts || []).map(function (o, i) { return { o: o, right: i === 0 }; })) };
     if (q.kind === 'match') {
       var idx = q.pairs.map(function (x, i) { return i; });
@@ -1201,7 +1243,8 @@
         var qParts = [tx(q.q), q.say || spoken(q.show), seq.map(function (x) { return x.name; }).join(', ')].concat(readAnswers ? answerParts : []);
         var act = ls.act || {};
         var hint = q.kind === 'count' && act.tried >= 0 ? fill(T.countHint, { A: act.tried, B: q.n })
-          : q.kind === 'code' && act.why ? T[act.why] + ' ' + tx(q.hint) : tx(q.hint);
+          : (q.kind === 'code' || q.kind === 'pycode') && act.msg ? act.msg
+          : (q.kind === 'code' || q.kind === 'pycode') && act.why ? T[act.why] + ' ' + tx(q.hint) : tx(q.hint);
         var cheer = T.cheers[ls.qi % T.cheers.length];
         var doneSay = ls.earned === 3 ? T.gDone3 : ls.earned === 2 ? T.gDone2 : T.gDone1;
         var teachIntro = fill(T.gTeach, { L: tx(lesson.title) });
@@ -1226,7 +1269,7 @@
           count: ls.step === 'quiz' ? fill(T.qOf, { A: ls.qi + 1, B: ls.qs.length }) : ls.step === 'teach' ? T.learn : '',
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
           prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)), gloss: tx(q.gloss),
-          isCode: q.kind === 'code',
+          isCode: q.kind === 'code' || q.kind === 'pycode', isPy: q.kind === 'pycode', isBlocks: q.kind === 'code',
           // blending: letters shown as tiles that slide together into the word
           isBlend: q.kind === 'choice' && !!q.show && q.show.indexOf(' · ') !== -1,
           notBlendShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)) && !(q.show && q.show.indexOf(' · ') !== -1),
@@ -1245,7 +1288,7 @@
           hasSay: !!q.say && out.speakOk, sayWord: function () { speak([q.say]); },
           seq: seq, hasSeq: seq.length > 0,
           msg: ls.solved ? cheer : ls.wrong.length ? T.no : q.kind === 'count' ? T.dragTip : q.kind === 'trace' ? T.traceTip : q.kind === 'match' ? T.matchTip : T.gIdle,
-          hint: hint, hasHint: !!hint && ls.wrong.length > 0 && !ls.solved,
+          hint: hint, hasHint: !!hint && (ls.wrong.length > 0 || !!act.msg) && !ls.solved,
           guideCls: ls.solved ? 'saqr cheer' : ls.wrong.length ? 'saqr think' : 'saqr',
           teachIntro: teachIntro, doneSay: doneSay,
           sayTeach: function () { speak([teachIntro, tx(lesson.teach)]); },
@@ -1257,7 +1300,7 @@
             save(d); if (auto) hush();
             self._said = null; self.setState({ data: d });
           },
-          fbCls: ls.solved ? 'feedback ok' : ls.wrong.length ? 'feedback bad' : 'feedback',
+          fbCls: ls.solved ? 'feedback ok' : ls.wrong.length || act.msg ? 'feedback bad' : 'feedback',
           solved: ls.solved, nextLabel: last ? T.finish : T.next,
           earnedText: fill(T.earned, { A: ls.earned }), earnedStars: stars(ls.earned),
           newSticker: ls.newSticker || '', hasNewSticker: !!ls.newSticker, goalHit: !!ls.goalHit,
@@ -1376,7 +1419,9 @@
           };
         }
 
-        if (q.kind === 'code' && ls.step === 'quiz') {
+        if ((q.kind === 'code' || q.kind === 'pycode') && ls.step === 'quiz') {
+          var pyKey = lesson.id + '|' + ls.qi;
+          if (q.kind === 'pycode' && (!self._py || self._py.key !== pyKey)) self._py = { key: pyKey, text: q.startText || '' };
           var sim = runProgram(q.grid, act.prog), shown = act.pos >= 0 ? sim.path.slice(0, act.pos + 1) : [sim.path[0]];
           var here = shown[shown.length - 1], trail = {};
           shown.forEach(function (pt) { trail[pt[0] + ',' + pt[1]] = true; });
@@ -1397,17 +1442,33 @@
             }),
             empty: act.prog.length === 0, notSolved: !ls.solved, running: !!act.running,
             count: q.max ? fill(T.cdBlocks, { A: act.prog.length, B: q.max }) : '', hasMax: !!q.max,
-            palette: q.blocks.map(function (b) {
+            palette: (q.blocks || []).map(function (b) {
               var rep = /^x\d$/.test(b);
               return { label: rep ? '🔁' + b.slice(1) : ARROW_ICON[b], cls: rep ? 'pal rep' : 'pal', aria: rep ? fill(T.cdRepeat, { A: b.slice(1) }) : T.cdArrow[b],
                 dis: full || act.running || ls.solved ? 'true' : 'false',
                 tap: function () { if (full || act.running || ls.solved) return; sfx('tap'); setAct({ prog: act.prog.concat(b), pos: -1, why: '' }); } };
             }),
-            clear: function () { if (act.running) return; setAct({ prog: [], pos: -1, why: '' }); },
+            clear: function () {
+              if (act.running) return;
+              if (q.kind === 'pycode') { self._py.text = q.startText || ''; var ta = document.getElementById('py-code'); if (ta) ta.value = self._py.text; }
+              setAct({ prog: [], pos: -1, why: '', msg: '' });
+            },
+            pyText: self._py && q.kind === 'pycode' ? self._py.text : '',
+            pyInput: function (e) { self._py.text = e.target.value; },
+            pyLines: q.maxLines ? fill(T.pyLines, { A: (String(self._py && self._py.text || '').split('\n').filter(function (x) { return x.replace(/#.*$/, '').trim(); }).length), B: q.maxLines }) : '',
+            pyHasMax: !!q.maxLines,
             run: function () {
-              if (act.running || ls.solved || !act.prog.length) return;
-              var result = runProgram(q.grid, act.prog), k = 0;
-              setAct({ running: true, pos: 0, why: '' });
+              if (act.running || ls.solved) return;
+              var prog = act.prog;
+              if (q.kind === 'pycode') {
+                var parsed = parsePy(self._py.text);
+                if (parsed.error) { sfx('wrong'); setAct({ msg: parsed.error, why: '', pos: -1 }); return; }
+                if (q.maxLines && parsed.lines > q.maxLines) { sfx('wrong'); setAct({ msg: fill(T.pyTooMany, { A: q.maxLines }), why: '', pos: -1 }); return; }
+                prog = parsed.prog;
+              }
+              if (!prog.length) return;
+              var result = runProgram(q.grid, prog), k = 0;
+              setAct({ running: true, pos: 0, why: '', msg: '', prog: prog });
               clearInterval(self._codeTimer);
               self._codeTimer = setInterval(function () {
                 k++;

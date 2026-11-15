@@ -697,6 +697,14 @@
 <sc-if value="{{ cell.hasItem }}"><span aria-hidden="true">{{ cell.item }}</span></sc-if>
 </div></sc-for></sc-for>
 </div>
+<sc-if value="{{ ls.isPy }}">
+<div class="prog-box">
+<div class="prog-head"><b>{{ t.pyCode }}</b><sc-if value="{{ ls.cd.pyHasMax }}"><span class="small muted">{{ ls.cd.pyLines }}</span></sc-if></div>
+<textarea id="py-code" class="py-editor" dir="ltr" rows="6" spellcheck="false" autocapitalize="off" autocomplete="off" oninput="{{ ls.cd.pyInput }}" aria-label="{{ t.pyCode }}">{{ ls.cd.pyText }}</textarea>
+<span class="small muted py-help" dir="ltr">{{ t.pyHelp }}</span>
+</div>
+</sc-if>
+<sc-if value="{{ ls.isBlocks }}">
 <div class="prog-box">
 <div class="prog-head"><b>{{ t.cdProgram }}</b><sc-if value="{{ ls.cd.hasMax }}"><span class="small muted">{{ ls.cd.count }}</span></sc-if></div>
 <div class="prog" dir="ltr">
@@ -704,8 +712,9 @@
 <sc-if value="{{ ls.cd.empty }}"><span class="small muted prog-empty">{{ t.cdEmpty }}</span></sc-if>
 </div>
 </div>
+</sc-if>
 <sc-if value="{{ ls.cd.notSolved }}">
-<div class="palette" dir="ltr"><sc-for list="{{ ls.cd.palette }}" as="b"><button type="button" class="{{ b.cls }}" onclick="{{ b.tap }}" aria-label="{{ b.aria }}" aria-disabled="{{ b.dis }}">{{ b.label }}</button></sc-for></div>
+<sc-if value="{{ ls.isBlocks }}"><div class="palette" dir="ltr"><sc-for list="{{ ls.cd.palette }}" as="b"><button type="button" class="{{ b.cls }}" onclick="{{ b.tap }}" aria-label="{{ b.aria }}" aria-disabled="{{ b.dis }}">{{ b.label }}</button></sc-for></div></sc-if>
 <div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.cd.clear }}">{{ t.cdClear }}</button><button type="button" class="btn primary lg point" onclick="{{ ls.cd.run }}">▶ {{ t.cdRun }}</button></div>
 </sc-if>
 </div>
