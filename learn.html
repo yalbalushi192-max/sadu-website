@@ -35,8 +35,9 @@
 <circle cx="50" cy="41" r="6" fill="#23204A"/><circle cx="70" cy="41" r="6" fill="#23204A"/>
 <circle cx="52" cy="39" r="2" fill="#FFFFFF"/><circle cx="72" cy="39" r="2" fill="#FFFFFF"/>
 <path d="M54 48c3-2 9-2 12 0-1 6-4 9-6 10-2-1-5-4-6-10z" fill="#FFC93C" stroke="#C98A00" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M36 60c8 5 16 7 24 7s16-2 24-7l2 7c-8 6-17 8-26 8s-18-2-26-8z" fill="#B3261E"/>
-<path d="M44 66.5l3-4 3 4zM53 68.5l3-4 3 4zM62 68.5l3-4 3 4zM71 66.5l3-4 3 4z" fill="#FFFFFF"/>
+<g id="saqr-scarf-default"><path d="M36 60c8 5 16 7 24 7s16-2 24-7l2 7c-8 6-17 8-26 8s-18-2-26-8z" fill="#B3261E"/>
+<path d="M44 66.5l3-4 3 4zM53 68.5l3-4 3 4zM62 68.5l3-4 3 4zM71 66.5l3-4 3 4z" fill="#FFFFFF"/></g>
+<g id="saqr-wear-scarf"></g><g id="saqr-wear-eyes"></g><g id="saqr-wear-hat"></g>
 </symbol>
 <!-- story drawings -->
 <linearGradient id="sky-day" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ED8FF"/><stop offset="1" stop-color="#FFF1D2"/></linearGradient>
@@ -83,6 +84,7 @@
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
 <button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
+<button type="button" onclick="{{ goWard }}" aria-current="{{ wardOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6a2 2 0 1 1 2 2c-1 0-2 .8-2 2l9 6c.8.6.4 2-.6 2H3.6c-1 0-1.4-1.4-.6-2l9-6"/></svg><span>{{ t.navWard }}</span></button>
 <button type="button" onclick="{{ goVibe }}" aria-current="{{ vibeOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 14h.01"/></svg><span>{{ t.navVibe }}</span></button>
 <button type="button" onclick="{{ goAI }}" aria-current="{{ aiOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16.5h5"/></svg><span>{{ t.navAI }}</span></button>
 <a href="{{ bayHref }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 15c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0M5 11l2-6h10l2 6z"/></svg><span>{{ t.navBay }}</span></a>
@@ -386,6 +388,25 @@
 </section>
 </sc-if>
 
+<!-- WARDROBE: spend stars on clothes for Saqr -->
+<sc-if value="{{ isWard }}">
+<section class="page ward-page">
+<header class="page-head"><h1 class="h1">🎩 {{ t.wdTitle }}</h1><p class="lead">{{ t.wdIntro }}</p></header>
+<div class="ward-top card">
+<svg class="saqr ward-saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<div class="ward-wallet"><b class="ward-stars">⭐ {{ wd.wallet }}</b><span class="small muted">{{ wd.walletText }}</span>
+<sc-if value="{{ wd.hasMsg }}"><p class="goal-ok" role="status">{{ wd.msg }}</p></sc-if></div>
+</div>
+<sc-for list="{{ wd.groups }}" as="gr">
+<article class="card ward-group"><h2 class="h3">{{ gr.title }}</h2>
+<div class="ward-grid"><sc-for list="{{ gr.items }}" as="it">
+<div class="{{ it.cls }}"><span class="ward-icon" aria-hidden="true" style="{{ it.style }}">{{ it.icon }}</span><b>{{ it.name }}</b>
+<button type="button" class="{{ it.btnCls }}" onclick="{{ it.act }}" aria-disabled="{{ it.dis }}">{{ it.label }}</button></div>
+</sc-for></div></article>
+</sc-for>
+</section>
+</sc-if>
+
 <!-- REST: the daily time limit is reached -->
 <sc-if value="{{ isRest }}">
 <section class="page rest-page">
@@ -664,6 +685,7 @@
 <h1 class="h1">{{ t.stickerTitle }}</h1>
 <p class="lead">{{ t.stickerIntro }}</p>
 <p class="small muted">{{ stickers.count }}</p>
+<div class="actions"><button type="button" class="btn secondary" onclick="{{ goWard }}">🎩 {{ t.wdTitle }}</button></div>
 </header>
 <sc-for list="{{ stickers.groups }}" as="g">
 <div class="card sticker-group" style="--c: {{ g.color }}">

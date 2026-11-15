@@ -718,3 +718,17 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .rest-saqr{width:120px;height:120px}
 .rest-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;text-align:start;width:100%}
 .rest-list li{padding:12px 14px;border-radius:var(--r-md);background:var(--sunk);font-weight:700}
+
+/* ---------- Dress up Saqr ---------- */
+.ward-page{max-width:960px}
+.ward-top{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.ward-saqr{width:min(180px,40vw);height:auto;aspect-ratio:1}
+.ward-wallet{display:flex;flex-direction:column;gap:6px}
+.ward-stars{font-size:34px;font-family:'Fredoka','Baloo Bhaijaan 2',sans-serif}
+.ward-group{display:flex;flex-direction:column;gap:12px}
+.ward-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ward-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--surface);text-align:center}
+.ward-item.owned{background:#F7F3FF}
+.ward-item.on{border-color:var(--green);background:#E8F7EE}
+.ward-icon{font-size:38px;line-height:1.2}
+.ward-item .btn{width:100%}

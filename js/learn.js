@@ -70,6 +70,10 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navWard: 'Dress up', wdTitle: 'Dress up Saqr', wdIntro: 'Spend the stars you earn in lessons and stories on clothes for Saqr. He wears them everywhere in Sadu!',
+      wdWallet: 'stars to spend (%A earned)', wdGroups: { hat: 'Hats', scarf: 'Scarves', eyes: 'Glasses' },
+      wdItems: { kuma: 'Omani kuma', crown: 'Crown', party: 'Party hat', sunhat: 'Sun hat', grad: 'Graduation cap', flower: 'Flower', blue: 'Blue scarf', green: 'Green scarf', gold: 'Gold scarf', rainbow: 'Rainbow scarf', shades: 'Sunglasses', round: 'Round glasses' },
+      wdBuy: 'Buy for ⭐%A', wdNeed: 'Need %A more ⭐', wdWear: 'Wear', wdOff: 'Take off', wdBought: 'Saqr loves his new %I!',
       tlTitle: 'Daily time limit', tlText: 'Sadu suggests a break when today\'s time is up. A lesson in progress can always be finished.', tlOff: 'Off', tlMin: '%A min',
       tlUsed: 'Used today: %A min', tlUsedOf: 'Used today: %A of %B min',
       rsTitle: 'Time for a break!', rsSaqr: 'Great learning today, %N! Your brain grows while you rest too. Let\'s do something else for a while.',
@@ -215,6 +219,10 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navWard: 'ألبس صقرًا', wdTitle: 'ألبس صقرًا', wdIntro: 'اصرف النجوم التي تربحها في الدروس والقصص على ملابس لصقر. سيلبسها في كل مكان في سدو!',
+      wdWallet: 'نجمة للصرف (ربحت %A)', wdGroups: { hat: 'القبعات', scarf: 'الأوشحة', eyes: 'النظارات' },
+      wdItems: { kuma: 'كمة عمانية', crown: 'تاج', party: 'قبعة حفلة', sunhat: 'قبعة شمس', grad: 'قبعة تخرّج', flower: 'وردة', blue: 'وشاح أزرق', green: 'وشاح أخضر', gold: 'وشاح ذهبي', rainbow: 'وشاح قوس قزح', shades: 'نظارة شمسية', round: 'نظارة دائرية' },
+      wdBuy: 'اشترِ بـ ⭐%A', wdNeed: 'تحتاج %A ⭐ أخرى', wdWear: 'البس', wdOff: 'اخلع', wdBought: 'صقر سعيد جدًا بـ%I!',
       tlTitle: 'الحد اليومي للوقت', tlText: 'يقترح سدو استراحة عندما ينتهي وقت اليوم. يمكن دائمًا إكمال الدرس الذي بدأه الطفل.', tlOff: 'إيقاف', tlMin: '%A دقيقة',
       tlUsed: 'المستخدم اليوم: %A دقيقة', tlUsedOf: 'المستخدم اليوم: %A من %B دقيقة',
       rsTitle: 'وقت الاستراحة!', rsSaqr: 'تعلّمت كثيرًا اليوم يا %N! عقلك ينمو وأنت ترتاح أيضًا. لنفعل شيئًا آخر قليلًا.',
@@ -373,6 +381,41 @@
 
   // pages for parents and teachers only
   var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next', 'vibeset', 'restmore'];
+  // ---- Dress up Saqr: items drawn on top of the #saqr symbol (viewBox 0 0 120 120); every <use> shows them ----
+  var SCARF_PATH = 'M36 60c8 5 16 7 24 7s16-2 24-7l2 7c-8 6-17 8-26 8s-18-2-26-8z';
+  var WARDROBE = [
+    { id: 'flower', slot: 'hat', price: 3, icon: '🌸', svg: '<g transform="translate(80 20)"><circle cx="0" cy="-6" r="5" fill="#FF8FB8"/><circle cx="6" cy="-1" r="5" fill="#FF8FB8"/><circle cx="4" cy="6" r="5" fill="#FF8FB8"/><circle cx="-4" cy="6" r="5" fill="#FF8FB8"/><circle cx="-6" cy="-1" r="5" fill="#FF8FB8"/><circle r="4" fill="#FFC93C"/></g>' },
+    { id: 'kuma', slot: 'hat', price: 5, icon: '🧢', svg: '<path d="M35 27c2-13 12-18 25-18s23 5 25 18c-7 3-16 4-25 4s-18-1-25-4z" fill="#FFFFFF" stroke="#D8CFBF" stroke-width="1.5"/><path d="M40 22c6 1.5 13 2 20 2s14-.5 20-2" fill="none" stroke="#3F8EF5" stroke-width="2.4" stroke-dasharray="3 3"/><path d="M45 16c5 1 10 1.5 15 1.5s10-.5 15-1.5" fill="none" stroke="#E5534B" stroke-width="2" stroke-dasharray="2 3"/>' },
+    { id: 'party', slot: 'hat', price: 8, icon: '🥳', svg: '<path d="M47 22L60 1l13 21z" fill="#FF6FA8" stroke="#C2457A" stroke-width="1.5" stroke-linejoin="round"/><path d="M51 16l13-6M54 21l14-7" stroke="#FFF" stroke-width="2.4" stroke-linecap="round"/><circle cx="60" cy="3" r="4" fill="#FFC93C"/>' },
+    { id: 'sunhat', slot: 'hat', price: 10, icon: '👒', svg: '<ellipse cx="60" cy="23" rx="35" ry="7" fill="#F2C77B" stroke="#C99A4A" stroke-width="1.5"/><path d="M44 22c0-9 7-14 16-14s16 5 16 14z" fill="#F2C77B" stroke="#C99A4A" stroke-width="1.5"/><path d="M44 19c10 2 22 2 32 0v3c-10 2-22 2-32 0z" fill="#E5534B"/>' },
+    { id: 'crown', slot: 'hat', price: 15, icon: '👑', svg: '<path d="M40 25l3-17 9 9 8-13 8 13 9-9 3 17z" fill="#FFC93C" stroke="#C98A00" stroke-width="2" stroke-linejoin="round"/><circle cx="60" cy="18" r="2.6" fill="#E5534B"/><circle cx="48" cy="20" r="2" fill="#3F8EF5"/><circle cx="72" cy="20" r="2" fill="#2E9E6B"/>' },
+    { id: 'grad', slot: 'hat', price: 20, icon: '🎓', svg: '<path d="M45 20v7c10 4 20 4 30 0v-7" fill="#23204A"/><path d="M28 17l32-10 32 10-32 10z" fill="#23204A" stroke="#3A3670" stroke-width="1.2"/><path d="M60 17l26 4v12" fill="none" stroke="#FFC93C" stroke-width="2"/><circle cx="86" cy="34" r="3" fill="#FFC93C"/>' },
+    { id: 'blue', slot: 'scarf', price: 4, icon: '🧣', color: '#3F8EF5', svg: '<path d="' + SCARF_PATH + '" fill="#3F8EF5"/><g fill="#FFFFFF"><circle cx="46" cy="66" r="1.8"/><circle cx="55" cy="68" r="1.8"/><circle cx="65" cy="68" r="1.8"/><circle cx="74" cy="66" r="1.8"/></g>' },
+    { id: 'green', slot: 'scarf', price: 4, icon: '🧣', color: '#2E9E6B', svg: '<path d="' + SCARF_PATH + '" fill="#2E9E6B"/><path d="M42 64l36 0" stroke="#BFF0D5" stroke-width="2" stroke-dasharray="4 3"/>' },
+    { id: 'gold', slot: 'scarf', price: 10, icon: '🧣', color: '#FFC93C', svg: '<path d="' + SCARF_PATH + '" fill="#FFC93C" stroke="#C98A00" stroke-width="1"/><path d="M44 66.5l3-4 3 4zM53 68.5l3-4 3 4zM62 68.5l3-4 3 4zM71 66.5l3-4 3 4z" fill="#B3261E"/>' },
+    { id: 'rainbow', slot: 'scarf', price: 12, icon: '🌈', color: 'linear-gradient(90deg,#E5534B,#FFC93C,#2E9E6B,#3F8EF5,#B48CFF)', svg: '<defs><linearGradient id="wd-rainbow" x1="0" x2="1"><stop offset="0" stop-color="#E5534B"/><stop offset=".25" stop-color="#FFC93C"/><stop offset=".5" stop-color="#2E9E6B"/><stop offset=".75" stop-color="#3F8EF5"/><stop offset="1" stop-color="#B48CFF"/></linearGradient></defs><path d="' + SCARF_PATH + '" fill="url(#wd-rainbow)"/>' },
+    { id: 'shades', slot: 'eyes', price: 6, icon: '🕶️', svg: '<rect x="40.5" y="35" width="18" height="12" rx="5" fill="#23204A"/><rect x="61.5" y="35" width="18" height="12" rx="5" fill="#23204A"/><path d="M58.5 39h3M40.5 38l-3-2M79.5 38l3-2" stroke="#23204A" stroke-width="2.4" stroke-linecap="round"/><path d="M44 38l4-1" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>' },
+    { id: 'round', slot: 'eyes', price: 6, icon: '👓', svg: '<circle cx="50" cy="41" r="8.5" fill="none" stroke="#23204A" stroke-width="2.2"/><circle cx="70" cy="41" r="8.5" fill="none" stroke="#23204A" stroke-width="2.2"/><path d="M58.5 41h3" stroke="#23204A" stroke-width="2.2"/>' }
+  ];
+  function starsEarned(data) {
+    var n = 0;
+    Object.keys(data.lessons || {}).forEach(function (k) { n += (data.lessons[k] && data.lessons[k].stars) || 0; });
+    Object.keys(data.stories || {}).forEach(function (k) { n += (data.stories[k] && data.stories[k].stars) || 0; });
+    return n;
+  }
+  var outfitShown = null;
+  function applyOutfit(data) {
+    var o = data.outfit || {}, key = JSON.stringify(o);
+    if (key === outfitShown) return;
+    var byId = {}; WARDROBE.forEach(function (w) { byId[w.id] = w; });
+    ['hat', 'scarf', 'eyes'].forEach(function (slot) {
+      var el = document.getElementById('saqr-wear-' + slot); if (!el) return;
+      el.innerHTML = o[slot] && byId[o[slot]] ? byId[o[slot]].svg : '';
+    });
+    var def = document.getElementById('saqr-scarf-default'); if (def) def.style.display = o.scarf ? 'none' : '';
+    outfitShown = key;
+  }
+
   // ---- break timer: time on screen per day (useSecs), the parent's daily limit and today's extra minutes ----
   var FREE_VIEWS = PARENT_VIEWS.concat(['gate', 'rest', 'who', 'worksheet', 'cert']);
   function usedSecs(data) { return ((data.useSecs || {})[dayKey(new Date())]) || 0; }
@@ -982,6 +1025,7 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isWard: s.view === 'ward', wardOn: s.view === 'ward' ? 'page' : 'false', goWard: function () { self.go('ward'); },
         isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
         isVibeSet: s.view === 'vibeset', isRest: s.view === 'rest', isRestMore: s.view === 'restmore',
         rest: {
@@ -1302,6 +1346,33 @@
             return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
           });
         }
+      }
+
+      // ---- Dress up Saqr ----
+      applyOutfit(data);
+      if (s.view === 'ward') {
+        var earned = starsEarned(data), wallet = Math.max(0, earned - (data.spent || 0)), owned = data.owned || [], outfit = data.outfit || {};
+        var saveWard = function (patch, msg) { var d = Object.assign({}, self.state.data, patch); save(d); self.setState({ data: d, wdMsg: msg || '' }); };
+        out.wd = {
+          wallet: String(wallet), walletText: fill(T.wdWallet, { A: earned }), msg: s.wdMsg || '', hasMsg: !!s.wdMsg,
+          groups: ['hat', 'scarf', 'eyes'].map(function (slot) {
+            return { title: T.wdGroups[slot], items: WARDROBE.filter(function (w) { return w.slot === slot; }).map(function (w) {
+              var has = owned.indexOf(w.id) !== -1, on = outfit[slot] === w.id, can = wallet >= w.price;
+              return { name: T.wdItems[w.id], icon: w.icon, style: w.color ? 'background:' + w.color + ';border-radius:12px;padding:4px 8px' : '',
+                cls: 'ward-item' + (on ? ' on' : '') + (has ? ' owned' : ''),
+                label: on ? T.wdOff : has ? T.wdWear : can ? fill(T.wdBuy, { A: w.price }) : fill(T.wdNeed, { A: w.price - wallet }),
+                btnCls: on ? 'btn ghost' : has ? 'btn secondary' : can ? 'btn primary' : 'btn ghost', dis: !has && !can ? 'true' : 'false',
+                act: function () {
+                  var o2 = Object.assign({}, outfit);
+                  if (on) { delete o2[slot]; sfx('tap'); return saveWard({ outfit: o2 }); }
+                  if (has) { o2[slot] = w.id; sfx('pop'); return saveWard({ outfit: o2 }); }
+                  if (!can) return;
+                  o2[slot] = w.id; sfx('done'); burst(document.querySelector('.ward-saqr'), 60);
+                  saveWard({ outfit: o2, owned: owned.concat(w.id), spent: (data.spent || 0) + w.price }, fill(T.wdBought, { I: T.wdItems[w.id] }));
+                } };
+            }) };
+          })
+        };
       }
 
       // ---- Vibe Studio ----
