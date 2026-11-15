@@ -70,6 +70,11 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      stuck1: '🤔 I\'m stuck', stuck2: '🤔 Still stuck', stuck3: '⏭️ Skip for now', stuckHint: 'Read the question again slowly. What is it really asking?',
+      stuckElim: 'I took away one wrong answer for you. You can do it!',
+      stuckWork: { count: 'Count out loud as you put each date in: 1, 2, 3… and stop at the number asked.', trace: 'Press Watch again, then start at the green dot and follow the line slowly.',
+        match: 'Pick one on the left, say its name, then look for its partner on the right.', code: 'Trace the path with your finger first, then add one arrow for each step.', pycode: 'Count the squares to the palm first. Then write right(…) or down(…) with that number.' },
+      stuckSkipped: 'No problem! We will try this one again tomorrow.',
       navHouse: 'Saqr\'s house', hsTitle: 'Saqr\'s house', hsIntro: 'Everything you make and win hangs on the walls of Saqr\'s house. Keep learning to fill them up!',
       hsWall: 'On the walls', hsEmpty: 'An empty frame. Finish lessons, quests and games to fill it!', hsJournal: 'My discovery journal', hsJournalEmpty: 'Your journal is empty. Start a lesson or a story to write the first page!',
       hsFrames: { sticker: 'Newest sticker', cert: 'Course certificate', cards: 'Knowledge cards', game: 'My game', story: 'Stories read', pet: 'My pet' },
@@ -245,6 +250,11 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      stuck1: '🤔 أحتاج مساعدة', stuck2: '🤔 ما زلت محتارًا', stuck3: '⏭️ تخطَّ الآن', stuckHint: 'اقرأ السؤال مرة أخرى ببطء. ماذا يطلب حقًّا؟',
+      stuckElim: 'أزلت لك جوابًا خاطئًا. تستطيع فعلها!',
+      stuckWork: { count: 'عُدّ بصوت عالٍ وأنت تضع كل تمرة: 1، 2، 3… وتوقّف عند العدد المطلوب.', trace: 'اضغط «شاهد مرة أخرى»، ثم ابدأ من النقطة الخضراء واتبع الخط ببطء.',
+        match: 'اختر عنصرًا من جهة، وقل اسمه، ثم ابحث عن شريكه في الجهة الأخرى.', code: 'تتبّع الطريق بإصبعك أولًا، ثم أضف سهمًا لكل خطوة.', pycode: 'عُدّ المربعات حتى النخلة أولًا، ثم اكتب right(…) أو down(…) بذلك العدد.' },
+      stuckSkipped: 'لا بأس! سنجرّب هذا السؤال مرة أخرى غدًا.',
       navHouse: 'بيت صقر', hsTitle: 'بيت صقر', hsIntro: 'كل ما تصنعه وتربحه يُعلَّق على جدران بيت صقر. واصل التعلّم لتملأها!',
       hsWall: 'على الجدران', hsEmpty: 'إطار فارغ. أكمل الدروس والمهامّ والألعاب لتملأه!', hsJournal: 'دفتر اكتشافاتي', hsJournalEmpty: 'دفترك فارغ. ابدأ درسًا أو قصة لتكتب الصفحة الأولى!',
       hsFrames: { sticker: 'أحدث ملصق', cert: 'شهادة دورة', cards: 'بطاقات المعرفة', game: 'لعبتي', story: 'القصص المقروءة', pet: 'حيواني' },
@@ -492,8 +502,14 @@
     var day = dayKey(new Date());
     if (data.todayPlan && data.todayPlan.day === day) return data.todayPlan;
     var rnd = seeded(day + '|' + (profiles.active || 'main') + '|' + (data.name || '')), shuffleR = function (a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
-    var items = [], fit = [];
-    COURSES.forEach(function (c, ci) { if (fitsAge(c, data.age)) fit.push(ci); });
+    var items = [], fit = [], usedCi = {};
+    // lessons skipped with "I'm stuck" on an earlier day come back first
+    Object.keys(data.retry || {}).forEach(function (lid) {
+      if (data.retry[lid] >= day || items.length >= 2) return;
+      COURSES.forEach(function (c, ci) { c.lessons.forEach(function (l, li) { if (l.id === lid && !usedCi[ci]) { items.push({ kind: 'lesson', ci: ci, li: li, retry: true }); usedCi[ci] = 1; } }); });
+      delete data.retry[lid];
+    });
+    COURSES.forEach(function (c, ci) { if (fitsAge(c, data.age) && !usedCi[ci]) fit.push(ci); });
     shuffleR(fit).forEach(function (ci) {
       if (items.length >= 4) return;
       var order = orderOf(ci), pickLi = null;
@@ -2097,9 +2113,25 @@
         var q = ls.qs[ls.qi], last = ls.qi === ls.qs.length - 1;
         var seq = (q.seq || []).map(function (name) { return { hex: COLOURS[name].hex, name: COLOURS[name][LANG] }; });
         var filled = ls.step === 'teach' ? 0 : ls.step === 'done' ? ls.qs.length : ls.qi + (ls.solved ? 1 : 0);
-        var next = function () {
-          var results = (ls.results || []).concat(ls.wrong.length === 0);
-          if (last) { self.finishLesson(results); } else { self.setState({ ls: Object.assign({}, ls, { qi: ls.qi + 1, wrong: [], solved: false, results: results, act: freshAct(ls.qs[ls.qi + 1]) }) }); }
+        var next = function (skipped) {
+          var results = (ls.results || []).concat(skipped === true ? false : ls.wrong.length === 0);
+          if (last) { self.finishLesson(results); } else { self.setState({ ls: Object.assign({}, ls, { qi: ls.qi + 1, wrong: [], solved: false, stuck: 0, elim: [], results: results, act: freshAct(ls.qs[ls.qi + 1]) }) }); }
+        };
+        // "I'm stuck": 1 a hint, 2 a wrong answer taken away (or how to start), 3 skip with no penalty, back tomorrow
+        var stuckN = ls.stuck || 0;
+        var stuckPress = function () {
+          if (ls.solved) return;
+          if (stuckN >= 2) {
+            sfx('tap');
+            if (!isStoryQuiz && !isChallenge && !isReview) { var dR = Object.assign({}, self.state.data); dR.retry = Object.assign({}, dR.retry || {}); dR.retry[lesson.id] = dayKey(new Date()); save(dR); self.state.data = dR; }
+            return next(true);
+          }
+          var extra = { stuck: stuckN + 1 };
+          if (stuckN + 1 === 2 && q.kind === 'choice') {
+            var wrongs = q.opts.map(function (o, k) { return k; }).filter(function (k) { return !q.opts[k].right && ls.wrong.indexOf(k) === -1 && (ls.elim || []).indexOf(k) === -1; });
+            if (wrongs.length > 1) extra.elim = (ls.elim || []).concat(wrongs[Math.floor(Math.random() * wrongs.length)]);
+          }
+          sfx('pop'); self.setState({ ls: Object.assign({}, ls, extra) });
         };
         var startQuiz = function () { self.setState({ ls: Object.assign({}, ls, { step: 'quiz' }) }); };
         var auto = data.autoRead !== false;
@@ -2165,7 +2197,10 @@
           hasSay: !!q.say && out.speakOk, sayWord: function () { speak([q.say]); },
           seq: seq, hasSeq: seq.length > 0,
           msg: ls.solved ? cheer : ls.wrong.length ? T.no : q.kind === 'count' ? T.dragTip : q.kind === 'trace' ? T.traceTip : q.kind === 'match' ? T.matchTip : T.gIdle,
-          hint: hint, hasHint: !!hint && (ls.wrong.length > 0 || !!act.msg) && !ls.solved,
+          hint: hint || (stuckN ? T.stuckHint : ''), hasHint: !ls.solved && ((!!hint && (ls.wrong.length > 0 || !!act.msg)) || stuckN > 0),
+          stuckShow: ls.step === 'quiz' && !ls.solved, stuckLabel: stuckN === 0 ? T.stuck1 : stuckN === 1 ? T.stuck2 : T.stuck3, stuckPress: stuckPress,
+          stuckWork: stuckN >= 2 ? (q.kind === 'choice' ? ((ls.elim || []).length ? T.stuckElim : '') : (T.stuckWork[q.kind] || '')) : '',
+          hasStuckWork: stuckN >= 2,
           guideCls: ls.solved ? 'saqr cheer' : ls.wrong.length ? 'saqr think' : 'saqr',
           teachIntro: teachIntro, doneSay: doneSay,
           sayTeach: function () { speak([teachIntro, tx(lesson.teach)]); },
@@ -2199,17 +2234,17 @@
         };
         out.ls.opts = q.opts.map(function (opt, k) {
           var isColour = !!(opt.o && opt.o.colour), col = isColour ? COLOURS[opt.o.colour] : null;
-          var won = ls.solved && opt.right, missed = ls.wrong.indexOf(k) !== -1, dim = ls.solved && !opt.right;
+          var won = ls.solved && opt.right, missed = ls.wrong.indexOf(k) !== -1, dim = ls.solved && !opt.right, gone = (ls.elim || []).indexOf(k) !== -1;
           return {
             key: String(k + 1),
             label: isColour ? col[LANG] : tx(opt.o), hasSw: isColour, sw: isColour ? col.hex : 'transparent',
-            cls: (won ? 'opt right' : missed ? 'opt wrong' + (ls.wrong[ls.wrong.length - 1] === k ? ' last' : '') : dim ? 'opt dim' : 'opt') +
+            cls: (gone ? 'opt gone' : won ? 'opt right' : missed ? 'opt wrong' + (ls.wrong[ls.wrong.length - 1] === k ? ' last' : '') : dim ? 'opt dim' : 'opt') +
               (!isColour && !/[0-9A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' pic' : '') +
               // single letters and letters with vowel marks are shown large so the marks are easy to see
               (!isColour && tx(opt.o).length <= 3 && /[A-Za-z\u0600-\u06FF]/.test(tx(opt.o)) ? ' big' : ''),
-            dis: ls.solved || missed ? 'true' : 'false',
+            dis: ls.solved || missed || gone ? 'true' : 'false', gone: gone,
             tap: function (e) {
-              if (ls.solved || ls.wrong.indexOf(k) !== -1) return;
+              if (ls.solved || ls.wrong.indexOf(k) !== -1 || gone) return;
               if (opt.right) {
                 sfx('right'); burst(e && e.currentTarget, 40);
                 self.setState({ ls: Object.assign({}, ls, { solved: true, firstTry: ls.firstTry + (ls.wrong.length ? 0 : 1) }) });
