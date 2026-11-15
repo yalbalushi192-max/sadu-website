@@ -16,6 +16,9 @@
            'count'  drag n dates into the basket (needs n)
            'trace'  trace the letter or shape in show with a finger (outline: true traces a shape's edge)
            'match'  match pairs: pairs is a list of [left, right]
+           'code'   coding puzzle: grid is a list of rows ('S' Saqr, 'G' goal, '#' rock, '.' sand);
+                    blocks lists the blocks offered ('U', 'D', 'L', 'R' and repeat blocks 'x2'...'x5');
+                    max (optional) is the most blocks allowed
      say   optional word Saqr says out loud (phonics: "listen, then choose"); shown as text if the
            device has no voice
      show  optional big word, letter or sum shown under the question
@@ -123,6 +126,9 @@
   var HEAR_WHICH = { en: 'Listen. Which word did you hear?', ar: 'استمع. أي كلمة سمعت؟' };
   var SHADDA = { en: 'Which letter has the shadda (ّ)?', ar: 'أي حرف عليه الشدّة؟' };
   var LETTERS = { en: 'How many letters are in this word?', ar: 'كم حرفًا في هذه الكلمة؟' };
+  var CODE = { en: 'Build a program to fly Saqr to the palm tree, then press Run.', ar: 'ابنِ برنامجًا يوصل صقرًا إلى النخلة، ثم اضغط «شغّل».' };
+  var ARROWS = ['U', 'D', 'L', 'R'];
+  function code(grid, max, extra) { var x = { kind: 'code', q: CODE, grid: grid, blocks: extra ? ARROWS.concat(extra) : ARROWS }; if (max) x.max = max; return x; }
   function hear(word, letters, q) { return { q: q || HEAR_FIRST, say: word, opts: letters }; }
 
   window.SADU_COURSES = [
@@ -271,6 +277,31 @@
           teach: { en: 'Listen to the word Saqr says, then find it. Look at the first letter to help you: باب starts with ب.', ar: 'استمع إلى الكلمة التي يقولها صقر، ثم ابحث عنها. انظر إلى أول حرف ليساعدك: «باب» تبدأ بالباء.' },
           hint: { en: 'Which word starts with the first sound you heard?', ar: 'أي كلمة تبدأ بأول صوت سمعته؟' },
           questions: [hear('باب', ['باب', 'نار', 'قمر'], HEAR_WHICH), hear('شمس', ['شمس', 'قمر', 'بحر'], HEAR_WHICH), hear('وردة', ['وردة', 'سمكة', 'نخلة'], HEAR_WHICH), hear('جمل', ['جمل', 'فيل', 'أسد'], HEAR_WHICH)] }
+      ]
+    },
+    {
+      id: 'coding', stickers: ['🧭', '🪜', '🪨', '🔁'], name: { en: 'Coding', ar: 'البرمجة' },
+      age: { en: 'Ages 5 to 10', ar: 'من 5 إلى 10 سنوات' }, ages: [5, 10],
+      color: '#4DB6AC', tint: '#CDEFEA',
+      tip: { en: 'Play "robot": your child gives you step-by-step instructions (two steps forward, turn right) to walk to the kitchen.', ar: 'العبا لعبة «الروبوت»: يعطيك طفلك تعليمات خطوة بخطوة (خطوتان إلى الأمام، استدر يمينًا) لتصل إلى المطبخ.' },
+      icon: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',
+      lessons: [
+        { id: 'coding-1', title: { en: 'Move Saqr', ar: 'حرّك صقرًا' },
+          teach: { en: 'A program is a list of steps a computer follows in order. Tap the arrow blocks to build Saqr\'s path, then press Run and watch him follow your steps.', ar: 'البرنامج قائمة خطوات ينفّذها الحاسوب بالترتيب. اضغط على أسهم الحركة لتبني طريق صقر، ثم اضغط «شغّل» وشاهده يتبع خطواتك.' },
+          hint: { en: 'Count the squares between Saqr and the palm tree. One arrow moves one square.', ar: 'عُدّ المربعات بين صقر والنخلة. كل سهم يحرّكه مربعًا واحدًا.' },
+          questions: [code(['S.G']), code(['S..G']), code(['G..S']), code(['S...G'])] },
+        { id: 'coding-2', title: { en: 'Up and down', ar: 'إلى الأعلى والأسفل' },
+          teach: { en: 'Saqr can fly up and down too. Plan the path square by square: first up, then across, or the other way round.', ar: 'يستطيع صقر أن يطير إلى الأعلى والأسفل أيضًا. خطّط الطريق مربعًا مربعًا: إلى الأعلى أولًا ثم إلى الجانب، أو العكس.' },
+          hint: { en: 'Trace the path with your finger first, then add one arrow for each square.', ar: 'تتبّع الطريق بإصبعك أولًا، ثم أضف سهمًا لكل مربع.' },
+          questions: [code(['G', '.', 'S']), code(['.G', 'S.']), code(['S..', '..G']), code(['..G', '...', 'S..'])] },
+        { id: 'coding-3', title: { en: 'Around the rocks', ar: 'حول الصخور' },
+          teach: { en: 'Rocks are in the way! If Saqr flies into a rock, the program stops. Find a path around them.', ar: 'الصخور في الطريق! إذا طار صقر نحو صخرة يتوقّف البرنامج. ابحث عن طريق حولها.' },
+          hint: { en: 'Go around the rock: up or down first, then across.', ar: 'التفّ حول الصخرة: إلى الأعلى أو الأسفل أولًا، ثم إلى الجانب.' },
+          questions: [code(['...', 'S#G']), code(['S#.', '..G']), code(['..#G', 'S...']), code(['S#.', '.#.', '..G'])] },
+        { id: 'coding-4', title: { en: 'Repeat blocks', ar: 'كتلة التكرار' },
+          teach: { en: 'A repeat block does the next step again and again. 🔁3 then ➡️ flies Saqr right three times. Programmers use repeats to keep programs short.', ar: 'كتلة التكرار تعيد الخطوة التالية أكثر من مرة. 🔁3 ثم ➡️ تجعل صقرًا يطير يمينًا ثلاث مرات. يستعمل المبرمجون التكرار ليجعلوا البرامج قصيرة.' },
+          hint: { en: 'Count the squares, put that repeat block first, then the arrow.', ar: 'عُدّ المربعات، وضع كتلة التكرار المناسبة أولًا، ثم السهم.' },
+          questions: [code(['S...G'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G....S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G', '.', '.', 'S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['...G', '...', 'S..'], 4, ['x2', 'x3', 'x4', 'x5'])] }
       ]
     },
     {
@@ -928,6 +959,7 @@
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
     'arabic-7': 1, 'arabic-8': 1, 'arabic-9': 2, 'arabic-10': 3,
     'art-7': 1, 'art-8': 2, 'art-9': 2, 'art-10': 3,
+    'coding-1': 1, 'coding-2': 1, 'coding-3': 2, 'coding-4': 2,
     'art-11': 1, 'art-12': 1, 'art-13': 2, 'art-14': 2, 'art-15': 3,
     'phonics-21': 2, 'phonics-23': 2, 'phonics-22': 3, 'phonics-24': 3, 'phonics-25': 3,
     'phonics-26': 2, 'phonics-29': 2, 'phonics-27': 3, 'phonics-28': 3, 'phonics-30': 3,

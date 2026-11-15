@@ -681,6 +681,29 @@
 </div>
 </sc-if>
 
+<!-- CODE: build a program of arrow blocks, then run it -->
+<sc-if value="{{ ls.isCode }}">
+<div class="code-act">
+<div class="grid-board" dir="ltr" style="--cols: {{ ls.cd.cols }}">
+<sc-for list="{{ ls.cd.rows }}" as="row"><sc-for list="{{ row.cells }}" as="cell"><div class="{{ cell.cls }}">
+<sc-if value="{{ cell.saqr }}"><svg class="saqr-mini" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg></sc-if>
+<sc-if value="{{ cell.hasItem }}"><span aria-hidden="true">{{ cell.item }}</span></sc-if>
+</div></sc-for></sc-for>
+</div>
+<div class="prog-box">
+<div class="prog-head"><b>{{ t.cdProgram }}</b><sc-if value="{{ ls.cd.hasMax }}"><span class="small muted">{{ ls.cd.count }}</span></sc-if></div>
+<div class="prog" dir="ltr">
+<sc-for list="{{ ls.cd.prog }}" as="b"><button type="button" class="{{ b.cls }}" onclick="{{ b.tap }}" aria-label="{{ b.aria }}">{{ b.label }}</button></sc-for>
+<sc-if value="{{ ls.cd.empty }}"><span class="small muted prog-empty">{{ t.cdEmpty }}</span></sc-if>
+</div>
+</div>
+<sc-if value="{{ ls.cd.notSolved }}">
+<div class="palette" dir="ltr"><sc-for list="{{ ls.cd.palette }}" as="b"><button type="button" class="{{ b.cls }}" onclick="{{ b.tap }}" aria-label="{{ b.aria }}" aria-disabled="{{ b.dis }}">{{ b.label }}</button></sc-for></div>
+<div class="actions center"><button type="button" class="btn ghost lg" onclick="{{ ls.cd.clear }}">{{ t.cdClear }}</button><button type="button" class="btn primary lg point" onclick="{{ ls.cd.run }}">▶ {{ t.cdRun }}</button></div>
+</sc-if>
+</div>
+</sc-if>
+
 <!-- MATCH: pair each item on one side with its partner -->
 <sc-if value="{{ ls.isMatch }}">
 <div class="match">

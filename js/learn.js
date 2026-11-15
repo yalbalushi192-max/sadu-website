@@ -70,6 +70,9 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      cdRun: 'Run', cdClear: 'Clear', cdProgram: 'Your program', cdEmpty: 'Tap the arrows to add steps.', cdBlocks: 'Blocks: %A of %B',
+      cdCrash: 'Bump! Saqr hit a rock or the edge. Change the program and try again.', cdShort: 'Saqr stopped before the palm tree. Add or change some steps.',
+      cdArrow: { U: 'Up', D: 'Down', L: 'Left', R: 'Right' }, cdRepeat: 'Repeat %A times', cdRemove: 'remove',
       dfEasy: 'Saqr made it a little easier this time.', dfHard: 'You did great last time, so Saqr made it harder!',
       rvTitle: 'Quick review', rvOffer: 'Saqr found %A tricky questions to practise again. Ready?', rvOffer1: 'Saqr found 1 tricky question to practise again. Ready?',
       rvBtn: 'Start quick review', rvCleared: 'Tricky questions cleared: %A',
@@ -163,6 +166,9 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      cdRun: 'شغّل', cdClear: 'امسح', cdProgram: 'برنامجك', cdEmpty: 'اضغط على الأسهم لتضيف خطوات.', cdBlocks: 'الكتل: %A من %B',
+      cdCrash: 'بُم! اصطدم صقر بصخرة أو بالحافة. غيّر البرنامج وحاول مرة أخرى.', cdShort: 'توقّف صقر قبل النخلة. أضف خطوات أو غيّرها.',
+      cdArrow: { U: 'أعلى', D: 'أسفل', L: 'يسار', R: 'يمين' }, cdRepeat: 'كرّر %A مرات', cdRemove: 'احذف',
       dfEasy: 'جعل صقر الأسئلة أسهل قليلًا هذه المرة.', dfHard: 'أبدعت في المرة الماضية، فجعل صقر الأسئلة أصعب!',
       rvTitle: 'مراجعة سريعة', rvOffer: 'وجد صقر %A أسئلة صعبة لنتدرّب عليها مرة أخرى. هل أنت مستعد؟', rvOffer1: 'وجد صقر سؤالًا صعبًا واحدًا لنتدرّب عليه مرة أخرى. هل أنت مستعد؟',
       rvBtn: 'ابدأ المراجعة السريعة', rvCleared: 'أسئلة صعبة تجاوزتها: %A',
@@ -386,6 +392,7 @@
     var raw = lesson.make ? lesson.make().concat(lesson.make()) : lesson.questions.slice();
     var seen = {}, items = [];
     raw.forEach(function (q) {
+      if (q.kind === 'code') return;
       var key = JSON.stringify([q.show, q.say, q.n, q.q, q.pairs]); if (seen[key] || items.length >= 6) return; seen[key] = true;
       var it = { kind: q.kind || 'choice', prompt: tx(q.q) };
       if (it.kind === 'choice') {
@@ -448,10 +455,32 @@
   function fitsAge(c, age) { return !age || age > 10 || !c.ages || (age >= c.ages[0] && age <= c.ages[1]); }
 
   // ---- activities ----
-  function freshAct(q) { return q && q.kind === 'count' ? { placed: 0, tried: -1 } : q && q.kind === 'match' ? { sel: -1, side: '', done: [], badL: -1, badR: -1 } : {}; }
+  function freshAct(q) { return q && q.kind === 'count' ? { placed: 0, tried: -1 } : q && q.kind === 'match' ? { sel: -1, side: '', done: [], badL: -1, badR: -1 }
+    : q && q.kind === 'code' ? { prog: [], pos: -1, running: false, why: '' } : {}; }
+
+  // ---- coding puzzles: a program of arrow blocks (repeat blocks 'x2'...'x5' repeat the next arrow) ----
+  var STEP = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] };
+  var ARROW_ICON = { U: '⬆️', D: '⬇️', L: '⬅️', R: '➡️' };
+  function expandProgram(prog) {
+    var out = [], times = 1;
+    prog.forEach(function (b) { if (/^x\d$/.test(b)) times = +b.slice(1); else { for (var i = 0; i < times; i++) out.push(b); times = 1; } });
+    return out;
+  }
+  // where Saqr goes: the squares he visits, and whether he bumped into something
+  function runProgram(grid, prog) {
+    var at = null, goal = null;
+    grid.forEach(function (row, y) { row.split('').forEach(function (ch, x) { if (ch === 'S') at = [y, x]; if (ch === 'G') goal = [y, x]; }); });
+    var path = [at], crash = false;
+    expandProgram(prog).some(function (b) {
+      var ny = at[0] + STEP[b][0], nx = at[1] + STEP[b][1];
+      if (ny < 0 || ny >= grid.length || nx < 0 || nx >= grid[ny].length || grid[ny][nx] === '#') { crash = true; return true; }
+      at = [ny, nx]; path.push(at); return false;
+    });
+    return { path: path, crash: crash, reached: !crash && at[0] === goal[0] && at[1] === goal[1] };
+  }
   function prepQ(q, lessonHint) {
     var out = { kind: q.kind || 'choice', q: q.q, show: q.show, say: q.say, gloss: q.gloss, seq: q.seq, hint: q.hint || lessonHint,
-      n: q.n, outline: !!q.outline, pairs: q.pairs,
+      n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max,
       opts: shuffle((q.opts || []).map(function (o, i) { return { o: o, right: i === 0 }; })) };
     if (q.kind === 'match') {
       var idx = q.pairs.map(function (x, i) { return i; });
@@ -575,7 +604,7 @@
     }
 
     go(view, extra) {
-      hush();
+      hush(); clearInterval(this._codeTimer);
       bits = [];  // confetti stops when the child moves to another page
       this._said = null;
       this.setState(Object.assign({ view: view, confirming: false }, extra || {}));
@@ -1169,7 +1198,8 @@
         var readAnswers = !q.say && optLabels.every(function (x) { return /[0-9A-Za-z\u0600-\u06FF]/.test(x); });
         var qParts = [tx(q.q), q.say || spoken(q.show), seq.map(function (x) { return x.name; }).join(', ')].concat(readAnswers ? answerParts : []);
         var act = ls.act || {};
-        var hint = q.kind === 'count' && act.tried >= 0 ? fill(T.countHint, { A: act.tried, B: q.n }) : tx(q.hint);
+        var hint = q.kind === 'count' && act.tried >= 0 ? fill(T.countHint, { A: act.tried, B: q.n })
+          : q.kind === 'code' && act.why ? T[act.why] + ' ' + tx(q.hint) : tx(q.hint);
         var cheer = T.cheers[ls.qi % T.cheers.length];
         var doneSay = ls.earned === 3 ? T.gDone3 : ls.earned === 2 ? T.gDone2 : T.gDone1;
         var teachIntro = fill(T.gTeach, { L: tx(lesson.title) });
@@ -1194,6 +1224,7 @@
           count: ls.step === 'quiz' ? fill(T.qOf, { A: ls.qi + 1, B: ls.qs.length }) : ls.step === 'teach' ? T.learn : '',
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
           prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)), gloss: tx(q.gloss),
+          isCode: q.kind === 'code',
           isChoice: q.kind === 'choice', optsCls: ls.wrong.length || ls.solved ? 'opts' : 'opts fresh', isCount: q.kind === 'count', isTrace: q.kind === 'trace', isMatch: q.kind === 'match',
           hasSay: !!q.say && out.speakOk, sayWord: function () { speak([q.say]); },
           seq: seq, hasSeq: seq.length > 0,
@@ -1325,6 +1356,58 @@
               if (ls.solved) return;
               var sc = traceScore(q, tr.paths);
               if (sc.cover >= 0.6 && sc.outside <= 0.45) tryRight(); else tryWrong();
+            }
+          };
+        }
+
+        if (q.kind === 'code' && ls.step === 'quiz') {
+          var sim = runProgram(q.grid, act.prog), shown = act.pos >= 0 ? sim.path.slice(0, act.pos + 1) : [sim.path[0]];
+          var here = shown[shown.length - 1], trail = {};
+          shown.forEach(function (pt) { trail[pt[0] + ',' + pt[1]] = true; });
+          var full = q.max && act.prog.length >= q.max;
+          var setAct = function (extra) { var cur = self.state.ls; self.setState({ ls: Object.assign({}, cur, { act: Object.assign({}, cur.act, extra) }) }); };
+          out.ls.cd = {
+            cols: String(q.grid[0].length),
+            rows: q.grid.map(function (row, y) { return { cells: row.split('').map(function (ch, x) {
+              var isHere = here[0] === y && here[1] === x;
+              return { cls: 'cell' + (ch === '#' ? ' rock' : '') + (ch === 'G' ? ' goal' : '') + (trail[y + ',' + x] ? ' trail' : ''),
+                saqr: isHere, item: ch === '#' ? '🪨' : ch === 'G' ? '🌴' : '', hasItem: (ch === '#' || ch === 'G') && !isHere };
+            }) }; }),
+            prog: act.prog.map(function (b, i) {
+              var rep = /^x\d$/.test(b);
+              return { label: rep ? '🔁' + b.slice(1) : ARROW_ICON[b], cls: rep ? 'block rep' : 'block',
+                aria: (rep ? fill(T.cdRepeat, { A: b.slice(1) }) : T.cdArrow[b]) + ', ' + T.cdRemove,
+                tap: function () { if (act.running || ls.solved) return; sfx('tap'); var pr = act.prog.slice(); pr.splice(i, 1); setAct({ prog: pr, pos: -1, why: '' }); } };
+            }),
+            empty: act.prog.length === 0, notSolved: !ls.solved, running: !!act.running,
+            count: q.max ? fill(T.cdBlocks, { A: act.prog.length, B: q.max }) : '', hasMax: !!q.max,
+            palette: q.blocks.map(function (b) {
+              var rep = /^x\d$/.test(b);
+              return { label: rep ? '🔁' + b.slice(1) : ARROW_ICON[b], cls: rep ? 'pal rep' : 'pal', aria: rep ? fill(T.cdRepeat, { A: b.slice(1) }) : T.cdArrow[b],
+                dis: full || act.running || ls.solved ? 'true' : 'false',
+                tap: function () { if (full || act.running || ls.solved) return; sfx('tap'); setAct({ prog: act.prog.concat(b), pos: -1, why: '' }); } };
+            }),
+            clear: function () { if (act.running) return; setAct({ prog: [], pos: -1, why: '' }); },
+            run: function () {
+              if (act.running || ls.solved || !act.prog.length) return;
+              var result = runProgram(q.grid, act.prog), k = 0;
+              setAct({ running: true, pos: 0, why: '' });
+              clearInterval(self._codeTimer);
+              self._codeTimer = setInterval(function () {
+                k++;
+                if (k < result.path.length) { sfx('pop'); setAct({ pos: k }); return; }
+                clearInterval(self._codeTimer);
+                var cur = self.state.ls;
+                if (result.reached) {
+                  sfx('right'); burst(document.querySelector('.grid-board'), 50);
+                  self.setState({ ls: Object.assign({}, cur, { solved: true, firstTry: cur.firstTry + (cur.wrong.length ? 0 : 1), act: Object.assign({}, cur.act, { running: false, pos: k - 1 }) }) });
+                } else {
+                  sfx('wrong');
+                  var missed = cur.wrong.length ? cur.missed : cur.missed.concat(tx(q.q));
+                  self.setState({ ls: Object.assign({}, cur, { wrong: cur.wrong.concat(cur.wrong.length), missed: missed,
+                    act: Object.assign({}, cur.act, { running: false, pos: -1, why: result.crash ? 'cdCrash' : 'cdShort' }) }) });
+                }
+              }, 420);
             }
           };
         }

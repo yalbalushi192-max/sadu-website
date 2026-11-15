@@ -35,6 +35,8 @@ changed on the dashboard or in the Family report.
   most of the guide is covered without drawing far outside it. Arabic lesson 6 (letters), art lesson 6 (shapes).
 - `match`: tap an item, then its partner. English lesson 6 (words and pictures), science lesson 6 (animals).
 
+**Coding:** a course where children build a program from arrow blocks (and repeat blocks) and press Run to fly Saqr across a grid to the palm tree, around rocks. Puzzles are `kind: 'code'` questions in `js/courses.js` (`grid`, `blocks`, optional `max`).
+
 **Phonics:** two courses, English Phonics and Arabic Phonics. Saqr says a word and the child picks the sound it starts (or ends)
 with, using the letters s a t p i n m d g o c k; then the child blends sounds to read words
 (c · a · t → 🐱). Two lessons do the same in Arabic (hear بيت → ب; ق · م · ر → 🌙). A question with
