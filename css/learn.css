@@ -732,3 +732,8 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .ward-item.on{border-color:var(--green);background:#E8F7EE}
 .ward-icon{font-size:38px;line-height:1.2}
 .ward-item .btn{width:100%}
+
+/* ---------- picture and sound questions (Animals & Birds) ---------- */
+.q-img{display:block;width:min(220px,60vw);height:auto;aspect-ratio:1;object-fit:contain;margin:0 auto}
+.sound-btn{margin:8px auto 0}
+.show-box .show:empty{display:none}

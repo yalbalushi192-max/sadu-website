@@ -70,7 +70,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
-      navWard: 'Dress up', wdTitle: 'Dress up Saqr', wdIntro: 'Spend the stars you earn in lessons and stories on clothes for Saqr. He wears them everywhere in Sadu!',
+      hearIt: 'Hear it', navWard: 'Dress up', wdTitle: 'Dress up Saqr', wdIntro: 'Spend the stars you earn in lessons and stories on clothes for Saqr. He wears them everywhere in Sadu!',
       wdWallet: 'stars to spend (%A earned)', wdGroups: { hat: 'Hats', scarf: 'Scarves', eyes: 'Glasses' },
       wdItems: { kuma: 'Omani kuma', crown: 'Crown', party: 'Party hat', sunhat: 'Sun hat', grad: 'Graduation cap', flower: 'Flower', blue: 'Blue scarf', green: 'Green scarf', gold: 'Gold scarf', rainbow: 'Rainbow scarf', shades: 'Sunglasses', round: 'Round glasses' },
       wdBuy: 'Buy for ⭐%A', wdNeed: 'Need %A more ⭐', wdWear: 'Wear', wdOff: 'Take off', wdBought: 'Saqr loves his new %I!',
@@ -219,7 +219,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
-      navWard: 'ألبس صقرًا', wdTitle: 'ألبس صقرًا', wdIntro: 'اصرف النجوم التي تربحها في الدروس والقصص على ملابس لصقر. سيلبسها في كل مكان في سدو!',
+      hearIt: 'اسمع', navWard: 'ألبس صقرًا', wdTitle: 'ألبس صقرًا', wdIntro: 'اصرف النجوم التي تربحها في الدروس والقصص على ملابس لصقر. سيلبسها في كل مكان في سدو!',
       wdWallet: 'نجمة للصرف (ربحت %A)', wdGroups: { hat: 'القبعات', scarf: 'الأوشحة', eyes: 'النظارات' },
       wdItems: { kuma: 'كمة عمانية', crown: 'تاج', party: 'قبعة حفلة', sunhat: 'قبعة شمس', grad: 'قبعة تخرّج', flower: 'وردة', blue: 'وشاح أزرق', green: 'وشاح أخضر', gold: 'وشاح ذهبي', rainbow: 'وشاح قوس قزح', shades: 'نظارة شمسية', round: 'نظارة دائرية' },
       wdBuy: 'اشترِ بـ ⭐%A', wdNeed: 'تحتاج %A ⭐ أخرى', wdWear: 'البس', wdOff: 'اخلع', wdBought: 'صقر سعيد جدًا بـ%I!',
@@ -381,6 +381,13 @@
 
   // pages for parents and teachers only
   var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next', 'vibeset', 'restmore'];
+  // ---- animal and bird sounds (media/) ----
+  var clip = null;
+  function playClip(src) {
+    if (!src) return;
+    try { if (clip) { clip.pause(); } clip = new Audio(src); clip.play().catch(function () {}); } catch (e) {}
+  }
+
   // ---- Dress up Saqr: items drawn on top of the #saqr symbol (viewBox 0 0 120 120); every <use> shows them ----
   var SCARF_PATH = 'M36 60c8 5 16 7 24 7s16-2 24-7l2 7c-8 6-17 8-26 8s-18-2-26-8z';
   var WARDROBE = [
@@ -704,7 +711,7 @@
     return { path: path, crash: crash, reached: !crash && at[0] === goal[0] && at[1] === goal[1] };
   }
   function prepQ(q, lessonHint) {
-    var out = { kind: q.kind || 'choice', q: q.q, show: q.show, say: q.say, gloss: q.gloss, seq: q.seq, hint: q.hint || lessonHint,
+    var out = { kind: q.kind || 'choice', q: q.q, show: q.show, img: q.img, sound: q.sound, say: q.say, gloss: q.gloss, seq: q.seq, hint: q.hint || lessonHint,
       n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max, start: q.start, maxLines: q.maxLines, startText: q.startText,
       opts: shuffle((q.opts || []).map(function (o, i) { return { o: o, right: i === 0 }; })) };
     if (q.kind === 'match') {
@@ -1746,6 +1753,12 @@
           self._said = sayKey;
           setTimeout(function () { speak(sayNow); }, 120);
         }
+        // picture-and-sound questions play the animal's sound once, after the question is read
+        var clipKey = lesson.id + '|' + ls.qi + '|' + ls.li;
+        if (ls.step === 'quiz' && q && q.sound && !ls.solved && self._clipKey !== clipKey) {
+          self._clipKey = clipKey; var src = q.sound;
+          setTimeout(function () { if (self.state.view === 'lesson') playClip(src); }, auto && out.speakOk ? 1600 : 300);
+        }
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
           title: tx(lesson.title), teach: tx(lesson.teach),
@@ -1758,11 +1771,12 @@
           audioReady: function (e) { e.target.parentNode.hidden = false; },
           count: ls.step === 'quiz' ? fill(T.qOf, { A: ls.qi + 1, B: ls.qs.length }) : ls.step === 'teach' ? T.learn : '',
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
-          prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)), gloss: tx(q.gloss),
+          prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || !!q.img || (!!q.say && !out.speakOk)), img: q.img || '', hasImg: !!q.img,
+          hasSound: !!q.sound, playSound: function () { playClip(q.sound); }, gloss: tx(q.gloss),
           isCode: q.kind === 'code' || q.kind === 'pycode', isPy: q.kind === 'pycode', isBlocks: q.kind === 'code',
           // blending: letters shown as tiles that slide together into the word
           isBlend: q.kind === 'choice' && !!q.show && q.show.indexOf(' · ') !== -1,
-          notBlendShow: q.kind === 'choice' && (!!q.show || (!!q.say && !out.speakOk)) && !(q.show && q.show.indexOf(' · ') !== -1),
+          notBlendShow: q.kind === 'choice' && (!!q.show || !!q.img || (!!q.say && !out.speakOk)) && !(q.show && q.show.indexOf(' · ') !== -1),
           blendJoined: !!act.blended, blendApart: !act.blended,
           blendWord: q.show ? q.show.split(' · ').join('') : '',
           blendDir: q.show && /[\u0600-\u06FF]/.test(q.show) ? 'rtl' : 'ltr',

@@ -163,3 +163,7 @@ The fonts load from Google Fonts. Offline, the page still works with the device'
 
 - English phonics order follows the Phase 2 sequence used in `hellodeborahuk/buzzphonics` (MIT licence).
 - Arabic mouth-position facts were checked against `harufkids/haruf-tahajji-kids` (MIT licence). The wording of all tips is original and should be reviewed by a teacher.
+
+## Credits
+
+Animal and bird pictures and sounds come from the open-source Learn app by VaibhavCodeClub (MIT); three.js draws Sadu Bay. See `CREDITS.md`.

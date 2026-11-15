@@ -855,7 +855,8 @@
 </div>
 </sc-if>
 <sc-if value="{{ ls.notBlendShow }}">
-<div class="show-box"><span class="show" dir="auto">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span></div>
+<div class="show-box"><sc-if value="{{ ls.hasImg }}"><img class="q-img" src="{{ ls.img }}" alt=""></sc-if><span class="show" dir="auto">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span>
+<sc-if value="{{ ls.hasSound }}"><button type="button" class="btn secondary sound-btn" onclick="{{ ls.playSound }}">🔊 {{ t.hearIt }}</button></sc-if></div>
 </sc-if>
 <sc-if value="{{ ls.hasSeq }}">
 <div class="seq" dir="ltr">

@@ -68,6 +68,41 @@
     };
   }
 
+
+  // ---- Animals & Birds (pictures and sounds in media/, from the "Learn" app, see CREDITS.md) ----
+  function critter(dir, id, en, ar, ext) { return { id: id, img: 'media/' + dir + '/' + id + '.svg', sound: 'media/' + dir + '/' + id + '.' + (ext || 'mp3'), name: { en: en, ar: ar } }; }
+  var FARM = [critter('animals', 'cow', 'cow', 'بقرة'), critter('animals', 'sheep', 'sheep', 'خروف'), critter('animals', 'goat', 'goat', 'ماعز'), critter('animals', 'horse', 'horse', 'حصان'),
+    critter('animals', 'dog', 'dog', 'كلب'), critter('animals', 'cat', 'cat', 'قطة', 'wav'), critter('animals', 'rabbit', 'rabbit', 'أرنب')];
+  var WILD = [critter('animals', 'lion', 'lion', 'أسد'), critter('animals', 'tiger', 'tiger', 'نمر'), critter('animals', 'elephant', 'elephant', 'فيل'), critter('animals', 'giraffe', 'giraffe', 'زرافة'),
+    critter('animals', 'zebra', 'zebra', 'حمار وحشي'), critter('animals', 'monkey', 'monkey', 'قرد'), critter('animals', 'bear', 'bear', 'دب'), critter('animals', 'fox', 'fox', 'ثعلب'),
+    critter('animals', 'deer', 'deer', 'أيل'), critter('animals', 'kangaroo', 'kangaroo', 'كنغر'), critter('animals', 'snake', 'snake', 'ثعبان'), critter('animals', 'squirrel', 'squirrel', 'سنجاب')];
+  var BIRDS = [critter('birds', 'crow', 'crow', 'غراب'), critter('birds', 'duck', 'duck', 'بطة'), critter('birds', 'eagle', 'eagle', 'عُقاب'), critter('birds', 'goose', 'goose', 'إوزة'),
+    critter('birds', 'hen', 'hen', 'دجاجة'), critter('birds', 'hummingbird', 'hummingbird', 'الطائر الطنّان'), critter('birds', 'kingfisher', 'kingfisher', 'الرفراف'), critter('birds', 'ostrich', 'ostrich', 'نعامة'),
+    critter('birds', 'owl', 'owl', 'بومة'), critter('birds', 'parrot', 'parrot', 'ببغاء'), critter('birds', 'pigeon', 'pigeon', 'حمامة'), critter('birds', 'robin', 'robin', 'أبو الحنّاء'),
+    critter('birds', 'seagull', 'seagull', 'نورس'), critter('birds', 'sparrow', 'sparrow', 'عصفور'), critter('birds', 'swan', 'swan', 'بجعة'), critter('birds', 'vulture', 'vulture', 'نسر'),
+    critter('birds', 'woodpecker', 'woodpecker', 'نقّار الخشب'), critter('birds', 'bulbul', 'bulbul', 'بلبل')];
+  var WHICH_ANIMAL = { en: 'Which one is this?', ar: 'من هذا؟' }, WHO_SOUND = { en: 'Listen. Who makes this sound?', ar: 'استمع. من يصدر هذا الصوت؟' };
+  // 'see' shows the picture (and plays the sound); 'hear' plays only the sound
+  function critters(list, mode) {
+    return function () {
+      var pool = list.slice().sort(function () { return Math.random() - 0.5; }).slice(0, 4);
+      return pool.map(function (a) {
+        var wrong = list.filter(function (b) { return b !== a; }).sort(function () { return Math.random() - 0.5; }).slice(0, hard(1, 2, 3));
+        return { q: mode === 'see' ? WHICH_ANIMAL : WHO_SOUND, img: mode === 'see' ? a.img : '', sound: a.sound, show: mode === 'see' ? '' : '🔊',
+          opts: [a.name].concat(wrong.map(function (b) { return b.name; })) };
+      });
+    };
+  }
+  var NO_FLY = { ostrich: 1 };
+  function canFly() {
+    var flyers = BIRDS.filter(function (b) { return !NO_FLY[b.id] && b.id !== 'hen'; }).sort(function () { return Math.random() - 0.5; });
+    var walkers = WILD.concat(FARM).sort(function () { return Math.random() - 0.5; });
+    var ostrich = BIRDS.filter(function (b) { return b.id === 'ostrich'; })[0];
+    var items = [ostrich, flyers[0], walkers[0], Math.random() < 0.5 ? flyers[1] : walkers[1]].sort(function () { return Math.random() - 0.5; });
+    var Q = { en: 'Can it fly?', ar: 'هل يطير؟' }, YES = { en: 'Yes, it can fly', ar: 'نعم، يطير' }, NO = { en: 'No, it cannot fly', ar: 'لا، لا يطير' };
+    return items.map(function (a) { var flies = BIRDS.indexOf(a) !== -1 && !NO_FLY[a.id]; return { q: Q, img: a.img, show: '', opts: flies ? [YES, NO] : [NO, YES], gloss: a.name }; });
+  }
+
   var WHICH_STARTS = { en: 'Which word starts with this letter?', ar: 'أي كلمة تبدأ بهذا الحرف؟' };
   var RHYMES = { en: 'Which word rhymes with this one?', ar: 'أي كلمة لها القافية نفسها؟' };
   var OPPOSITE = { en: 'What is the opposite of this word?', ar: 'ما عكس هذه الكلمة؟' };
@@ -979,6 +1014,39 @@
             { q: { en: 'Where are henna patterns drawn?', ar: 'أين تُرسم نقوش الحنّاء؟' }, opts: [{ en: 'on hands', ar: 'على الأيدي' }, { en: 'on walls', ar: 'على الجدران' }, { en: 'on boats', ar: 'على السفن' }] },
             { q: { en: 'How is Sadu made?', ar: 'كيف يُصنع السدو؟' }, opts: [{ en: 'by weaving wool', ar: 'بنسج الصوف' }, { en: 'by baking clay', ar: 'بشيّ الطين' }, { en: 'by carving wood', ar: 'بنحت الخشب' }] }
           ] }
+      ]
+    },
+    {
+      // pictures and sounds from the open-source "Learn" app by VaibhavCodeClub (MIT), see CREDITS.md
+      id: 'animals', stickers: ['🐄', '🦁', '👂', '🦜', '🎶', '🪶'], name: { en: 'Animals & Birds', ar: 'الحيوانات والطيور' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
+      color: '#FF9F45', tint: '#FFE0C2',
+      tip: { en: 'On a walk or at the farm, stop and listen: which animal or bird can you hear? Copy the sounds together.', ar: 'في نزهة أو في المزرعة توقّفا واستمعا: أي حيوان أو طائر تسمعان؟ قلّدا الأصوات معًا.' },
+      icon: 'M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM16 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM5 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM19 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM12 20c-3 0-5-1.5-5-4s2.5-4 5-4 5 1.5 5 4-2 4-5 4z',
+      lessons: [
+        { id: 'animals-1', title: { en: 'Farm animals', ar: 'حيوانات المزرعة' },
+          teach: { en: 'Farm animals live with people and help us. The cow gives milk, the sheep gives wool, and the horse can carry us. Look at each picture and listen to its sound.', ar: 'تعيش حيوانات المزرعة مع الناس وتساعدنا. البقرة تعطينا الحليب، والخروف يعطينا الصوف، والحصان يحملنا. انظر إلى كل صورة واستمع إلى صوتها.' },
+          hint: { en: 'Look at the picture and listen to the sound again.', ar: 'انظر إلى الصورة واستمع إلى الصوت مرة أخرى.' },
+          make: critters(FARM, 'see') },
+        { id: 'animals-2', title: { en: 'Wild animals', ar: 'الحيوانات البرّية' },
+          teach: { en: 'Wild animals live in forests, jungles and grasslands. The lion roars, the elephant trumpets with its long trunk, and the giraffe has a very long neck.', ar: 'تعيش الحيوانات البرّية في الغابات والسهول. الأسد يزأر، والفيل له خرطوم طويل، والزرافة لها رقبة طويلة جدًّا.' },
+          hint: { en: 'Look closely: what is special about this animal?', ar: 'انظر جيدًا: ما الذي يميّز هذا الحيوان؟' },
+          make: critters(WILD, 'see') },
+        { id: 'animals-3', title: { en: 'Who makes this sound?', ar: 'من يصدر هذا الصوت؟' },
+          teach: { en: 'Close your eyes and listen. Every animal has its own voice: the cow moos, the dog barks, the sheep says baa and the lion roars.', ar: 'أغمض عينيك واستمع. لكل حيوان صوته الخاص: البقرة تخور، والكلب ينبح، والخروف يثغو، والأسد يزأر.' },
+          hint: { en: 'Press the sound button again and think: big or small animal?', ar: 'اضغط زر الصوت مرة أخرى وفكّر: حيوان كبير أم صغير؟' },
+          make: critters(FARM.concat(WILD), 'hear') },
+        { id: 'animals-4', title: { en: 'Birds', ar: 'الطيور' },
+          teach: { en: 'Birds have feathers, wings and a beak, and they hatch from eggs. The owl is awake at night, the parrot can copy words, and the seagull lives by the sea.', ar: 'للطيور ريش وأجنحة ومنقار، وتفقس من البيض. البومة تسهر في الليل، والببغاء يقلّد الكلام، والنورس يعيش قرب البحر.' },
+          hint: { en: 'Look at its beak, feathers and colours.', ar: 'انظر إلى منقاره وريشه وألوانه.' },
+          make: critters(BIRDS, 'see') },
+        { id: 'animals-5', title: { en: 'Bird songs', ar: 'أصوات الطيور' },
+          teach: { en: 'Birds sing to talk to each other. The hen clucks, the duck quacks, the crow caws and the owl hoots. Listen carefully!', ar: 'تغرّد الطيور لتتكلّم مع بعضها. الدجاجة تقوقئ، والبطة تبطبط، والغراب ينعق، والبومة تنعب. استمع جيدًا!' },
+          hint: { en: 'Listen again: is it a soft song or a loud call?', ar: 'استمع مرة أخرى: هل هو تغريد ناعم أم صوت عالٍ؟' },
+          make: critters(BIRDS, 'hear') },
+        { id: 'animals-6', title: { en: 'Can it fly?', ar: 'هل يطير؟' },
+          teach: { en: 'Most birds can fly, but not all! The ostrich is the biggest bird and it cannot fly, but it runs very fast. Animals like lions and cows have no wings.', ar: 'معظم الطيور تطير، لكن ليس كلها! النعامة أكبر طائر وهي لا تطير، لكنها تركض بسرعة كبيرة. وحيوانات مثل الأسد والبقرة ليس لها أجنحة.' },
+          hint: { en: 'Does it have wings? Remember the ostrich!', ar: 'هل له أجنحة؟ تذكّر النعامة!' },
+          make: canFly }
       ]
     }
   ];
