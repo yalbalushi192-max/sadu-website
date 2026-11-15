@@ -428,7 +428,7 @@
       ]
     },
     {
-      id: 'arabic', stickers: ['📜', '🌓', '🔟', '🕌', '✌️', '✍️'], name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
+      id: 'arabic', stickers: ['📜', '🌓', '🔟', '🕌', '✌️', '✍️', '🌈', '🐫', '🏷️', '📅'], name: { en: 'Arabic', ar: 'اللغة العربية' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
       color: '#FF6FA8', tint: '#FFD0E2',
       tip: { en: 'Point to letters on signs and packets, and ask for a word that starts or ends with the same letter.', ar: 'أشِر إلى الحروف على اللافتات والعلب، واطلب كلمة تبدأ أو تنتهي بالحرف نفسه.' },
       icon: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M9 8h6',
@@ -481,11 +481,47 @@
         { id: 'arabic-6', title: { en: 'Write the letters', ar: 'اكتب الحروف' },
           teach: { en: 'Use your finger (or the mouse) to go over the grey letter. Start at the top and follow its whole shape slowly. Do not forget the dots!', ar: 'مرّر إصبعك (أو الفأرة) فوق الحرف الرمادي. ابدأ من الأعلى واتبع شكله كله ببطء، ولا تنسَ النقاط!' },
           hint: { en: 'Go slowly over all of the grey letter, from one end to the other.', ar: 'مرّ ببطء فوق الحرف الرمادي كله، من أوله إلى آخره.' },
-          questions: [{ kind: 'trace', q: TRACE, show: 'ب' }, { kind: 'trace', q: TRACE, show: 'ج' }, { kind: 'trace', q: TRACE, show: 'م' }, { kind: 'trace', q: TRACE, show: 'ك' }] }
+          questions: [{ kind: 'trace', q: TRACE, show: 'ب' }, { kind: 'trace', q: TRACE, show: 'ج' }, { kind: 'trace', q: TRACE, show: 'م' }, { kind: 'trace', q: TRACE, show: 'ك' }] },
+        { id: 'arabic-7', title: { en: 'Colours in Arabic', ar: 'الألوان' },
+          teach: { en: 'Colours in Arabic: أحمر red like an apple, أصفر yellow like a banana, أخضر green like broccoli and أزرق blue like a whale.', ar: 'نتعلّم أسماء الألوان: أحمر مثل التفاحة، وأصفر مثل الموزة، وأخضر مثل البروكلي، وأزرق مثل الحوت.' },
+          hint: { en: 'Read the colour word, then find something that colour.', ar: 'اقرأ اسم اللون، ثم ابحث عن شيء بهذا اللون.' },
+          questions: [
+            { q: { en: 'Which picture is this colour?', ar: 'أي صورة لونها هكذا؟' }, show: 'أحمر', gloss: { en: 'red', ar: '' }, opts: ['🍎', '🍌', '🥦'] },
+            { q: { en: 'Which picture is this colour?', ar: 'أي صورة لونها هكذا؟' }, show: 'أصفر', gloss: { en: 'yellow', ar: '' }, opts: ['🍌', '🐳', '🍎'] },
+            { q: { en: 'Which picture is this colour?', ar: 'أي صورة لونها هكذا؟' }, show: 'أخضر', gloss: { en: 'green', ar: '' }, opts: ['🥦', '🍎', '🍌'] },
+            { q: { en: 'Which picture is this colour?', ar: 'أي صورة لونها هكذا؟' }, show: 'أزرق', gloss: { en: 'blue', ar: '' }, opts: ['🐳', '🥦', '🍎'] }
+          ] },
+        { id: 'arabic-8', title: { en: 'Animals in Arabic', ar: 'الحيوانات' },
+          teach: { en: 'Animal words: جمل camel, سمكة fish, قطة cat, حصان horse.', ar: 'نتعلّم أسماء الحيوانات: جمل، وسمكة، وقطة، وحصان.' },
+          hint: { en: 'Read the word slowly, then find the animal.', ar: 'اقرأ الكلمة ببطء، ثم ابحث عن الحيوان.' },
+          questions: [
+            { q: { en: 'Which picture is this animal?', ar: 'أي صورة لهذا الحيوان؟' }, show: 'جمل', gloss: { en: 'camel', ar: '' }, opts: ['🐪', '🐟', '🐦'] },
+            { q: { en: 'Which picture is this animal?', ar: 'أي صورة لهذا الحيوان؟' }, show: 'سمكة', gloss: { en: 'fish', ar: '' }, opts: ['🐟', '🐱', '🐪'] },
+            { q: { en: 'Which picture is this animal?', ar: 'أي صورة لهذا الحيوان؟' }, show: 'قطة', gloss: { en: 'cat', ar: '' }, opts: ['🐱', '🐎', '🐟'] },
+            { q: { en: 'Which picture is this animal?', ar: 'أي صورة لهذا الحيوان؟' }, show: 'حصان', gloss: { en: 'horse', ar: '' }, opts: ['🐎', '🐱', '🐦'] }
+          ] },
+        { id: 'arabic-9', title: { en: '"The" in Arabic (ال)', ar: '«ال» التعريف' },
+          teach: { en: 'To say "the" in Arabic, put ال at the start of the word: بيت (a house) becomes البيت (the house).', ar: 'لنعرّف الكلمة نضع «ال» في أولها: «بيت» تصير «البيت»، و«قمر» تصير «القمر».' },
+          hint: { en: 'Look for the word that starts with ال.', ar: 'ابحث عن الكلمة التي تبدأ بـ «ال».' },
+          questions: [
+            { q: { en: 'Add "the" (ال). Which word is right?', ar: 'أضف «ال» التعريف. أي كلمة صحيحة؟' }, show: 'بيت', gloss: { en: 'house', ar: '' }, opts: ['البيت', 'بيتي', 'بيتان'] },
+            { q: { en: 'Add "the" (ال). Which word is right?', ar: 'أضف «ال» التعريف. أي كلمة صحيحة؟' }, show: 'قمر', gloss: { en: 'moon', ar: '' }, opts: ['القمر', 'قمري', 'قمران'] },
+            { q: { en: 'Add "the" (ال). Which word is right?', ar: 'أضف «ال» التعريف. أي كلمة صحيحة؟' }, show: 'شمس', gloss: { en: 'sun', ar: '' }, opts: ['الشمس', 'شمسي', 'شموس'] },
+            { q: { en: 'Add "the" (ال). Which word is right?', ar: 'أضف «ال» التعريف. أي كلمة صحيحة؟' }, show: 'كتاب', gloss: { en: 'book', ar: '' }, opts: ['الكتاب', 'كتابي', 'كتب'] }
+          ] },
+        { id: 'arabic-10', title: { en: 'Days of the week', ar: 'أيام الأسبوع' },
+          teach: { en: 'The days in Arabic, in order: السبت Saturday, الأحد Sunday, الاثنين Monday, الثلاثاء Tuesday, الأربعاء Wednesday, الخميس Thursday, الجمعة Friday.', ar: 'أيام الأسبوع بالترتيب: السبت، الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس، الجمعة.' },
+          hint: { en: 'Say the days in order from Saturday, then find the next one.', ar: 'قل الأيام بالترتيب من السبت، ثم ابحث عن اليوم التالي.' },
+          questions: [
+            { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'السبت', gloss: { en: 'Saturday', ar: '' }, opts: ['الأحد', 'الاثنين', 'الجمعة'] },
+            { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الأحد', gloss: { en: 'Sunday', ar: '' }, opts: ['الاثنين', 'الأربعاء', 'السبت'] },
+            { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الثلاثاء', gloss: { en: 'Tuesday', ar: '' }, opts: ['الأربعاء', 'الخميس', 'الأحد'] },
+            { q: { en: 'Which day comes next?', ar: 'أي يوم يأتي بعده؟' }, show: 'الخميس', gloss: { en: 'Thursday', ar: '' }, opts: ['الجمعة', 'السبت', 'الاثنين'] }
+          ] }
       ]
     },
     {
-      id: 'art', stickers: ['🎨', '🌈', '🧶', '🔺', '🖌️', '🌗'], name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
+      id: 'art', stickers: ['🎨', '🌈', '🧶', '🔺', '🖌️', '🌗', '〰️', '🧵', '🦋', '🎡'], name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
       color: '#FF7A45', tint: '#FFD3C0',
       tip: { en: 'Mix paints or food colouring together, and look for repeating patterns on rugs, tiles and clothes.', ar: 'امزجا الألوان أو ألوان الطعام، وابحثا عن النقوش المتكرّرة في السجاد والبلاط والملابس.' },
       icon: 'M20 4l-9 9M14 4l6 6M11 13c-3 0-4 2-4 4s-2 3-3 3c4 1 9 0 9-5',
@@ -538,7 +574,43 @@
         { id: 'art-6', title: { en: 'Draw the shapes', ar: 'ارسم الأشكال' },
           teach: { en: 'Go around the grey shape with your finger. A triangle has three straight sides, a square has four, and a circle goes round and round.', ar: 'مرّر إصبعك حول الشكل الرمادي. للمثلث ثلاثة أضلاع مستقيمة، وللمربع أربعة، والدائرة تدور حول نفسها.' },
           hint: { en: 'Follow the grey line all the way round until you get back to the start.', ar: 'اتبع الخط الرمادي حتى آخره، إلى أن تعود إلى البداية.' },
-          questions: [{ kind: 'trace', q: TRACE_SHAPE, show: '▲', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '■', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '●', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '◆', outline: true }] }
+          questions: [{ kind: 'trace', q: TRACE_SHAPE, show: '▲', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '■', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '●', outline: true }, { kind: 'trace', q: TRACE_SHAPE, show: '◆', outline: true }] },
+        { id: 'art-7', title: { en: 'Lines', ar: 'الخطوط' },
+          teach: { en: 'Artists use many kinds of lines: straight lines, wavy lines like water, and zigzag lines like mountains. Sadu weaving is full of zigzags!', ar: 'يستعمل الفنانون أنواعًا كثيرة من الخطوط: خطوط مستقيمة، وخطوط متموّجة مثل الماء، وخطوط متعرّجة مثل الجبال. ونسيج السدو مليء بالخطوط المتعرّجة!' },
+          hint: { en: 'Run your finger along the line in the air. Does it go up and down?', ar: 'حرّك إصبعك في الهواء على شكل الخط. هل يصعد وينزل؟' },
+          questions: [
+            { q: { en: 'What kind of line is this?', ar: 'ما نوع هذا الخط؟' }, show: '━━━━━', opts: [{ en: 'straight', ar: 'مستقيم' }, { en: 'wavy', ar: 'متموّج' }, { en: 'zigzag', ar: 'متعرّج' }] },
+            { q: { en: 'What kind of line is this?', ar: 'ما نوع هذا الخط؟' }, show: '〰〰〰', opts: [{ en: 'wavy', ar: 'متموّج' }, { en: 'straight', ar: 'مستقيم' }, { en: 'zigzag', ar: 'متعرّج' }] },
+            { q: { en: 'What kind of line is this?', ar: 'ما نوع هذا الخط؟' }, show: '╱╲╱╲╱╲', opts: [{ en: 'zigzag', ar: 'متعرّج' }, { en: 'wavy', ar: 'متموّج' }, { en: 'straight', ar: 'مستقيم' }] },
+            { q: { en: 'Which line is used a lot in Sadu weaving?', ar: 'أي خط يكثر في نسيج السدو؟' }, opts: [{ en: 'zigzag', ar: 'المتعرّج' }, { en: 'curly', ar: 'الملتفّ' }, { en: 'dotted', ar: 'المنقّط' }] }
+          ] },
+        { id: 'art-8', title: { en: 'Sadu symbols', ar: 'رموز السدو' },
+          teach: { en: 'Sadu is a weaving art of Bedouin women in the Gulf. They spin wool from sheep, goats and camels, and weave bold patterns in red, black and white. Rows of triangles can stand for tents or mountains.', ar: 'السدو فن نسيج تصنعه نساء البادية في الخليج. يغزلن الصوف من الأغنام والماعز والإبل، وينسجن نقوشًا واضحة بالأحمر والأسود والأبيض. وقد ترمز صفوف المثلثات إلى الخيام أو الجبال.' },
+          hint: { en: 'Think about the desert and the Bedouin tent.', ar: 'فكّر في الصحراء وبيت الشَّعَر.' },
+          questions: [
+            { q: { en: 'What is Sadu?', ar: 'ما السدو؟' }, opts: [{ en: 'weaving by Bedouin women', ar: 'نسيج تصنعه نساء البادية' }, { en: 'a kind of food', ar: 'نوع من الطعام' }, { en: 'a board game', ar: 'لعبة لوحية' }] },
+            { q: { en: 'Where does Sadu wool come from?', ar: 'من أين يأتي صوف السدو؟' }, opts: [{ en: 'sheep, goats and camels', ar: 'الأغنام والماعز والإبل' }, { en: 'trees', ar: 'الأشجار' }, { en: 'plastic bottles', ar: 'زجاجات البلاستيك' }] },
+            { q: { en: 'A row of triangles in Sadu can look like…', ar: 'صف المثلثات في السدو قد يشبه…' }, opts: [{ en: 'tents or mountains', ar: 'الخيام أو الجبال' }, { en: 'fish', ar: 'السمك' }, { en: 'clouds', ar: 'الغيوم' }] },
+            { q: { en: 'Which colour is used a lot in Sadu?', ar: 'أي لون يكثر في السدو؟' }, opts: [c('red'), c('pink'), c('purple')] }
+          ] },
+        { id: 'art-9', title: { en: 'Symmetry', ar: 'التماثل' },
+          teach: { en: 'A shape is symmetrical when one half is a mirror of the other half, like a butterfly or a heart. The line that splits it into two matching halves is the line of symmetry.', ar: 'يكون الشكل متماثلًا إذا كان نصفه صورة في المرآة لنصفه الآخر، مثل الفراشة أو القلب. والخط الذي يقسمه إلى نصفين متطابقين هو محور التماثل.' },
+          hint: { en: 'Imagine folding it in half. Do both halves match?', ar: 'تخيّل أنك طويته من المنتصف. هل يتطابق النصفان؟' },
+          questions: [
+            { q: { en: 'Which one is symmetrical?', ar: 'أيّها متماثل؟' }, opts: ['🦋', '🐌', '🦒'] },
+            { q: { en: 'Which one is symmetrical?', ar: 'أيّها متماثل؟' }, opts: ['❤️', '🔑', '🎺'] },
+            { q: { en: 'Which letter is symmetrical?', ar: 'أي حرف متماثل؟' }, opts: ['A', 'F', 'J'] },
+            { q: { en: 'What does a line of symmetry do?', ar: 'ماذا يفعل محور التماثل؟' }, opts: [{ en: 'splits a shape into two matching halves', ar: 'يقسم الشكل إلى نصفين متطابقين' }, { en: 'colours the shape', ar: 'يلوّن الشكل' }, { en: 'makes the shape bigger', ar: 'يكبّر الشكل' }] }
+          ] },
+        { id: 'art-10', title: { en: 'Opposite colours', ar: 'الألوان المتقابلة' },
+          teach: { en: 'On a colour wheel, opposite colours sit across from each other: red and green, blue and orange, yellow and purple. Side by side they look extra bright!', ar: 'في دائرة الألوان تقع الألوان المتقابلة مقابل بعضها: الأحمر والأخضر، والأزرق والبرتقالي، والأصفر والبنفسجي. وعندما تتجاور تبدو زاهية جدًّا!' },
+          hint: { en: 'Remember the pairs: red–green, blue–orange, yellow–purple.', ar: 'تذكّر الأزواج: أحمر وأخضر، أزرق وبرتقالي، أصفر وبنفسجي.' },
+          questions: [
+            { q: { en: 'What is the opposite of red?', ar: 'ما اللون المقابل للأحمر؟' }, opts: [c('green'), c('pink'), c('orange')] },
+            { q: { en: 'What is the opposite of blue?', ar: 'ما اللون المقابل للأزرق؟' }, opts: [c('orange'), c('purple'), c('green')] },
+            { q: { en: 'What is the opposite of yellow?', ar: 'ما اللون المقابل للأصفر؟' }, opts: [c('purple'), c('orange'), c('red')] },
+            { q: { en: 'Opposite colours side by side look…', ar: 'الألوان المتقابلة عندما تتجاور تبدو…' }, opts: [{ en: 'extra bright', ar: 'زاهية جدًّا' }, { en: 'invisible', ar: 'غير مرئية' }, { en: 'exactly the same', ar: 'متشابهة تمامًا' }] }
+          ] }
       ]
     }
   ];
@@ -553,6 +625,8 @@
     'english-7': 1, 'english-8': 1, 'english-9': 2, 'english-10': 3,
     'english-1': 1, 'english-6': 1, 'english-2': 2, 'english-3': 2, 'english-4': 3, 'english-5': 3,
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
+    'arabic-7': 1, 'arabic-8': 1, 'arabic-9': 2, 'arabic-10': 3,
+    'art-7': 1, 'art-8': 2, 'art-9': 2, 'art-10': 3,
     'art-1': 1, 'art-4': 1, 'art-6': 1, 'art-2': 2, 'art-5': 2, 'art-3': 3
   };
   window.SADU_COURSES.forEach(function (c) { c.lessons.forEach(function (l) { l.level = l.level || LEVELS[l.id] || 1; }); });
