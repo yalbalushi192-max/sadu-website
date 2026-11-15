@@ -60,7 +60,7 @@
       gTeach: 'Let\'s learn: %L! Listen, then answer four questions.', gIdle: 'Which one is right? Take your time.',
       cheers: ['Great job!', 'You got it!', 'Brilliant!', 'Super!'],
       gDone3: 'Perfect! Three stars!', gDone2: 'Great work! Play again for three stars?', gDone1: 'Good try! Practice makes you stronger.',
-      nameJoin: ' ', blank: 'what number', or: ' or ',
+      nameJoin: ' ', blank: 'what number', gap: 'blank', or: ' or ',
       navStories: 'Stories', storiesTitle: 'Story time', storiesIntro: 'Short stories read aloud by Saqr. After each one, answer three questions.',
       readStory: 'Read', readAgain: 'Read again', pageOf: 'Page %A of %B', prevPage: 'Back', nextPage: 'Next page',
       storyQuiz: 'Answer the questions', backStories: 'Back to stories', storyDone: 'Read %A of %B stories', storyQs: 'Questions about the story',
@@ -132,7 +132,7 @@
       gTeach: 'هيا نتعلّم: %L! استمع، ثم أجب عن أربعة أسئلة.', gIdle: 'أيّها الصحيح؟ خذ وقتك.',
       cheers: ['أحسنت!', 'رائع!', 'ممتاز!', 'عمل جميل!'],
       gDone3: 'ممتاز! ثلاث نجوم!', gDone2: 'عمل رائع! العب مرة أخرى لتحصل على ثلاث نجوم؟', gDone1: 'محاولة جيدة! التدريب يجعلك أقوى.',
-      nameJoin: ' يا ', blank: 'كم', or: ' أو ',
+      nameJoin: ' يا ', blank: 'كم', gap: 'فراغ', or: ' أو ',
       navStories: 'القصص', storiesTitle: 'وقت القصة', storiesIntro: 'قصص قصيرة يقرؤها صقر بصوت عالٍ. بعد كل قصة أجب عن ثلاثة أسئلة.',
       readStory: 'اقرأ', readAgain: 'اقرأ مرة أخرى', pageOf: 'الصفحة %A من %B', prevPage: 'السابقة', nextPage: 'الصفحة التالية',
       storyQuiz: 'أجب عن الأسئلة', backStories: 'العودة إلى القصص', storyDone: 'قرأت %A من %B قصص', storyQs: 'أسئلة عن القصة',
@@ -280,7 +280,7 @@
   function spoken(show) {
     // letters to blend ("c · a · t") are not read either: blending them is the child's job
     if (!show || !/[0-9A-Za-z\u0600-\u06FF]/.test(show) || show.indexOf('·') !== -1) return '';
-    return show.replace(/(^|\s)\?(\s|$)/g, '$1' + T.blank + '$2');
+    return show.replace(/_{2,}/g, T.gap).replace(/(^|\s)\?(\s|$)/g, '$1' + T.blank + '$2');
   }
   function orList(items) { return items.length < 2 ? items.join('') : items.slice(0, -1).join(', ') + T.or + items[items.length - 1]; }
 

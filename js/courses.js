@@ -232,7 +232,7 @@
       ]
     },
     {
-      id: 'science', stickers: ['🌱', '🐪', '🌗', '🧊', '🔬', '🐞'], name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
+      id: 'science', stickers: ['🌱', '🐪', '🌗', '🧊', '🔬', '🐞', '🌦️', '🥕', '🛟', '🧲'], name: { en: 'Science', ar: 'العلوم' }, age: { en: 'Ages 6 to 10', ar: 'من 6 إلى 10 سنوات' }, ages: [6, 10],
       color: '#2ED3A6', tint: '#B9F3E2',
       tip: { en: 'Ask why questions together: why does ice melt, why do we see the Moon at night? Let your child guess first.', ar: 'اطرحا معًا أسئلة «لماذا»: لماذا يذوب الثلج؟ لماذا نرى القمر ليلًا؟ دع طفلك يخمّن أولًا.' },
       icon: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M7.5 15h9',
@@ -282,6 +282,42 @@
             { q: { en: 'A date tastes sweet. What tells you that?', ar: 'التمرة طعمها حلو. ما الذي يخبرك بذلك؟' }, opts: [{ en: 'the tongue', ar: 'اللسان' }, { en: 'the eyes', ar: 'العينان' }, { en: 'the hair', ar: 'الشعر' }] },
             { q: { en: 'The sand feels hot under your feet. Which sense is that?', ar: 'تشعر بحرارة الرمل تحت قدميك. ما هذه الحاسّة؟' }, opts: [{ en: 'touch', ar: 'اللمس' }, { en: 'sight', ar: 'البصر' }, { en: 'hearing', ar: 'السمع' }] }
           ] },
+        { id: 'science-7', title: { en: 'Weather', ar: 'الطقس' },
+          teach: { en: 'The weather changes every day. It can be sunny, cloudy, rainy or windy. We choose our clothes and games to suit the weather.', ar: 'يتغيّر الطقس كل يوم: قد يكون مشمسًا أو غائمًا أو ماطرًا أو عاصفًا. ونختار ملابسنا وألعابنا بما يناسب الطقس.' },
+          hint: { en: 'Think about what you would see or feel outside.', ar: 'فكّر فيما تراه أو تشعر به في الخارج.' },
+          questions: [
+            { q: { en: 'It is raining. What do you need?', ar: 'إنها تمطر. ماذا تحتاج؟' }, opts: [{ en: 'an umbrella', ar: 'مظلّة' }, { en: 'sunglasses', ar: 'نظّارة شمسية' }, { en: 'a fan', ar: 'مروحة' }] },
+            { q: { en: 'What makes a kite fly high?', ar: 'ما الذي يجعل الطائرة الورقية تطير عاليًا؟' }, opts: [{ en: 'the wind', ar: 'الريح' }, { en: 'the rain', ar: 'المطر' }, { en: 'the moon', ar: 'القمر' }] },
+            { q: { en: 'Grey clouds often bring…', ar: 'الغيوم الرمادية تجلب غالبًا…' }, opts: [{ en: 'rain', ar: 'المطر' }, { en: 'sand', ar: 'الرمل' }, { en: 'stars', ar: 'النجوم' }] },
+            { q: { en: 'It is a hot, sunny day. What should you wear?', ar: 'يوم حارّ ومشمس. ماذا تلبس؟' }, opts: [{ en: 'a hat', ar: 'قبّعة' }, { en: 'a thick coat', ar: 'معطف سميك' }, { en: 'gloves', ar: 'قفّازات' }] }
+          ] },
+        { id: 'science-8', title: { en: 'Healthy food', ar: 'الطعام الصحي' },
+          teach: { en: 'Our bodies need good food to grow. Fruit and vegetables help us stay well, water is the best drink, and brushing our teeth keeps them strong.', ar: 'تحتاج أجسامنا إلى طعام مفيد لتنمو. الفواكه والخضار تحافظ على صحتنا، والماء أفضل مشروب، وتنظيف الأسنان يجعلها قوية.' },
+          hint: { en: 'Which one would make your body strong?', ar: 'أيّها يجعل جسمك قويًّا؟' },
+          questions: [
+            { q: { en: 'Which of these is a fruit?', ar: 'أي من هذه فاكهة؟' }, opts: [{ en: 'a date', ar: 'تمرة' }, { en: 'bread', ar: 'خبز' }, { en: 'cheese', ar: 'جبن' }] },
+            { q: { en: 'You are thirsty after playing. What is the best drink?', ar: 'أنت عطشان بعد اللعب. ما أفضل مشروب؟' }, opts: [{ en: 'water', ar: 'الماء' }, { en: 'a fizzy drink', ar: 'مشروب غازي' }, { en: 'sweet tea', ar: 'شاي بالسكر' }] },
+            { q: { en: 'What keeps your teeth strong?', ar: 'ما الذي يحافظ على قوة أسنانك؟' }, opts: [{ en: 'brushing them', ar: 'تنظيفها بالفرشاة' }, { en: 'eating sweets', ar: 'أكل الحلوى' }, { en: 'sleeping late', ar: 'السهر' }] },
+            { q: { en: 'Which of these is a vegetable?', ar: 'أي من هذه من الخضار؟' }, opts: [{ en: 'a carrot', ar: 'جزرة' }, { en: 'a cake', ar: 'كعكة' }, { en: 'a sweet', ar: 'حلوى' }] }
+          ] },
+        { id: 'science-9', title: { en: 'Float or sink', ar: 'يطفو أم يغرق' },
+          teach: { en: 'Some things float on water and some sink to the bottom. A wooden boat and a leaf float. A stone and a metal coin sink.', ar: 'بعض الأشياء تطفو على الماء وبعضها يغرق إلى القاع. القارب الخشبي والورقة يطفوان، والحجر والقطعة النقدية المعدنية يغرقان.' },
+          hint: { en: 'Is it light like wood, or heavy and small like a stone?', ar: 'هل هو خفيف كالخشب، أم ثقيل وصغير كالحجر؟' },
+          questions: [
+            { q: { en: 'You drop a stone into the sea. What happens?', ar: 'رميتَ حجرًا في البحر. ماذا يحدث؟' }, opts: [{ en: 'It sinks', ar: 'يغرق' }, { en: 'It floats', ar: 'يطفو' }, { en: 'It flies', ar: 'يطير' }] },
+            { q: { en: 'What does a wooden boat do on water?', ar: 'ماذا يفعل القارب الخشبي على الماء؟' }, opts: [{ en: 'It floats', ar: 'يطفو' }, { en: 'It sinks', ar: 'يغرق' }, { en: 'It melts', ar: 'يذوب' }] },
+            { q: { en: 'Which of these sinks?', ar: 'أيّها يغرق؟' }, opts: [{ en: 'a metal coin', ar: 'قطعة نقدية معدنية' }, { en: 'a leaf', ar: 'ورقة شجر' }, { en: 'a cork', ar: 'فلّينة' }] },
+            { q: { en: 'Which of these floats?', ar: 'أيّها يطفو؟' }, opts: [{ en: 'a leaf', ar: 'ورقة شجر' }, { en: 'a key', ar: 'مفتاح' }, { en: 'a stone', ar: 'حجر' }] }
+          ] },
+        { id: 'science-10', title: { en: 'Magnets', ar: 'المغناطيس' },
+          teach: { en: 'A magnet pulls things made of iron or steel, like paper clips and nails. It does not pull plastic, wood or paper. A magnet has two ends called poles: two of the same pole push apart.', ar: 'المغناطيس يجذب الأشياء المصنوعة من الحديد أو الفولاذ، مثل مشابك الورق والمسامير، ولا يجذب البلاستيك أو الخشب أو الورق. وللمغناطيس طرفان يسمّيان القطبين، والقطبان المتشابهان يتنافران.' },
+          hint: { en: 'Is it made of iron or steel?', ar: 'هل هو مصنوع من الحديد أو الفولاذ؟' },
+          questions: [
+            { q: { en: 'Which one will a magnet pick up?', ar: 'أيّها يلتقطه المغناطيس؟' }, opts: [{ en: 'a paper clip', ar: 'مشبك ورق' }, { en: 'a plastic spoon', ar: 'ملعقة بلاستيكية' }, { en: 'a wooden block', ar: 'مكعب خشبي' }] },
+            { q: { en: 'What are the two ends of a magnet called?', ar: 'ماذا يسمّى طرفا المغناطيس؟' }, opts: [{ en: 'poles', ar: 'القطبان' }, { en: 'wheels', ar: 'العجلتان' }, { en: 'roots', ar: 'الجذران' }] },
+            { q: { en: 'You push two north poles together. What happens?', ar: 'قرّبتَ قطبين شماليين. ماذا يحدث؟' }, opts: [{ en: 'They push apart', ar: 'يتنافران' }, { en: 'They stick', ar: 'يلتصقان' }, { en: 'They disappear', ar: 'يختفيان' }] },
+            { q: { en: 'Which of these is NOT pulled by a magnet?', ar: 'أي من هذه لا يجذبه المغناطيس؟' }, opts: [{ en: 'paper', ar: 'الورق' }, { en: 'a nail', ar: 'مسمار' }, { en: 'a steel pin', ar: 'دبوس فولاذي' }] }
+          ] },
         { id: 'science-6', title: { en: 'Animal match', ar: 'مطابقة الحيوانات' },
           teach: { en: 'Every animal has a home and food that suit it. Camels live in the desert, fish live in the sea and bees live in a hive. Cows eat grass and bees drink from flowers.', ar: 'لكل حيوان بيت وطعام يناسبانه. الجِمال تعيش في الصحراء، والسمك في البحر، والنحل في الخلية. والبقرة تأكل العشب، والنحلة تمتصّ رحيق الأزهار.' },
           hint: { en: 'Think: where would this animal be happy? What would it like to eat?', ar: 'فكّر: أين يكون هذا الحيوان سعيدًا؟ وماذا يحبّ أن يأكل؟' },
@@ -294,7 +330,7 @@
       ]
     },
     {
-      id: 'english', stickers: ['🔤', '🎶', '🎈', '🐶', '📖', '🖼️'], name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
+      id: 'english', stickers: ['🔤', '🎶', '🎈', '🐶', '📖', '🖼️', '🎨', '🔢', '🏃', '🗣️'], name: { en: 'English', ar: 'اللغة الإنجليزية' }, age: { en: 'Ages 5 to 9', ar: 'من 5 إلى 9 سنوات' }, ages: [5, 9],
       color: '#3FA9F5', tint: '#C4E4FC',
       tip: { en: 'Play I spy with first sounds: I spy something starting with s. Read a short English picture book together.', ar: 'العبا لعبة «أرى شيئًا يبدأ بصوت s». واقرآ معًا قصة إنجليزية قصيرة مصوّرة.' },
       icon: 'M4 5h16v11H10l-5 4v-4H4zM8 9h8M8 12h5',
@@ -352,6 +388,42 @@
             { kind: 'match', q: MATCH_WORDS, pairs: [['sun', '☀️'], ['moon', '🌙'], ['star', '⭐']] },
             { kind: 'match', q: MATCH_WORDS, pairs: [['apple', '🍎'], ['banana', '🍌'], ['grapes', '🍇']] },
             { kind: 'match', q: MATCH_WORDS, pairs: [['car', '🚗'], ['boat', '⛵'], ['plane', '✈️']] }
+          ] },
+        { id: 'english-7', title: { en: 'Colours', ar: 'الألوان بالإنجليزية' },
+          teach: { en: 'Colour words: red like an apple, yellow like a banana, green like broccoli and blue like a whale.', ar: 'أسماء الألوان بالإنجليزية: red أحمر مثل التفاحة، و yellow أصفر مثل الموزة، و green أخضر مثل البروكلي، و blue أزرق مثل الحوت.' },
+          hint: { en: 'Read the colour word, then look for something that colour.', ar: 'اقرأ اسم اللون، ثم ابحث عن شيء بهذا اللون.' },
+          questions: [
+            { q: { en: 'Find the picture that is this colour.', ar: 'ابحث عن الصورة التي لونها هكذا.' }, show: 'red', gloss: { en: '', ar: 'أحمر' }, opts: ['🍎', '🍌', '🥦'] },
+            { q: { en: 'Find the picture that is this colour.', ar: 'ابحث عن الصورة التي لونها هكذا.' }, show: 'yellow', gloss: { en: '', ar: 'أصفر' }, opts: ['🍌', '🍎', '🐳'] },
+            { q: { en: 'Find the picture that is this colour.', ar: 'ابحث عن الصورة التي لونها هكذا.' }, show: 'green', gloss: { en: '', ar: 'أخضر' }, opts: ['🥦', '🍌', '🍎'] },
+            { q: { en: 'Find the picture that is this colour.', ar: 'ابحث عن الصورة التي لونها هكذا.' }, show: 'blue', gloss: { en: '', ar: 'أزرق' }, opts: ['🐳', '🍎', '🍌'] }
+          ] },
+        { id: 'english-8', title: { en: 'Numbers one to ten', ar: 'الأعداد من واحد إلى عشرة' },
+          teach: { en: 'one 1, two 2, three 3, four 4, five 5, six 6, seven 7, eight 8, nine 9, ten 10.', ar: 'نعدّ بالإنجليزية: one 1، two 2، three 3، four 4، five 5، six 6، seven 7، eight 8، nine 9، ten 10.' },
+          hint: { en: 'Count on your fingers: one, two, three…', ar: 'عُدّ على أصابعك بالإنجليزية: one، two، three…' },
+          questions: [
+            { q: WHICH_NUMBER, show: 'three', gloss: { en: '', ar: 'ثلاثة' }, opts: ['3', '5', '8'] },
+            { q: WHICH_NUMBER, show: 'seven', gloss: { en: '', ar: 'سبعة' }, opts: ['7', '2', '9'] },
+            { q: WHICH_NUMBER, show: 'ten', gloss: { en: '', ar: 'عشرة' }, opts: ['10', '6', '4'] },
+            { q: WHICH_NUMBER, show: 'five', gloss: { en: '', ar: 'خمسة' }, opts: ['5', '1', '8'] }
+          ] },
+        { id: 'english-9', title: { en: 'Action words', ar: 'كلمات الأفعال' },
+          teach: { en: 'Action words tell us what someone is doing: run, sleep, swim, eat.', ar: 'كلمات الأفعال تخبرنا بما يفعله شخص ما: run يركض، و sleep ينام، و swim يسبح، و eat يأكل.' },
+          hint: { en: 'Act it out! Which picture is doing that?', ar: 'مثّل الفعل! أي صورة تفعل ذلك؟' },
+          questions: [
+            { q: { en: 'Which picture shows this action?', ar: 'أي صورة تُظهر هذا الفعل؟' }, show: 'run', gloss: { en: '', ar: 'يركض' }, opts: ['🏃', '😴', '🏊'] },
+            { q: { en: 'Which picture shows this action?', ar: 'أي صورة تُظهر هذا الفعل؟' }, show: 'sleep', gloss: { en: '', ar: 'ينام' }, opts: ['😴', '🏃', '🍽️'] },
+            { q: { en: 'Which picture shows this action?', ar: 'أي صورة تُظهر هذا الفعل؟' }, show: 'swim', gloss: { en: '', ar: 'يسبح' }, opts: ['🏊', '😴', '🏃'] },
+            { q: { en: 'Which picture shows this action?', ar: 'أي صورة تُظهر هذا الفعل؟' }, show: 'eat', gloss: { en: '', ar: 'يأكل' }, opts: ['🍽️', '🏊', '😴'] }
+          ] },
+        { id: 'english-10', title: { en: 'am, is, are', ar: 'am و is و are' },
+          teach: { en: 'Use am with I (I am happy), is with one person or thing (The cat is big), and are with you, we and they (We are friends).', ar: 'نستعمل am مع I (أنا)، و is مع شخص أو شيء واحد، و are مع you و we و they. مثل: I am happy (أنا سعيد)، و We are friends (نحن أصدقاء).' },
+          hint: { en: 'Who is it about: I (am), one thing (is) or more than one (are)?', ar: 'عمّن تتحدّث الجملة: I (am)، أم شيء واحد (is)، أم أكثر من واحد (are)؟' },
+          questions: [
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'I ___ happy.', opts: ['am', 'is', 'are'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'The dog ___ big.', opts: ['is', 'am', 'are'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'We ___ friends.', opts: ['are', 'is', 'am'] },
+            { q: { en: 'Which word fills the gap?', ar: 'أي كلمة تملأ الفراغ؟' }, show: 'They ___ at school.', opts: ['are', 'am', 'is'] }
           ] }
       ]
     },
@@ -477,6 +549,8 @@
     'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3,
     'math-1': 1, 'math-2': 1, 'math-6': 1, 'math-4': 2, 'math-5': 2, 'math-7': 2, 'math-8': 2, 'math-3': 3, 'math-9': 3, 'math-10': 3,
     'science-1': 1, 'science-5': 1, 'science-2': 2, 'science-6': 2, 'science-4': 2, 'science-3': 3,
+    'science-7': 1, 'science-8': 1, 'science-9': 2, 'science-10': 3,
+    'english-7': 1, 'english-8': 1, 'english-9': 2, 'english-10': 3,
     'english-1': 1, 'english-6': 1, 'english-2': 2, 'english-3': 2, 'english-4': 3, 'english-5': 3,
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
     'art-1': 1, 'art-4': 1, 'art-6': 1, 'art-2': 2, 'art-5': 2, 'art-3': 3
