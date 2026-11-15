@@ -83,6 +83,7 @@
 <button type="button" onclick="{{ goReport }}" aria-current="{{ reportOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21h16M7 17v-5M12 17V6M17 17v-8"/></svg><span>{{ t.navReport }}</span></button>
 <button type="button" onclick="{{ goStories }}" aria-current="{{ storiesOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6c-2-1.6-5-2-8-1.5v14c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5v-14c-3-.5-6-.1-8 1.5zM12 6v14"/></svg><span>{{ t.navStories }}</span></button>
 <button type="button" onclick="{{ goStickers }}" aria-current="{{ stickersOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM15 3v4h4"/><circle cx="10" cy="13" r="3"/></svg><span>{{ t.navStickers }}</span></button>
+<button type="button" onclick="{{ goAI }}" aria-current="{{ aiOn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16.5h5"/></svg><span>{{ t.navAI }}</span></button>
 <a href="{{ gamesHref }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><span>{{ t.navGames }}</span></a>
 <a href="{{ langHref }}" class="lang"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span>{{ t.langLabel }}</span></a>
 </nav>
@@ -378,6 +379,32 @@
 </fieldset>
 </sc-for>
 <div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<!-- AI LAB: the child teaches a robot to sort colours -->
+<sc-if value="{{ isAI }}">
+<section class="page ai-page">
+<header class="page-head"><h1 class="h1">🤖 {{ t.aiTitle }}</h1><p class="lead">{{ t.aiIntro }}</p></header>
+<div class="chip-row"><sc-for list="{{ ai.modes }}" as="m"><button type="button" class="{{ m.cls }}" onclick="{{ m.set }}">{{ m.label }}</button></sc-for></div>
+<div class="card ai-teach">
+<p class="small muted">{{ t.aiPick }}</p>
+<div class="ai-palette"><sc-for list="{{ ai.palette }}" as="c"><button type="button" class="{{ c.cls }}" style="background: {{ c.css }}" onclick="{{ c.tap }}" aria-disabled="{{ c.dis }}" aria-label="colour"></button></sc-for></div>
+<div class="ai-baskets">
+<div class="ai-basket"><button type="button" class="btn secondary" onclick="{{ ai.putA }}">{{ ai.labelA }}</button><div class="ai-in"><sc-for list="{{ ai.a }}" as="e"><button type="button" class="ai-dot" style="background: {{ e.css }}" onclick="{{ e.out }}" aria-label="remove"></button></sc-for></div></div>
+<div class="ai-basket"><button type="button" class="btn secondary" onclick="{{ ai.putB }}">{{ ai.labelB }}</button><div class="ai-in"><sc-for list="{{ ai.b }}" as="e"><button type="button" class="ai-dot" style="background: {{ e.css }}" onclick="{{ e.out }}" aria-label="remove"></button></sc-for></div></div>
+</div>
+<sc-if value="{{ ai.cantTrain }}"><p class="small muted">{{ t.aiNeed }}</p></sc-if>
+<div class="actions"><button type="button" class="btn primary lg point" onclick="{{ ai.train }}" aria-disabled="{{ ai.cantTrain }}">🤖 {{ t.aiTrain }}</button><button type="button" class="btn ghost" onclick="{{ ai.reset }}">{{ t.aiReset }}</button></div>
+</div>
+<sc-if value="{{ ai.tested }}">
+<div class="card ai-results">
+<h2 class="h3">{{ ai.score }}</h2>
+<div class="ai-grid"><sc-for list="{{ ai.results }}" as="r"><div class="{{ r.cls }}"><span class="ai-sw" style="background: {{ r.css }}"></span><span class="small">{{ r.guess }}</span><span aria-label="{{ r.aria }}">{{ r.mark }}</span></div></sc-for></div>
+<div class="guide"><svg class="saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg><div class="bubble"><p>{{ ai.advice }}</p></div></div>
+<div class="actions"><button type="button" class="btn secondary" onclick="{{ ai.again }}">{{ t.aiAgain }}</button></div>
 </div>
 </sc-if>
 </section>

@@ -70,6 +70,12 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navAI: 'AI Lab', aiTitle: 'Build your own AI', aiIntro: 'Teach the robot by putting colours into the right basket. Then press Train and see if it can sort colours it has never seen!',
+      aiModes: { warm: 'Warm or cool', light: 'Light or dark' }, aiA: { warm: '🔥 Warm', light: '☀️ Light' }, aiB: { warm: '❄️ Cool', light: '🌙 Dark' },
+      aiPick: 'Tap a colour, then tap a basket.', aiTrain: 'Train the robot', aiNeed: 'Put at least 2 colours in each basket.', aiTest: 'The robot is guessing new colours…',
+      aiScore: 'The robot got %A of %B right!', aiMore: 'Teach it more examples to make it even smarter.', aiPerfect: 'Brilliant teaching! The robot learned really well.',
+      aiOops: '%A of your examples were in the wrong basket, so the robot learned a mistake. AI copies what we teach it!', aiAgain: 'Teach again', aiReset: 'Start over',
+      aiGuessA: 'Robot says: %A', aiRight: 'right', aiWrong: 'wrong',
       vdTitle: 'Video Studio', vdBtn: 'Video Studio', vdIntro: 'Make a short learning video with Seedance 2.5. Every prompt is made child-safe automatically. Always watch a video before showing it to children.',
       vdNotConnected: 'Not connected yet', vdConnectText: 'Paste the address of your Sadu video helper and its PIN (see server/README.md in the project folder).',
       vdUrl: 'Helper address', vdPin: 'PIN', vdConnect: 'Connect', vdDisconnect: 'Disconnect', vdConnected: 'Connected to your video helper.',
@@ -183,6 +189,12 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navAI: 'مختبر الذكاء', aiTitle: 'اصنع ذكاءك الاصطناعي', aiIntro: 'علّم الروبوت بوضع الألوان في السلة الصحيحة. ثم اضغط «درّب» وانظر هل يستطيع ترتيب ألوان لم يرها من قبل!',
+      aiModes: { warm: 'حارّ أم بارد', light: 'فاتح أم غامق' }, aiA: { warm: '🔥 حارّ', light: '☀️ فاتح' }, aiB: { warm: '❄️ بارد', light: '🌙 غامق' },
+      aiPick: 'اضغط على لون، ثم على سلة.', aiTrain: 'درّب الروبوت', aiNeed: 'ضع لونين على الأقل في كل سلة.', aiTest: 'الروبوت يخمّن ألوانًا جديدة…',
+      aiScore: 'أصاب الروبوت في %A من %B!', aiMore: 'علّمه أمثلة أكثر ليصبح أذكى.', aiPerfect: 'تعليم رائع! تعلّم الروبوت جيدًا.',
+      aiOops: '%A من أمثلتك كانت في السلة الخطأ، فتعلّم الروبوت خطأً. الذكاء الاصطناعي يقلّد ما نعلّمه إياه!', aiAgain: 'علّمه مرة أخرى', aiReset: 'ابدأ من جديد',
+      aiGuessA: 'الروبوت يقول: %A', aiRight: 'صحيح', aiWrong: 'خطأ',
       vdTitle: 'استوديو الفيديو', vdBtn: 'استوديو الفيديو', vdIntro: 'اصنع فيديو تعليميًا قصيرًا باستخدام Seedance 2.5. يُجعل كل وصف مناسبًا للأطفال تلقائيًا. شاهد الفيديو دائمًا قبل عرضه على الأطفال.',
       vdNotConnected: 'غير متّصل بعد', vdConnectText: 'الصق عنوان مساعد الفيديو الخاص بسدو ورمزه السري (انظر server/README.md في مجلد المشروع).',
       vdUrl: 'عنوان المساعد', vdPin: 'الرمز السري', vdConnect: 'اتّصال', vdDisconnect: 'قطع الاتّصال', vdConnected: 'متّصل بمساعد الفيديو.',
@@ -279,6 +291,21 @@
     });
   }
   mergeCustom();
+
+  // ---- AI Lab: colours, the true rule (to mark the robot's guesses) and a 3-nearest-neighbour learner ----
+  var AI_COLOURS = [];
+  [0, 20, 40, 55, 120, 160, 190, 210, 235, 260, 285, 330].forEach(function (h) { [38, 62].forEach(function (l) { AI_COLOURS.push({ h: h, s: 75, l: l }); }); });
+  function aiCss(c) { return 'hsl(' + c.h + ',' + c.s + '%,' + c.l + '%)'; }
+  function aiTruth(mode, c) { return mode === 'light' ? (c.l >= 50 ? 'A' : 'B') : ((c.h <= 70 || c.h >= 320) ? 'A' : 'B'); }
+  function aiDist(mode, x, y) {
+    if (mode === 'light') return Math.abs(x.l - y.l);
+    var dh = Math.abs(x.h - y.h); dh = Math.min(dh, 360 - dh); return dh + Math.abs(x.l - y.l) * 0.3;
+  }
+  function aiGuess(mode, examples, c) {
+    var near = examples.slice().sort(function (p, q) { return aiDist(mode, p.c, c) - aiDist(mode, q.c, c); }).slice(0, 3);
+    var a = near.filter(function (e) { return e.g === 'A'; }).length;
+    return a * 2 > near.length ? 'A' : 'B';
+  }
 
   // ---- Video Studio: settings and videos are kept in this browser ----
   var VIDEO_CFG_KEY = 'sadu-video-cfg', VIDEOS_KEY = 'sadu-videos-v1';
@@ -827,6 +854,7 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isAI: s.view === 'ailab', aiOn: s.view === 'ailab' ? 'page' : 'false', goAI: function () { self.go('ailab'); },
         isVideo: s.view === 'video', goVideo: function () { self.go('video'); },
         isGate: s.view === 'gate',
         isCert: s.view === 'cert',
@@ -1125,6 +1153,51 @@
             return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
           });
         }
+      }
+
+      // ---- AI Lab ----
+      if (s.view === 'ailab') {
+        var ai = s.ai || { mode: 'warm', ex: [], sel: -1, tests: null };
+        var setAi = function (extra) { self.setState({ ai: Object.assign({}, self.state.ai || ai, extra) }); };
+        var used = {}; ai.ex.forEach(function (e) { used[e.i] = true; });
+        var countA = ai.ex.filter(function (e) { return e.g === 'A'; }).length, countB = ai.ex.length - countA;
+        var put = function (g) {
+          if (ai.sel < 0) return; sfx('pop');
+          setAi({ ex: ai.ex.concat({ i: ai.sel, c: AI_COLOURS[ai.sel], g: g }), sel: -1, tests: null });
+        };
+        var basket = function (g) {
+          return ai.ex.filter(function (e) { return e.g === g; }).map(function (e) {
+            return { css: aiCss(e.c), out: function () { sfx('tap'); setAi({ ex: ai.ex.filter(function (x) { return x !== e; }), tests: null }); } };
+          });
+        };
+        var wrongEx = ai.ex.filter(function (e) { return aiTruth(ai.mode, e.c) !== e.g; }).length;
+        var tests = ai.tests || [], right = tests.filter(function (tt) { return tt.ok; }).length;
+        out.ai = {
+          modes: ['warm', 'light'].map(function (m) { return { label: T.aiModes[m], cls: ai.mode === m ? 'chip-btn on' : 'chip-btn',
+            set: function () { sfx('tap'); self.setState({ ai: { mode: m, ex: [], sel: -1, tests: null } }); } }; }),
+          labelA: T.aiA[ai.mode], labelB: T.aiB[ai.mode],
+          palette: AI_COLOURS.map(function (c, i) {
+            return { css: aiCss(c), cls: 'ai-swatch' + (used[i] ? ' used' : '') + (ai.sel === i ? ' on' : ''), dis: used[i] ? 'true' : 'false',
+              tap: function () { if (used[i]) return; sfx('tap'); setAi({ sel: ai.sel === i ? -1 : i }); } };
+          }),
+          a: basket('A'), b: basket('B'), putA: function () { put('A'); }, putB: function () { put('B'); },
+          canTrain: countA >= 2 && countB >= 2, cantTrain: !(countA >= 2 && countB >= 2),
+          train: function () {
+            if (countA < 2 || countB < 2) return;
+            var pool = AI_COLOURS.map(function (c, i) { return i; }).filter(function (i) { return !used[i]; });
+            var pick = shuffle(pool).slice(0, 6);
+            sfx('done');
+            setAi({ tests: pick.map(function (i) { var c = AI_COLOURS[i], g = aiGuess(ai.mode, ai.ex, c); return { i: i, c: c, g: g, ok: g === aiTruth(ai.mode, c) }; }) });
+          },
+          tested: tests.length > 0,
+          results: tests.map(function (tt) { return { css: aiCss(tt.c), guess: fill(T.aiGuessA, { A: tt.g === 'A' ? T.aiA[ai.mode] : T.aiB[ai.mode] }),
+            mark: tt.ok ? '✅' : '❌', cls: tt.ok ? 'ai-result ok' : 'ai-result bad', aria: tt.ok ? T.aiRight : T.aiWrong }; }),
+          score: fill(T.aiScore, { A: right, B: tests.length }),
+          advice: wrongEx ? fill(T.aiOops, { A: wrongEx }) : right === tests.length ? T.aiPerfect : T.aiMore,
+          reset: function () { self.setState({ ai: { mode: ai.mode, ex: [], sel: -1, tests: null } }); },
+          again: function () { setAi({ tests: null }); }
+        };
+        if (tests.length && right === tests.length && !wrongEx && !ai.cheered) { setTimeout(function () { burst(document.querySelector('.ai-results'), 60); }, 50); ai.cheered = true; }
       }
 
       // ---- Video Studio ----
