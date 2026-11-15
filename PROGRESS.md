@@ -37,7 +37,8 @@ A. Ideas from the best children's learning apps (owner's request; Sadu's own loo
    - [x] Split Phonics into English Phonics and Arabic Phonics (lesson ids and stickers kept).
    - [x] Daily goal (like Duolingo ABC, Lingokids): pick 1, 2 or 3 lessons a day; a goal ring on the dashboard; a celebration when it is reached. Done: in the This week card.
    - [x] Quick review (spaced practice, like Duolingo): a short lesson built from recently missed questions, offered by Saqr. Done: offer on the journey and the dashboard (up to 6 questions, newest lessons first; maths gives a fresh sum of the same kind); right answers clear them and lift the lesson's score.
-   - [ ] Adaptive maths (like Khan Academy Kids, Prodigy): numbers get bigger or smaller with the child's recent accuracy.
+   - [x] Adaptive maths (like Khan Academy Kids, Prodigy): numbers get bigger or smaller with the child's recent accuracy. Done: every maths lesson that makes its own questions has easier, normal and harder number ranges; all right moves up, under 60% moves down; age 5 and under starts easier; Saqr says when it changed.
+   - [ ] Coding course (owner's idea, from coding-for-kids programmes such as CodaKid; Sadu's own content): guide Saqr across a grid with arrow blocks (sequences), then repeat blocks (loops) and if blocks (choices); ages 5 to 10; later a gentle 'What is AI?' lesson where children sort pictures to teach a pretend robot.
    - [ ] Animated blending (like Teach Your Monster to Read, Starfall): letters slide together as the sounds are spoken.
    - [ ] Watch, then trace (like letter-writing apps): a dotted demo moves along the shape first; a green start dot shows where to begin.
    - [ ] Parent gate and break timer (like Khan Academy Kids, ABCmouse): a grown-ups-only question before the Family report and settings; an optional daily time limit with Saqr suggesting a break.

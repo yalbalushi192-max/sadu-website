@@ -70,6 +70,7 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      dfEasy: 'Saqr made it a little easier this time.', dfHard: 'You did great last time, so Saqr made it harder!',
       rvTitle: 'Quick review', rvOffer: 'Saqr found %A tricky questions to practise again. Ready?', rvOffer1: 'Saqr found 1 tricky question to practise again. Ready?',
       rvBtn: 'Start quick review', rvCleared: 'Tricky questions cleared: %A',
       wkTitle: 'This week', wkBtn: 'Weekly summary', wkRange: '%A to %B', wkLessons: 'lessons finished', wkMinutes: 'minutes learning', wkDays: 'days active',
@@ -162,6 +163,7 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      dfEasy: 'جعل صقر الأسئلة أسهل قليلًا هذه المرة.', dfHard: 'أبدعت في المرة الماضية، فجعل صقر الأسئلة أصعب!',
       rvTitle: 'مراجعة سريعة', rvOffer: 'وجد صقر %A أسئلة صعبة لنتدرّب عليها مرة أخرى. هل أنت مستعد؟', rvOffer1: 'وجد صقر سؤالًا صعبًا واحدًا لنتدرّب عليه مرة أخرى. هل أنت مستعد؟',
       rvBtn: 'ابدأ المراجعة السريعة', rvCleared: 'أسئلة صعبة تجاوزتها: %A',
       wkTitle: 'هذا الأسبوع', wkBtn: 'ملخّص الأسبوع', wkRange: 'من %A إلى %B', wkLessons: 'دروس مكتملة', wkMinutes: 'دقائق تعلّم', wkDays: 'أيام نشاط',
@@ -622,12 +624,15 @@
     }
 
     startLesson(ci, li, fromJourney) {
-      var lesson = COURSES[ci].lessons[li];
+      var lesson = COURSES[ci].lessons[li], rec0 = this.state.data.lessons[lesson.id];
+      var diff = rec0 && rec0.diff != null ? rec0.diff : (this.state.data.age && this.state.data.age <= 5 ? 0 : 1);
+      window.SADU_DIFF = diff;
       var raw = lesson.make ? lesson.make() : lesson.questions;
+      window.SADU_DIFF = 1;
       var qs = raw.map(function (q) {
         return prepQ(q, lesson.hint);
       });
-      this.go('lesson', { ci: ci, ls: { fromJourney: !!fromJourney || !!(this.state.ls && this.state.ls.fromJourney && this.state.view === 'lesson'), li: li, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
+      this.go('lesson', { ci: ci, ls: { fromJourney: !!fromJourney || !!(this.state.ls && this.state.ls.fromJourney && this.state.view === 'lesson'), li: li, step: 'teach', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]), diff: lesson.make ? diff : null } });
     }
 
     finishLesson(results) {
@@ -670,6 +675,7 @@
       var lvFrom = masteryOf(data.lessons[lesson.id]), lvTo = nextMastery(lvFrom, ls.firstTry / n, false);
       data.lessons[lesson.id] = { stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
         acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4), mastery: lvTo };
+      if (ls.diff != null) data.lessons[lesson.id].diff = ls.firstTry === n ? Math.min(2, ls.diff + 1) : ls.firstTry / n < 0.6 ? Math.max(0, ls.diff - 1) : ls.diff;
       levelMsg = lvTo > lvFrom && lvFrom > 0 ? fill(T.levelUp, { A: T.mlv[lvFrom], B: T.mlv[lvTo] }) : fill(T.levelNow, { B: T.mlv[lvTo] });
       levelCls = mastClass(lvTo);
       if (!courseWas && levelDone(data, this.state.ci, 0)) cert = { ci: this.state.ci, lv: 0, msg: T.certCourseDone };
@@ -1179,6 +1185,8 @@
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
           title: tx(lesson.title), teach: tx(lesson.teach),
+          diffNote: ls.diff === 0 && (data.lessons[lesson.id] || {}).diff === 0 ? T.dfEasy : ls.diff === 2 ? T.dfHard : '',
+          diffCls: ls.diff === 2 ? 'diff-note up' : 'diff-note',
           of: fill(T.lessonOf, { A: isStoryQuiz || isChallenge || isReview ? 1 : orderOf(s.ci).indexOf(ls.li) + 1, B: lessonCount }),
           // the podcast file for this lesson and language, without its ending (see audio/README.md)
           audio: 'audio/' + lesson.id + '-' + LANG,

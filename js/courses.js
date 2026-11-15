@@ -42,6 +42,8 @@
   };
 
   function rand(n) { return Math.floor(Math.random() * n); }
+  // difficulty for lessons that make their own questions: 0 easier, 1 normal, 2 harder (set by learn.js from the child's last try)
+  function hard(easy, normal, harder) { var d = window.SADU_DIFF; return d === 0 ? easy : d === 2 ? harder : normal; }
   function c(name) { return { colour: name }; }
 
   // builds one maths question with two wrong answers close to the right one
@@ -76,7 +78,7 @@
 
   // compares two numbers: the right sign comes first, the other two follow
   function compare() {
-    var a = 10 + rand(90), b = rand(6) === 0 ? a : 10 + rand(90);
+    var lo = hard(1, 10, 100), span = hard(20, 90, 900), a = lo + rand(span), b = rand(6) === 0 ? a : lo + rand(span);
     var right = a > b ? '>' : a < b ? '<' : '=';
     var sameTens = Math.floor(a / 10) === Math.floor(b / 10);
     return { q: WHICH_SIGN, show: a + ' ? ' + b, opts: [right].concat(['>', '<', '='].filter(function (x) { return x !== right; })),
@@ -85,7 +87,7 @@
   }
   // a sum with one number hidden
   function missing() {
-    var a = 2 + rand(9), b = 1 + rand(9), t = a + b, kind = rand(3);
+    var a = 2 + rand(hard(5, 9, 18)), b = 1 + rand(hard(5, 9, 18)), t = a + b, kind = rand(3);
     var show = kind === 0 ? a + ' + ? = ' + t : kind === 1 ? '? + ' + b + ' = ' + t : t + ' − ? = ' + a;
     var from = kind === 1 ? b : a;
     var hint = kind === 2 ? { en: 'Count back from ' + t + ' to ' + a + '. How many steps?', ar: 'عُدّ من ' + t + ' نزولًا إلى ' + a + '. كم خطوة؟' }
@@ -280,19 +282,19 @@
         { id: 'math-1', title: { en: 'Adding', ar: 'الجمع' },
           teach: { en: 'Adding means putting groups together. 3 dates and 2 dates make 5 dates. A quick way: start from the bigger number and count on.', ar: 'الجمع هو ضمّ مجموعتين معًا. 3 تمرات و2 تمرتان تساوي 5 تمرات. طريقة سريعة: ابدأ من العدد الأكبر ثم عُدّ للأمام.' },
           make: four(function () {
-            var a = 2 + rand(11), b = 1 + rand(8), big = Math.max(a, b), small = Math.min(a, b);
+            var a = 2 + rand(hard(6, 11, 25)), b = 1 + rand(hard(5, 8, 15)), big = Math.max(a, b), small = Math.min(a, b);
             return sum(a + ' + ' + b, a + b, { en: 'Start at ' + big + ' and count on ' + small + ' more.', ar: 'ابدأ من ' + big + ' وعُدّ ' + small + ' للأمام.' });
           }) },
         { id: 'math-2', title: { en: 'Taking away', ar: 'الطرح' },
           teach: { en: 'Taking away means some are removed. 9 birds sit on a wall, 4 fly off, and 5 stay. A quick way: start from the first number and count back.', ar: 'الطرح هو أن نأخذ جزءًا من المجموعة. 9 طيور على الجدار، طار منها 4، فبقي 5. طريقة سريعة: ابدأ من العدد الأول ثم عُدّ للخلف.' },
           make: four(function () {
-            var a = 6 + rand(15), b = 1 + rand(Math.min(9, a - 1));
+            var a = 6 + rand(hard(8, 15, 35)), b = 1 + rand(Math.min(hard(5, 9, 19), a - 1));
             return sum(a + ' − ' + b, a - b, { en: 'Start at ' + a + ' and count back ' + b + '.', ar: 'ابدأ من ' + a + ' وعُدّ ' + b + ' للخلف.' });
           }) },
         { id: 'math-3', title: { en: 'Times 2, 5 and 10', ar: 'الضرب في 2 و5 و10' },
           teach: { en: 'Multiplying is adding the same number again and again. 3 × 5 means three fives: 5 + 5 + 5 = 15.', ar: 'الضرب هو جمع العدد نفسه عدة مرات. 3 × 5 تعني ثلاث خمسات: 5 + 5 + 5 = 15.' },
           make: four(function () {
-            var a = 1 + rand(10), b = [2, 5, 10][rand(3)], rep = [];
+            var a = 1 + rand(hard(5, 10, 12)), b = [2, 5, 10][rand(3)], rep = [];
             for (var i = 0; i < a; i++) rep.push(b);
             return sum(a + ' × ' + b, a * b, { en: 'Add ' + b + ', ' + a + (a === 1 ? ' time: ' : ' times: ') + rep.join(' + '), ar: 'اجمع: ' + rep.join(' + ') });
           }) },
@@ -304,7 +306,7 @@
           make: four(missing) },
         { id: 'math-7', title: { en: 'Doubles', ar: 'الضِّعف' },
           teach: { en: 'A double is a number added to itself. Double 4 is 4 + 4 = 8. Your two hands are a double: 5 + 5 = 10.', ar: 'الضِّعف هو أن نجمع العدد مع نفسه. ضِعف 4 هو 4 + 4 = 8. ويداك ضِعف: 5 + 5 = 10.' },
-          make: four(function () { var a = 1 + rand(10); return sum(a + ' + ' + a, a + a, { en: 'Count on ' + a + ' more from ' + a + '.', ar: 'عُدّ ' + a + ' للأمام بدءًا من ' + a + '.' }); }) },
+          make: four(function () { var a = 1 + rand(hard(5, 10, 25)); return sum(a + ' + ' + a, a + a, { en: 'Count on ' + a + ' more from ' + a + '.', ar: 'عُدّ ' + a + ' للأمام بدءًا من ' + a + '.' }); }) },
         { id: 'math-8', title: { en: 'Make 10', ar: 'كوِّن 10' },
           teach: { en: 'Pairs of numbers that make 10 are very useful: 1 + 9, 2 + 8, 3 + 7, 4 + 6 and 5 + 5. Use your ten fingers to find the partner.', ar: 'أزواج الأعداد التي مجموعها 10 مفيدة جدًّا: 1 + 9، و2 + 8، و3 + 7، و4 + 6، و5 + 5. استعمل أصابعك العشرة لتجد الشريك.' },
           make: four(function () { var a = 1 + rand(9), q = sum(a + ' + ? = 10', 10 - a, { en: 'Hold up ' + a + ' fingers. How many are still down?', ar: 'ارفع ' + a + ' أصابع. كم إصبعًا بقي مضمومًا؟' }); q.q = MISSING; return q; }) },
@@ -319,11 +321,11 @@
           make: countDates },
         { id: 'math-11', title: { en: 'Counting in 2s, 5s and 10s', ar: 'العدّ بالقفز 2 و5 و10' },
           teach: { en: 'Skip counting means jumping by the same number each time: 2, 4, 6, 8… or 5, 10, 15, 20… or 10, 20, 30, 40…', ar: 'العدّ بالقفز يعني أن نقفز بالعدد نفسه كل مرة: 2، 4، 6، 8… أو 5، 10، 15، 20… أو 10، 20، 30، 40…' },
-          make: four(function () { var st = [2, 5, 10][rand(3)], k = 1 + rand(5), seq = [k * st, (k + 1) * st, (k + 2) * st];
+          make: four(function () { var st = [2, 5, 10][rand(3)], k = 1 + rand(hard(3, 5, 10)), seq = [k * st, (k + 1) * st, (k + 2) * st];
             var q = sum(seq.join(', ') + ', ?', (k + 3) * st, { en: 'Add ' + st + ' each time.', ar: 'أضف ' + st + ' في كل مرة.' }); q.q = { en: 'What comes next?', ar: 'ما العدد التالي؟' }; return q; }) },
         { id: 'math-12', title: { en: 'Halves', ar: 'النصف' },
           teach: { en: 'Half means splitting into two equal parts. Half of 8 is 4, because 4 + 4 = 8.', ar: 'النصف يعني أن نقسم إلى جزأين متساويين. نصف 8 هو 4، لأن 4 + 4 = 8.' },
-          make: four(function () { var h = 1 + rand(10), q = sum(String(h * 2), h, { en: 'Which number added to itself makes ' + (h * 2) + '?', ar: 'أي عدد إذا جمعناه مع نفسه يعطي ' + (h * 2) + '؟' }); q.q = { en: 'What is half of this number?', ar: 'ما نصف هذا العدد؟' }; return q; }) },
+          make: four(function () { var h = 1 + rand(hard(5, 10, 25)), q = sum(String(h * 2), h, { en: 'Which number added to itself makes ' + (h * 2) + '?', ar: 'أي عدد إذا جمعناه مع نفسه يعطي ' + (h * 2) + '؟' }); q.q = { en: 'What is half of this number?', ar: 'ما نصف هذا العدد؟' }; return q; }) },
         { id: 'math-13', title: { en: 'Shapes and sides', ar: 'الأشكال وأضلاعها' },
           teach: { en: 'A triangle has 3 sides, a square has 4, a pentagon has 5 and a hexagon has 6. Count the straight sides!', ar: 'للمثلث 3 أضلاع، وللمربع 4، وللمخمّس 5، وللمسدّس 6. عُدّ الأضلاع المستقيمة!' },
           hint: { en: 'Touch each side as you count it.', ar: 'المس كل ضلع وأنت تعدّه.' },
@@ -341,7 +343,7 @@
               hint: { en: 'Look where the short hand points.', ar: 'انظر إلى أين يشير العقرب القصير.' } }; }) },
         { id: 'math-15', title: { en: 'Shopping sums', ar: 'حساب التسوّق' },
           teach: { en: 'At the souq we add and take away. If you have 15 coins and a toy costs 6, you have 15 − 6 = 9 coins left.', ar: 'في السوق نجمع ونطرح. إذا كان معك 15 قطعة نقدية وثمن اللعبة 6، يبقى معك 15 − 6 = 9.' },
-          make: four(function () { var a = 11 + rand(10), b = 2 + rand(8), q = sum(a + ' − ' + b, a - b, { en: 'Start at ' + a + ' and count back ' + b + '.', ar: 'ابدأ من ' + a + ' وعُدّ ' + b + ' للخلف.' });
+          make: four(function () { var a = 11 + rand(hard(5, 10, 40)), b = 2 + rand(Math.min(hard(5, 8, 15), a - 3)), q = sum(a + ' − ' + b, a - b, { en: 'Start at ' + a + ' and count back ' + b + '.', ar: 'ابدأ من ' + a + ' وعُدّ ' + b + ' للخلف.' });
             q.q = { en: 'You have ' + a + ' coins and buy a toy that costs ' + b + '. How many coins are left?', ar: 'معك ' + a + ' قطعة نقدية واشتريت لعبة ثمنها ' + b + '. كم بقي معك؟' }; return q; }) }
       ]
     },
