@@ -295,6 +295,7 @@
 <sc-if value="{{ journey.hasNext }}"><button type="button" class="btn primary lg point go-btn" onclick="{{ journey.go }}">{{ t.jGo }}</button></sc-if>
 </div>
 <sc-if value="{{ review.has }}"><div class="review-offer"><span class="review-ic" aria-hidden="true">🔁</span><p>{{ review.text }}</p><button type="button" class="btn accent" onclick="{{ review.start }}">{{ t.rvBtn }}</button></div></sc-if>
+<sc-if value="{{ placeOffer }}"><div class="review-offer pl-offer"><span class="review-ic" aria-hidden="true">🎯</span><p>{{ t.plOffer }}</p><div class="actions"><button type="button" class="btn accent" onclick="{{ placeStart }}">{{ t.plStart }}</button><button type="button" class="btn ghost" onclick="{{ placeSkip }}">{{ t.plSkip }}</button></div></div></sc-if>
 <sc-if value="{{ journey.hasEarlier }}"><p class="small muted road-earlier">✓ {{ journey.earlier }}</p></sc-if>
 <ol class="road">
 <sc-for list="{{ journey.stops }}" as="st">
@@ -391,6 +392,30 @@
 </fieldset>
 </sc-for>
 <div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<!-- STARTING TEST: a short placement quiz -->
+<sc-if value="{{ isPlacement }}">
+<section class="page pl-page">
+<header class="page-head"><h1 class="h1">🎯 {{ t.plTitle }}</h1><p class="lead">{{ t.plIntro }}</p></header>
+<sc-if value="{{ pl.asking }}">
+<div class="pcard quiz pl-card">
+<p class="small muted">{{ pl.of }} · {{ pl.course }}</p>
+<h2 class="prompt">{{ pl.q }}</h2>
+<sc-if value="{{ pl.hasImg }}"><div class="show-box"><img class="q-img" src="{{ pl.img }}" alt=""></div></sc-if>
+<sc-if value="{{ pl.hasShow }}"><div class="show-box"><span class="show" dir="{{ pl.showDir }}">{{ pl.show }}</span></div></sc-if>
+<div class="opts"><sc-for list="{{ pl.opts }}" as="o"><button type="button" class="opt" onclick="{{ o.pick }}"><span class="opt-label">{{ o.label }}</span></button></sc-for></div>
+<div class="actions center"><button type="button" class="btn ghost" onclick="{{ pl.idk }}">🤷 {{ t.plIdk }}</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ pl.done }}">
+<div class="card pl-done">
+<div class="guide"><svg class="saqr cheer" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg><div class="bubble"><p>{{ t.plDone }}</p></div></div>
+<ul class="pl-results"><sc-for list="{{ pl.results }}" as="r"><li style="--c: {{ r.color }}"><b>{{ r.name }}</b><span class="tag">{{ r.level }}</span></li></sc-for></ul>
+<div class="actions center"><button type="button" class="btn primary lg point" onclick="{{ pl.go }}">{{ t.plGo }}</button></div>
 </div>
 </sc-if>
 </section>
@@ -1043,7 +1068,7 @@
 </div>
 </sc-if>
 <sc-if value="{{ ls.notBlendShow }}">
-<div class="show-box"><sc-if value="{{ ls.hasImg }}"><img class="q-img" src="{{ ls.img }}" alt=""></sc-if><span class="show" dir="auto">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span>
+<div class="show-box"><sc-if value="{{ ls.hasImg }}"><img class="q-img" src="{{ ls.img }}" alt=""></sc-if><span class="show" dir="{{ ls.showDir }}">{{ ls.show }}</span><span class="gloss">{{ ls.gloss }}</span>
 <sc-if value="{{ ls.hasSound }}"><button type="button" class="btn secondary sound-btn" onclick="{{ ls.playSound }}">🔊 {{ t.hearIt }}</button></sc-if></div>
 </sc-if>
 <sc-if value="{{ ls.hasSeq }}">

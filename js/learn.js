@@ -70,6 +70,9 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      plOffer: 'New here? Take a 2-minute starting test so Saqr knows where to begin in each subject.', plStart: '🎯 Starting test', plSkip: 'Start from the beginning',
+      plTitle: 'Starting test', plIntro: 'Just answer what you know. It is fine to say "I don\'t know yet"!', plIdk: 'I don\'t know yet', plOf: 'Question %A of %B',
+      plDone: 'All done! Here is where you will start:', plGo: 'Start my journey', plRedo: '🎯 Do the starting test again',
       glClose: 'Got it!', glTitle: 'What does it mean?',
       stuck1: '🤔 I\'m stuck', stuck2: '🤔 Still stuck', stuck3: '⏭️ Skip for now', stuckHint: 'Read the question again slowly. What is it really asking?',
       stuckElim: 'I took away one wrong answer for you. You can do it!',
@@ -255,6 +258,9 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      plOffer: 'جديد هنا؟ قم باختبار بداية مدته دقيقتان ليعرف صقر من أين تبدأ في كل مادة.', plStart: '🎯 اختبار البداية', plSkip: 'ابدأ من البداية',
+      plTitle: 'اختبار البداية', plIntro: 'أجب عمّا تعرفه فقط. لا بأس أن تقول «لا أعرف بعد»!', plIdk: 'لا أعرف بعد', plOf: 'السؤال %A من %B',
+      plDone: 'انتهينا! هذا مكان بدايتك:', plGo: 'ابدأ رحلتي', plRedo: '🎯 أعِد اختبار البداية',
       glClose: 'فهمت!', glTitle: 'ماذا تعني؟',
       stuck1: '🤔 أحتاج مساعدة', stuck2: '🤔 ما زلت محتارًا', stuck3: '⏭️ تخطَّ الآن', stuckHint: 'اقرأ السؤال مرة أخرى ببطء. ماذا يطلب حقًّا؟',
       stuckElim: 'أزلت لك جوابًا خاطئًا. تستطيع فعلها!',
@@ -507,6 +513,28 @@
     return n;
   }
   // ---- Today's six: picked once a day per child (kept in data.todayPlan so it does not change while playing) ----
+  function placedOrder(data, ci) {
+    var o = orderOf(ci), lv = (data.place || {})[COURSES[ci].id] || 1;
+    var keep = o.filter(function (li) { return (COURSES[ci].lessons[li].level || 1) >= lv; });
+    return keep.length ? keep : o;
+  }
+  // starting test: from each suitable course, one question from a level 2 lesson and one from a level 3 lesson
+  function placementQuestions(data) {
+    var out = [], courses = COURSES.map(function (c, ci) { return ci; }).filter(function (ci) { return fitsAge(COURSES[ci], data.age); });
+    courses.forEach(function (ci) {
+      if (out.length >= 12) return;
+      var c = COURSES[ci];
+      [2, 3].forEach(function (lv) {
+        var ls = c.lessons.filter(function (l) { return (l.level || 1) === lv; });
+        var l = ls[Math.floor(Math.random() * ls.length)]; if (!l) return;
+        window.SADU_DIFF = 1;
+        var pool = (l.make ? l.make() : l.questions || []).filter(function (q) { return (!q.kind || q.kind === 'choice') && q.opts && q.opts.length > 1 && !q.opts.some(function (o) { return o && o.colour; }) && !q.say; });
+        var q = pool[Math.floor(Math.random() * pool.length)];
+        if (q) out.push({ ci: ci, lv: lv, q: prepQ(q, l.hint) });
+      });
+    });
+    return out;
+  }
   function seeded(seedText) { var h = 2166136261; for (var i = 0; i < seedText.length; i++) { h ^= seedText.charCodeAt(i); h = Math.imul(h, 16777619); } return function () { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; }
   function todayPlan(data) {
     var day = dayKey(new Date());
@@ -522,7 +550,7 @@
     COURSES.forEach(function (c, ci) { if (fitsAge(c, data.age) && !usedCi[ci]) fit.push(ci); });
     shuffleR(fit).forEach(function (ci) {
       if (items.length >= 4) return;
-      var order = orderOf(ci), pickLi = null;
+      var order = placedOrder(data, ci), pickLi = null;
       // the first lesson not yet strong in this course, else a random one to practise
       order.some(function (li) { var rec = data.lessons[COURSES[ci].lessons[li].id]; if (!rec || accuracy(rec) < 0.85) { pickLi = li; return true; } return false; });
       if (pickLi == null) pickLi = order[Math.floor(rnd() * order.length)];
@@ -1252,6 +1280,7 @@
         isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
         gl: s.gl ? { word: s.gl.word, meaning: (window.SADU_GLOSSARY[s.gl.key] || {})[LANG] || '', close: function () { self.setState({ gl: null }); },
           say: function () { speak([s.gl.word, (window.SADU_GLOSSARY[s.gl.key] || {})[LANG] || '']); } } : null, hasGl: !!s.gl,
+        isPlacement: s.view === 'placement',
         isHouse: s.view === 'house', houseOn: s.view === 'house' ? 'page' : 'false', goHouse: function () { self.go('house'); },
         isToday: s.view === 'today', todayOn: s.view === 'today' ? 'page' : 'false', goToday: function () { self._todayRun = false; self.go('today'); },
         isPet: s.view === 'pet', petOn: s.view === 'pet' ? 'page' : 'false', goPet: function () { self.go('pet'); },
@@ -1459,7 +1488,7 @@
       (function () {
         var fit = COURSES.map(function (c, ci) { return ci; }).filter(function (ci) { return fitsAge(COURSES[ci], data.age); });
         if (!fit.length) fit = COURSES.map(function (c, ci) { return ci; });
-        var orders = fit.map(orderOf), road = [], longest = Math.max.apply(null, orders.map(function (o) { return o.length; }));
+        var orders = fit.map(function (ci) { return placedOrder(data, ci); }), road = [], longest = Math.max.apply(null, orders.map(function (o) { return o.length; }));
         for (var r = 0; r < longest; r++) fit.forEach(function (ci, k) { if (orders[k][r] != null) road.push({ ci: ci, li: orders[k][r] }); });
         var cur = road.findIndex(function (st) { return !data.lessons[COURSES[st.ci].lessons[st.li].id]; });
         var allDone = cur === -1; if (allDone) cur = road.length;
@@ -1469,6 +1498,9 @@
         var next = road[cur], nc = next ? COURSES[next.ci] : null, nl = next ? nc.lessons[next.li] : null;
         var lead = allDone ? T.jAllDone : fill(who ? T.jLeadName : T.jLead, { N: who, L: tx(nl.title), C: tx(nc.name) });
         var go = function () { sfx('pop'); if (next) self.startLesson(next.ci, next.li, true); };
+        out.placeOffer = !Object.keys(data.lessons).length && !data.placed;
+        out.placeStart = function () { sfx('pop'); self.go('placement', { pl: { qs: placementQuestions(self.state.data), i: 0, right: [], picked: -1, done: false } }); };
+        out.placeSkip = function () { var d = Object.assign({}, self.state.data, { placed: true }); save(d); self.setState({ data: d }); };
         out.journey = {
           lead: lead, hasNext: !allDone, go: go, earlier: from > 0 ? fill(T.jEarlier, { A: from }) : '', hasEarlier: from > 0,
           say: function () { speak([lead]); },
@@ -1636,6 +1668,34 @@
             };
           }
         }
+      }
+
+      // ---- starting test ----
+      if (s.view === 'placement' && s.pl) {
+        var pl = s.pl, cur = pl.qs[pl.i], setPl = function (x) { self.setState({ pl: Object.assign({}, self.state.pl, x) }); };
+        var finish = function (right) {
+          var per = {};
+          pl.qs.forEach(function (qq, k) { var id = COURSES[qq.ci].id; per[id] = per[id] || {}; per[id][qq.lv] = !!right[k]; });
+          var place = {};
+          Object.keys(per).forEach(function (id) { place[id] = per[id][2] && per[id][3] ? 3 : per[id][2] ? 2 : 1; });
+          var d = Object.assign({}, self.state.data, { place: place, placed: true }); save(d);
+          sfx('done'); setTimeout(function () { burst(null, 140); }, 50);
+          self.setState({ data: d, pl: Object.assign({}, pl, { done: true, right: right }) });
+        };
+        var answer = function (ok) {
+          var right = pl.right.concat(ok);
+          if (pl.i + 1 >= pl.qs.length) return finish(right);
+          setPl({ i: pl.i + 1, right: right });
+        };
+        out.pl = { done: !!pl.done, asking: !pl.done && !!cur, of: cur ? fill(T.plOf, { A: pl.i + 1, B: pl.qs.length }) : '',
+          q: cur ? tx(cur.q.q) : '', show: cur && cur.q.show ? cur.q.show : '', showDir: cur && /[A-Za-z\u0600-\u06FF]/.test(cur.q.show || '') ? 'auto' : 'ltr', hasShow: !!(cur && cur.q.show), img: cur && cur.q.img ? cur.q.img : '', hasImg: !!(cur && cur.q.img),
+          course: cur ? tx(COURSES[cur.ci].name) : '',
+          opts: cur ? cur.q.opts.map(function (o) { return { label: tx(o.o), pick: function () { sfx('tap'); answer(!!o.right); } }; }) : [],
+          idk: function () { sfx('tap'); answer(false); },
+          results: Object.keys(data.place || {}).map(function (id) { var c = COURSES.filter(function (x) { return x.id === id; })[0]; return c ? { name: tx(c.name), level: T.levelNames[data.place[id]], color: c.color } : null; }).filter(Boolean),
+          go: function () { self.go('journey'); }
+        };
+        if (!pl.qs.length && !pl.done) setTimeout(function () { finish([]); }, 0);
       }
 
       // ---- Saqr's house: frames on the walls and a discovery journal ----
@@ -2238,7 +2298,7 @@
           audioReady: function (e) { e.target.parentNode.hidden = false; },
           count: ls.step === 'quiz' ? fill(T.qOf, { A: ls.qi + 1, B: ls.qs.length }) : ls.step === 'teach' ? T.learn : '',
           segs: ls.qs.map(function (x, k) { return { cls: k < filled ? 'seg on' : 'seg' }; }),
-          prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || !!q.img || (!!q.say && !out.speakOk)), img: q.img || '', hasImg: !!q.img,
+          prompt: tx(q.q), show: q.show || (q.say && !out.speakOk ? q.say : ''), hasShow: q.kind === 'choice' && (!!q.show || !!q.img || (!!q.say && !out.speakOk)), showDir: /[A-Za-z\u0600-\u06FF]/.test(q.show || '') ? 'auto' : 'ltr', img: q.img || '', hasImg: !!q.img,
           hasSound: !!q.sound, playSound: function () { playClip(q.sound); }, gloss: tx(q.gloss),
           isCode: q.kind === 'code' || q.kind === 'pycode', isPy: q.kind === 'pycode', isBlocks: q.kind === 'code',
           // blending: letters shown as tiles that slide together into the word
