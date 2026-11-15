@@ -668,3 +668,15 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .gate-lock{font-size:46px}
 .gate-q{font-family:'Fredoka','Baloo Bhaijaan 2',sans-serif;font-size:28px;font-weight:700}
 .gate-input{max-width:160px;text-align:center;font-size:26px}
+
+/* ---------- Video Studio ---------- */
+.video-page{max-width:820px}
+.vd-connect,.vd-form,.vd-done{display:flex;flex-direction:column;gap:14px}
+.vd-status{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.linkish{border:0;background:none;padding:0;color:var(--ink);font-weight:800;text-decoration:underline;cursor:pointer}
+.vd-working{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.vd-bar{width:100%;max-width:420px;height:12px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.vd-bar span{display:block;height:100%;width:40%;border-radius:999px;background:var(--accent);animation:vdslide 1.6s ease-in-out infinite}
+@keyframes vdslide{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
+.vd-video,.lesson-video video{width:100%;border-radius:var(--r-md);background:#000}
+.lesson-video{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:var(--r-md);background:#EEF6FF}

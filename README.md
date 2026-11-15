@@ -131,6 +131,15 @@ right and two wrong answers, in English, Arabic or both (an empty language copie
 this browser (`sadu-custom-v1`); **Export my lessons** saves them to a file and **Import lessons** loads a
 file, so they can be moved to another device or shared.
 
+## Video Studio (Seedance 2.5)
+
+For grown-ups only (behind the grown-ups question): Family report → **Video Studio** makes a short
+learning video with Seedance 2.5 from BytePlus. Pick a lesson idea or describe the scene, choose the
+length and shape, and press **Make the video**; after about a minute or two it can be attached to the
+lesson, where it appears on the Learn screen. Prompts with unsuitable words are refused and every
+prompt is made child-safe. The Seedance key is kept in a small helper (`server/seedance-worker.js`),
+never in the website: see `server/README.md` to set it up. Until then the studio says "Not connected yet".
+
 ## Install like an app
 
 Once the site is online (over https), phones and computers offer to install Sadu: it gets its own

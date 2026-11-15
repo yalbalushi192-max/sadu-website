@@ -383,6 +383,61 @@
 </section>
 </sc-if>
 
+<!-- VIDEO: Video Studio for parents and teachers (Seedance 2.5 through the helper in server/) -->
+<sc-if value="{{ isVideo }}">
+<section class="page video-page">
+<header class="page-head"><h1 class="h1">🎬 {{ t.vdTitle }}</h1><p class="lead">{{ t.vdIntro }}</p></header>
+
+<sc-if value="{{ vd.notConnected }}">
+<div class="card vd-connect">
+<h2 class="h3">{{ t.vdNotConnected }}</h2>
+<p class="small muted">{{ t.vdConnectText }}</p>
+<label class="ed-field"><span>{{ t.vdUrl }}</span><input id="video-url" class="input" type="url" dir="ltr" placeholder="https://sadu-video.example.workers.dev" autocomplete="off"></label>
+<label class="ed-field"><span>{{ t.vdPin }}</span><input id="video-pin" class="input" type="password" dir="ltr" autocomplete="off"></label>
+<div class="actions"><button type="button" class="btn primary" onclick="{{ vd.connect }}">{{ t.vdConnect }}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ vd.connected }}">
+<p class="small muted vd-status">✅ {{ t.vdConnected }} <span dir="ltr">{{ vd.url }}</span> · <button type="button" class="linkish" onclick="{{ vd.disconnect }}">{{ t.vdDisconnect }}</button></p>
+
+<sc-if value="{{ vd.idle }}">
+<div class="card vd-form">
+<div class="ed-pair"><b class="ed-label">{{ t.vdIdeas }}</b><div class="chip-row"><sc-for list="{{ vd.ideas }}" as="i"><button type="button" class="chip-btn" onclick="{{ i.use }}">{{ i.label }}</button></sc-for></div></div>
+<sc-if value="{{ vd.hasLesson }}"><span class="tag">{{ vd.forLesson }}</span></sc-if>
+<label class="ed-field"><span>{{ t.vdPrompt }}</span><textarea id="video-prompt" class="input" rows="3" dir="auto" placeholder="{{ t.vdPromptPh }}">{{ vd.prompt }}</textarea></label>
+<div class="ed-pair"><b class="ed-label">{{ t.vdLength }}</b><div class="chip-row"><sc-for list="{{ vd.lengths }}" as="c"><button type="button" class="{{ c.cls }}" onclick="{{ c.set }}">{{ c.label }}</button></sc-for></div></div>
+<div class="ed-pair"><b class="ed-label">{{ t.vdShape }}</b><div class="chip-row"><sc-for list="{{ vd.shapes }}" as="c"><button type="button" class="{{ c.cls }}" onclick="{{ c.set }}">{{ c.label }}</button></sc-for></div></div>
+<sc-if value="{{ vd.error }}"><p class="ed-msg" role="alert">{{ vd.msg }}</p></sc-if>
+<div class="actions"><button type="button" class="btn primary lg" onclick="{{ vd.make }}">🎬 {{ t.vdMake }}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ vd.working }}">
+<div class="card vd-working" role="status">
+<svg class="saqr cheer" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<p><b>{{ t.vdWorking }}</b></p>
+<div class="vd-bar" aria-hidden="true"><span></span></div>
+<span class="small muted">{{ vd.polls }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ vd.done }}">
+<div class="card vd-done">
+<h2 class="h3">🎉 {{ t.vdDone }}</h2>
+<video class="vd-video" controls playsinline src="{{ vd.videoUrl }}"></video>
+<sc-if value="{{ vd.attached }}"><p class="goal-ok">✓ {{ t.vdAttached }}</p></sc-if>
+<div class="actions">
+<sc-if value="{{ vd.hasLesson }}"><sc-if value="{{ vd.notAttached }}"><button type="button" class="btn primary" onclick="{{ vd.attach }}">{{ vd.attachLabel }}</button></sc-if></sc-if>
+<button type="button" class="btn secondary" onclick="{{ vd.save }}">{{ t.vdSave }}</button>
+<button type="button" class="btn ghost" onclick="{{ vd.again }}">{{ t.vdAgain }}</button>
+</div>
+</div>
+</sc-if>
+</sc-if>
+</section>
+</sc-if>
+
 <!-- GATE: grown-ups only -->
 <sc-if value="{{ isGate }}">
 <section class="page gate-page">
@@ -634,6 +689,7 @@
 <div class="teach-top"><span class="teach-label">{{ t.learn }}</span><sc-if value="{{ speakOk }}"><button type="button" class="speak" onclick="{{ ls.sayTeach }}" aria-label="{{ t.listenBtn }}" title="{{ t.listenBtn }}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></sc-if></div>
 <p class="teach">{{ ls.teach }}</p>
 </div>
+<sc-if value="{{ ls.lessonVideo }}"><div class="lesson-video"><b>🎬 {{ t.lessonVideo }}</b><video controls preload="metadata" playsinline src="{{ ls.lessonVideo }}"></video></div></sc-if>
 <!-- Lesson podcast: shown only when a file audio/<lesson id>-<en or ar>.m4a (or .mp3, .wav) exists -->
 <div class="listen" hidden>
 <span>{{ t.listen }}</span>
@@ -902,6 +958,7 @@
 <button type="button" class="btn secondary" onclick="{{ r.print }}">{{ t.print }}</button>
 <button type="button" class="btn secondary" onclick="{{ goWeek }}">📅 {{ t.wkBtn }}</button>
 <button type="button" class="btn secondary" onclick="{{ goEditor }}">✏️ {{ t.edBtn }}</button>
+<button type="button" class="btn secondary" onclick="{{ goVideo }}">🎬 {{ t.vdBtn }}</button>
 <sc-if value="{{ r_remove.can }}"><button type="button" class="btn ghost" onclick="{{ r_remove.ask }}">{{ t.removeChild }}</button></sc-if>
 <sc-if value="{{ r_remove.asking }}"><span role="alert" class="confirm">{{ t.removeSure }}</span><button type="button" class="btn danger" onclick="{{ r_remove.yes }}">{{ t.yesRemove }}</button><button type="button" class="btn ghost" onclick="{{ r_remove.cancel }}">{{ t.cancel }}</button></sc-if>
 <sc-if value="{{ r.notConfirming }}"><button type="button" class="btn ghost" onclick="{{ r.askReset }}">{{ t.reset }}</button></sc-if>

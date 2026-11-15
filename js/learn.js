@@ -70,6 +70,17 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      vdTitle: 'Video Studio', vdBtn: 'Video Studio', vdIntro: 'Make a short learning video with Seedance 2.5. Every prompt is made child-safe automatically. Always watch a video before showing it to children.',
+      vdNotConnected: 'Not connected yet', vdConnectText: 'Paste the address of your Sadu video helper and its PIN (see server/README.md in the project folder).',
+      vdUrl: 'Helper address', vdPin: 'PIN', vdConnect: 'Connect', vdDisconnect: 'Disconnect', vdConnected: 'Connected to your video helper.',
+      vdIdeas: 'Ideas from the lessons', vdPrompt: 'What should the video show?', vdPromptPh: 'For example: a caterpillar turns into a butterfly in a sunny garden',
+      vdLength: 'Length', vdShape: 'Shape', vdWide: 'Wide', vdTall: 'Tall', vdSquare: 'Square', vdSeconds: '%A seconds', vdMake: 'Make the video',
+      vdWorking: 'Seedance is making your video. This usually takes 1 to 2 minutes…', vdElapsed: 'Checked %A times', vdDone: 'Your video is ready!',
+      vdAttach: 'Show it in the lesson "%L"', vdAttached: 'Added to the lesson.', vdSave: 'Save a copy', vdAgain: 'Make another', vdForLesson: 'For lesson: %L',
+      vdErr: { 'not-allowed': 'That prompt has a word that is not allowed in a children\'s video. Please change it.', 'too-short': 'Please describe the video in a few more words.',
+        'too-long': 'Please make the description shorter (500 letters at most).', 'wrong-pin': 'The PIN is not right. Check it in Connect.', 'not-configured': 'The helper has no Seedance key yet (see server/README.md).',
+        network: 'Could not reach the video helper. Check the address and your internet.', failed: 'Seedance could not make this video. Try a different description.', timeout: 'This is taking too long. Please try again later.' },
+      lessonVideo: 'Watch the lesson video',
       gateTitle: 'For grown-ups', gateText: 'This part is for parents and teachers. Please answer to continue.', gateQ: 'What is %A × %B?',
       gateGo: 'Continue', gateWrong: 'Not quite. Please ask a grown-up.', gateBack: 'Back',
       pyUnknown: 'Line %A: I don\'t know "%B". Try up(), down(), left(), right() or a for loop.', pyNumber: 'Line %A: use a number from 1 to 9 inside the brackets.',
@@ -172,6 +183,17 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      vdTitle: 'استوديو الفيديو', vdBtn: 'استوديو الفيديو', vdIntro: 'اصنع فيديو تعليميًا قصيرًا باستخدام Seedance 2.5. يُجعل كل وصف مناسبًا للأطفال تلقائيًا. شاهد الفيديو دائمًا قبل عرضه على الأطفال.',
+      vdNotConnected: 'غير متّصل بعد', vdConnectText: 'الصق عنوان مساعد الفيديو الخاص بسدو ورمزه السري (انظر server/README.md في مجلد المشروع).',
+      vdUrl: 'عنوان المساعد', vdPin: 'الرمز السري', vdConnect: 'اتّصال', vdDisconnect: 'قطع الاتّصال', vdConnected: 'متّصل بمساعد الفيديو.',
+      vdIdeas: 'أفكار من الدروس', vdPrompt: 'ماذا يعرض الفيديو؟', vdPromptPh: 'مثلًا: يرقة تتحوّل إلى فراشة في حديقة مشمسة',
+      vdLength: 'المدة', vdShape: 'الشكل', vdWide: 'عريض', vdTall: 'طولي', vdSquare: 'مربع', vdSeconds: '%A ثوانٍ', vdMake: 'اصنع الفيديو',
+      vdWorking: 'يصنع Seedance الفيديو الآن. يستغرق ذلك عادة دقيقة إلى دقيقتين…', vdElapsed: 'تم التحقّق %A مرات', vdDone: 'الفيديو جاهز!',
+      vdAttach: 'اعرضه في درس «%L»', vdAttached: 'أُضيف إلى الدرس.', vdSave: 'احفظ نسخة', vdAgain: 'اصنع فيديو آخر', vdForLesson: 'للدرس: %L',
+      vdErr: { 'not-allowed': 'في الوصف كلمة غير مسموحة في فيديو للأطفال. غيّرها من فضلك.', 'too-short': 'صِف الفيديو بكلمات أكثر قليلًا.',
+        'too-long': 'اجعل الوصف أقصر (500 حرف على الأكثر).', 'wrong-pin': 'الرمز السري غير صحيح. تحقّق منه في «اتّصال».', 'not-configured': 'لا يوجد مفتاح Seedance في المساعد بعد (انظر server/README.md).',
+        network: 'تعذّر الوصول إلى مساعد الفيديو. تحقّق من العنوان والإنترنت.', failed: 'لم يستطع Seedance صنع هذا الفيديو. جرّب وصفًا مختلفًا.', timeout: 'يستغرق الأمر وقتًا طويلًا. حاول لاحقًا.' },
+      lessonVideo: 'شاهد فيديو الدرس',
       gateTitle: 'للكبار', gateText: 'هذا الجزء لأولياء الأمور والمعلّمين. أجب من فضلك لتتابع.', gateQ: 'كم يساوي %A × %B؟',
       gateGo: 'متابعة', gateWrong: 'ليست صحيحة. اطلب المساعدة من شخص كبير.', gateBack: 'رجوع',
       pyUnknown: 'السطر %A: لا أعرف «%B». جرّب up() أو down() أو left() أو right() أو حلقة for.', pyNumber: 'السطر %A: اكتب عددًا من 1 إلى 9 بين القوسين.',
@@ -257,6 +279,18 @@
     });
   }
   mergeCustom();
+
+  // ---- Video Studio: settings and videos are kept in this browser ----
+  var VIDEO_CFG_KEY = 'sadu-video-cfg', VIDEOS_KEY = 'sadu-videos-v1';
+  function loadJSON(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v || d; } catch (e) { return d; } }
+  function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  var BLOCKED_WORDS = ['kill', 'blood', 'gun', 'weapon', 'knife', 'war', 'fight', 'violence', 'dead', 'death', 'scary', 'horror', 'monster attack', 'nude', 'naked', 'sexy', 'kiss', 'drug', 'alcohol', 'beer', 'smoke', 'cigarette', 'bomb',
+    'قتل', 'دم', 'سلاح', 'مسدس', 'سكين', 'حرب', 'عنف', 'موت', 'رعب', 'مخيف', 'عاري', 'مخدرات', 'خمر', 'تدخين', 'قنبلة'];
+  function hasBlockedWord(text) {
+    var tokens = String(text).toLowerCase().split(/[^a-z\u0600-\u06FF]+/).filter(Boolean);
+    var bare = tokens.map(function (t) { return t.replace(/^(و|ف|ب)?(ال)?/, ''); }), joined = ' ' + tokens.join(' ') + ' ';
+    return BLOCKED_WORDS.some(function (w) { return w.indexOf(' ') !== -1 ? joined.indexOf(' ' + w + ' ') !== -1 : tokens.some(function (t, i) { return t === w || t === w + 's' || bare[i] === w; }); });
+  }
 
   // pages for parents and teachers only
   var PARENT_VIEWS = ['report', 'week', 'editor', 'video'];
@@ -656,6 +690,7 @@
     }
 
     go(view, extra) {
+      clearTimeout(this._vdTimer);
       if (PARENT_VIEWS.indexOf(view) !== -1 && !(this._grownUntil > Date.now())) {
         var a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
         extra = { gate: { view: view, extra: extra || {}, a: a, b: b, wrong: false } }; view = 'gate';
@@ -792,6 +827,7 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isVideo: s.view === 'video', goVideo: function () { self.go('video'); },
         isGate: s.view === 'gate',
         isCert: s.view === 'cert',
         isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
@@ -1091,6 +1127,82 @@
         }
       }
 
+      // ---- Video Studio ----
+      if (s.view === 'video') {
+        var cfg = loadJSON(VIDEO_CFG_KEY, null), vd = s.vd || { status: 'idle', duration: 5, ratio: '16:9' }, vids = loadJSON(VIDEOS_KEY, { lessons: {} });
+        var setVd = function (extra) { self.setState({ vd: Object.assign({}, self.state.vd || vd, extra) }); };
+        // ideas come from lessons that make good scenes (science, art, maths, English, Arabic), not phonics or coding
+        var fit = COURSES.filter(function (c) { return ['phonics', 'arabic-phonics', 'coding'].indexOf(c.id) === -1; });
+        var ideas = [];
+        fit.forEach(function (c, k) { var l = c.lessons[(k * 3) % c.lessons.length]; if (l && !l.make && ideas.length < 6) ideas.push({ c: c, l: l }); });
+        var lessonOf = function (id) { var hit = null; COURSES.forEach(function (c) { c.lessons.forEach(function (l) { if (l.id === id) hit = { c: c, l: l }; }); }); return hit; };
+        var chosen = vd.lessonId ? lessonOf(vd.lessonId) : null;
+        var fail = function (code) { sfx('wrong'); setVd({ status: 'error', msg: T.vdErr[code] || T.vdErr.failed }); };
+        out.vd = {
+          connected: !!cfg, notConnected: !cfg, url: cfg ? cfg.url : '',
+          connect: function () {
+            var u = (document.getElementById('video-url') || {}).value || '', pin = (document.getElementById('video-pin') || {}).value || '';
+            u = u.trim().replace(/\/+$/, '');
+            if (!/^https?:\/\//.test(u) || !pin.trim()) return;
+            saveJSON(VIDEO_CFG_KEY, { url: u, pin: pin.trim() }); self.setState({ vd: Object.assign({}, vd, { status: 'idle', msg: '' }) });
+          },
+          disconnect: function () { try { localStorage.removeItem(VIDEO_CFG_KEY); } catch (e) {} self.setState({ vd: { status: 'idle', duration: 5, ratio: '16:9' } }); },
+          ideas: ideas.map(function (it) {
+            return { label: tx(it.c.name) + ': ' + tx(it.l.title),
+              use: function () {
+                var el = document.getElementById('video-prompt');
+                var text = (it.l.teach.en || '').split('. ').slice(0, 2).join('. ');
+                if (el) el.value = text;
+                setVd({ lessonId: it.l.id, prompt: text });
+              } };
+          }),
+          forLesson: chosen ? fill(T.vdForLesson, { L: tx(chosen.l.title) }) : '', hasLesson: !!chosen,
+          prompt: vd.prompt || '',
+          lengths: [5, 8, 10].map(function (n) { return { label: fill(T.vdSeconds, { A: n }), cls: vd.duration === n ? 'chip-btn on' : 'chip-btn', set: function () { setVd({ duration: n }); } }; }),
+          shapes: [['16:9', T.vdWide], ['9:16', T.vdTall], ['1:1', T.vdSquare]].map(function (r) { return { label: r[1], cls: vd.ratio === r[0] ? 'chip-btn on' : 'chip-btn', set: function () { setVd({ ratio: r[0] }); } }; }),
+          idle: vd.status === 'idle' || vd.status === 'error', working: vd.status === 'working', done: vd.status === 'done',
+          error: vd.status === 'error', msg: vd.msg || '', polls: fill(T.vdElapsed, { A: vd.polls || 0 }),
+          videoUrl: vd.url || '', attached: !!vd.attached, notAttached: !vd.attached,
+          attachLabel: chosen ? fill(T.vdAttach, { L: tx(chosen.l.title) }) : '',
+          make: function () {
+            var text = ((document.getElementById('video-prompt') || {}).value || '').trim();
+            if (text.length < 5) return fail('too-short');
+            if (text.length > 500) return fail('too-long');
+            if (hasBlockedWord(text)) return fail('not-allowed');
+            var c = loadJSON(VIDEO_CFG_KEY, null); if (!c) return;
+            setVd({ status: 'working', prompt: text, polls: 0, msg: '', attached: false });
+            var headers = { 'Content-Type': 'application/json', 'X-Sadu-Pin': c.pin }, started = Date.now();
+            fetch(c.url + '/video', { method: 'POST', headers: headers, body: JSON.stringify({ prompt: text, duration: vd.duration, ratio: vd.ratio }) })
+              .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+              .then(function (res) {
+                if (!res.ok || !res.j.id) return fail(res.j.error);
+                var polls = 0;
+                var check = function () {
+                  if (self.state.view !== 'video') return;
+                  if (Date.now() - started > 30 * 60 * 1000) return fail('timeout');
+                  fetch(c.url + '/video/' + res.j.id, { headers: headers }).then(function (r) { return r.json(); }).then(function (st) {
+                    polls++;
+                    if (st.status === 'succeeded' && st.videoUrl) {
+                      sfx('done'); burst(null, 80);
+                      var all = loadJSON(VIDEOS_KEY, { lessons: {} }); all.recent = [{ url: st.videoUrl, prompt: text, when: Date.now() }].concat(all.recent || []).slice(0, 10); saveJSON(VIDEOS_KEY, all);
+                      setVd({ status: 'done', url: st.videoUrl, polls: polls });
+                    } else if (st.status === 'failed' || st.error) fail('failed');
+                    else { setVd({ polls: polls }); self._vdTimer = setTimeout(check, window.SADU_VIDEO_POLL || 10000); }
+                  }).catch(function () { fail('network'); });
+                };
+                self._vdTimer = setTimeout(check, window.SADU_VIDEO_POLL || 10000);
+              }).catch(function () { fail('network'); });
+          },
+          attach: function () {
+            if (!chosen || !vd.url) return;
+            var all = loadJSON(VIDEOS_KEY, { lessons: {} }); all.lessons = all.lessons || {}; all.lessons[chosen.l.id] = { url: vd.url, when: Date.now() }; saveJSON(VIDEOS_KEY, all);
+            sfx('pop'); setVd({ attached: true });
+          },
+          save: function () { if (vd.url) window.open(vd.url, '_blank', 'noopener'); },
+          again: function () { setVd({ status: 'idle', url: '', attached: false }); }
+        };
+      }
+
       // ---- grown-ups gate ----
       if (s.view === 'gate' && s.gate) {
         var gt = s.gate;
@@ -1288,6 +1400,7 @@
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
           title: tx(lesson.title), teach: tx(lesson.teach),
+          lessonVideo: ((loadJSON(VIDEOS_KEY, { lessons: {} }).lessons || {})[lesson.id] || {}).url || '',
           diffNote: ls.diff === 0 && (data.lessons[lesson.id] || {}).diff === 0 ? T.dfEasy : ls.diff === 2 ? T.dfHard : '',
           diffCls: ls.diff === 2 ? 'diff-note up' : 'diff-note',
           of: fill(T.lessonOf, { A: isStoryQuiz || isChallenge || isReview ? 1 : orderOf(s.ci).indexOf(ls.li) + 1, B: lessonCount }),
