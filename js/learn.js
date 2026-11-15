@@ -456,7 +456,7 @@
 
   // ---- activities ----
   function freshAct(q) { return q && q.kind === 'count' ? { placed: 0, tried: -1 } : q && q.kind === 'match' ? { sel: -1, side: '', done: [], badL: -1, badR: -1 }
-    : q && q.kind === 'code' ? { prog: [], pos: -1, running: false, why: '' } : {}; }
+    : q && q.kind === 'code' ? { prog: (q.start || []).slice(), pos: -1, running: false, why: '' } : {}; }
 
   // ---- coding puzzles: a program of arrow blocks (repeat blocks 'x2'...'x5' repeat the next arrow) ----
   var STEP = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] };
@@ -480,7 +480,7 @@
   }
   function prepQ(q, lessonHint) {
     var out = { kind: q.kind || 'choice', q: q.q, show: q.show, say: q.say, gloss: q.gloss, seq: q.seq, hint: q.hint || lessonHint,
-      n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max,
+      n: q.n, outline: !!q.outline, pairs: q.pairs, grid: q.grid, blocks: q.blocks, max: q.max, start: q.start,
       opts: shuffle((q.opts || []).map(function (o, i) { return { o: o, right: i === 0 }; })) };
     if (q.kind === 'match') {
       var idx = q.pairs.map(function (x, i) { return i; });

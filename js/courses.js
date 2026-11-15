@@ -18,7 +18,7 @@
            'match'  match pairs: pairs is a list of [left, right]
            'code'   coding puzzle: grid is a list of rows ('S' Saqr, 'G' goal, '#' rock, '.' sand);
                     blocks lists the blocks offered ('U', 'D', 'L', 'R' and repeat blocks 'x2'...'x5');
-                    max (optional) is the most blocks allowed
+                    max (optional) is the most blocks allowed; start (optional) is a program to fix
      say   optional word Saqr says out loud (phonics: "listen, then choose"); shown as text if the
            device has no voice
      show  optional big word, letter or sum shown under the question
@@ -128,6 +128,8 @@
   var LETTERS = { en: 'How many letters are in this word?', ar: 'كم حرفًا في هذه الكلمة؟' };
   var CODE = { en: 'Build a program to fly Saqr to the palm tree, then press Run.', ar: 'ابنِ برنامجًا يوصل صقرًا إلى النخلة، ثم اضغط «شغّل».' };
   var ARROWS = ['U', 'D', 'L', 'R'];
+  var FIX = { en: 'This program has a bug! Fix it so Saqr reaches the palm tree, then press Run.', ar: 'في هذا البرنامج خطأ! أصلحه ليصل صقر إلى النخلة، ثم اضغط «شغّل».' };
+  function fix(grid, start) { return { kind: 'code', q: FIX, grid: grid, blocks: ARROWS, start: start }; }
   function code(grid, max, extra) { var x = { kind: 'code', q: CODE, grid: grid, blocks: extra ? ARROWS.concat(extra) : ARROWS }; if (max) x.max = max; return x; }
   function hear(word, letters, q) { return { q: q || HEAR_FIRST, say: word, opts: letters }; }
 
@@ -280,7 +282,7 @@
       ]
     },
     {
-      id: 'coding', stickers: ['🧭', '🪜', '🪨', '🔁'], name: { en: 'Coding', ar: 'البرمجة' },
+      id: 'coding', stickers: ['🧭', '🪜', '🪨', '🔁', '🐞', '🚦', '🤖'], name: { en: 'Coding', ar: 'البرمجة' },
       age: { en: 'Ages 5 to 10', ar: 'من 5 إلى 10 سنوات' }, ages: [5, 10],
       color: '#4DB6AC', tint: '#CDEFEA',
       tip: { en: 'Play "robot": your child gives you step-by-step instructions (two steps forward, turn right) to walk to the kitchen.', ar: 'العبا لعبة «الروبوت»: يعطيك طفلك تعليمات خطوة بخطوة (خطوتان إلى الأمام، استدر يمينًا) لتصل إلى المطبخ.' },
@@ -301,7 +303,29 @@
         { id: 'coding-4', title: { en: 'Repeat blocks', ar: 'كتلة التكرار' },
           teach: { en: 'A repeat block does the next step again and again. 🔁3 then ➡️ flies Saqr right three times. Programmers use repeats to keep programs short.', ar: 'كتلة التكرار تعيد الخطوة التالية أكثر من مرة. 🔁3 ثم ➡️ تجعل صقرًا يطير يمينًا ثلاث مرات. يستعمل المبرمجون التكرار ليجعلوا البرامج قصيرة.' },
           hint: { en: 'Count the squares, put that repeat block first, then the arrow.', ar: 'عُدّ المربعات، وضع كتلة التكرار المناسبة أولًا، ثم السهم.' },
-          questions: [code(['S...G'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G....S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G', '.', '.', 'S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['...G', '...', 'S..'], 4, ['x2', 'x3', 'x4', 'x5'])] }
+          questions: [code(['S...G'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G....S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['G', '.', '.', 'S'], 2, ['x2', 'x3', 'x4', 'x5']), code(['...G', '...', 'S..'], 4, ['x2', 'x3', 'x4', 'x5'])] },
+        { id: 'coding-5', title: { en: 'Fix the bug', ar: 'أصلح الخطأ' },
+          teach: { en: 'A bug is a mistake in a program. Programmers find bugs by running the program and watching where it goes wrong. Tap a wrong block to remove it, then add the right one.', ar: 'الخطأ في البرنامج يسمّى «علّة». يجد المبرمجون الأخطاء بتشغيل البرنامج ومراقبة أين يخطئ. اضغط على الكتلة الخاطئة لتحذفها، ثم أضف الصحيحة.' },
+          hint: { en: 'Press Run and watch where Saqr goes wrong. That is the bug.', ar: 'اضغط «شغّل» وراقب أين يخطئ صقر. هناك الخطأ.' },
+          questions: [fix(['S..G'], ['R', 'R']), fix(['S.G'], ['R', 'L']), fix(['.G', 'S.'], ['R', 'R']), fix(['S#.', '..G'], ['R', 'D', 'R'])] },
+        { id: 'coding-6', title: { en: 'If… then…', ar: 'إذا… فإن…' },
+          teach: { en: 'Programs make choices with IF: IF something is true, THEN do this, ELSE do that. For example: IF the light is red, THEN stop, ELSE go.', ar: 'تتّخذ البرامج قرارات باستعمال «إذا»: إذا كان الشيء صحيحًا فافعل هذا، وإلا فافعل ذاك. مثلًا: إذا كانت الإشارة حمراء فتوقّف، وإلا فانطلق.' },
+          hint: { en: 'Read the rule, then look at what is happening now. Is the IF true?', ar: 'اقرأ القاعدة، ثم انظر إلى ما يحدث الآن. هل شرط «إذا» صحيح؟' },
+          questions: [
+            { q: { en: 'Rule: IF the light is red, THEN stop, ELSE go. What does Saqr do?', ar: 'القاعدة: إذا كانت الإشارة حمراء فتوقّف، وإلا فانطلق. ماذا يفعل صقر؟' }, show: '🟢', opts: [{ en: 'go', ar: 'ينطلق' }, { en: 'stop', ar: 'يتوقّف' }, { en: 'sleep', ar: 'ينام' }] },
+            { q: { en: 'Rule: IF it is raining, THEN take an umbrella. What does Saqr do?', ar: 'القاعدة: إذا كانت تمطر فخذ مظلّة. ماذا يفعل صقر؟' }, show: '🌧️', opts: [{ en: 'take an umbrella', ar: 'يأخذ مظلّة' }, { en: 'wear sunglasses', ar: 'يلبس نظّارة شمسية' }, { en: 'go swimming', ar: 'يذهب للسباحة' }] },
+            { q: { en: 'Rule: IF the number is bigger than 5, THEN say "big", ELSE say "small". What does Saqr say?', ar: 'القاعدة: إذا كان العدد أكبر من 5 فقل «كبير»، وإلا فقل «صغير». ماذا يقول صقر؟' }, show: '8', opts: [{ en: 'big', ar: 'كبير' }, { en: 'small', ar: 'صغير' }, { en: 'nothing', ar: 'لا شيء' }] },
+            { q: { en: 'Rule: IF there is a rock ahead, THEN fly up, ELSE fly straight. What does Saqr do?', ar: 'القاعدة: إذا كانت أمامك صخرة فطِر إلى الأعلى، وإلا فطِر مستقيمًا. ماذا يفعل صقر؟' }, show: '🦅 🪨', opts: [{ en: 'fly up', ar: 'يطير إلى الأعلى' }, { en: 'fly straight', ar: 'يطير مستقيمًا' }, { en: 'fly backwards', ar: 'يطير إلى الخلف' }] }
+          ] },
+        { id: 'coding-7', title: { en: 'What is AI?', ar: 'ما الذكاء الاصطناعي؟' },
+          teach: { en: 'AI (artificial intelligence) is a computer program that learns from lots of examples. If we show a robot many pictures of fruit and animals, it learns to tell them apart. But it can only learn what it has seen, so it can make mistakes, and people must check it.', ar: 'الذكاء الاصطناعي برنامج حاسوب يتعلّم من أمثلة كثيرة. إذا أرينا روبوتًا صورًا كثيرة لفواكه وحيوانات، يتعلّم أن يفرّق بينها. لكنه يتعلّم فقط مما رآه، لذلك قد يخطئ، ويجب أن يتحقّق منه الناس.' },
+          hint: { en: 'Think: what examples did the robot see?', ar: 'فكّر: ما الأمثلة التي رآها الروبوت؟' },
+          questions: [
+            { q: { en: 'The robot learned that 🍎🍌🍇 are fruit and 🐱🐶🐟 are animals. What will it say about this?', ar: 'تعلّم الروبوت أن 🍎🍌🍇 فواكه وأن 🐱🐶🐟 حيوانات. ماذا سيقول عن هذا؟' }, show: '🍊', opts: [{ en: 'fruit', ar: 'فاكهة' }, { en: 'animal', ar: 'حيوان' }, { en: 'a car', ar: 'سيارة' }] },
+            { q: { en: 'We want the robot to find cats in photos. What should we show it first?', ar: 'نريد أن يجد الروبوت القطط في الصور. ماذا نريه أولًا؟' }, opts: [{ en: 'many pictures of cats', ar: 'صورًا كثيرة للقطط' }, { en: 'one picture of a shoe', ar: 'صورة حذاء واحدة' }, { en: 'nothing at all', ar: 'لا شيء' }] },
+            { q: { en: 'The robot only ever saw red apples. Now it sees a green apple and is not sure. Why?', ar: 'رأى الروبوت تفاحًا أحمر فقط. والآن يرى تفاحة خضراء ولا يعرفها. لماذا؟' }, show: '🍏', opts: [{ en: 'it never saw green apples', ar: 'لم يرَ تفاحًا أخضر من قبل' }, { en: 'it is hungry', ar: 'لأنه جائع' }, { en: 'green is not a colour', ar: 'لأن الأخضر ليس لونًا' }] },
+            { q: { en: 'Is AI always right?', ar: 'هل الذكاء الاصطناعي دائمًا على صواب؟' }, opts: [{ en: 'No, it can make mistakes, so people check it', ar: 'لا، قد يخطئ، لذلك يتحقّق منه الناس' }, { en: 'Yes, always', ar: 'نعم، دائمًا' }, { en: 'Only on Fridays', ar: 'فقط يوم الجمعة' }] }
+          ] }
       ]
     },
     {
@@ -959,7 +983,7 @@
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
     'arabic-7': 1, 'arabic-8': 1, 'arabic-9': 2, 'arabic-10': 3,
     'art-7': 1, 'art-8': 2, 'art-9': 2, 'art-10': 3,
-    'coding-1': 1, 'coding-2': 1, 'coding-3': 2, 'coding-4': 2,
+    'coding-1': 1, 'coding-2': 1, 'coding-3': 2, 'coding-4': 2, 'coding-7': 2, 'coding-5': 3, 'coding-6': 3,
     'art-11': 1, 'art-12': 1, 'art-13': 2, 'art-14': 2, 'art-15': 3,
     'phonics-21': 2, 'phonics-23': 2, 'phonics-22': 3, 'phonics-24': 3, 'phonics-25': 3,
     'phonics-26': 2, 'phonics-29': 2, 'phonics-27': 3, 'phonics-28': 3, 'phonics-30': 3,
