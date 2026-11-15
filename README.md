@@ -119,6 +119,15 @@ To change the Souq Dash goods, prices or wording, edit the `souqDash(...)` line 
 - **Letter Catch:** playable in English and Arabic letters. It speaks the word with the voices installed on the device; with no voice, the word is still shown on screen. Stars reset when the page is reloaded.
 - **Souq Dash:** playable. The score and best score reset when the page is reloaded, and its points are not added to the progress bar.
 
+## Lesson editor
+
+In the Family report, **Lesson editor** lets a parent or teacher add lessons with a form: choose the
+course and level, write the title, the short idea to learn and a hint, then four questions with one
+right and two wrong answers, in English, Arabic or both (an empty language copies the other).
+"Save and try" adds the lesson to its course and the journey (with a ✏️ sticker). Lessons are saved in
+this browser (`sadu-custom-v1`); **Export my lessons** saves them to a file and **Import lessons** loads a
+file, so they can be moved to another device or shared.
+
 ## Install like an app
 
 Once the site is online (over https), phones and computers offer to install Sadu: it gets its own

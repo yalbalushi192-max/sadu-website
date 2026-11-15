@@ -597,3 +597,21 @@ html[lang=ar] .cert-title{font-family:'Baloo Bhaijaan 2',sans-serif}
 .cert-seal svg{width:72px;height:72px}
 @media print{.cert-page{max-width:none}.cert{box-shadow:none}}
 @media (max-width:560px){.cert-foot{flex-direction:column;align-items:center}}
+
+/* ---------- lesson editor ---------- */
+.editor{max-width:900px}
+.ed-msg{padding:10px 16px;border-radius:var(--r-md);background:var(--amber-soft);color:var(--ink);font-weight:800}
+.ed-list li{align-items:center}
+.ed-form{display:flex;flex-direction:column;gap:18px}
+.ed-pair{display:flex;flex-direction:column;gap:6px}
+.ed-label{font-size:15px}
+.ed-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ed-field{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:800;color:var(--muted)}
+.ed-field .input{font-size:16px;font-weight:600}
+textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
+.ed-q{border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column;gap:12px;margin:0}
+.ed-q legend{padding:0 6px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip-btn{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:800;color:var(--ink-2)}
+.chip-btn.on{background:var(--ink);color:#FFFFFF;border-color:var(--ink)}
+@media (max-width:560px){.ed-two{grid-template-columns:1fr}}

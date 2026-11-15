@@ -302,6 +302,52 @@
 </section>
 </sc-if>
 
+<!-- EDITOR: parents and teachers add their own lessons -->
+<sc-if value="{{ isEditor }}">
+<section class="page editor">
+<header class="page-head">
+<h1 class="h1">✏️ {{ t.edTitle }}</h1>
+<p class="lead">{{ ed.intro }}</p>
+</header>
+<sc-if value="{{ ed.hasMsg }}"><p class="ed-msg" role="alert">{{ ed.msg }}</p></sc-if>
+
+<sc-if value="{{ ed.notEditing }}">
+<div class="card">
+<h2 class="h3 card-title">{{ t.edMine }}</h2>
+<sc-if value="{{ ed.noList }}"><p class="empty">{{ t.edNone }}</p></sc-if>
+<ul class="lines ed-list"><sc-for list="{{ ed.list }}" as="el"><li>
+<span><b>{{ el.title }}</b> <span class="small muted">{{ el.meta }}</span></span>
+<span class="actions">
+<sc-if value="{{ el.notAsking }}"><button type="button" class="btn ghost" onclick="{{ el.tryIt }}">{{ t.edTry }}</button><button type="button" class="btn ghost" onclick="{{ el.edit }}">{{ t.edEdit }}</button><button type="button" class="btn ghost" onclick="{{ el.ask }}">{{ t.edDelete }}</button></sc-if>
+<sc-if value="{{ el.asking }}"><span class="confirm">{{ t.edSure }}</span><button type="button" class="btn danger" onclick="{{ el.del }}">{{ t.edYes }}</button><button type="button" class="btn ghost" onclick="{{ el.cancel }}">{{ t.cancel }}</button></sc-if>
+</span>
+</li></sc-for></ul>
+<div class="actions"><button type="button" class="btn primary" onclick="{{ ed.start }}">+ {{ t.edNew }}</button></div>
+</div>
+<div class="actions">
+<button type="button" class="btn secondary" onclick="{{ ed.exportIt }}">{{ t.edExport }}</button>
+<label class="btn secondary"><input type="file" accept="application/json,.json" class="file" onchange="{{ ed.importIt }}">{{ t.edImport }}</label>
+</div>
+</sc-if>
+
+<sc-if value="{{ ed.editing }}">
+<div class="card ed-form">
+<div class="ed-pair"><b class="ed-label">{{ t.edCourse }}</b><div class="chip-row"><sc-for list="{{ ed.courses }}" as="c"><button type="button" class="{{ c.cls }}" onclick="{{ c.set }}" aria-pressed="{{ c.pressed }}">{{ c.label }}</button></sc-for></div></div>
+<div class="ed-pair"><b class="ed-label">{{ t.edLevel }}</b><div class="chip-row"><sc-for list="{{ ed.levels }}" as="c"><button type="button" class="{{ c.cls }}" onclick="{{ c.set }}" aria-pressed="{{ c.pressed }}">{{ c.label }}</button></sc-for></div></div>
+<div class="ed-pair"><b class="ed-label">{{ t.edTitleF }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-title-en" class="input" type="text" dir="ltr" data-path="title.en" value="{{ ed.d.title.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-title-ar" class="input" type="text" dir="rtl" data-path="title.ar" value="{{ ed.d.title.ar }}" oninput="{{ ed.input }}"></label></div></div><div class="ed-pair"><b class="ed-label">{{ t.edTeach }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><textarea id="ed-teach-en" class="input" rows="3" dir="ltr" data-path="teach.en" oninput="{{ ed.input }}">{{ ed.d.teach.en }}</textarea></label><label class="ed-field"><span>{{ t.edAr }}</span><textarea id="ed-teach-ar" class="input" rows="3" dir="rtl" data-path="teach.ar" oninput="{{ ed.input }}">{{ ed.d.teach.ar }}</textarea></label></div></div><div class="ed-pair"><b class="ed-label">{{ t.edHint }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-hint-en" class="input" type="text" dir="ltr" data-path="hint.en" value="{{ ed.d.hint.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-hint-ar" class="input" type="text" dir="rtl" data-path="hint.ar" value="{{ ed.d.hint.ar }}" oninput="{{ ed.input }}"></label></div></div>
+<sc-for list="{{ ed.qs }}" as="eq">
+<fieldset class="ed-q"><legend class="h3">{{ eq.n }}</legend>
+<div class="ed-pair"><b class="ed-label">{{ t.edQText }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-q{{ eq.i }}-q-en" class="input" type="text" dir="ltr" data-path="questions.{{ eq.i }}.q.en" value="{{ eq.q.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-q{{ eq.i }}-q-ar" class="input" type="text" dir="rtl" data-path="questions.{{ eq.i }}.q.ar" value="{{ eq.q.ar }}" oninput="{{ ed.input }}"></label></div></div>
+<label class="ed-field"><span>{{ t.edShow }}</span><input id="ed-q{{ eq.i }}-show" class="input" type="text" dir="auto" data-path="questions.{{ eq.i }}.show" value="{{ eq.q.show }}" oninput="{{ ed.input }}"></label>
+<div class="ed-pair"><b class="ed-label">✅ {{ t.edRight }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-q{{ eq.i }}-o0-en" class="input" type="text" dir="ltr" data-path="questions.{{ eq.i }}.opts.0.en" value="{{ eq.o0.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-q{{ eq.i }}-o0-ar" class="input" type="text" dir="rtl" data-path="questions.{{ eq.i }}.opts.0.ar" value="{{ eq.o0.ar }}" oninput="{{ ed.input }}"></label></div></div><div class="ed-pair"><b class="ed-label">{{ t.edWrong1 }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-q{{ eq.i }}-o1-en" class="input" type="text" dir="ltr" data-path="questions.{{ eq.i }}.opts.1.en" value="{{ eq.o1.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-q{{ eq.i }}-o1-ar" class="input" type="text" dir="rtl" data-path="questions.{{ eq.i }}.opts.1.ar" value="{{ eq.o1.ar }}" oninput="{{ ed.input }}"></label></div></div><div class="ed-pair"><b class="ed-label">{{ t.edWrong2 }}</b><div class="ed-two"><label class="ed-field"><span>{{ t.edEn }}</span><input id="ed-q{{ eq.i }}-o2-en" class="input" type="text" dir="ltr" data-path="questions.{{ eq.i }}.opts.2.en" value="{{ eq.o2.en }}" oninput="{{ ed.input }}"></label><label class="ed-field"><span>{{ t.edAr }}</span><input id="ed-q{{ eq.i }}-o2-ar" class="input" type="text" dir="rtl" data-path="questions.{{ eq.i }}.opts.2.ar" value="{{ eq.o2.ar }}" oninput="{{ ed.input }}"></label></div></div>
+</fieldset>
+</sc-for>
+<div class="actions"><button type="button" class="btn primary lg" onclick="{{ ed.save }}">{{ t.edSave }}</button><button type="button" class="btn ghost lg" onclick="{{ ed.cancel }}">{{ t.edCancel }}</button></div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
 <!-- CERTIFICATE: printable, for a finished level or course -->
 <sc-if value="{{ isCert }}">
 <section class="page cert-page" style="--c: {{ cert.color }}; --t: {{ cert.tint }}">
@@ -764,6 +810,7 @@
 
 <div class="actions no-print">
 <button type="button" class="btn secondary" onclick="{{ r.print }}">{{ t.print }}</button>
+<button type="button" class="btn secondary" onclick="{{ goEditor }}">✏️ {{ t.edBtn }}</button>
 <sc-if value="{{ r_remove.can }}"><button type="button" class="btn ghost" onclick="{{ r_remove.ask }}">{{ t.removeChild }}</button></sc-if>
 <sc-if value="{{ r_remove.asking }}"><span role="alert" class="confirm">{{ t.removeSure }}</span><button type="button" class="btn danger" onclick="{{ r_remove.yes }}">{{ t.yesRemove }}</button><button type="button" class="btn ghost" onclick="{{ r_remove.cancel }}">{{ t.cancel }}</button></sc-if>
 <sc-if value="{{ r.notConfirming }}"><button type="button" class="btn ghost" onclick="{{ r.askReset }}">{{ t.reset }}</button></sc-if>

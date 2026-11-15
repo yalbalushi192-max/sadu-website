@@ -70,6 +70,13 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      edTitle: 'Lesson editor', edBtn: 'Lesson editor', edIntro: 'Add your own lessons with a form. They are saved on this device and appear in the course and on the journey. Export them to keep a copy or share them.',
+      edNew: 'New lesson', edEdit: 'Edit', edTry: 'Try', edDelete: 'Delete', edSure: 'Delete this lesson?', edYes: 'Yes, delete', edNone: 'No lessons of your own yet.',
+      edCourse: 'Course', edLevel: 'Level', edTitleF: 'Lesson title', edTeach: 'What to learn (a short explanation)', edHint: 'Hint after a wrong answer',
+      edQ: 'Question %A', edQText: 'Question', edShow: 'Big word or sum to show (optional)', edRight: 'Right answer', edWrong1: 'Wrong answer 1', edWrong2: 'Wrong answer 2',
+      edEn: 'English', edAr: 'Arabic', edSave: 'Save and try', edCancel: 'Cancel', edExport: 'Export my lessons', edImport: 'Import lessons',
+      edMissing: 'Please fill in a title and, for every question, the question and three different answers (in English or Arabic).',
+      edSaved: 'Saved!', edImported: '%A lessons imported.', edBadFile: 'This file does not contain Sadu lessons.', edMine: 'Your lessons',
       certTitle: 'Certificate of achievement', certAwarded: 'This certificate is proudly given to', certFor: 'for completing',
       certLevelOf: '%L of %C', certCourse: 'the whole %C course', certSigned: 'Parent or teacher', certBtn: 'Certificate',
       certGet: 'Get your certificate', certPrint: 'Print the certificate', certStars: '%A stars earned', certLevelDone: 'You finished %L!', certCourseDone: 'You finished the whole course!',
@@ -149,6 +156,13 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      edTitle: 'محرّر الدروس', edBtn: 'محرّر الدروس', edIntro: 'أضف دروسك الخاصة عبر نموذج بسيط. تُحفظ على هذا الجهاز وتظهر في الدورة وفي الرحلة. صدّرها لتحتفظ بنسخة أو تشاركها.',
+      edNew: 'درس جديد', edEdit: 'تعديل', edTry: 'جرّب', edDelete: 'حذف', edSure: 'هل تريد حذف هذا الدرس؟', edYes: 'نعم، احذف', edNone: 'لا توجد دروس خاصة بك بعد.',
+      edCourse: 'الدورة', edLevel: 'المستوى', edTitleF: 'عنوان الدرس', edTeach: 'ماذا نتعلّم (شرح قصير)', edHint: 'تلميح بعد الإجابة الخاطئة',
+      edQ: 'السؤال %A', edQText: 'السؤال', edShow: 'كلمة أو عملية كبيرة تظهر (اختياري)', edRight: 'الإجابة الصحيحة', edWrong1: 'إجابة خاطئة 1', edWrong2: 'إجابة خاطئة 2',
+      edEn: 'بالإنجليزية', edAr: 'بالعربية', edSave: 'احفظ وجرّب', edCancel: 'إلغاء', edExport: 'صدّر دروسي', edImport: 'استورد دروسًا',
+      edMissing: 'املأ العنوان، ولكل سؤال: نص السؤال وثلاث إجابات مختلفة (بالإنجليزية أو العربية).',
+      edSaved: 'تم الحفظ!', edImported: 'تم استيراد %A دروس.', edBadFile: 'هذا الملف لا يحتوي على دروس سدو.', edMine: 'دروسك',
       certTitle: 'شهادة إنجاز', certAwarded: 'تُمنح هذه الشهادة بكل فخر إلى', certFor: 'لإتمام',
       certLevelOf: '%L في %C', certCourse: 'دورة %C كاملة', certSigned: 'وليّ الأمر أو المعلّم', certBtn: 'الشهادة',
       certGet: 'احصل على شهادتك', certPrint: 'اطبع الشهادة', certStars: 'حصلت على %A نجمة', certLevelDone: 'أنهيت %L!', certCourseDone: 'أنهيت الدورة كاملة!',
@@ -196,6 +210,21 @@
   // a calendar day on this device, like 2026-11-15
   function dayKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function clock(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
+
+  // ---- lessons made in the lesson editor (same format as js/courses.js, kept in localStorage) ----
+  var CUSTOM_KEY = 'sadu-custom-v1';
+  function loadCustom() { try { var c = JSON.parse(localStorage.getItem(CUSTOM_KEY)); if (c && c.lessons) return c; } catch (e) {} return { lessons: [] }; }
+  function saveCustom(c) { try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(c)); } catch (e) {} }
+  function mergeCustom() {
+    COURSES.forEach(function (c) { c.lessons = c.lessons.filter(function (l) { return !l.custom; }); });
+    loadCustom().lessons.forEach(function (cl) {
+      var course = COURSES.filter(function (c) { return c.id === cl.course; })[0];
+      if (!course) return;
+      course.lessons.push({ id: cl.id, custom: true, sticker: '✏️', level: cl.level || 1, title: cl.title, teach: cl.teach, hint: cl.hint,
+        questions: cl.questions.map(function (q) { var x = { q: q.q, opts: q.opts }; if (q.show) x.show = q.show; return x; }) });
+    });
+  }
+  mergeCustom();
 
   // ---- child profiles ----
   function keyFor(id) { return id === 'p1' ? KEY : KEY + ':' + id; }
@@ -375,7 +404,7 @@
   }
 
   // ---- stickers: one per lesson (from the course's list) and one per story ----
-  function stickerOf(ci, li) { var st = COURSES[ci].stickers; return st && st.length ? st[li % st.length] : '⭐'; }
+  function stickerOf(ci, li) { var l = COURSES[ci].lessons[li], st = COURSES[ci].stickers; return l && l.sticker ? l.sticker : st && st.length ? st[li % st.length] : '⭐'; }
 
   // ---- age: which courses suit the child (age 0 or unset = show everything) ----
   function fitsAge(c, age) { return !age || age > 10 || !c.ages || (age >= c.ages[0] && age <= c.ages[1]); }
@@ -616,6 +645,7 @@
         isHome: s.view === 'home', isCourse: s.view === 'course', isLesson: s.view === 'lesson', isReport: s.view === 'report',
         isStories: s.view === 'stories', isStory: s.view === 'story', storiesOn: s.view === 'stories' || s.view === 'story' ? 'page' : 'false',
         goStories: function () { self.go('stories'); },
+        isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isCert: s.view === 'cert',
         isWorksheet: s.view === 'worksheet', isJourney: s.view === 'journey', journeyOn: s.view === 'journey' ? 'page' : 'false',
         goJourney: function () { self.go('journey'); },
@@ -813,6 +843,78 @@
           self._keys = { opts: [], next: allDone ? null : go };
         }
       })();
+
+      // ---- lesson editor ----
+      if (s.view === 'editor') {
+        var custom = loadCustom(), both = function (v) { return { en: (v.en || v.ar || '').trim(), ar: (v.ar || v.en || '').trim() }; };
+        var blank = function () { return { id: '', course: COURSES[0].id, level: 1, title: { en: '', ar: '' }, teach: { en: '', ar: '' }, hint: { en: '', ar: '' },
+          questions: [0, 1, 2, 3].map(function () { return { q: { en: '', ar: '' }, show: '', opts: [{ en: '', ar: '' }, { en: '', ar: '' }, { en: '', ar: '' }] }; }) }; };
+        var d = self._draft;
+        out.ed = {
+          intro: T.edIntro, editing: !!d, notEditing: !d, msg: s.edMsg || '', hasMsg: !!s.edMsg,
+          list: custom.lessons.map(function (cl) {
+            var c = COURSES.filter(function (x) { return x.id === cl.course; })[0];
+            return { title: tx(cl.title), meta: (c ? tx(c.name) : cl.course) + ' · ' + T.levelNames[cl.level || 1], asking: s.edAsk === cl.id, notAsking: s.edAsk !== cl.id,
+              edit: function () { self._draft = JSON.parse(JSON.stringify(cl)); self.setState({ edMsg: '', edAsk: null }); window.scrollTo(0, 0); },
+              tryIt: function () { var ci = COURSES.findIndex(function (x) { return x.id === cl.course; }), li = COURSES[ci].lessons.findIndex(function (l) { return l.id === cl.id; }); self.startLesson(ci, li); },
+              ask: function () { self.setState({ edAsk: cl.id }); },
+              cancel: function () { self.setState({ edAsk: null }); },
+              del: function () { var c2 = loadCustom(); c2.lessons = c2.lessons.filter(function (x) { return x.id !== cl.id; }); saveCustom(c2); mergeCustom(); self.setState({ edAsk: null }); } };
+          }),
+          hasList: custom.lessons.length > 0, noList: custom.lessons.length === 0,
+          start: function () { self._draft = blank(); self.setState({ edMsg: '' }); },
+          cancel: function () { self._draft = null; self.setState({ edMsg: '' }); },
+          // typing goes straight into the draft; the page is not redrawn under the keyboard
+          input: function (e) {
+            var path = e.target.getAttribute('data-path').split('.'), o = self._draft;
+            for (var i = 0; i < path.length - 1; i++) o = o[path[i]];
+            o[path[path.length - 1]] = e.target.value;
+          },
+          save: function () {
+            var dr = self._draft, ok = (dr.title.en || dr.title.ar).trim() && dr.questions.every(function (q) {
+              var a = q.opts.map(function (o) { return (o.en || o.ar || '').trim(); });
+              return (q.q.en || q.q.ar).trim() && a.every(Boolean) && new Set(a).size === 3;
+            });
+            if (!ok) { self.setState({ edMsg: T.edMissing }); return; }
+            var clean = { id: dr.id || 'custom-' + Date.now().toString(36), course: dr.course, level: +dr.level || 1,
+              title: both(dr.title), teach: both(dr.teach), hint: both(dr.hint),
+              questions: dr.questions.map(function (q) { return { q: both(q.q), show: (q.show || '').trim(), opts: q.opts.map(both) }; }) };
+            var c2 = loadCustom(), at = c2.lessons.findIndex(function (x) { return x.id === clean.id; });
+            if (at >= 0) c2.lessons[at] = clean; else c2.lessons.push(clean);
+            saveCustom(c2); mergeCustom(); self._draft = null; sfx('right');
+            var ci = COURSES.findIndex(function (x) { return x.id === clean.course; }), li = COURSES[ci].lessons.findIndex(function (l) { return l.id === clean.id; });
+            self.startLesson(ci, li);
+          },
+          exportIt: function () {
+            var blob = new Blob([JSON.stringify(loadCustom(), null, 2)], { type: 'application/json' }), a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = 'sadu-lessons.json'; document.body.appendChild(a); a.click(); a.remove();
+          },
+          importIt: function (e) {
+            var f = e.target.files && e.target.files[0]; if (!f) return;
+            f.text().then(function (txt) {
+              var got; try { got = JSON.parse(txt); } catch (er) { got = null; }
+              if (!got || !Array.isArray(got.lessons)) { self.setState({ edMsg: T.edBadFile }); return; }
+              var c2 = loadCustom(), n = 0;
+              got.lessons.forEach(function (cl) {
+                if (!cl || !cl.title || !Array.isArray(cl.questions) || !COURSES.some(function (c) { return c.id === cl.course; })) return;
+                cl.id = /^custom-/.test(cl.id || '') ? cl.id : 'custom-' + Date.now().toString(36) + n;
+                var at = c2.lessons.findIndex(function (x) { return x.id === cl.id; }); if (at >= 0) c2.lessons[at] = cl; else c2.lessons.push(cl); n++;
+              });
+              saveCustom(c2); mergeCustom(); self.setState({ edMsg: fill(T.edImported, { A: n }) });
+            });
+          }
+        };
+        if (d) {
+          out.ed.courses = COURSES.map(function (c) { return { label: tx(c.name), cls: c.id === d.course ? 'chip-btn on' : 'chip-btn', pressed: c.id === d.course ? 'true' : 'false',
+            set: function () { d.course = c.id; self.setState({}); } }; });
+          out.ed.levels = [1, 2, 3].map(function (lv) { return { label: T.levelNames[lv], cls: lv === +d.level ? 'chip-btn on' : 'chip-btn', pressed: lv === +d.level ? 'true' : 'false',
+            set: function () { d.level = lv; self.setState({}); } }; });
+          out.ed.d = d;
+          out.ed.qs = d.questions.map(function (q, i) {
+            return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
+          });
+        }
+      }
 
       // ---- certificate ----
       if (s.view === 'cert') {
