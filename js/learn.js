@@ -70,6 +70,12 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      tlTitle: 'Daily time limit', tlText: 'Sadu suggests a break when today\'s time is up. A lesson in progress can always be finished.', tlOff: 'Off', tlMin: '%A min',
+      tlUsed: 'Used today: %A min', tlUsedOf: 'Used today: %A of %B min',
+      rsTitle: 'Time for a break!', rsSaqr: 'Great learning today, %N! Your brain grows while you rest too. Let\'s do something else for a while.',
+      rsIdeas: ['🤸 Stretch up high and touch your toes', '💧 Drink some water', '🎨 Draw what you learned today', '🌳 Play outside or help at home', '📖 Look at a book with someone you love'],
+      rsMore: 'For grown-ups: more time', rsMoreTitle: 'More time today', rsMoreText: 'Add extra minutes for today only. Tomorrow the normal limit starts again.', rsAdd: '+%A minutes',
+      rsSee: 'See you tomorrow!',
       navVibe: 'Make a game', vbTitle: 'Make your own game', vbIntro: 'Tell Saqr your game idea and Claude will build it for you to play. Then ask for changes to make it even better!',
       vbIdeas: ['Saqr catches falling dates in a basket', 'Pop the balloons that show the number 7', 'Help a camel find the way through a maze', 'Match each animal to its sound', 'Catch the letters that spell CAT'],
       vbPrompt: 'Your game idea', vbPromptPh: 'For example: a falcon flies over the desert and collects stars', vbMake: 'Make my game',
@@ -209,6 +215,12 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      tlTitle: 'الحد اليومي للوقت', tlText: 'يقترح سدو استراحة عندما ينتهي وقت اليوم. يمكن دائمًا إكمال الدرس الذي بدأه الطفل.', tlOff: 'إيقاف', tlMin: '%A دقيقة',
+      tlUsed: 'المستخدم اليوم: %A دقيقة', tlUsedOf: 'المستخدم اليوم: %A من %B دقيقة',
+      rsTitle: 'وقت الاستراحة!', rsSaqr: 'تعلّمت كثيرًا اليوم يا %N! عقلك ينمو وأنت ترتاح أيضًا. لنفعل شيئًا آخر قليلًا.',
+      rsIdeas: ['🤸 تمدّد للأعلى ثم المس أصابع قدميك', '💧 اشرب بعض الماء', '🎨 ارسم ما تعلّمته اليوم', '🌳 العب في الخارج أو ساعد في البيت', '📖 تصفّح كتابًا مع من تحب'],
+      rsMore: 'للكبار: وقت إضافي', rsMoreTitle: 'وقت إضافي اليوم', rsMoreText: 'أضف دقائق لليوم فقط. غدًا يبدأ الحد المعتاد من جديد.', rsAdd: '+%A دقيقة',
+      rsSee: 'نراك غدًا!',
       navVibe: 'اصنع لعبة', vbTitle: 'اصنع لعبتك', vbIntro: 'أخبر صقرًا بفكرة لعبتك وسيبنيها Claude لتلعبها. ثم اطلب تغييرات لتصبح أجمل!',
       vbIdeas: ['صقر يلتقط التمر المتساقط في سلة', 'فرقع البالونات التي عليها الرقم 7', 'ساعد الجمل في الخروج من المتاهة', 'طابق كل حيوان مع صوته', 'التقط حروف كلمة قطة'],
       vbPrompt: 'فكرة لعبتك', vbPromptPh: 'مثلًا: صقر يطير فوق الصحراء ويجمع النجوم', vbMake: 'اصنع لعبتي',
@@ -360,7 +372,15 @@
   }
 
   // pages for parents and teachers only
-  var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next', 'vibeset'];
+  var PARENT_VIEWS = ['report', 'week', 'editor', 'video', 'next', 'vibeset', 'restmore'];
+  // ---- break timer: time on screen per day (useSecs), the parent's daily limit and today's extra minutes ----
+  var FREE_VIEWS = PARENT_VIEWS.concat(['gate', 'rest', 'who', 'worksheet', 'cert']);
+  function usedSecs(data) { return ((data.useSecs || {})[dayKey(new Date())]) || 0; }
+  function overLimit(data) {
+    if (!data || !data.limit) return false;
+    var extra = ((data.extraMin || {})[dayKey(new Date())]) || 0;
+    return usedSecs(data) >= (data.limit + extra) * 60;
+  }
   // ---- Vibe Studio: games made by Claude Fable 5.2 through the helper in server/vibe-worker.js ----
   var VIBE_CFG_KEY = 'sadu-vibe-cfg', VIBE_GAMES_KEY = 'sadu-vibe-games-v1';
   // the game runs in a sandboxed frame (scripts only, no access to Sadu) and this rule blocks all network use
@@ -800,6 +820,18 @@
       this.state = { view: location.hash === '#report' ? 'gate' : profiles.list.length > 1 ? 'who' : 'journey',
         gate: location.hash === '#report' ? { view: 'report', extra: {}, a: 7, b: 8, wrong: false } : null, ci: 0, ls: null, data: load(), confirming: false };
       var self = this;
+      if (overLimit(this.state.data) && FREE_VIEWS.indexOf(this.state.view) === -1) this.state.view = 'rest';
+      // count time on screen every 15 seconds while a child page is showing
+      setInterval(function () {
+        var st = self.state, v = st.view;
+        if (document.hidden || FREE_VIEWS.indexOf(v) !== -1) return;
+        var d = st.data, k = dayKey(new Date());
+        d.useSecs = d.useSecs || {}; d.useSecs[k] = (d.useSecs[k] || 0) + 15;
+        Object.keys(d.useSecs).forEach(function (key) { if (key < dayKey(new Date(Date.now() - 40 * 864e5))) delete d.useSecs[key]; });
+        save(d);
+        // a lesson in progress is finished first; the break comes on the next page
+        if (overLimit(d) && !(v === 'lesson' && st.ls && st.ls.step !== 'done')) self.go('rest');
+      }, 15000);
       if (SPEECH) speechSynthesis.addEventListener('voiceschanged', function () { self.setState({}); });
       // keyboard: 1, 2, 3 pick an answer; Enter moves on
       document.addEventListener('keydown', function (e) {
@@ -813,6 +845,7 @@
     go(view, extra) {
       clearTimeout(this._vdTimer);
       if (view === 'vibe' && this.state.view === 'vibeset') this.state.vb = { status: 'idle' };
+      if (FREE_VIEWS.indexOf(view) === -1 && overLimit((extra && extra.data) || this.state.data)) { view = 'rest'; extra = {}; }
       if (PARENT_VIEWS.indexOf(view) !== -1 && !(this._grownUntil > Date.now())) {
         var a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
         extra = { gate: { view: view, extra: extra || {}, a: a, b: b, wrong: false } }; view = 'gate';
@@ -950,7 +983,24 @@
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
-        isVibeSet: s.view === 'vibeset',
+        isVibeSet: s.view === 'vibeset', isRest: s.view === 'rest', isRestMore: s.view === 'restmore',
+        rest: {
+          saqr: fill(T.rsSaqr, { N: data.name || '' }), ideas: T.rsIdeas,
+          more: function () { self.go('restmore'); },
+          adds: [10, 20].map(function (n) { return { label: fill(T.rsAdd, { A: n }), add: function () {
+            var d = Object.assign({}, self.state.data), k = dayKey(new Date());
+            d.extraMin = {}; d.extraMin[k] = (((self.state.data.extraMin || {})[k]) || 0) + n;
+            save(d); sfx('pop'); self.go('journey', { data: d });
+          } }; })
+        },
+        limit: {
+          used: data.limit ? fill(T.tlUsedOf, { A: Math.floor(usedSecs(data) / 60), B: data.limit + (((data.extraMin || {})[dayKey(new Date())]) || 0) }) : fill(T.tlUsed, { A: Math.floor(usedSecs(data) / 60) }),
+          choices: [0, 15, 20, 30, 45, 60].map(function (m) {
+            var on = (data.limit || 0) === m;
+            return { label: m ? fill(T.tlMin, { A: m }) : T.tlOff, cls: on ? 'chip-btn on' : 'chip-btn', pressed: on ? 'true' : 'false',
+              set: function () { var d = Object.assign({}, self.state.data, { limit: m || undefined }); save(d); sfx('tap'); self.setState({ data: d }); } };
+          })
+        },
         isNext: s.view === 'next', goNext: function () { self.go('next'); },
         isAI: s.view === 'ailab', aiOn: s.view === 'ailab' ? 'page' : 'false', goAI: function () { self.go('ailab'); },
         isVideo: s.view === 'video', goVideo: function () { self.go('video'); },

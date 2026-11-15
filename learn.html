@@ -385,6 +385,26 @@
 </section>
 </sc-if>
 
+<!-- REST: the daily time limit is reached -->
+<sc-if value="{{ isRest }}">
+<section class="page rest-page">
+<div class="card rest-card">
+<svg class="saqr cheer rest-saqr" viewBox="0 0 120 120" aria-hidden="true"><use href="#saqr"/></svg>
+<h1 class="h1">🌙 {{ t.rsTitle }}</h1>
+<p class="lead">{{ rest.saqr }}</p>
+<ul class="rest-list"><sc-for list="{{ rest.ideas }}" as="i"><li>{{ i }}</li></sc-for></ul>
+<p><b>{{ t.rsSee }}</b></p>
+<div class="actions center"><button type="button" class="btn ghost" onclick="{{ rest.more }}">🔒 {{ t.rsMore }}</button></div>
+</div>
+</section>
+</sc-if>
+<sc-if value="{{ isRestMore }}">
+<section class="page rest-page">
+<header class="page-head"><h1 class="h1">⏰ {{ t.rsMoreTitle }}</h1><p class="lead">{{ t.rsMoreText }}</p></header>
+<div class="actions"><sc-for list="{{ rest.adds }}" as="a"><button type="button" class="btn primary lg" onclick="{{ a.add }}">{{ a.label }}</button></sc-for></div>
+</section>
+</sc-if>
+
 <!-- VIBE STUDIO: the child describes a game, Claude Fable 5.2 builds it (through server/vibe-worker.js) -->
 <sc-if value="{{ isVibe }}">
 <section class="page vibe-page">
@@ -1044,6 +1064,13 @@
 <sc-if value="{{ r.noRecent }}"><p class="empty">{{ t.rNoRecent }}</p></sc-if>
 </div>
 </div>
+
+<article class="card no-print time-limit">
+<h2 class="h3">⏰ {{ t.tlTitle }}</h2>
+<p class="small muted">{{ t.tlText }}</p>
+<div class="chip-row"><sc-for list="{{ limit.choices }}" as="c"><button type="button" class="{{ c.cls }}" onclick="{{ c.set }}" aria-pressed="{{ c.pressed }}">{{ c.label }}</button></sc-for></div>
+<span class="small">{{ limit.used }}</span>
+</article>
 
 <div class="actions no-print">
 <button type="button" class="btn secondary" onclick="{{ r.print }}">{{ t.print }}</button>
