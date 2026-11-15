@@ -37,6 +37,12 @@ monkey, rabbit, sheep, snake, squirrel, tiger, zebra. Birds: bulbul, crow, duck,
 hummingbird, kingfisher, ostrich, owl, parrot, pigeon, robin, seagull, sparrow, swan, vulture,
 woodpecker.
 
+## My World pictures
+
+The pictures in `media/body/`, `media/food/`, `media/seasons/`, `media/jobs/` and `media/planets/`, used by
+the **My World** course, also come from the **Learn** app by VaibhavCodeClub (same MIT licence as above,
+same note about unknown original sources). The barber picture, marked as coming from Freepik, was left out.
+
 ## Code colours
 
 The colours of typed code in the Coding course are the **Hopscotch** colour scheme by Jan T. Sott

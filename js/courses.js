@@ -103,6 +103,36 @@
     return items.map(function (a) { var flies = BIRDS.indexOf(a) !== -1 && !NO_FLY[a.id]; return { q: Q, img: a.img, show: '', opts: flies ? [YES, NO] : [NO, YES], gloss: a.name }; });
   }
 
+
+  // ---- My World (pictures in media/, from the "Learn" app, see CREDITS.md) ----
+  function pics(dir, items) { return items.map(function (it) { return { id: it[0], img: 'media/' + dir + '/' + it[0] + '.svg', name: { en: it[1], ar: it[2] } }; }); }
+  var FACE = pics('body', [['eye', 'eye', 'عين'], ['ear', 'ear', 'أذن'], ['nose', 'nose', 'أنف'], ['lips', 'lips', 'شفتان'], ['teeth', 'teeth', 'أسنان'], ['tongue', 'tongue', 'لسان'], ['cheek', 'cheek', 'خدّ'], ['chin', 'chin', 'ذقن'], ['hair', 'hair', 'شعر'], ['neck', 'neck', 'رقبة']]);
+  var LIMBS = pics('body', [['arm', 'arm', 'ذراع'], ['elbow', 'elbow', 'مرفق'], ['wrist', 'wrist', 'معصم'], ['palm', 'palm', 'كفّ'], ['fingers', 'fingers', 'أصابع'], ['thumb', 'thumb', 'إبهام'], ['nail', 'nail', 'ظفر'], ['shoulder', 'shoulder', 'كتف'],
+    ['back', 'back', 'ظهر'], ['chest', 'chest', 'صدر'], ['belly', 'belly', 'بطن'], ['leg', 'leg', 'ساق'], ['knee', 'knee', 'ركبة'], ['ankle', 'ankle', 'كاحل'], ['foot', 'foot', 'قدم'], ['toe', 'toe', 'إصبع القدم']]);
+  var FRUITS = pics('food', [['apple', 'apple', 'تفاحة'], ['banana', 'banana', 'موزة'], ['grapes', 'grapes', 'عنب'], ['kiwi', 'kiwi', 'كيوي'], ['orange', 'orange', 'برتقالة'], ['pineapple', 'pineapple', 'أناناس'], ['strawberry', 'strawberry', 'فراولة'], ['watermelon', 'watermelon', 'بطيخ']]);
+  var VEGGIES = pics('food', [['carrot', 'carrot', 'جزر'], ['chilli', 'chilli', 'فلفل حار'], ['eggplant', 'eggplant', 'باذنجان'], ['ginger', 'ginger', 'زنجبيل'], ['okra', 'okra', 'بامية'], ['onion', 'onion', 'بصل'], ['potato', 'potato', 'بطاطا']]);
+  var TOMATO = pics('food', [['tomato', 'tomato', 'طماطم']]);
+  var SEASONS = pics('seasons', [['spring', 'spring', 'الربيع'], ['summer', 'summer', 'الصيف'], ['autumn', 'autumn', 'الخريف'], ['winter', 'winter', 'الشتاء']]);
+  var JOBS = pics('jobs', [['artist', 'artist', 'فنان'], ['author', 'author', 'كاتب'], ['carpenter', 'carpenter', 'نجّار'], ['dentist', 'dentist', 'طبيب أسنان'], ['doctor', 'doctor', 'طبيب'], ['electrician', 'electrician', 'كهربائي'], ['engineer', 'engineer', 'مهندس'],
+    ['farmer', 'farmer', 'مزارع'], ['lawyer', 'lawyer', 'محامٍ'], ['photographer', 'photographer', 'مصوّر'], ['pilot', 'pilot', 'طيّار'], ['police', 'police officer', 'شرطي'], ['teacher', 'teacher', 'معلّم'], ['vet', 'vet', 'طبيب بيطري']]);
+  var SKY = pics('planets', [['sun', 'the Sun', 'الشمس'], ['mercury', 'Mercury', 'عطارد'], ['venus', 'Venus', 'الزهرة'], ['earth', 'Earth', 'الأرض'], ['mars', 'Mars', 'المريخ'], ['jupiter', 'Jupiter', 'المشتري'], ['saturn', 'Saturn', 'زحل'], ['uranus', 'Uranus', 'أورانوس'], ['neptune', 'Neptune', 'نبتون']]);
+  var WHAT_IS = { en: 'What is this?', ar: 'ما هذا؟' }, WHO_JOB = { en: 'What is this job?', ar: 'ما هذه المهنة؟' }, WHICH_SEASON = { en: 'Which season is this?', ar: 'أي فصل هذا؟' }, WHICH_SKY = { en: 'What is its name?', ar: 'ما اسمه؟' };
+  function picQuiz(list, Q) {
+    return function () {
+      return list.slice().sort(function () { return Math.random() - 0.5; }).slice(0, 4).map(function (a) {
+        var wrong = list.filter(function (b) { return b !== a; }).sort(function () { return Math.random() - 0.5; }).slice(0, hard(1, 2, 2));
+        return { q: Q, img: a.img, show: '', opts: [a.name].concat(wrong.map(function (b) { return b.name; })) };
+      });
+    };
+  }
+  function fruitOrVeg() {
+    var FR = { en: 'a fruit', ar: 'فاكهة' }, VG = { en: 'a vegetable', ar: 'خضار' }, Q = { en: 'Is it a fruit or a vegetable?', ar: 'هل هو فاكهة أم خضار؟' };
+    var f = FRUITS.slice().sort(function () { return Math.random() - 0.5; }), v = VEGGIES.slice().sort(function () { return Math.random() - 0.5; });
+    return [f[0], v[0], f[1], v[1]].sort(function () { return Math.random() - 0.5; }).map(function (a) {
+      var isFruit = FRUITS.indexOf(a) !== -1; return { q: Q, img: a.img, show: '', gloss: a.name, opts: isFruit ? [FR, VG] : [VG, FR] };
+    });
+  }
+
   var WHICH_STARTS = { en: 'Which word starts with this letter?', ar: 'أي كلمة تبدأ بهذا الحرف؟' };
   var RHYMES = { en: 'Which word rhymes with this one?', ar: 'أي كلمة لها القافية نفسها؟' };
   var OPPOSITE = { en: 'What is the opposite of this word?', ar: 'ما عكس هذه الكلمة؟' };
@@ -1048,11 +1078,50 @@
           hint: { en: 'Does it have wings? Remember the ostrich!', ar: 'هل له أجنحة؟ تذكّر النعامة!' },
           make: canFly }
       ]
+    },
+    {
+      // pictures from the open-source "Learn" app by VaibhavCodeClub (MIT), see CREDITS.md
+      id: 'world', stickers: ['😀', '💪', '🍎', '🥕', '🌦️', '👩‍⚕️', '🪐'], name: { en: 'My World', ar: 'عالمي' }, age: { en: 'Ages 3 to 8', ar: 'من 3 إلى 8 سنوات' }, ages: [3, 8],
+      color: '#4FB6E0', tint: '#CDEBF7',
+      tip: { en: 'Play "point to your…" at bath time, name fruits at the market, and look at the Moon and bright planets together at night.', ar: 'العبا لعبة «أشر إلى…» وقت الاستحمام، وسمّيا الفواكه في السوق، وتأمّلا القمر والكواكب الساطعة معًا ليلًا.' },
+      icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3.6 9h16.8M3.6 15h16.8M12 3c2.5 2.5 3.6 5.8 3.6 9s-1.1 6.5-3.6 9c-2.5-2.5-3.6-5.8-3.6-9S9.5 5.5 12 3z',
+      lessons: [
+        { id: 'world-1', title: { en: 'My face', ar: 'وجهي' },
+          teach: { en: 'We see with our eyes, hear with our ears, smell with our nose and taste with our tongue. Point to each part of your face as you learn its name!', ar: 'نرى بأعيننا، ونسمع بآذاننا، ونشمّ بأنوفنا، ونتذوّق بألسنتنا. أشر إلى كل جزء من وجهك وأنت تتعلّم اسمه!' },
+          hint: { en: 'Point to that part of your own face. What do you call it?', ar: 'أشر إلى هذا الجزء في وجهك. ماذا تسمّيه؟' },
+          make: picQuiz(FACE, WHAT_IS) },
+        { id: 'world-2', title: { en: 'Arms and legs', ar: 'الذراعان والساقان' },
+          teach: { en: 'Our arms bend at the elbow and our legs bend at the knee. We have five fingers on each hand and five toes on each foot.', ar: 'تنثني أذرعنا عند المرفق، وتنثني سيقاننا عند الركبة. لكل يد خمسة أصابع، ولكل قدم خمسة أصابع.' },
+          hint: { en: 'Find this part on your own body and move it.', ar: 'ابحث عن هذا الجزء في جسمك وحرّكه.' },
+          make: picQuiz(LIMBS, WHAT_IS) },
+        { id: 'world-3', title: { en: 'Fruits and vegetables', ar: 'الفواكه والخضار' },
+          teach: { en: 'Fruits and vegetables keep us healthy and strong. Try to eat many colours every day: red tomatoes, orange carrots, green okra and yellow bananas!', ar: 'الفواكه والخضار تجعلنا أصحّاء وأقوياء. حاول أن تأكل ألوانًا كثيرة كل يوم: طماطم حمراء، وجزرًا برتقاليًا، وبامية خضراء، وموزًا أصفر!' },
+          hint: { en: 'Look at its colour and shape.', ar: 'انظر إلى لونه وشكله.' },
+          make: picQuiz(FRUITS.concat(VEGGIES, TOMATO), WHAT_IS) },
+        { id: 'world-4', title: { en: 'Fruit or vegetable?', ar: 'فاكهة أم خضار؟' },
+          teach: { en: 'Fruits are usually sweet and hold seeds, like apples and grapes. Vegetables are other parts of plants we eat: roots like carrots, bulbs like onions, and pods like okra.', ar: 'الفواكه غالبًا حلوة وفيها بذور، مثل التفاح والعنب. والخضار أجزاء أخرى من النبات نأكلها: جذور مثل الجزر، وأبصال مثل البصل، وقرون مثل البامية.' },
+          hint: { en: 'Is it sweet like a fruit, or is it a root, bulb or pod?', ar: 'هل هو حلو مثل الفاكهة، أم هو جذر أو بصلة أو قرن؟' },
+          make: fruitOrVeg },
+        { id: 'world-5', title: { en: 'The seasons', ar: 'الفصول' },
+          teach: { en: 'A year has four seasons: spring with flowers, hot summer, autumn when leaves fall, and cool winter. In Oman, summer is very hot and winter is mild and pleasant.', ar: 'للسنة أربعة فصول: الربيع بأزهاره، والصيف الحار، والخريف حين تتساقط الأوراق، والشتاء البارد. في عُمان يكون الصيف حارًّا جدًّا والشتاء معتدلًا لطيفًا.' },
+          hint: { en: 'Look for flowers, sun, falling leaves or snow.', ar: 'ابحث عن الأزهار أو الشمس أو الأوراق المتساقطة أو الثلج.' },
+          make: picQuiz(SEASONS, WHICH_SEASON) },
+        { id: 'world-6', title: { en: 'Jobs people do', ar: 'مهن الناس' },
+          teach: { en: 'Many people help us every day. A doctor helps us get better, a teacher helps us learn, a farmer grows our food and a pilot flies the plane.', ar: 'يساعدنا أناس كثيرون كل يوم. الطبيب يساعدنا لنشفى، والمعلّم يساعدنا لنتعلّم، والمزارع يزرع طعامنا، والطيّار يقود الطائرة.' },
+          hint: { en: 'Look at what the person is holding or wearing.', ar: 'انظر إلى ما يحمله الشخص أو يلبسه.' },
+          make: picQuiz(JOBS, WHO_JOB) },
+        { id: 'world-7', title: { en: 'The planets', ar: 'الكواكب' },
+          teach: { en: 'The Sun is a star. Eight planets travel around it: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. We live on Earth, and Saturn has beautiful rings!', ar: 'الشمس نجم. تدور حولها ثمانية كواكب: عطارد والزهرة والأرض والمريخ والمشتري وزحل وأورانوس ونبتون. نحن نعيش على الأرض، ولزحل حلقات جميلة!' },
+          hint: { en: 'Red is Mars, rings mean Saturn, and the biggest is Jupiter.', ar: 'الأحمر هو المريخ، والحلقات تعني زحل، والأكبر هو المشتري.' },
+          make: picQuiz(SKY, WHICH_SKY) }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'world-1': 1, 'world-2': 1, 'world-3': 1, 'world-4': 2, 'world-5': 2, 'world-6': 2, 'world-7': 3,
+    'animals-1': 1, 'animals-2': 1, 'animals-3': 2, 'animals-4': 2, 'animals-5': 3, 'animals-6': 3,
     'phonics-1': 1, 'phonics-2': 1, 'phonics-3': 1, 'phonics-8': 2, 'phonics-4': 2, 'phonics-5': 3, 'phonics-9': 3,
     'phonics-11': 2, 'phonics-12': 3, 'phonics-13': 3,
     'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3, 'phonics-14': 1, 'phonics-15': 2, 'phonics-16': 2, 'phonics-17': 2, 'phonics-18': 2, 'phonics-19': 3, 'phonics-20': 3,
