@@ -113,11 +113,14 @@
     }
     return list;
   }
+  var HEAR_LONG = { en: 'Listen. Which long sound is in the word?', ar: 'استمع. أي صوت طويل في الكلمة؟' };
+  var HEAR_SOUND = { en: 'Listen. Which sound do you hear?', ar: 'استمع. أي صوت تسمع؟' };
+  var DOTS = { en: 'How many dots does this letter have?', ar: 'كم نقطة لهذا الحرف؟' };
   function hear(word, letters, q) { return { q: q || HEAR_FIRST, say: word, opts: letters }; }
 
   window.SADU_COURSES = [
     {
-      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🐇', '🚢'], name: { en: 'English Phonics', ar: 'الأصوات الإنجليزية' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
+      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🐇', '🚢', '🪁', '🌕', '🥁'], name: { en: 'English Phonics', ar: 'الأصوات الإنجليزية' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#B9A8FF', tint: '#E4DDFF',
       tip: { en: 'Say letter sounds, not letter names: "sss" for s, "mmm" for m. On walks, ask: which sound does "palm" start with?', ar: 'انطق صوت الحرف لا اسمه: «سَ» لا «سين». وفي النزهة اسأل: بأي صوت تبدأ كلمة «نخلة»؟' },
       icon: 'M7 10a5 5 0 1 1 10 0c0 3.5-3.5 4-3.5 7a2.5 2.5 0 0 1-5 0M10 10a2 2 0 1 1 4 0',
@@ -154,11 +157,23 @@
         { id: 'phonics-9', title: { en: 'Two letters, one sound', ar: 'حرفان وصوت واحد' },
           teach: { en: 'Some sounds are made by two letters together. sh says "shhh" as in ship, ch says "ch" as in chip, th puts your tongue between your teeth as in thumb, and ck says "k" at the end of duck.', ar: 'بعض الأصوات الإنجليزية يصنعها حرفان معًا. sh صوته «ش» كما في ship، و ch صوته «تش» كما في chip، وفي th يخرج اللسان بين الأسنان كما في thumb، و ck صوته «ك» في آخر duck.' },
           hint: { en: 'Is it a quiet "shhh", a sneezy "ch", or is your tongue between your teeth (th)?', ar: 'هل هو «ش» هادئ، أم «تش» كالعطسة، أم لسانك بين أسنانك (th)؟' },
-          questions: [hear('ship', ['sh', 'ch', 'th']), hear('chip', ['ch', 'sh', 'th']), hear('thumb', ['th', 'sh', 'ch']), hear('duck', ['ck', 'sh', 'th'], HEAR_LAST)] }
+          questions: [hear('ship', ['sh', 'ch', 'th']), hear('chip', ['ch', 'sh', 'th']), hear('thumb', ['th', 'sh', 'ch']), hear('duck', ['ck', 'sh', 'th'], HEAR_LAST)] },
+        { id: 'phonics-11', title: { en: 'First sounds: l w y j', ar: 'أول صوت: l w y j' },
+          teach: { en: 'l says "lll" as in lemon, w says "w" as in web, y says "y" as in yo-yo, and j says "j" as in jam.', ar: 'l صوته «لْ» كما في lemon، و w صوته «وْ» كما في web، و y صوته «يْ» كما في yo-yo، و j صوته «جْ» كما في jam.' },
+          hint: { en: 'Is your tongue up (l), are your lips round (w), or are you smiling (y)?', ar: 'هل لسانك مرفوع (l)، أم شفتاك مستديرتان (w)، أم أنت تبتسم (y)؟' },
+          questions: [hear('lemon', ['l', 'w', 'j']), hear('web', ['w', 'y', 'l']), hear('yo-yo', ['y', 'j', 'w']), hear('jam', ['j', 'l', 'y'])] },
+        { id: 'phonics-12', title: { en: 'Long sounds: ee and oo', ar: 'أصوات طويلة: ee و oo' },
+          teach: { en: 'Two letters can make one long sound. ee says "eee" as in bee and tree. oo says "ooo" as in moon and zoo.', ar: 'قد يصنع حرفان صوتًا طويلًا واحدًا: ee صوته «إيـ» طويل كما في bee و tree، و oo صوته «أو» طويل كما في moon و zoo.' },
+          hint: { en: 'Do you smile (ee) or make a round mouth (oo)?', ar: 'هل تبتسم (ee) أم تجعل فمك مستديرًا (oo)؟' },
+          questions: [hear('bee', ['ee', 'oo', 'sh'], HEAR_LONG), hear('moon', ['oo', 'ee', 'ch'], HEAR_LONG), hear('tree', ['ee', 'oo', 'th'], HEAR_LONG), hear('zoo', ['oo', 'ee', 'sh'], HEAR_LONG)] },
+        { id: 'phonics-13', title: { en: 'Blend four sounds', ar: 'اجمع أربعة أصوات' },
+          teach: { en: 'Longer words have four sounds. Say each one, then push them together: f · r · o · g becomes frog!', ar: 'الكلمات الأطول فيها أربعة أصوات. انطق كل صوت ثم اجمعها: f · r · o · g تصير frog!' },
+          hint: { en: 'Point to each letter and say its sound, then say them faster.', ar: 'أشِر إلى كل حرف وانطق صوته، ثم انطقها أسرع.' },
+          questions: [{ q: BLEND, show: 'f · r · o · g', opts: ['🐸', '🦀', '🥁'] }, { q: BLEND, show: 'c · r · a · b', opts: ['🦀', '🐸', '🚩'] }, { q: BLEND, show: 'd · r · u · m', opts: ['🥁', '🚩', '🦀'] }, { q: BLEND, show: 'f · l · a · g', opts: ['🚩', '🥁', '🐸'] }] }
       ]
     },
     {
-      id: 'arabic-phonics', stickers: ['🏠', '🍊', '🌙'], name: { en: 'Arabic Phonics', ar: 'الأصوات العربية' },
+      id: 'arabic-phonics', stickers: ['🏠', '🍊', '🌙', '🔍', '☀️', '⛺', '🔑', '🎵', '🦅', '🐘'], name: { en: 'Arabic Phonics', ar: 'الأصوات العربية' },
       age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#F6A04D', tint: '#FFE3C4',
       tip: { en: 'Say each letter with its vowel sound: بَ is "ba", بِ is "bi", بُ is "bu". Point to letters on signs and packets and ask which sound they make.', ar: 'انطق كل حرف مع حركته: بَ، بِ، بُ. وأشِر إلى الحروف على اللافتات والعلب واسأل عن صوتها.' },
@@ -180,7 +195,35 @@
             { q: BLEND_AR, show: 'ش · م · س', opts: ['☀️', '🌙', '🏠'] },
             { q: BLEND_AR, show: 'س · م · ك', opts: ['🐟', '🏠', '🌙'] },
             { q: BLEND_AR, show: 'ب · ي · ت', opts: ['🏠', '🐟', '☀️'] }
-          ] }
+          ] },
+        { id: 'phonics-14', title: { en: 'Letters with dots', ar: 'الحروف والنقاط' },
+          teach: { en: 'Some Arabic letters have the same shape and differ only by their dots: ب has one dot below, ت has two dots above, and ث has three dots above.', ar: 'بعض الحروف لها الشكل نفسه وتختلف بالنقاط فقط: الباء نقطة واحدة تحتها، والتاء نقطتان فوقها، والثاء ثلاث نقاط فوقها.' },
+          hint: { en: 'Count the dots carefully, above and below.', ar: 'عُدّ النقاط جيدًا، فوق الحرف وتحته.' },
+          questions: [{ q: DOTS, show: 'ب', opts: ['1', '2', '3'] }, { q: DOTS, show: 'ت', opts: ['2', '1', '3'] }, { q: DOTS, show: 'ث', opts: ['3', '2', '1'] }, { q: DOTS, show: 'ن', opts: ['1', '3', '2'] }] },
+        { id: 'phonics-15', title: { en: 'Sounds: س ش ص', ar: 'أصوات: س ش ص' },
+          teach: { en: 'س is a light hiss as in سمكة, ش is "sh" as in شمس, and ص is a heavy, deep "s" as in صقر.', ar: 'السين صفير خفيف كما في «سمكة»، والشين كما في «شمس»، والصاد صوت ثقيل عميق كما في «صقر».' },
+          hint: { en: 'Is it a light hiss (س), a "shh" (ش) or a deep, heavy sound (ص)?', ar: 'هل هو صفير خفيف (س)، أم «ش» (ش)، أم صوت ثقيل عميق (ص)؟' },
+          questions: [hear('سمكة', ['س', 'ش', 'ص'], HEAR_AR), hear('شمس', ['ش', 'س', 'ص'], HEAR_AR), hear('صقر', ['ص', 'س', 'ش'], HEAR_AR), hear('سيارة', ['س', 'ص', 'ش'], HEAR_AR)] },
+        { id: 'phonics-16', title: { en: 'Sounds: ح خ ع', ar: 'أصوات: ح خ ع' },
+          teach: { en: 'These sounds come from the throat. ح is a soft breath as in حصان, خ is a rough sound as in خيمة, and ع is deep in the throat as in عين.', ar: 'هذه الأصوات تخرج من الحلق: الحاء نفَس ناعم كما في «حصان»، والخاء صوت خشن كما في «خيمة»، والعين من عمق الحلق كما في «عين».' },
+          hint: { en: 'Is it a soft breath (ح), a rough sound (خ) or deep in the throat (ع)?', ar: 'هل هو نفَس ناعم (ح)، أم صوت خشن (خ)، أم من عمق الحلق (ع)؟' },
+          questions: [hear('حصان', ['ح', 'خ', 'ع'], HEAR_AR), hear('خيمة', ['خ', 'ح', 'ع'], HEAR_AR), hear('عين', ['ع', 'ح', 'خ'], HEAR_AR), hear('خروف', ['خ', 'ع', 'ح'], HEAR_AR)] },
+        { id: 'phonics-17', title: { en: 'ق or ك?', ar: 'ق أم ك؟' },
+          teach: { en: 'ق comes from the very back of the mouth, deep and strong, as in قمر. ك is lighter and further forward, as in كلب.', ar: 'القاف تخرج من أقصى الفم، قوية وعميقة، كما في «قمر». والكاف أخفّ وأقرب إلى الأمام، كما في «كلب».' },
+          hint: { en: 'Is the sound deep at the back (ق) or lighter (ك)?', ar: 'هل الصوت عميق في الخلف (ق) أم أخفّ (ك)؟' },
+          questions: [hear('قمر', ['ق', 'ك', 'غ'], HEAR_AR), hear('كلب', ['ك', 'ق', 'غ'], HEAR_AR), hear('قلم', ['ق', 'غ', 'ك'], HEAR_AR), hear('كتاب', ['ك', 'غ', 'ق'], HEAR_AR)] },
+        { id: 'phonics-18', title: { en: 'Long vowels: ا و ي', ar: 'المدود: ا و ي' },
+          teach: { en: 'Long vowels stretch a sound. ا makes a long "aa": با. و makes a long "oo": بو. ي makes a long "ee": بي.', ar: 'حروف المدّ تُطيل الصوت: الألف تمدّ الفتحة «با»، والواو تمدّ الضمة «بو»، والياء تمدّ الكسرة «بي».' },
+          hint: { en: 'Listen to the long sound: "aa" (ا), "oo" (و) or "ee" (ي)?', ar: 'استمع إلى الصوت الطويل: «آ» (ا)، أم «أو» (و)، أم «إي» (ي)؟' },
+          questions: [hear('با', ['با', 'بو', 'بي'], HEAR_SOUND), hear('بو', ['بو', 'با', 'بي'], HEAR_SOUND), hear('بي', ['بي', 'بو', 'با'], HEAR_SOUND), hear('سا', ['سا', 'سي', 'سو'], HEAR_SOUND)] },
+        { id: 'phonics-19', title: { en: 'Arabic last sounds', ar: 'آخر صوت في الكلمة' },
+          teach: { en: 'Listen to how an Arabic word ends. قمر ends with ر, and باب ends with ب.', ar: 'استمع إلى نهاية الكلمة: «قمر» تنتهي بالراء، و«باب» تنتهي بالباء.' },
+          hint: { en: 'Say the word slowly and stop on the last sound.', ar: 'انطق الكلمة ببطء وتوقّف عند آخر صوت.' },
+          questions: [hear('قمر', ['ر', 'ق', 'م'], HEAR_LAST), hear('باب', ['ب', 'ا', 'ت'], HEAR_LAST), hear('جمل', ['ل', 'ج', 'م'], HEAR_LAST), hear('سمك', ['ك', 'س', 'م'], HEAR_LAST)] },
+        { id: 'phonics-20', title: { en: 'More Arabic blending', ar: 'تجميع حروف أكثر' },
+          teach: { en: 'Join the letters to read new words: ف · ي · ل makes فيل (elephant) and ب · ا · ب makes باب (door).', ar: 'صِل الحروف لتقرأ كلمات جديدة: ف · ي · ل تصير «فيل»، و ب · ا · ب تصير «باب».' },
+          hint: { en: 'Say each letter with its sound, then join them quickly.', ar: 'انطق كل حرف بصوته، ثم صِلها بسرعة.' },
+          questions: [{ q: BLEND_AR, show: 'ف · ي · ل', opts: ['🐘', '🚪', '🌹'] }, { q: BLEND_AR, show: 'ب · ا · ب', opts: ['🚪', '🐘', '🐝'] }, { q: BLEND_AR, show: 'و · ر · د', opts: ['🌹', '🐝', '🚪'] }, { q: BLEND_AR, show: 'ن · ح · ل', opts: ['🐝', '🌹', '🐘'] }] }
       ]
     },
     {
@@ -618,7 +661,8 @@
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
     'phonics-1': 1, 'phonics-2': 1, 'phonics-3': 1, 'phonics-8': 2, 'phonics-4': 2, 'phonics-5': 3, 'phonics-9': 3,
-    'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3,
+    'phonics-11': 2, 'phonics-12': 3, 'phonics-13': 3,
+    'phonics-6': 1, 'phonics-10': 2, 'phonics-7': 3, 'phonics-14': 1, 'phonics-15': 2, 'phonics-16': 2, 'phonics-17': 2, 'phonics-18': 2, 'phonics-19': 3, 'phonics-20': 3,
     'math-1': 1, 'math-2': 1, 'math-6': 1, 'math-4': 2, 'math-5': 2, 'math-7': 2, 'math-8': 2, 'math-3': 3, 'math-9': 3, 'math-10': 3,
     'science-1': 1, 'science-5': 1, 'science-2': 2, 'science-6': 2, 'science-4': 2, 'science-3': 3,
     'science-7': 1, 'science-8': 1, 'science-9': 2, 'science-10': 3,
