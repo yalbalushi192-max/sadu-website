@@ -1200,4 +1200,9 @@
   }
 
   startPage(Component, {});
+
+  // installable app: the offline helper only runs when the site is served over http(s), not from a file
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
 })();

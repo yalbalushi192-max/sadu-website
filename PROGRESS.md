@@ -15,7 +15,7 @@ This file is updated after each finished item. Each item is also saved as a git 
 0. [x] Make it interactive for kids (owner's request, first): (a) sound effects, confetti, tappable Saqr with fun facts, bouncy answers; (b) sticker book: a sticker for every finished lesson. Part (a) done: sound effects (switch in the lesson bar), confetti, tap Saqr for fun facts, bouncy answers. Part (b) done: sticker book page (menu: Stickers), a sticker per lesson and story, gold for 3 stars, "New sticker!" on the result screen, latest stickers on the dashboard.
 1. [x] More phonics: English digraphs (sh, ch, th, ck), more first-sound sets, and Arabic short vowels (fatha, kasra, damma). Done: phonics-8 (r h b f), phonics-9 (sh ch th ck), phonics-10 (fatha, kasra, damma); missed words now show in the plan; single letters shown large.
 C. Updatable website (owner's request, first):
-   - [ ] Install like an app: web app manifest, icons, offline cache (works once the site is online over https).
+   - [x] Install like an app: web app manifest, icons, offline cache (works once the site is online over https). Done: manifest.webmanifest, icons/ (192, 512, maskable, Apple), sw.js; Chrome reports it installable and all pages open offline. Raise VERSION in sw.js when files are added or removed.
    - [ ] Lesson editor: a page to add or change lessons, questions and stories with a form (no code); saved on this device and exportable, until accounts exist.
    - [ ] Go online: GitHub Pages with automatic updates. NEEDS THE OWNER: a GitHub account and `gh auth login`; ask before making the repository public.
    - [ ] Accounts and sync: parent sign-in and progress synced across devices (Supabase). NEEDS THE OWNER: a free Supabase project URL and public (anon) key.

@@ -119,6 +119,14 @@ To change the Souq Dash goods, prices or wording, edit the `souqDash(...)` line 
 - **Letter Catch:** playable in English and Arabic letters. It speaks the word with the voices installed on the device; with no voice, the word is still shown on screen. Stars reset when the page is reloaded.
 - **Souq Dash:** playable. The score and best score reset when the page is reloaded, and its points are not added to the progress bar.
 
+## Install like an app
+
+Once the site is online (over https), phones and computers offer to install Sadu: it gets its own
+icon and opens full screen, and it keeps working without internet. `manifest.webmanifest` describes
+the app, `icons/` holds its icons, and `sw.js` keeps a copy of the files on the device and refreshes
+them in the background. When you add or remove a file, add it to the list in `sw.js` and raise `VERSION`.
+Opened as a plain file (double-click), the site works as before, without the offline part.
+
 ## Needs an internet connection
 
 The fonts load from Google Fonts. Offline, the page still works with the device's default fonts.

@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=Tajawal:wght@800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="css/site.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#23204A">
 </head>
 <body>
 <div id="app"></div>
@@ -609,5 +613,6 @@
 <script src="js/letter-catch.js"></script>
 <script src="js/souq-dash.js"></script>
 <script src="js/page-en.js"></script>
+<script>if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });</script>
 </body>
 </html>
