@@ -750,3 +750,35 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 .hs-var{color:#FDCC59}.hs-punct{color:#B9B5B8}.hs-comment{color:#989498;font-style:italic}
 .hs-bad{color:#DD464C;text-decoration:underline wavy #DD464C;text-underline-offset:4px}
 .hs-cmd{filter:brightness(1.35)}.hs-key{filter:brightness(1.25)}.hs-fn{filter:brightness(1.4)}
+
+/* ---------- Discover Saudi Arabia ---------- */
+.ds-page{max-width:980px}
+.ds-map-card{display:flex;flex-direction:column;gap:8px}
+.ds-map{position:relative;width:100%;aspect-ratio:4/3;max-height:560px;border-radius:var(--r-md);background:linear-gradient(#CDEBF7,#E8F6FC);overflow:hidden}
+.ds-land{position:absolute;inset:4%;width:92%;height:92%}
+.ds-pin{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:none;cursor:pointer;padding:0;max-width:30%}
+.ds-pin-icon{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#FFFFFF;border:4px solid var(--c);font-size:26px;box-shadow:var(--sh-1);transition:transform .15s}
+.ds-pin:hover .ds-pin-icon,.ds-pin:focus-visible .ds-pin-icon{transform:scale(1.12)}
+.ds-pin.done .ds-pin-icon{background:var(--c)}
+.ds-pin-name{font-weight:800;font-size:13px;line-height:1.2;text-align:center;background:rgba(255,255,255,.9);border-radius:8px;padding:2px 6px;color:var(--ink)}
+.ds-pin-done{font-size:11px;font-weight:800;color:var(--green)}
+.ds-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ds-item{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border-top:6px solid var(--c)}
+.ds-item-icon{font-size:40px}
+.ds-scene{font-size:clamp(48px,12vw,84px);text-align:center;letter-spacing:6px;line-height:1.2;padding:8px 0}
+.ds-place{text-align:center;font-weight:800}
+.ds-text{margin:0;font-size:19px;line-height:1.6}
+.ds-q{margin:14px 0 8px}
+.ds-msg{font-weight:800;text-align:center;margin:10px 0 0}.ds-msg.ok{color:var(--green)}.ds-msg.no{color:#B3261E}
+.ds-won{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.ds-won .saqr{width:110px;height:110px}
+.ds-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;width:100%}
+.ds-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px;border-radius:var(--r-md);background:linear-gradient(160deg,#FFF7E6,#FFFFFF);border:2px solid #F1D9A8;box-shadow:var(--sh-1);text-align:center}
+.ds-card p{margin:0;color:var(--ink-2)}
+.ds-card.locked{background:var(--sunk);border-style:dashed;opacity:.7}
+.ds-card.new{animation:dsPop .5s ease-out both}
+.ds-card-icon{font-size:40px}
+.ds-topic{display:flex;flex-direction:column;gap:12px}
+@keyframes dsPop{from{transform:scale(.6) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:520px){.ds-pin-icon{width:40px;height:40px;font-size:20px;border-width:3px}.ds-pin-name{font-size:11px}}
+@media (prefers-reduced-motion:reduce){.ds-card.new{animation:none}}

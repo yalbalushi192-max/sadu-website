@@ -70,6 +70,10 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navDisc: 'Discover', dsTitle: 'Discover Saudi Arabia', dsIntro: 'Fly with Saqr across the Kingdom! Each place is a short quest. Finish it to collect knowledge cards.',
+      dsMapNote: 'Map drawing, not to scale', dsDone: 'Finished', dsGo: 'Start the quest', dsAgain: 'Play again', dsCards: 'My card book', dsCardsIntro: 'Cards you have collected on your quests.',
+      dsCount: '%A of %B cards', dsTopics: { place: 'Places', nature: 'Nature', culture: 'Culture', history: 'History' }, dsLocked: 'Not found yet',
+      dsStage: 'Stop %A of %B', dsNext: 'Next', dsTry: 'Not quite. Try again!', dsRight: 'Yes, that\'s right!', dsWon: 'Quest complete!', dsWonText: 'You collected these cards:', dsBackMap: 'Back to the map',
       hearIt: 'Hear it', navWard: 'Dress up', wdTitle: 'Dress up Saqr', wdIntro: 'Spend the stars you earn in lessons and stories on clothes for Saqr. He wears them everywhere in Sadu!',
       wdWallet: 'stars to spend (%A earned)', wdGroups: { hat: 'Hats', scarf: 'Scarves', eyes: 'Glasses' },
       wdItems: { kuma: 'Omani kuma', crown: 'Crown', party: 'Party hat', sunhat: 'Sun hat', grad: 'Graduation cap', flower: 'Flower', blue: 'Blue scarf', green: 'Green scarf', gold: 'Gold scarf', rainbow: 'Rainbow scarf', shades: 'Sunglasses', round: 'Round glasses' },
@@ -219,6 +223,10 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navDisc: 'اكتشف', dsTitle: 'اكتشف المملكة العربية السعودية', dsIntro: 'طِر مع صقر في أنحاء المملكة! كل مكان مهمة قصيرة. أكملها لتجمع بطاقات المعرفة.',
+      dsMapNote: 'رسم للخريطة، ليس بمقياس دقيق', dsDone: 'مكتملة', dsGo: 'ابدأ المهمة', dsAgain: 'العب مرة أخرى', dsCards: 'كتاب بطاقاتي', dsCardsIntro: 'البطاقات التي جمعتها في مهامّك.',
+      dsCount: '%A من %B بطاقة', dsTopics: { place: 'أماكن', nature: 'طبيعة', culture: 'ثقافة', history: 'تاريخ' }, dsLocked: 'لم تُكتشف بعد',
+      dsStage: 'المحطة %A من %B', dsNext: 'التالي', dsTry: 'ليس تمامًا. حاول مرة أخرى!', dsRight: 'نعم، صحيح!', dsWon: 'اكتملت المهمة!', dsWonText: 'جمعت هذه البطاقات:', dsBackMap: 'العودة إلى الخريطة',
       hearIt: 'اسمع', navWard: 'ألبس صقرًا', wdTitle: 'ألبس صقرًا', wdIntro: 'اصرف النجوم التي تربحها في الدروس والقصص على ملابس لصقر. سيلبسها في كل مكان في سدو!',
       wdWallet: 'نجمة للصرف (ربحت %A)', wdGroups: { hat: 'القبعات', scarf: 'الأوشحة', eyes: 'النظارات' },
       wdItems: { kuma: 'كمة عمانية', crown: 'تاج', party: 'قبعة حفلة', sunhat: 'قبعة شمس', grad: 'قبعة تخرّج', flower: 'وردة', blue: 'وشاح أزرق', green: 'وشاح أخضر', gold: 'وشاح ذهبي', rainbow: 'وشاح قوس قزح', shades: 'نظارة شمسية', round: 'نظارة دائرية' },
@@ -1055,6 +1063,8 @@
         goStories: function () { self.go('stories'); },
         isWeek: s.view === 'week', goWeek: function () { self.go('week'); },
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
+        isDisc: s.view === 'discover', discOn: (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') ? 'page' : 'false', goDisc: function () { self.go('discover'); },
+        isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
         isWard: s.view === 'ward', wardOn: s.view === 'ward' ? 'page' : 'false', goWard: function () { self.go('ward'); },
         isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
         isVibeSet: s.view === 'vibeset', isRest: s.view === 'rest', isRestMore: s.view === 'restmore',
@@ -1375,6 +1385,58 @@
           out.ed.qs = d.questions.map(function (q, i) {
             return { n: fill(T.edQ, { A: i + 1 }), i: String(i), q: q, o0: q.opts[0], o1: q.opts[1], o2: q.opts[2] };
           });
+        }
+      }
+
+      // ---- Discover Saudi Arabia: map, quests and the card book ----
+      if (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') {
+        var QUESTS = window.SADU_QUESTS || [], dsv = data.discover || {}, allCards = [];
+        QUESTS.forEach(function (qq) { qq.cards.forEach(function (cd) { allCards.push(cd); }); });
+        var got = function (cid) { return QUESTS.some(function (qq) { return (dsv[qq.id] || {}).done && qq.cards.some(function (cd) { return cd.id === cid; }); }); };
+        var have = allCards.filter(function (cd) { return got(cd.id); }).length;
+        out.ds = { count: fill(T.dsCount, { A: have, B: allCards.length }),
+          pins: QUESTS.map(function (qq) { var done = !!(dsv[qq.id] || {}).done;
+            return { emoji: qq.emoji, name: tx(qq.place), style: 'left:' + qq.pin[0] + '%;top:' + qq.pin[1] + '%;--c:' + qq.color, cls: done ? 'ds-pin done' : 'ds-pin',
+              status: done ? '✓ ' + T.dsDone : '', open: function () { sfx('tap'); self.go('quest', { qst: { id: qq.id, stage: 0, wrong: [], right: false, won: false } }); } }; }),
+          list: QUESTS.map(function (qq) { var done = !!(dsv[qq.id] || {}).done;
+            return { emoji: qq.emoji, name: tx(qq.place), style: '--c:' + qq.color, btn: done ? T.dsAgain : T.dsGo, done: done,
+              open: function () { sfx('tap'); self.go('quest', { qst: { id: qq.id, stage: 0, wrong: [], right: false, won: false } }); } }; }),
+          topics: ['place', 'nature', 'culture', 'history'].map(function (tp) {
+            return { title: T.dsTopics[tp], cards: allCards.filter(function (cd) { return cd.topic === tp; }).map(function (cd) { var g = got(cd.id);
+              return { emoji: g ? cd.emoji : '❔', title: g ? tx(cd.title) : T.dsLocked, fact: g ? tx(cd.fact) : '', cls: g ? 'ds-card' : 'ds-card locked' }; }) };
+          }).filter(function (tp) { return tp.cards.length; })
+        };
+        if (s.view === 'quest' && s.qst) {
+          var qs2 = s.qst, quest = QUESTS.filter(function (qq) { return qq.id === qs2.id; })[0];
+          if (quest) {
+            var st = quest.stages[qs2.stage], setQ = function (extra) { self.setState({ qst: Object.assign({}, self.state.qst, extra) }); };
+            if (!self._qOrder || self._qOrder.key !== qs2.id + '|' + qs2.stage) self._qOrder = { key: qs2.id + '|' + qs2.stage, order: shuffle(st ? st.q.opts.map(function (o, i) { return i; }) : []) };
+            var qKey = 'quest|' + qs2.id + '|' + qs2.stage + '|' + qs2.won;
+            if (data.autoRead !== false && out.speakOk && self._said !== qKey) {
+              self._said = qKey;
+              var words = qs2.won ? [T.dsWon] : [tx(st.text), tx(st.q.q)];
+              setTimeout(function () { speak(words); }, 250);
+            }
+            out.qst = {
+              place: tx(quest.place), emoji: quest.emoji, style: '--c:' + quest.color, won: !!qs2.won, playing: !qs2.won,
+              stageText: st ? fill(T.dsStage, { A: qs2.stage + 1, B: quest.stages.length }) : '',
+              dots: quest.stages.map(function (x, i) { return { cls: i < qs2.stage || qs2.won ? 'seg on' : i === qs2.stage ? 'seg now' : 'seg' }; }),
+              scene: st ? st.scene : '', text: st ? tx(st.text) : '', q: st ? tx(st.q.q) : '',
+              say: function () { if (st) speak([tx(st.text), tx(st.q.q)]); },
+              right: !!qs2.right, notRight: !qs2.right, msg: qs2.right ? T.dsRight : qs2.wrong.length ? T.dsTry : '', hasMsg: !!qs2.right || qs2.wrong.length > 0,
+              msgCls: qs2.right ? 'ds-msg ok' : 'ds-msg no',
+              opts: st ? self._qOrder.order.map(function (i) { var o = st.q.opts[i], label = typeof o === 'string' ? o : tx(o), isW = qs2.wrong.indexOf(i) !== -1;
+                return { label: label, cls: 'opt' + (qs2.right && i === 0 ? ' right' : '') + (isW ? ' wrong' : ''), dis: qs2.right || isW ? 'true' : 'false',
+                  pick: function () { if (qs2.right || isW) return; if (i === 0) { sfx('right'); burst(document.querySelector('.ds-stage .opts'), 40); setQ({ right: true }); } else { sfx('wrong'); setQ({ wrong: qs2.wrong.concat(i) }); } } }; }) : [],
+              next: function () {
+                if (qs2.stage + 1 < quest.stages.length) return setQ({ stage: qs2.stage + 1, wrong: [], right: false });
+                var d = Object.assign({}, self.state.data); d.discover = Object.assign({}, d.discover || {}); d.discover[quest.id] = { done: true, when: Date.now() };
+                save(d); sfx('done'); burst(null, 200); self.setState({ data: d, qst: Object.assign({}, qs2, { won: true }) });
+              },
+              cards: quest.cards.map(function (cd) { return { emoji: cd.emoji, title: tx(cd.title), fact: tx(cd.fact) }; }),
+              close: function () { self.go('discover'); }
+            };
+          }
         }
       }
 
