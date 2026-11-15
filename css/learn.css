@@ -828,3 +828,19 @@ textarea.input{resize:vertical;font-family:inherit;line-height:1.5}
 @keyframes ptJump{0%{transform:scale(1)}40%{transform:scale(1.15) translateY(-16px)}100%{transform:scale(1)}}
 @keyframes ptJump2{0%{transform:scale(1)}40%{transform:scale(1.15) translateY(-16px) rotate(4deg)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.pt-pet{animation:none!important}}
+
+/* ---------- Today's six ---------- */
+.td-page{max-width:760px}
+.td-top{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.td-dots{display:flex;gap:10px}
+.td-dot{width:26px;height:26px;border-radius:50%;background:var(--sunk);border:3px solid var(--line)}
+.td-dot.on{background:var(--green);border-color:var(--green)}
+.td-count{font-size:20px}
+.td-play{min-width:220px}
+.td-list{display:flex;flex-direction:column;gap:10px}
+.td-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--surface);border:2px solid var(--line);border-inline-start:8px solid var(--c);box-shadow:var(--sh-1)}
+.td-item.done{opacity:.75;background:#F2FAF5}
+.td-num{font-weight:800;color:var(--ink-2);min-width:1.2em}
+.td-icon{font-size:30px}
+.td-text{display:flex;flex-direction:column;flex:1;min-width:0}
+.td-check{font-size:24px}

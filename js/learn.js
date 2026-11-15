@@ -70,6 +70,9 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      navToday: 'Today\'s six', tdTitle: 'Today\'s six', tdIntro: 'Six short activities picked just for you today. Press play and do them one after another!',
+      tdPlay: '▶ Play next', tdOf: '%A of 6 done', tdDone: 'All six done! Fantastic learning today. New ones come tomorrow.', tdNextIn: 'Next in Today\'s six ▶', tdBack: 'Back to Today\'s six',
+      tdKinds: { lesson: 'Lesson', story: 'Story', quest: 'Discover' }, tdGo: 'Play',
       navPet: 'My pet', ptTitle: 'My pet', ptPick: 'Choose an egg! Who is inside?', ptKinds: { falcon: 'Falcon', camel: 'Camel', oryx: 'Oryx' },
       ptTap: 'Tap the egg to help it hatch! (%A more taps)', ptName: 'It hatched! What will you call your baby %K?', ptNameBtn: 'That\'s the name!',
       ptStages: ['Baby', 'Young', 'Grown up', 'Champion'], ptGrow: 'Finish lessons to help %N grow: %A of %B lessons to the next stage.', ptMax: '%N is a champion! Amazing learning!',
@@ -237,6 +240,9 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      navToday: 'ستّ اليوم', tdTitle: 'ستّ اليوم', tdIntro: 'ستة أنشطة قصيرة اخترناها لك اليوم. اضغط «العب» وأنجزها واحدًا بعد الآخر!',
+      tdPlay: 'العب التالي ◀', tdOf: 'أنجزت %A من 6', tdDone: 'أنجزت الستة كلها! تعلّم رائع اليوم. أنشطة جديدة غدًا.', tdNextIn: 'التالي في ستّ اليوم ◀', tdBack: 'العودة إلى ستّ اليوم',
+      tdKinds: { lesson: 'درس', story: 'قصة', quest: 'اكتشف' }, tdGo: 'العب',
       navPet: 'حيواني', ptTitle: 'حيواني الأليف', ptPick: 'اختر بيضة! من في داخلها؟', ptKinds: { falcon: 'صقر', camel: 'جمل', oryx: 'مها' },
       ptTap: 'اضغط على البيضة لتساعدها على الفقس! (باقي %A ضغطات)', ptName: 'فقست البيضة! ماذا ستسمّي صغير ال%K؟', ptNameBtn: 'هذا هو الاسم!',
       ptStages: ['صغير', 'يافع', 'كبير', 'بطل'], ptGrow: 'أكمل الدروس ليكبر %N: %A من %B دروس للمرحلة التالية.', ptMax: '%N صار بطلًا! تعلّم رائع!',
@@ -470,6 +476,38 @@
     Object.keys(data.stories || {}).forEach(function (k) { n += (data.stories[k] && data.stories[k].stars) || 0; });
     return n;
   }
+  // ---- Today's six: picked once a day per child (kept in data.todayPlan so it does not change while playing) ----
+  function seeded(seedText) { var h = 2166136261; for (var i = 0; i < seedText.length; i++) { h ^= seedText.charCodeAt(i); h = Math.imul(h, 16777619); } return function () { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; }
+  function todayPlan(data) {
+    var day = dayKey(new Date());
+    if (data.todayPlan && data.todayPlan.day === day) return data.todayPlan;
+    var rnd = seeded(day + '|' + (profiles.active || 'main') + '|' + (data.name || '')), shuffleR = function (a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+    var items = [], fit = [];
+    COURSES.forEach(function (c, ci) { if (fitsAge(c, data.age)) fit.push(ci); });
+    shuffleR(fit).forEach(function (ci) {
+      if (items.length >= 4) return;
+      var order = orderOf(ci), pickLi = null;
+      // the first lesson not yet strong in this course, else a random one to practise
+      order.some(function (li) { var rec = data.lessons[COURSES[ci].lessons[li].id]; if (!rec || accuracy(rec) < 0.85) { pickLi = li; return true; } return false; });
+      if (pickLi == null) pickLi = order[Math.floor(rnd() * order.length)];
+      items.push({ kind: 'lesson', ci: ci, li: pickLi });
+    });
+    var st = STORIES.map(function (x, i) { return i; }).filter(function (i) { var a = STORIES[i].ages; return !a || !data.age || (data.age >= a[0] - 1 && data.age <= a[1] + 2); });
+    var unread = st.filter(function (i) { return !data.stories[STORIES[i].id]; });
+    var pool = unread.length ? unread : st; if (pool.length) items.push({ kind: 'story', si: shuffleR(pool)[0] });
+    var Q = window.SADU_QUESTS || [], qOpen = Q.filter(function (q) { return !(data.discover || {})[q.id]; });
+    var qPool = qOpen.length ? qOpen : Q; if (qPool.length) items.push({ kind: 'quest', id: shuffleR(qPool)[0].id });
+    var plan = { day: day, items: items };
+    data.todayPlan = plan; save(data);
+    return plan;
+  }
+  function todayDone(data, it) {
+    var day = dayKey(new Date()), onDay = function (rec) { return !!(rec && rec.when && dayKey(new Date(rec.when)) === day); };
+    if (it.kind === 'lesson') return onDay(data.lessons[COURSES[it.ci].lessons[it.li].id]);
+    if (it.kind === 'story') return onDay(data.stories[STORIES[it.si].id]);
+    return onDay((data.discover || {})[it.id]);
+  }
+
   // ---- pet: grows with finished lessons; treats cost stars from the same wallet as Dress up ----
   var PET_LOOK = { falcon: ['🐣', '🐥', '🦅', '🦅'], camel: ['🐪', '🐪', '🐫', '🐫'], oryx: ['🐐', '🐐', '🦌', '🦌'] };
   var PET_STEPS = [0, 5, 15, 35];
@@ -982,6 +1020,7 @@
     go(view, extra) {
       clearTimeout(this._vdTimer);
       if (view === 'vibe' && this.state.view === 'vibeset') this.state.vb = { status: 'idle' };
+      if (['lesson', 'story', 'quest', 'gate', 'rest'].indexOf(view) === -1) this._todayRun = false;
       if (FREE_VIEWS.indexOf(view) === -1 && overLimit((extra && extra.data) || this.state.data)) { view = 'rest'; extra = {}; }
       if (PARENT_VIEWS.indexOf(view) !== -1 && !(this._grownUntil > Date.now())) {
         var a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
@@ -1033,6 +1072,18 @@
         return prepQ(q);
       });
       this.go('lesson', { ls: { story: si, li: 0, step: 'quiz', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], act: freshAct(qs[0]) } });
+    }
+
+    startToday(it) {
+      if (it.kind === 'lesson') return this.startLesson(it.ci, it.li);
+      if (it.kind === 'story') return this.go('story', { si: it.si, page: 0 });
+      this.go('quest', { qst: { id: it.id, stage: 0, wrong: [], right: false, won: false } });
+    }
+
+    playToday() {
+      var data = this.state.data, plan = todayPlan(data), next = plan.items.filter(function (it) { return !todayDone(data, it); })[0];
+      if (!next) { this._todayRun = false; return this.go('today'); }
+      this._todayRun = true; this.startToday(next);
     }
 
     startLesson(ci, li, fromJourney) {
@@ -1121,6 +1172,7 @@
         isEditor: s.view === 'editor', goEditor: function () { self._draft = null; self.go('editor', { edMsg: '' }); },
         isDisc: s.view === 'discover', discOn: (s.view === 'discover' || s.view === 'quest' || s.view === 'cards') ? 'page' : 'false', goDisc: function () { self.go('discover'); },
         isQuest: s.view === 'quest', isCards: s.view === 'cards', goCards: function () { self.go('cards'); },
+        isToday: s.view === 'today', todayOn: s.view === 'today' ? 'page' : 'false', goToday: function () { self._todayRun = false; self.go('today'); },
         isPet: s.view === 'pet', petOn: s.view === 'pet' ? 'page' : 'false', goPet: function () { self.go('pet'); },
         isWard: s.view === 'ward', wardOn: s.view === 'ward' ? 'page' : 'false', goWard: function () { self.go('ward'); },
         isVibe: s.view === 'vibe', vibeOn: s.view === 'vibe' ? 'page' : 'false', goVibe: function () { self.go('vibe'); },
@@ -1495,6 +1547,27 @@
             };
           }
         }
+      }
+
+      // ---- Today's six ----
+      var inToday = !!self._todayRun;
+      out.todayRun = inToday && ['lesson', 'story', 'quest'].indexOf(s.view) !== -1;
+      out.todayNext = function () { self.playToday(); };
+      if (s.view === 'today') {
+        var plan = todayPlan(data), doneN = 0;
+        out.td = { items: plan.items.map(function (it, k) {
+          var done = todayDone(data, it); if (done) doneN++;
+          var title, icon, color;
+          if (it.kind === 'lesson') { var c = COURSES[it.ci]; title = tx(c.lessons[it.li].title); icon = (c.stickers && c.stickers[0]) || '📘'; color = c.color; }
+          else if (it.kind === 'story') { var st2 = STORIES[it.si]; title = tx(st2.title); icon = st2.sticker; color = st2.color; }
+          else { var qq = (window.SADU_QUESTS || []).filter(function (x) { return x.id === it.id; })[0] || { place: { en: '', ar: '' }, emoji: '🗺️', color: '#C98B4E' }; title = tx(qq.place); icon = qq.emoji; color = qq.color; }
+          return { num: String(k + 1), title: title, icon: icon, style: '--c:' + color, kind: T.tdKinds[it.kind] + (it.kind === 'lesson' ? ' · ' + tx(COURSES[it.ci].name) : ''),
+            cls: done ? 'td-item done' : 'td-item', done: done, notDone: !done, go: function () { self._todayRun = true; self.startToday(it); } };
+        }) };
+        out.td.count = fill(T.tdOf, { A: doneN }); out.td.all = doneN >= plan.items.length; out.td.notAll = !out.td.all;
+        out.td.dots = plan.items.map(function (it) { return { cls: todayDone(data, it) ? 'td-dot on' : 'td-dot' }; });
+        out.td.play = function () { self._todayRun = true; self.playToday(); };
+        if (out.td.all && !self._todayCheered) { self._todayCheered = dayKey(new Date()); setTimeout(function () { sfx('done'); burst(null, 220); }, 200); }
       }
 
       // ---- my pet ----
