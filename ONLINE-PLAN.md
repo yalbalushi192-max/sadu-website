@@ -7,11 +7,11 @@ and what each step needs from you. Nothing here is set up yet. Each step starts 
 
 | Option | Cost | Code public? | Automatic updates | What you do |
 |---|---|---|---|---|
-| **GitHub Pages** (recommended to start) | Free | Yes | Yes, every saved version | Create a GitHub account (done: `yousufalbalushi192-max`), install the GitHub tool, log in once |
+| **GitHub Pages** (recommended to start) | Free | Yes | Yes, every saved version | Create a GitHub account (done: `yalbalushi192-max`), install the GitHub tool, log in once |
 | Netlify or Cloudflare Pages | Free | No (private code is fine) | Yes | Same as GitHub, plus connect the site on their website (a few clicks) |
 | Your own web address (for example `sadu.app`) | About 10 to 15 USD a year | — | — | Buy the name; we point it at the site |
 
-**Your web address with GitHub Pages:** `https://yousufalbalushi192-max.github.io/sadu-website/`
+**Your web address with GitHub Pages:** `https://yalbalushi192-max.github.io/sadu-website/`
 
 **What I do after you log in:** create the `sadu-website` repository, upload the site, turn on GitHub
 Pages, and from then on every saved version goes live within about a minute. Once it is online over

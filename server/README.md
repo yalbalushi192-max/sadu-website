@@ -18,7 +18,7 @@ helper, not in the website. The helper also checks every prompt and adds child-s
 3. Open the worker's **Settings → Variables and Secrets** and add:
    - `ARK_API_KEY` (type **Secret**): your BytePlus ModelArk API key
    - `STUDIO_PIN` (type **Secret**): a code only parents and teachers know, for example `4827`
-   - `ALLOWED_ORIGIN`: your website address, `https://yousufalbalushi192-max.github.io`
+   - `ALLOWED_ORIGIN`: your website address, `https://yalbalushi192-max.github.io`
 4. Copy the worker's address (it looks like `https://sadu-video.YOURNAME.workers.dev`).
 5. In Sadu: **Family report → Video Studio → Connect**, paste the address and the PIN. Done.
 

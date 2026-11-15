@@ -6,7 +6,7 @@
 // Secrets to set in Cloudflare (Settings → Variables and Secrets):
 //   ARK_API_KEY     the BytePlus ModelArk API key (keep it secret)
 //   STUDIO_PIN      a code the parent types in the Video Studio, so strangers cannot spend your credit
-//   ALLOWED_ORIGIN  the website address, for example https://yousufalbalushi192-max.github.io
+//   ALLOWED_ORIGIN  the website address, for example https://yalbalushi192-max.github.io
 // Optional:
 //   SEEDANCE_MODEL  defaults to dreamina-seedance-2-5-260628 (use the "flash" model to spend less)
 //
