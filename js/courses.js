@@ -1280,11 +1280,92 @@
             { q: { en: 'What may happen if all the gazelles disappear?', ar: 'ماذا قد يحدث إذا اختفت كل الغزلان؟' }, opts: [{ en: 'the wolves go hungry', ar: 'تجوع الذئاب' }, { en: 'nothing at all', ar: 'لا شيء' }, { en: 'more wolves appear', ar: 'تظهر ذئاب أكثر' }] }
           ] }
       ]
+    },
+    {
+      id: 'english-plus', stickers: ['🔤', '⏳', '🤝', '❓', '🔁', '🧩', '🦁', '📖'], name: { en: 'English Grammar and Reading', ar: 'قواعد الإنجليزية والقراءة' }, age: { en: 'Ages 10 to 14', ar: 'من 10 إلى 14 سنة' }, ages: [10, 14],
+      color: '#3F8EF5', tint: '#D2E5FD',
+      tip: { en: 'Read together every day, even a few pages. Ask your child to find a simile or a new word, and use it at dinner.', ar: 'اقرآ معًا كل يوم ولو صفحات قليلة. اطلب من طفلك أن يجد تشبيهًا أو كلمة جديدة ويستعملها على العشاء.' },
+      icon: 'M4 5h7a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H4zM20 5h-7a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h8z',
+      lessons: [
+        { id: "eg-1", title: {"en": "Parts of speech", "ar": "أقسام الكلام"},
+          teach: {"en": "A noun names a person, place or thing (falcon, Riyadh). A verb is an action or being word (fly, is). An adjective describes a noun (fast, golden). An adverb describes a verb (quickly).", "ar": "الاسم (noun) يسمّي شخصًا أو مكانًا أو شيئًا (falcon, Riyadh). والفعل (verb) كلمة حدث (fly, is). والصفة (adjective) تصف الاسم (fast, golden). والظرف (adverb) يصف الفعل (quickly)."},
+          hint: {"en": "Ask: is it a thing, an action, or a describing word?", "ar": "اسأل: هل هي شيء أم حدث أم كلمة وصف؟"},
+          questions: [
+            {"q": {"en": "Which word is a noun?", "ar": "أي كلمة اسم (noun)؟"}, "opts": ["desert", "flew", "over"], "show": "The falcon flew over the desert."},
+            {"q": {"en": "Which word is a verb?", "ar": "أي كلمة فعل (verb)؟"}, "opts": ["reads", "sister", "evening"], "show": "My sister reads every evening."},
+            {"q": {"en": "Which word is an adjective?", "ar": "أي كلمة صفة (adjective)؟"}, "opts": ["sweet", "dates", "garden"], "show": "We ate sweet dates in the garden."},
+            {"q": {"en": "Which word is an adverb?", "ar": "أي كلمة ظرف (adverb)؟"}, "opts": ["slowly", "camel", "home"], "show": "The camel walked slowly home."}
+          ] },
+        { id: "eg-2", title: {"en": "Verb tenses", "ar": "أزمنة الفعل"},
+          teach: {"en": "Tense tells us when something happens. Past: I played yesterday. Present: I play every day. Future: I will play tomorrow. Many past verbs end in -ed, but some are irregular (go → went, see → saw).", "ar": "الزمن يخبرنا متى يحدث الفعل. الماضي: I played yesterday. والمضارع: I play every day. والمستقبل: I will play tomorrow. كثير من أفعال الماضي تنتهي بـ ed، وبعضها شاذ (go ← went، see ← saw)."},
+          hint: {"en": "Look for time words: yesterday, every day, tomorrow.", "ar": "ابحث عن كلمات الزمن: yesterday، every day، tomorrow."},
+          questions: [
+            {"q": {"en": "Choose the past tense.", "ar": "اختر صيغة الماضي."}, "opts": ["went", "go", "will go"], "show": "Yesterday we ___ to the beach."},
+            {"q": {"en": "Choose the future tense.", "ar": "اختر صيغة المستقبل."}, "opts": ["will visit", "visited", "visits"], "show": "Tomorrow I ___ my grandmother."},
+            {"q": {"en": "What is the past tense of \"see\"?", "ar": "ما ماضي الفعل «see»؟"}, "opts": ["saw", "seed", "seen it"]},
+            {"q": {"en": "Which sentence is in the present tense?", "ar": "أي جملة في زمن المضارع؟"}, "opts": ["She walks to school.", "She walked to school.", "She will walk to school."]}
+          ] },
+        { id: "eg-3", title: {"en": "Subject and verb agreement", "ar": "توافق الفاعل والفعل"},
+          teach: {"en": "The verb must match its subject. One person or thing: he runs, the cat sleeps. More than one: they run, the cats sleep. With \"I\" and \"you\": I am, you are.", "ar": "يجب أن يوافق الفعل فاعله. شخص أو شيء واحد: he runs، the cat sleeps. وأكثر من واحد: they run، the cats sleep. ومع I وyou: I am، you are."},
+          hint: {"en": "Is the subject one, or more than one?", "ar": "هل الفاعل واحد أم أكثر من واحد؟"},
+          questions: [
+            {"q": {"en": "Choose the correct verb.", "ar": "اختر الفعل الصحيح."}, "opts": ["play", "plays", "playing"], "show": "The boys ___ football after school."},
+            {"q": {"en": "Choose the correct verb.", "ar": "اختر الفعل الصحيح."}, "opts": ["listens", "listen", "listening"], "show": "My brother ___ to music."},
+            {"q": {"en": "Choose the correct verb.", "ar": "اختر الفعل الصحيح."}, "opts": ["are", "is", "am"], "show": "They ___ happy today."},
+            {"q": {"en": "Which sentence is correct?", "ar": "أي جملة صحيحة؟"}, "opts": ["The birds sing in the morning.", "The birds sings in the morning.", "The bird sing in the morning."]}
+          ] },
+        { id: "eg-4", title: {"en": "Punctuation", "ar": "علامات الترقيم"},
+          teach: {"en": "A sentence starts with a capital letter and ends with a full stop (.), a question mark (?) or an exclamation mark (!). Commas separate items in a list. An apostrophe shows that something belongs to someone: Sara's book.", "ar": "تبدأ الجملة بحرف كبير وتنتهي بنقطة (.) أو علامة استفهام (?) أو علامة تعجّب (!). والفواصل تفصل عناصر القائمة. والفاصلة العليا (apostrophe) تدل على الملكية: Sara's book."},
+          hint: {"en": "Is it a question, a list, or something that belongs to someone?", "ar": "هل هي سؤال أم قائمة أم شيء يملكه أحد؟"},
+          questions: [
+            {"q": {"en": "Which ending is correct?", "ar": "أي نهاية صحيحة؟"}, "opts": ["?", ".", ","], "show": "Where is the library"},
+            {"q": {"en": "Which sentence uses commas correctly?", "ar": "أي جملة تستعمل الفواصل بشكل صحيح؟"}, "opts": ["I bought dates, bread and milk.", "I bought, dates bread, and milk.", "I, bought dates bread and milk."]},
+            {"q": {"en": "Which shows that the bag belongs to Ali?", "ar": "أي عبارة تدل على أن الحقيبة لعلي؟"}, "opts": ["Ali's bag", "Alis' bag", "Alis bag"]},
+            {"q": {"en": "Which sentence starts correctly?", "ar": "أي جملة تبدأ بشكل صحيح؟"}, "opts": ["We visited Jeddah.", "we visited jeddah.", "We visited jeddah."]}
+          ] },
+        { id: "eg-5", title: {"en": "Synonyms and antonyms", "ar": "المترادفات والأضداد"},
+          teach: {"en": "Synonyms are words with the same or similar meaning (big – large). Antonyms are words with opposite meanings (hot – cold). Using synonyms makes your writing more interesting.", "ar": "المترادفات كلمات معناها واحد أو متقارب (big – large). والأضداد كلمات معناها متعاكس (hot – cold). واستعمال المترادفات يجعل كتابتك أجمل."},
+          hint: {"en": "Same meaning, or opposite meaning?", "ar": "معنى متشابه أم معنى معاكس؟"},
+          questions: [
+            {"q": {"en": "Which word is a synonym of \"happy\"?", "ar": "أي كلمة مرادفة لـ «happy»؟"}, "opts": ["glad", "sad", "angry"]},
+            {"q": {"en": "Which word is an antonym of \"ancient\"?", "ar": "أي كلمة ضد «ancient»؟"}, "opts": ["modern", "old", "historic"]},
+            {"q": {"en": "Which word is a synonym of \"rapid\"?", "ar": "أي كلمة مرادفة لـ «rapid»؟"}, "opts": ["fast", "slow", "quiet"]},
+            {"q": {"en": "Which word is an antonym of \"generous\"?", "ar": "أي كلمة ضد «generous»؟"}, "opts": ["selfish", "kind", "giving"]}
+          ] },
+        { id: "eg-6", title: {"en": "Prefixes and suffixes", "ar": "السوابق واللواحق"},
+          teach: {"en": "A prefix goes at the start of a word and changes its meaning: un + happy = unhappy (not happy), re + write = rewrite (write again). A suffix goes at the end: care + ful = careful, quick + ly = quickly.", "ar": "السابقة تُضاف إلى أول الكلمة فتغيّر معناها: un + happy = unhappy (غير سعيد)، re + write = rewrite (يعيد الكتابة). واللاحقة تُضاف إلى آخرها: care + ful = careful، quick + ly = quickly."},
+          hint: {"en": "un- means \"not\", re- means \"again\", -ful means \"full of\".", "ar": "un تعني «غير»، وre تعني «مرة أخرى»، وful تعني «مليء بـ»."},
+          questions: [
+            {"q": {"en": "What does \"unkind\" mean?", "ar": "ماذا تعني «unkind»؟"}, "opts": ["not kind", "very kind", "kind again"]},
+            {"q": {"en": "What does \"replay\" mean?", "ar": "ماذا تعني «replay»؟"}, "opts": ["play again", "not play", "play badly"]},
+            {"q": {"en": "Which word means \"full of hope\"?", "ar": "أي كلمة تعني «مليء بالأمل»؟"}, "opts": ["hopeful", "hopeless", "unhope"]},
+            {"q": {"en": "Add a suffix: \"quiet\" + ___ = done in a quiet way.", "ar": "أضف لاحقة: quiet + ___ = بطريقة هادئة."}, "opts": ["quietly", "quietful", "unquiet"]}
+          ] },
+        { id: "eg-7", title: {"en": "Similes and metaphors", "ar": "التشبيه والاستعارة"},
+          teach: {"en": "A simile compares two things using \"like\" or \"as\": as brave as a lion, she runs like the wind. A metaphor says one thing IS another: the classroom was a zoo. Writers use them to paint pictures with words.", "ar": "التشبيه يقارن بين شيئين باستعمال like أو as: as brave as a lion، she runs like the wind. والاستعارة تقول إن شيئًا هو شيء آخر: the classroom was a zoo. ويستعملها الكتّاب ليرسموا بالكلمات."},
+          hint: {"en": "Look for \"like\" or \"as\": that is a simile.", "ar": "ابحث عن like أو as: هذا تشبيه."},
+          questions: [
+            {"q": {"en": "Which sentence is a simile?", "ar": "أي جملة تشبيه؟"}, "opts": ["He is as tall as a palm tree.", "He is a tall boy.", "He climbed the palm tree."]},
+            {"q": {"en": "Which sentence is a metaphor?", "ar": "أي جملة استعارة؟"}, "opts": ["Time is a thief.", "Time is like a river.", "Time is passing."]},
+            {"q": {"en": "What does \"the classroom was a zoo\" mean?", "ar": "ماذا تعني «the classroom was a zoo»؟"}, "opts": ["the class was very noisy", "there were animals in class", "the class was empty"]},
+            {"q": {"en": "Complete the simile: as busy as a ___", "ar": "أكمل التشبيه: as busy as a ___"}, "opts": ["bee", "rock", "pillow"]}
+          ] },
+        { id: "eg-8", title: {"en": "Reading: The Desert Garden", "ar": "القراءة: حديقة الصحراء"},
+          teach: {"en": "Read carefully: \"Layla lived in a village at the edge of the desert. Every morning before school, she carried water to the small garden her grandfather had planted. At first only a few green shoots appeared, and her friends laughed. But Layla did not give up. By the end of the year, the garden was full of tomatoes, mint and a young palm tree, and the whole village came to see it.\"", "ar": "اقرأ بعناية (النص بالإنجليزية): \"Layla lived in a village at the edge of the desert. Every morning before school, she carried water to the small garden her grandfather had planted. At first only a few green shoots appeared, and her friends laughed. But Layla did not give up. By the end of the year, the garden was full of tomatoes, mint and a young palm tree, and the whole village came to see it.\""},
+          hint: {"en": "Read the story again and find the sentence that answers the question.", "ar": "اقرأ القصة مرة أخرى وابحث عن الجملة التي تجيب عن السؤال."},
+          questions: [
+            {"q": {"en": "When did Layla water the garden?", "ar": "متى كانت ليلى تسقي الحديقة؟"}, "opts": ["every morning before school", "every night", "only at the weekend"]},
+            {"q": {"en": "Who planted the garden?", "ar": "من زرع الحديقة؟"}, "opts": ["her grandfather", "her friends", "her teacher"]},
+            {"q": {"en": "How did Layla feel when her friends laughed?", "ar": "كيف كانت ليلى عندما ضحك أصدقاؤها؟"}, "opts": ["she did not give up", "she stopped watering", "she moved away"]},
+            {"q": {"en": "What is the main message of the story?", "ar": "ما الفكرة الرئيسة للقصة؟"}, "opts": ["keep trying and you can succeed", "gardens are boring", "never listen to grandparents"]}
+          ] }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'eg-1': 1, 'eg-2': 1, 'eg-3': 1, 'eg-4': 2, 'eg-5': 2, 'eg-6': 2, 'eg-7': 3, 'eg-8': 3,
     'sx-1': 1, 'sx-2': 1, 'sx-3': 1, 'sx-4': 2, 'sx-5': 2, 'sx-6': 2, 'sx-7': 3, 'sx-8': 3,
     'mp-1': 1, 'mp-2': 1, 'mp-3': 1, 'mp-4': 2, 'mp-5': 2, 'mp-6': 2, 'mp-7': 3, 'mp-8': 3,
     'world-1': 1, 'world-2': 1, 'world-3': 1, 'world-4': 2, 'world-5': 2, 'world-6': 2, 'world-7': 3,
