@@ -1200,11 +1200,92 @@
             return pick3(x, [x + 1, kind === 1 ? a * x - a : x + a, Math.max(0, x - 2)], { en: 'Undo each step: subtract, then divide.', ar: 'تراجع عن كل خطوة: اطرح، ثم اقسم.' }, MP_FIND_X, show);
           }) }
       ]
+    },
+    {
+      id: 'science-plus', stickers: ['🔬', '🫀', '🧲', '☀️', '💡', '🌧️', '🪐', '🦊'], name: { en: 'Science Explorers', ar: 'مستكشفو العلوم' }, age: { en: 'Ages 10 to 14', ar: 'من 10 إلى 14 سنة' }, ages: [10, 14],
+      color: '#2E9E8F', tint: '#C6EDE8',
+      tip: { en: 'Try small experiments together: roll a ball on different floors, build a circuit with a battery and foil, or watch a puddle dry in the sun.', ar: 'جرّبا تجارب صغيرة معًا: دحرجا كرة على أرضيات مختلفة، واصنعا دائرة ببطارية وورق ألمنيوم، أو راقبا بركة ماء تجفّ في الشمس.' },
+      icon: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M8 15h8M11 12h2',
+      lessons: [
+        { id: 'sx-1', title: { en: 'Cells: the building blocks', ar: 'الخلايا: لبنات الحياة' },
+          teach: { en: 'All living things are made of cells. The nucleus is the control centre, the cell membrane lets things in and out, and plant cells also have a cell wall and chloroplasts for making food from sunlight.', ar: 'كل الكائنات الحية مكوّنة من خلايا. النواة مركز التحكّم، والغشاء الخلوي يسمح بدخول المواد وخروجها، ولخلايا النبات أيضًا جدار خلوي وبلاستيدات خضراء لصنع الغذاء من ضوء الشمس.' },
+          hint: { en: 'Think about what each part does, like rooms in a house.', ar: 'فكّر في عمل كل جزء، مثل غرف البيت.' },
+          questions: [
+            { q: { en: 'What are all living things made of?', ar: 'مِمّ تتكوّن كل الكائنات الحية؟' }, opts: [{ en: 'cells', ar: 'الخلايا' }, { en: 'stones', ar: 'الحجارة' }, { en: 'plastic', ar: 'البلاستيك' }] },
+            { q: { en: 'Which part is the control centre of a cell?', ar: 'أي جزء هو مركز التحكّم في الخلية؟' }, opts: [{ en: 'the nucleus', ar: 'النواة' }, { en: 'the cell wall', ar: 'الجدار الخلوي' }, { en: 'the water', ar: 'الماء' }] },
+            { q: { en: 'What do chloroplasts help a plant do?', ar: 'بماذا تساعد البلاستيدات الخضراء النبات؟' }, opts: [{ en: 'make food from sunlight', ar: 'صنع الغذاء من ضوء الشمس' }, { en: 'walk', ar: 'المشي' }, { en: 'sleep', ar: 'النوم' }] },
+            { q: { en: 'Which cells have a cell wall?', ar: 'أي الخلايا لها جدار خلوي؟' }, opts: [{ en: 'plant cells', ar: 'الخلايا النباتية' }, { en: 'only human cells', ar: 'الخلايا البشرية فقط' }, { en: 'no cells', ar: 'لا خلايا' }] }
+          ] },
+        { id: 'sx-2', title: { en: 'The human body', ar: 'جسم الإنسان' },
+          teach: { en: 'The heart pumps blood around the body. The lungs take in oxygen when we breathe. The stomach and intestines break down food so the body can use it. The brain controls everything.', ar: 'يضخّ القلب الدم إلى أنحاء الجسم. وتأخذ الرئتان الأكسجين عندما نتنفّس. وتهضم المعدة والأمعاء الطعام ليستفيد منه الجسم. والدماغ يتحكّم في كل شيء.' },
+          hint: { en: 'Which organ does that job in your own body?', ar: 'أي عضو يقوم بهذا العمل في جسمك؟' },
+          questions: [
+            { q: { en: 'Which organ pumps blood around the body?', ar: 'أي عضو يضخّ الدم في الجسم؟' }, opts: [{ en: 'the heart', ar: 'القلب' }, { en: 'the stomach', ar: 'المعدة' }, { en: 'the lungs', ar: 'الرئتان' }] },
+            { q: { en: 'What gas do our lungs take in from the air?', ar: 'ما الغاز الذي تأخذه الرئتان من الهواء؟' }, opts: [{ en: 'oxygen', ar: 'الأكسجين' }, { en: 'smoke', ar: 'الدخان' }, { en: 'helium', ar: 'الهيليوم' }] },
+            { q: { en: 'Where does most digestion of food happen?', ar: 'أين يحدث معظم هضم الطعام؟' }, opts: [{ en: 'in the stomach and intestines', ar: 'في المعدة والأمعاء' }, { en: 'in the ears', ar: 'في الأذنين' }, { en: 'in the hair', ar: 'في الشعر' }] },
+            { q: { en: 'Which organ controls the whole body?', ar: 'أي عضو يتحكّم في الجسم كله؟' }, opts: [{ en: 'the brain', ar: 'الدماغ' }, { en: 'the knee', ar: 'الركبة' }, { en: 'the skin', ar: 'الجلد' }] }
+          ] },
+        { id: 'sx-3', title: { en: 'Forces and motion', ar: 'القوى والحركة' },
+          teach: { en: 'A force is a push or a pull. Gravity pulls things down towards the Earth. Friction slows moving things down, which is why a ball rolls further on smooth tiles than on sand.', ar: 'القوة دفع أو سحب. الجاذبية تسحب الأشياء نحو الأرض. والاحتكاك يبطئ الأشياء المتحرّكة، ولهذا تتدحرج الكرة على البلاط الأملس أبعد مما تتدحرج على الرمل.' },
+          hint: { en: 'Is it a push, a pull, or something slowing it down?', ar: 'هل هو دفع أم سحب أم شيء يبطئ الحركة؟' },
+          questions: [
+            { q: { en: 'What is a force?', ar: 'ما القوة؟' }, opts: [{ en: 'a push or a pull', ar: 'دفع أو سحب' }, { en: 'a colour', ar: 'لون' }, { en: 'a sound', ar: 'صوت' }] },
+            { q: { en: 'Which force makes a dropped apple fall?', ar: 'أي قوة تجعل التفاحة تسقط؟' }, opts: [{ en: 'gravity', ar: 'الجاذبية' }, { en: 'magnetism', ar: 'المغناطيسية' }, { en: 'friction', ar: 'الاحتكاك' }] },
+            { q: { en: 'Where will a ball roll furthest?', ar: 'أين تتدحرج الكرة أبعد مسافة؟' }, opts: [{ en: 'on smooth tiles', ar: 'على البلاط الأملس' }, { en: 'on deep sand', ar: 'على الرمل العميق' }, { en: 'on thick carpet', ar: 'على سجّاد سميك' }] },
+            { q: { en: 'Which force slows a moving bicycle when you brake?', ar: 'أي قوة تبطئ الدراجة عند استعمال المكابح؟' }, opts: [{ en: 'friction', ar: 'الاحتكاك' }, { en: 'gravity pulling up', ar: 'جاذبية للأعلى' }, { en: 'sunlight', ar: 'ضوء الشمس' }] }
+          ] },
+        { id: 'sx-4', title: { en: 'Energy', ar: 'الطاقة' },
+          teach: { en: 'Energy makes things happen. It comes in forms like heat, light, movement and electricity, and it can change from one form to another. Solar panels change sunlight into electricity, and sunny Saudi Arabia is a great place for them.', ar: 'الطاقة تجعل الأشياء تحدث. ولها أشكال مثل الحرارة والضوء والحركة والكهرباء، ويمكن أن تتحوّل من شكل إلى آخر. الألواح الشمسية تحوّل ضوء الشمس إلى كهرباء، والمملكة المشمسة مكان رائع لها.' },
+          hint: { en: 'What does it start as, and what does it change into?', ar: 'بأي شكل تبدأ الطاقة، وإلى أي شكل تتحوّل؟' },
+          questions: [
+            { q: { en: 'What do solar panels change sunlight into?', ar: 'إلى ماذا تحوّل الألواح الشمسية ضوء الشمس؟' }, opts: [{ en: 'electricity', ar: 'كهرباء' }, { en: 'water', ar: 'ماء' }, { en: 'sand', ar: 'رمل' }] },
+            { q: { en: 'Which is a renewable energy source?', ar: 'أي مصدر للطاقة متجدّد؟' }, opts: [{ en: 'the Sun', ar: 'الشمس' }, { en: 'coal', ar: 'الفحم' }, { en: 'a battery that is used up', ar: 'بطارية فارغة' }] },
+            { q: { en: 'A lamp changes electricity into…', ar: 'المصباح يحوّل الكهرباء إلى…' }, opts: [{ en: 'light and heat', ar: 'ضوء وحرارة' }, { en: 'food', ar: 'غذاء' }, { en: 'wind', ar: 'رياح' }] },
+            { q: { en: 'What kind of energy does a moving car have?', ar: 'ما نوع الطاقة التي تملكها سيارة متحرّكة؟' }, opts: [{ en: 'movement energy', ar: 'طاقة حركة' }, { en: 'no energy', ar: 'لا طاقة' }, { en: 'sound only', ar: 'صوت فقط' }] }
+          ] },
+        { id: 'sx-5', title: { en: 'Electric circuits', ar: 'الدوائر الكهربائية' },
+          teach: { en: 'Electricity flows round a complete loop called a circuit: from the battery, through the wires and the bulb, and back. If there is a gap, the bulb goes off. Metals conduct electricity; plastic and wood do not.', ar: 'تسري الكهرباء في حلقة كاملة تُسمّى دائرة: من البطارية عبر الأسلاك والمصباح ثم تعود. إذا كانت هناك فجوة ينطفئ المصباح. الفلزات توصل الكهرباء، أما البلاستيك والخشب فلا.' },
+          hint: { en: 'Is the loop complete? Is the material a metal?', ar: 'هل الحلقة كاملة؟ هل المادة فلز؟' },
+          questions: [
+            { q: { en: 'What happens to the bulb if the circuit has a gap?', ar: 'ماذا يحدث للمصباح إذا كانت في الدائرة فجوة؟' }, opts: [{ en: 'it goes off', ar: 'ينطفئ' }, { en: 'it gets brighter', ar: 'يصبح أكثر إضاءة' }, { en: 'it turns blue', ar: 'يصبح أزرق' }] },
+            { q: { en: 'Which material conducts electricity?', ar: 'أي مادة توصل الكهرباء؟' }, opts: [{ en: 'copper', ar: 'النحاس' }, { en: 'plastic', ar: 'البلاستيك' }, { en: 'wood', ar: 'الخشب' }] },
+            { q: { en: 'What does a switch do?', ar: 'ماذا يفعل المفتاح الكهربائي؟' }, opts: [{ en: 'opens or closes the circuit', ar: 'يفتح الدائرة أو يغلقها' }, { en: 'makes electricity', ar: 'يصنع الكهرباء' }, { en: 'cools the wires', ar: 'يبرّد الأسلاك' }] },
+            { q: { en: 'Why are wires covered in plastic?', ar: 'لماذا تُغطّى الأسلاك بالبلاستيك؟' }, opts: [{ en: 'to keep us safe from shocks', ar: 'لحمايتنا من الصعق' }, { en: 'to make them heavy', ar: 'لتصبح ثقيلة' }, { en: 'to make them glow', ar: 'لتتوهّج' }] }
+          ] },
+        { id: 'sx-6', title: { en: 'The water cycle', ar: 'دورة الماء' },
+          teach: { en: 'The Sun heats water in seas and lakes, and it evaporates into water vapour. High up it cools and condenses into clouds. Then it falls as rain, flows into rivers and seas, and the cycle starts again.', ar: 'تسخّن الشمس الماء في البحار والبحيرات فيتبخّر ويصبح بخار ماء. وفي الأعلى يبرد ويتكاثف فيكوّن السحب. ثم يسقط مطرًا ويجري في الأودية والبحار، وتبدأ الدورة من جديد.' },
+          hint: { en: 'Follow the water: up as vapour, clouds, then down as rain.', ar: 'تتبّع الماء: يصعد بخارًا، ثم سحبًا، ثم ينزل مطرًا.' },
+          questions: [
+            { q: { en: 'What is it called when water turns into vapour?', ar: 'ماذا يُسمّى تحوّل الماء إلى بخار؟' }, opts: [{ en: 'evaporation', ar: 'التبخّر' }, { en: 'freezing', ar: 'التجمّد' }, { en: 'melting', ar: 'الانصهار' }] },
+            { q: { en: 'How are clouds made?', ar: 'كيف تتكوّن السحب؟' }, opts: [{ en: 'water vapour cools and condenses', ar: 'يبرد بخار الماء ويتكاثف' }, { en: 'smoke from cars', ar: 'من دخان السيارات' }, { en: 'the wind blows sand', ar: 'الريح تحمل الرمل' }] },
+            { q: { en: 'What gives the energy for the water cycle?', ar: 'ما مصدر الطاقة لدورة الماء؟' }, opts: [{ en: 'the Sun', ar: 'الشمس' }, { en: 'the Moon', ar: 'القمر' }, { en: 'fish', ar: 'الأسماك' }] },
+            { q: { en: 'What is rain, snow or hail called?', ar: 'ماذا يُسمّى المطر والثلج والبَرَد؟' }, opts: [{ en: 'precipitation', ar: 'الهطول' }, { en: 'condensation', ar: 'التكاثف' }, { en: 'evaporation', ar: 'التبخّر' }] }
+          ] },
+        { id: 'sx-7', title: { en: 'Earth and space', ar: 'الأرض والفضاء' },
+          teach: { en: 'The Earth spins once a day, giving us day and night, and travels around the Sun once a year. The Moon goes around the Earth about once a month, and we see its shape change as different parts are lit by the Sun.', ar: 'تدور الأرض حول نفسها مرة كل يوم فيكون الليل والنهار، وتدور حول الشمس مرة كل سنة. ويدور القمر حول الأرض مرة كل شهر تقريبًا، ونرى شكله يتغيّر لأن الشمس تضيء أجزاء مختلفة منه.' },
+          hint: { en: 'Think: spinning makes day and night; going around the Sun makes a year.', ar: 'تذكّر: الدوران حول النفس يصنع الليل والنهار، والدوران حول الشمس يصنع السنة.' },
+          questions: [
+            { q: { en: 'What causes day and night?', ar: 'ما سبب الليل والنهار؟' }, opts: [{ en: 'the Earth spinning', ar: 'دوران الأرض حول نفسها' }, { en: 'the Sun switching off', ar: 'انطفاء الشمس' }, { en: 'clouds', ar: 'السحب' }] },
+            { q: { en: 'How long does the Earth take to go around the Sun?', ar: 'كم تستغرق الأرض لتدور حول الشمس؟' }, opts: [{ en: 'one year', ar: 'سنة واحدة' }, { en: 'one day', ar: 'يومًا واحدًا' }, { en: 'one hour', ar: 'ساعة واحدة' }] },
+            { q: { en: 'Why does the Moon seem to change shape?', ar: 'لماذا يبدو أن شكل القمر يتغيّر؟' }, opts: [{ en: 'we see different lit parts of it', ar: 'لأننا نرى أجزاء مضيئة مختلفة منه' }, { en: 'it breaks into pieces', ar: 'لأنه يتكسّر' }, { en: 'it gets eaten', ar: 'لأن أحدًا يأكله' }] },
+            { q: { en: 'What is the Sun?', ar: 'ما الشمس؟' }, opts: [{ en: 'a star', ar: 'نجم' }, { en: 'a planet', ar: 'كوكب' }, { en: 'a moon', ar: 'قمر' }] }
+          ] },
+        { id: 'sx-8', title: { en: 'Food chains', ar: 'السلاسل الغذائية' },
+          teach: { en: 'A food chain shows who eats whom. It starts with a plant (a producer) that makes food from sunlight. Then come consumers: for example grass → gazelle → wolf. If one link disappears, the whole chain is affected.', ar: 'تبيّن السلسلة الغذائية من يأكل من. تبدأ بنبات (منتِج) يصنع غذاءه من ضوء الشمس، ثم تأتي المستهلكات: مثل عشب ← غزال ← ذئب. إذا اختفت حلقة تأثّرت السلسلة كلها.' },
+          hint: { en: 'Start from the plant, then ask: who eats it?', ar: 'ابدأ من النبات، ثم اسأل: من يأكله؟' },
+          questions: [
+            { q: { en: 'What is at the start of every food chain?', ar: 'ماذا يوجد في بداية كل سلسلة غذائية؟' }, opts: [{ en: 'a plant', ar: 'نبات' }, { en: 'a lion', ar: 'أسد' }, { en: 'a rock', ar: 'صخرة' }] },
+            { q: { en: 'In grass → gazelle → wolf, which is the producer?', ar: 'في عشب ← غزال ← ذئب، أيها المنتِج؟' }, opts: [{ en: 'grass', ar: 'العشب' }, { en: 'gazelle', ar: 'الغزال' }, { en: 'wolf', ar: 'الذئب' }] },
+            { q: { en: 'Where does the energy in a food chain first come from?', ar: 'من أين تأتي الطاقة في السلسلة الغذائية أولًا؟' }, opts: [{ en: 'the Sun', ar: 'الشمس' }, { en: 'the wolf', ar: 'الذئب' }, { en: 'the soil only', ar: 'التربة فقط' }] },
+            { q: { en: 'What may happen if all the gazelles disappear?', ar: 'ماذا قد يحدث إذا اختفت كل الغزلان؟' }, opts: [{ en: 'the wolves go hungry', ar: 'تجوع الذئاب' }, { en: 'nothing at all', ar: 'لا شيء' }, { en: 'more wolves appear', ar: 'تظهر ذئاب أكثر' }] }
+          ] }
+      ]
     }
   ];
 
   // Level of each lesson: 1 Starter, 2 Explorer, 3 Champion. Lessons are shown by level on the course page.
   var LEVELS = {
+    'sx-1': 1, 'sx-2': 1, 'sx-3': 1, 'sx-4': 2, 'sx-5': 2, 'sx-6': 2, 'sx-7': 3, 'sx-8': 3,
     'mp-1': 1, 'mp-2': 1, 'mp-3': 1, 'mp-4': 2, 'mp-5': 2, 'mp-6': 2, 'mp-7': 3, 'mp-8': 3,
     'world-1': 1, 'world-2': 1, 'world-3': 1, 'world-4': 2, 'world-5': 2, 'world-6': 2, 'world-7': 3,
     'animals-1': 1, 'animals-2': 1, 'animals-3': 2, 'animals-4': 2, 'animals-5': 3, 'animals-6': 3,
