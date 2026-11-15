@@ -1276,6 +1276,13 @@
 </div>
 </div>
 
+<article class="card review-days">
+<h2 class="h3">📅 {{ t.rvBoxTitle }}</h2>
+<p class="small muted">{{ t.rvBoxText }}</p>
+<sc-if value="{{ reviewDays.any }}"><div class="rv-days"><sc-for list="{{ reviewDays.list }}" as="d"><div class="{{ d.cls }}"><b>{{ d.day }}</b><span class="small">{{ d.n }}</span></div></sc-for></div></sc-if>
+<sc-if value="{{ reviewDays.none }}"><p class="small">{{ t.rvNone }}</p></sc-if>
+</article>
+
 <article class="card no-print time-limit">
 <h2 class="h3">⏰ {{ t.tlTitle }}</h2>
 <p class="small muted">{{ t.tlText }}</p>

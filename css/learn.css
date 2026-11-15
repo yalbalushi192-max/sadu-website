@@ -871,3 +871,9 @@ button.hs-frame{cursor:pointer}button.hs-frame:hover{transform:rotate(-1.5deg)}
 .stuck-btn{white-space:nowrap}
 .opt.gone{visibility:hidden}
 .stuck-work:empty{display:none}
+
+/* ---------- smart review days ---------- */
+.review-days{display:flex;flex-direction:column;gap:10px}
+.rv-days{display:flex;flex-wrap:wrap;gap:8px}
+.rv-day{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;border-radius:12px;background:var(--sunk);min-width:90px}
+.rv-day.due{background:#FFE9A8;border:2px solid #FFC93C}

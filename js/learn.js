@@ -159,6 +159,10 @@
       cdArrow: { U: 'Up', D: 'Down', L: 'Left', R: 'Right' }, cdRepeat: 'Repeat %A times', cdRemove: 'remove',
       dfEasy: 'Saqr made it a little easier this time.', dfHard: 'You did great last time, so Saqr made it harder!',
       rvTitle: 'Quick review', rvOffer: 'Saqr found %A tricky questions to practise again. Ready?', rvOffer1: 'Saqr found 1 tricky question to practise again. Ready?',
+      rvDue: 'Memory time! %A lessons are ready for a quick review today, so you never forget them.', rvDue1: 'Memory time! 1 lesson is ready for a quick review today, so you never forget it.',
+      rvNext: 'Next reviews: %A', rvNone: 'No reviews planned yet. Finish lessons and they will come back on review days.', rvDays: { 1: 'tomorrow', 3: 'in 3 days', 7: 'in a week', 21: 'in 3 weeks', 60: 'in 2 months' },
+      rvBoxTitle: 'Review days', rvBoxText: 'Each finished lesson comes back for a short review after 1, 3, 7, 21 and 60 days. Getting it right moves it further away; a mistake brings it back sooner.',
+      rvSoon: 'Coming up', rvToday: 'today', rvCount: '%A lessons', rvCount1: '1 lesson',
       rvBtn: 'Start quick review', rvCleared: 'Tricky questions cleared: %A',
       wkTitle: 'This week', wkBtn: 'Weekly summary', wkRange: '%A to %B', wkLessons: 'lessons finished', wkMinutes: 'minutes learning', wkDays: 'days active',
       wkStories: 'stories read', wkWell: 'What went well', wkWellNone: 'Finish a few lessons this week to see highlights here.', wkPractise: 'Practise next',
@@ -339,6 +343,10 @@
       cdArrow: { U: 'أعلى', D: 'أسفل', L: 'يسار', R: 'يمين' }, cdRepeat: 'كرّر %A مرات', cdRemove: 'احذف',
       dfEasy: 'جعل صقر الأسئلة أسهل قليلًا هذه المرة.', dfHard: 'أبدعت في المرة الماضية، فجعل صقر الأسئلة أصعب!',
       rvTitle: 'مراجعة سريعة', rvOffer: 'وجد صقر %A أسئلة صعبة لنتدرّب عليها مرة أخرى. هل أنت مستعد؟', rvOffer1: 'وجد صقر سؤالًا صعبًا واحدًا لنتدرّب عليه مرة أخرى. هل أنت مستعد؟',
+      rvDue: 'وقت التذكّر! %A دروس جاهزة لمراجعة سريعة اليوم كي لا تنساها أبدًا.', rvDue1: 'وقت التذكّر! درس واحد جاهز لمراجعة سريعة اليوم كي لا تنساه أبدًا.',
+      rvNext: 'المراجعات القادمة: %A', rvNone: 'لا مراجعات مخطّطة بعد. أكمل الدروس وستعود في أيام المراجعة.', rvDays: { 1: 'غدًا', 3: 'بعد 3 أيام', 7: 'بعد أسبوع', 21: 'بعد 3 أسابيع', 60: 'بعد شهرين' },
+      rvBoxTitle: 'أيام المراجعة', rvBoxText: 'يعود كل درس منتهٍ لمراجعة قصيرة بعد يوم ثم 3 أيام ثم 7 ثم 21 ثم 60 يومًا. الإجابة الصحيحة تبعده أكثر، والخطأ يعيده أسرع.',
+      rvSoon: 'القادم', rvToday: 'اليوم', rvCount: '%A دروس', rvCount1: 'درس واحد',
       rvBtn: 'ابدأ المراجعة السريعة', rvCleared: 'أسئلة صعبة تجاوزتها: %A',
       wkTitle: 'هذا الأسبوع', wkBtn: 'ملخّص الأسبوع', wkRange: 'من %A إلى %B', wkLessons: 'دروس مكتملة', wkMinutes: 'دقائق تعلّم', wkDays: 'أيام نشاط',
       wkStories: 'قصص مقروءة', wkWell: 'ما أُنجز جيدًا', wkWellNone: 'أنهِ بعض الدروس هذا الأسبوع لترى أبرز الإنجازات هنا.', wkPractise: 'تدرّب بعد ذلك',
@@ -743,8 +751,26 @@
   }
 
   // ---- quick review (spaced practice): questions missed recently, newest lessons first ----
+  // ---- smart review days (spaced repetition): box 0..4 → back after 1, 3, 7, 21, 60 days ----
+  var BOX_DAYS = [1, 3, 7, 21, 60];
+  function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return dayKey(d); }
+  function scheduleBox(rec, ok) { rec.box = ok ? Math.min(4, (rec.box == null ? -1 : rec.box) + 1) : 0; rec.due = addDays(BOX_DAYS[rec.box]); }
+  function dueLessons(data) {
+    var today = dayKey(new Date()), out = [];
+    COURSES.forEach(function (c, ci) { c.lessons.forEach(function (l, li) { var rec = data.lessons[l.id]; if (rec && rec.due && rec.due <= today) out.push({ ci: ci, li: li, l: l, rec: rec }); }); });
+    return out.sort(function (a, b) { return a.rec.due < b.rec.due ? -1 : 1; });
+  }
   function reviewItems(data, max) {
-    var picks = [];
+    var picks = [], outDue = [];
+    // lessons due today come first: one question from each (choice questions only)
+    dueLessons(data).forEach(function (pk) {
+      if (outDue.length >= max) return;
+      var pool = pk.l.make ? pk.l.make() : (pk.l.questions || []);
+      var choice = pool.filter(function (x) { return !x.kind || x.kind === 'choice'; });
+      var q = choice[Math.floor(Math.random() * choice.length)];
+      if (q) outDue.push({ q: q, ci: pk.ci, li: pk.li, label: '', hint: pk.l.hint, due: true });
+    });
+    if (outDue.length >= max) return outDue;
     COURSES.forEach(function (c, ci) { c.lessons.forEach(function (l, li) {
       var rec = data.lessons[l.id]; if (rec && rec.missed && rec.missed.length) picks.push({ ci: ci, li: li, l: l, rec: rec });
     }); });
@@ -763,7 +789,7 @@
         if (q) out.push({ q: q, ci: pk.ci, li: pk.li, label: label, hint: pk.l.hint });
       });
     });
-    return out;
+    return outDue.concat(out.filter(function (o) { return !outDue.some(function (d) { return d.ci === o.ci && d.li === o.li; }); })).slice(0, max);
   }
 
   // ---- levels: the order lessons are shown and played in (by level, then as written) ----
@@ -1074,7 +1100,7 @@
     startReview() {
       var items = reviewItems(this.state.data, 6);
       if (!items.length) return;
-      var qs = items.map(function (it) { var x = prepQ(it.q, it.hint); x.ci = it.ci; x.li = it.li; x.label = it.label; return x; });
+      var qs = items.map(function (it) { var x = prepQ(it.q, it.hint); x.ci = it.ci; x.li = it.li; x.label = it.label; x.due = !!it.due; return x; });
       this.go('lesson', { ls: { review: true, li: 0, step: 'quiz', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], results: [], act: freshAct(qs[0]) } });
     }
 
@@ -1133,6 +1159,7 @@
         var cleared = 0;
         (results || []).forEach(function (ok, k) {
           var qq = ls.qs[k], l = COURSES[qq.ci].lessons[qq.li], rec = data.lessons[l.id];
+          if (rec && qq.due) scheduleBox(rec, ok);
           if (!ok || !rec) return;
           var at = (rec.missed || []).indexOf(qq.label);
           if (at >= 0) { rec.missed.splice(at, 1); cleared++; }
@@ -1162,7 +1189,8 @@
       // acc and missed describe the latest play; the learning plan uses them to find weak spots
       var lvl = lesson.level || 1, levelWas = levelDone(data, this.state.ci, lvl), courseWas = levelDone(data, this.state.ci, 0);
       var lvFrom = masteryOf(data.lessons[lesson.id]), lvTo = nextMastery(lvFrom, ls.firstTry / n, false);
-      data.lessons[lesson.id] = { stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
+      var boxRec = { box: old.box, due: old.due }; scheduleBox(boxRec, ls.firstTry / n >= 0.75);
+      data.lessons[lesson.id] = { box: boxRec.box, due: boxRec.due, stars: Math.max(old.stars, earned), plays: old.plays + 1, when: Date.now(),
         acc: ls.firstTry / n, firstTry: ls.firstTry, missed: ls.missed.slice(0, 4), mastery: lvTo };
       if (ls.diff != null) data.lessons[lesson.id].diff = ls.firstTry === n ? Math.min(2, ls.diff + 1) : ls.firstTry / n < 0.6 ? Math.max(0, ls.diff - 1) : ls.diff;
       levelMsg = lvTo > lvFrom && lvFrom > 0 ? fill(T.levelUp, { A: T.mlv[lvFrom], B: T.mlv[lvTo] }) : fill(T.levelNow, { B: T.mlv[lvTo] });
@@ -1390,8 +1418,16 @@
       out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
       out.dash.say = function () { speak([out.dash.guide]); };
 
-      var rvCount = reviewItems(data, 6).length;
-      out.review = { has: rvCount > 0, text: rvCount === 1 ? T.rvOffer1 : fill(T.rvOffer, { A: rvCount }), start: function () { sfx('pop'); self.startReview(); } };
+      var rvCount = reviewItems(data, 6).length, rvDueN = dueLessons(data).length;
+      out.review = { has: rvCount > 0, text: rvDueN ? (rvDueN === 1 ? T.rvDue1 : fill(T.rvDue, { A: rvDueN })) : rvCount === 1 ? T.rvOffer1 : fill(T.rvOffer, { A: rvCount }), start: function () { sfx('pop'); self.startReview(); } };
+      // the coming review days, for the Family report
+      var soon = {};
+      COURSES.forEach(function (c) { c.lessons.forEach(function (l) { var rec = data.lessons[l.id]; if (rec && rec.due) soon[rec.due] = (soon[rec.due] || 0) + 1; }); });
+      var todayK = dayKey(new Date());
+      out.reviewDays = { list: Object.keys(soon).sort().slice(0, 6).map(function (k) {
+          var d = new Date(k + 'T12:00:00'), label = k <= todayK ? T.rvToday : d.toLocaleDateString(LANG === 'ar' ? 'ar' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+          return { day: label, n: soon[k] === 1 ? T.rvCount1 : fill(T.rvCount, { A: soon[k] }), cls: k <= todayK ? 'rv-day due' : 'rv-day' }; }),
+        any: Object.keys(soon).length > 0, none: Object.keys(soon).length === 0 };
 
       // ---- journey: lessons from the courses that suit the child, taking turns, easiest levels first ----
       (function () {
