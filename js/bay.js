@@ -67,7 +67,7 @@
 
   // ---- elements ----
   var $ = function (id) { return document.getElementById(id); };
-  var cv = $('sea'), g = cv.getContext('2d'), stage = $('stage'), hint = $('hint'), action = $('action');
+  var cv = $('sea'), g = null, stage = $('stage'), hint = $('hint'), action = $('action');
   var meter = $('meter'), mark = meter.querySelector('.mark'), zoneEl = meter.querySelector('.zone'), fillbar = meter.querySelector('.fillbar');
   var progressEl = $('progress'), layer = $('layer'), card = $('card');
   document.title = T.title; $('title').textContent = '🚣 ' + T.title; $('back').textContent = T.back;
@@ -137,7 +137,7 @@
       var face = q.colours ? '<span style="display:inline-block;width:38px;height:38px;border-radius:50%;background:' + { red: '#E5534B', blue: '#3F8EF5', yellow: '#FFD23F', green: '#2E9E6B' }[o] + '"></span>' : o;
       return '<button type="button" class="btn" data-o="' + o + '" aria-label="' + (q.colours ? T.colours[o] : o) + '">' + face + '</button>';
     }).join('');
-    show('<p class="q">' + q.text + '</p>' + (q.show ? '<p class="big" style="font-size:36px;word-break:break-all">' + q.show + '</p>' : '') + '<div class="opts">' + opts + '</div>');
+    show('<p class="q"' + (/\d\s*\+/.test(q.text) ? ' dir="ltr"' : '') + '>' + q.text + '</p>' + (q.show ? '<p class="big" style="font-size:36px;word-break:break-all">' + q.show + '</p>' : '') + '<div class="opts">' + opts + '</div>');
     speak(q.text.replace('= ?', '').replace('= ؟', ''));
     var tries = 0;
     card.querySelectorAll('[data-o]').forEach(function (b) {
@@ -264,11 +264,12 @@
       function () { card.querySelector('.btn.light').onclick = hide; });
   };
 
-  // ---- rowing: tap the water ----
+  // ---- rowing: tap the water (3D: find the point on the sea under the finger) ----
   var view = { k: 1, ox: 0, oy: 0 };
   cv.addEventListener('pointerdown', function (e) {
     if (S.mode !== 'row') return;
     var r = cv.getBoundingClientRect();
+    if (three) { var w = three.pick(e.clientX, e.clientY, r); if (w) S.target = w; return; }
     S.target = { x: ((e.clientX - r.left) * (cv.width / r.width) - view.ox) / view.k, y: ((e.clientY - r.top) * (cv.height / r.height) - view.oy) / view.k };
   });
 
@@ -332,7 +333,7 @@
     g.fillStyle = '#A67C52'; g.fillRect(x - 3, y - 4, 6, 16);
     g.fillStyle = '#3E9B57'; for (var i = 0; i < 6; i++) { var a = i / 6 * Math.PI * 2; g.beginPath(); g.ellipse(x + Math.cos(a) * 12, y - 6 + Math.sin(a) * 9, 13, 5, a, 0, Math.PI * 2); g.fill(); }
   }
-  function draw(time) {
+  function draw2D(time) {
     var cw = cv.width, ch = cv.height;
     // fit the whole bay on wide screens; on narrow (phone) screens zoom in so at least 440 units show, and follow the boat
     view.k = Math.max(Math.min(cw / W, ch / H), Math.min(ch / H, cw / 440));
@@ -404,8 +405,209 @@
       if (ph > 0.85) { g.fillStyle = 'rgba(30,30,90,' + Math.min(0.3, (ph - 0.85) * 2) + ')'; g.fillRect(0, 0, cw, ch); } }
   }
 
+  // ---- the 3D bay (three.js). Game positions (x 0–1000, y 0–620) become X = (x − 500) / 10, Z = (y − 310) / 10 ----
+  function makeThree() {
+    if (!window.THREE) return null;
+    var renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true }); } catch (e) { return null; }
+    var P = function (x, y) { return { X: (x - 500) / 10, Z: (y - 310) / 10 }; };
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+    var scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(38, 1, 0.5, 400);
+    scene.fog = new THREE.Fog(0xBFE6FF, 220, 420);
+    var hemi = new THREE.HemisphereLight(0xCFEFFF, 0xF3E2B6, 1.5); scene.add(hemi);
+    var sun = new THREE.DirectionalLight(0xFFF1D6, 1.6); sun.position.set(-30, 60, 20); sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048); var sc = sun.shadow.camera; sc.left = -70; sc.right = 70; sc.top = 50; sc.bottom = -50; sc.near = 1; sc.far = 160;
+    sun.shadow.bias = -0.0008; scene.add(sun); scene.add(sun.target);
+    var mat = function (c, o) { return new THREE.MeshStandardMaterial(Object.assign({ color: c, flatShading: true, roughness: 0.85 }, o || {})); };
+    var add = function (geo, m, x, y, z, parent) { var me = new THREE.Mesh(geo, m); me.position.set(x || 0, y || 0, z || 0); me.castShadow = true; me.receiveShadow = true; (parent || scene).add(me); return me; };
+    var smooth = function (a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+    // seabed: shallow near the beach, deeper further out, a deep hole on the right
+    var deepAt = function (x, y) { return Math.max(0, 1 - Math.hypot(x - 905, (y - 440) * 1.2) / 150); };
+    var bedGeo = new THREE.PlaneGeometry(180, 120, 90, 60); bedGeo.rotateX(-Math.PI / 2);
+    var bp = bedGeo.attributes.position, bedCol = [];
+    for (var i = 0; i < bp.count; i++) {
+      var gx = bp.getX(i) * 10 + 500, gy = bp.getZ(i) * 10 + 310, d = smooth(110, 360, gx) * 1.6 + deepAt(gx, gy) * 2.2;
+      bp.setY(i, -0.35 - d + Math.sin(gx * 0.05) * Math.cos(gy * 0.04) * 0.12);
+      var c = new THREE.Color(0xF7E9C0).lerp(new THREE.Color(0x4FA3D1), Math.min(1, d / 3.4)); bedCol.push(c.r, c.g, c.b);
+    }
+    bedGeo.setAttribute('color', new THREE.Float32BufferAttribute(bedCol, 3)); bedGeo.computeVertexNormals();
+    var bed = new THREE.Mesh(bedGeo, mat(0xFFFFFF, { vertexColors: true })); bed.receiveShadow = true; scene.add(bed);
+
+    // water: low-poly waves, clear near the shore so the reef and fish show through
+    var waterGeo = new THREE.PlaneGeometry(180, 120, 72, 48); waterGeo.rotateX(-Math.PI / 2);
+    var wp = waterGeo.attributes.position, base = [], waterCol = [];
+    for (i = 0; i < wp.count; i++) {
+      var wx = wp.getX(i) * 10 + 500, wy = wp.getZ(i) * 10 + 310, dd = Math.min(1, smooth(110, 420, wx) * 0.75 + deepAt(wx, wy) * 0.6);
+      base.push(wp.getX(i), wp.getZ(i));
+      var wc = new THREE.Color(0x7FF0F0).lerp(new THREE.Color(0x1E8FE0), dd); waterCol.push(wc.r, wc.g, wc.b);
+    }
+    waterGeo.setAttribute('color', new THREE.Float32BufferAttribute(waterCol, 3));
+    var water = new THREE.Mesh(waterGeo, mat(0xFFFFFF, { vertexColors: true, transparent: true, opacity: 0.62, roughness: 0.18, metalness: 0.0 }));
+    scene.add(water);
+
+    // beach, dock, hut, palms
+    var beach = add(new THREE.BoxGeometry(60, 1.4, 130), mat(0xF3E2B6), -69, 0.1, 0);
+    var slope = add(new THREE.BoxGeometry(5, 1.4, 130), mat(0xEEDCAB), -38.6, -0.25, 0); slope.rotation.z = -0.32;
+    var foam = add(new THREE.BoxGeometry(0.6, 0.1, 130), mat(0xFFFFFF, { transparent: true, opacity: 0.7 }), -36.4, 0.06, 0); foam.castShadow = false;
+    var dk = P(160, DOCK.y), wood = mat(0xB07A4A), darkWood = mat(0x7A4E2D);
+    for (var k = 0; k < 10; k++) add(new THREE.BoxGeometry(1.25, 0.25, 3), k % 2 ? wood : mat(0xA36F42), -40.5 + k * 1.4, 0.75, dk.Z);
+    [[-40, -1.3], [-40, 1.3], [-33, -1.3], [-33, 1.3], [-27.3, -1.3], [-27.3, 1.3]].forEach(function (pp) { add(new THREE.CylinderGeometry(0.2, 0.2, 2.4, 6), darkWood, pp[0], -0.3, dk.Z + pp[1]); });
+    var hp = P(53, 252), hut = new THREE.Group(); hut.position.set(hp.X, 0.8, hp.Z); scene.add(hut);
+    add(new THREE.BoxGeometry(5.5, 3.6, 4.4), mat(0xE0B07A), 0, 1.8, 0, hut);
+    var roof = add(new THREE.ConeGeometry(4.6, 2.6, 4), mat(0xE5534B), 0, 4.9, 0, hut); roof.rotation.y = Math.PI / 4;
+    add(new THREE.BoxGeometry(1.3, 2.2, 0.2), darkWood, 0, 1.1, 2.25, hut);
+    add(new THREE.BoxGeometry(1, 1, 0.2), mat(0x9FD8F0), -1.8, 2.2, 2.25, hut);
+    var leafMat = mat(0x3E9B57), trunkMat = mat(0xA67C52);
+    [[40, 90], [72, 150], [35, 470], [80, 545], [55, 385], [28, 30], [30, 600]].forEach(function (pp, n) {
+      var q = P(pp[0], pp[1]), palm = new THREE.Group(); palm.position.set(q.X, 0.8, q.Z); palm.rotation.y = n * 1.3; scene.add(palm);
+      var lean = 0.12 + (n % 3) * 0.05, top = new THREE.Vector3(0, 0, 0);
+      for (var s2 = 0; s2 < 4; s2++) { var seg = add(new THREE.CylinderGeometry(0.28 - s2 * 0.03, 0.34 - s2 * 0.03, 1.6, 6), trunkMat, top.x, top.y + 0.8, 0, palm); seg.rotation.z = -lean * s2; top.x += Math.sin(lean * s2) * 1.6; top.y += Math.cos(lean * s2) * 1.5; }
+      for (var lf = 0; lf < 6; lf++) { var leaf = add(new THREE.ConeGeometry(0.55, 3.4, 4), leafMat, top.x, top.y + 0.2, 0, palm);
+        leaf.rotation.order = 'YXZ'; leaf.rotation.y = lf / 6 * Math.PI * 2; leaf.rotation.x = 1.15; leaf.translateY(1.5); leaf.scale.z = 0.35; }
+      add(new THREE.SphereGeometry(0.3, 6, 5), mat(0x7A4E2D), top.x + 0.3, top.y - 0.1, 0.2, palm);
+    });
+
+    // rocks and the coral reef
+    var rockMat = mat(0x8D99A6);
+    [[760, 120, 3.2], [800, 162, 2.5], [725, 172, 2], [792, 98, 1.6], [830, 130, 1.2]].forEach(function (r, n) { var q = P(r[0], r[1]);
+      var rock = add(new THREE.DodecahedronGeometry(r[2], 0), rockMat, q.X, 0.1 + r[2] * 0.15, q.Z); rock.rotation.set(n, n * 2, 0); rock.scale.y = 0.6; });
+    var coral = [0xFF7FA3, 0xFFA45C, 0xB48CFF, 0xFF6F91];
+    [[560, 480, 2], [612, 455, 1.6], [540, 440, 1.4], [600, 512, 1.3], [585, 430, 1], [528, 500, 1.1], [632, 490, 1]].forEach(function (r, n) { var q = P(r[0], r[1]);
+      add(new THREE.IcosahedronGeometry(r[2], 0), mat(coral[n % 4]), q.X, -1.2, q.Z).scale.y = 0.7;
+      for (var b2 = 0; b2 < 3; b2++) { var br = add(new THREE.CylinderGeometry(0.12, 0.2, 1.4, 5), mat(coral[(n + b2 + 1) % 4]), q.X + (b2 - 1) * 0.6, -0.8, q.Z + (b2 % 2) * 0.5); br.rotation.z = (b2 - 1) * 0.4; }
+    });
+
+    // fishing spots: rising bubbles, a ring on the surface, and a "?" marker until found
+    var bubbleMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.8, roughness: 0.1 });
+    var spotFx = SPOTS.map(function (sp) {
+      var q = P(sp.x, sp.y), grp = new THREE.Group(); grp.position.set(q.X, 0, q.Z); scene.add(grp);
+      var bubbles = []; for (var j = 0; j < 7; j++) { var bb = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 6), bubbleMat.clone()); bb.userData = { o: j / 7, dx: Math.sin(j * 2.1) * 1.2, dz: Math.cos(j * 1.7) * 1.0 }; grp.add(bb); bubbles.push(bb); }
+      var ring = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.08, 6, 24), new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.6 })); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.15; grp.add(ring);
+      var marker = new THREE.Mesh(new THREE.OctahedronGeometry(0.6, 0), mat(0xFFD23F, { emissive: 0x664400, emissiveIntensity: 0.4 })); marker.position.y = 3; marker.castShadow = true; grp.add(marker);
+      return { sp: sp, bubbles: bubbles, ring: ring, marker: marker };
+    });
+
+    // fish swimming in schools under the water
+    var fishMat = mat(0x2D5A80, { transparent: true, opacity: 0.85 });
+    var fishGeo = new THREE.SphereGeometry(0.5, 6, 4); fishGeo.scale(1.3, 0.45, 0.55);
+    var tailGeo = new THREE.ConeGeometry(0.35, 0.6, 4); tailGeo.rotateZ(Math.PI / 2);
+    var schools3 = SPOTS.map(function (sp, n) {
+      var q = P(sp.x, sp.y);
+      return [0, 1, 2, 3, 4].map(function (j) { var f = new THREE.Group(); var body = new THREE.Mesh(fishGeo, fishMat); f.add(body); var tail = new THREE.Mesh(tailGeo, fishMat); tail.position.x = -0.85; f.add(tail);
+        scene.add(f); return { g: f, tail: tail, cx: q.X, cz: q.Z, r: 2.4 + j * 0.6, o: j * 1.25 + n }; });
+    });
+
+    // the boat with Saqr
+    var hullShape = new THREE.Shape(); hullShape.moveTo(3.9, 0); hullShape.quadraticCurveTo(2.2, 1.75, -2.9, 1.45); hullShape.lineTo(-3.3, 0); hullShape.lineTo(-2.9, -1.45); hullShape.quadraticCurveTo(2.2, -1.75, 3.9, 0);
+    var hullGeo = new THREE.ExtrudeGeometry(hullShape, { depth: 1.1, bevelEnabled: true, bevelThickness: 0.25, bevelSize: 0.25, bevelSegments: 1, curveSegments: 8 }); hullGeo.rotateX(Math.PI / 2);
+    var inner = new THREE.Shape(); inner.moveTo(3.1, 0); inner.quadraticCurveTo(1.8, 1.3, -2.5, 1.05); inner.lineTo(-2.8, 0); inner.lineTo(-2.5, -1.05); inner.quadraticCurveTo(1.8, -1.3, 3.1, 0);
+    var innerGeo = new THREE.ShapeGeometry(inner); innerGeo.rotateX(-Math.PI / 2);
+    var boat = new THREE.Group(); scene.add(boat);
+    add(hullGeo, mat(0x9C6235), 0, 1.0, 0, boat);
+    add(innerGeo, mat(0xC98B55), 0, 0.95, 0, boat);
+    add(new THREE.BoxGeometry(0.5, 0.15, 2.4), darkWood, 1.2, 1.05, 0, boat);
+    var oars = [-1, 1].map(function (side) { var pivot = new THREE.Group(); pivot.position.set(-0.4, 1.1, side * 1.3); boat.add(pivot);
+      var oar = add(new THREE.BoxGeometry(0.16, 0.12, 3.4), darkWood, 0, 0, side * 1.6, pivot); add(new THREE.BoxGeometry(0.7, 0.08, 0.9), darkWood, 0, 0, side * 3.2, pivot); return pivot; });
+    var saqr = new THREE.Group(); saqr.position.set(-0.4, 1.0, 0); boat.add(saqr);
+    add(new THREE.SphereGeometry(0.95, 10, 8), mat(0x8A5A34), 0, 0.9, 0, saqr).scale.y = 1.1;
+    add(new THREE.SphereGeometry(0.62, 10, 8), mat(0xF6E7C1), 0.55, 1.05, 0, saqr).scale.set(0.6, 1, 1.05);
+    [-0.28, 0.28].forEach(function (z) { add(new THREE.SphereGeometry(0.13, 6, 5), mat(0x23204A), 0.86, 1.35, z, saqr); add(new THREE.SphereGeometry(0.05, 4, 3), mat(0xFFFFFF), 0.95, 1.4, z + 0.03, saqr); });
+    var beak = add(new THREE.ConeGeometry(0.17, 0.42, 5), mat(0xFFB020), 1.05, 1.08, 0, saqr); beak.rotation.z = -Math.PI / 2 - 0.4;
+    add(new THREE.SphereGeometry(0.62, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat(0xFFFFFF), 0, 1.72, 0, saqr);
+    [-1, 1].forEach(function (side) { var wing = add(new THREE.SphereGeometry(0.45, 6, 5), mat(0x744A2A), -0.1, 0.85, side * 0.85, saqr); wing.scale.set(1.2, 0.8, 0.35); });
+
+    // fishing line and bobber
+    var linePts = []; for (i = 0; i < 24; i++) linePts.push(new THREE.Vector3());
+    var line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(linePts), new THREE.LineBasicMaterial({ color: 0xFFFFFF })); line.frustumCulled = false; scene.add(line);
+    var bobber = new THREE.Group(); scene.add(bobber);
+    add(new THREE.SphereGeometry(0.4, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat(0xE5534B), 0, 0, 0, bobber);
+    add(new THREE.SphereGeometry(0.4, 10, 6, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), mat(0xFFFFFF), 0, 0, 0, bobber);
+    var splash = new THREE.Mesh(new THREE.TorusGeometry(1, 0.06, 6, 24), new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.7 })); splash.rotation.x = -Math.PI / 2; scene.add(splash);
+
+    // a dhow sailing far away
+    var dhow = new THREE.Group(); scene.add(dhow);
+    var dh = add(new THREE.BoxGeometry(5, 1, 1.6), mat(0x7A4E2D), 0, 0.4, 0, dhow); dh.scale.x = 1;
+    add(new THREE.CylinderGeometry(0.08, 0.08, 4.5, 5), darkWood, 0.3, 2.6, 0, dhow);
+    var sailShape = new THREE.Shape(); sailShape.moveTo(0, 0); sailShape.lineTo(-2.4, 0.4); sailShape.lineTo(0.2, 4); sailShape.lineTo(0, 0);
+    var sail = add(new THREE.ShapeGeometry(sailShape), mat(0xFFF6E0, { side: THREE.DoubleSide }), 0.4, 0.9, 0, dhow);
+
+    // light through the day
+    var SKY = [[0, 0xBFE6FF, 0xFFE8C0, 2.2], [0.33, 0xA8DCFF, 0xFFFFFF, 2.6], [0.66, 0xFFC9A0, 0xFFC080, 2.1], [0.85, 0xF59E7A, 0xFF9A60, 1.6], [1, 0x34406E, 0x9AA6FF, 0.8]];
+    var cA = new THREE.Color(), cB = new THREE.Color();
+    function daylight(p) {
+      for (var n = 0; n < SKY.length - 1 && p > SKY[n + 1][0]; n++);
+      var a = SKY[n], b = SKY[Math.min(n + 1, SKY.length - 1)], t = b[0] > a[0] ? (p - a[0]) / (b[0] - a[0]) : 0;
+      cA.set(a[1]).lerp(cB.set(b[1]), t); scene.background = scene.background || new THREE.Color(); scene.background.copy(cA); scene.fog.color.copy(cA); hemi.color.copy(cA);
+      sun.color.set(a[2]).lerp(cB.set(b[2]), t); sun.intensity = a[3] + (b[3] - a[3]) * t;
+      sun.position.set(-40 + p * 80, 60 - p * 30, 25);
+    }
+
+    // camera: the whole bay on wide screens; closer and following the boat on phones
+    var camTarget = new THREE.Vector3(0, 0, 2), elev = 0.95;
+    function placeCamera(snap) {
+      var aspect = camera.aspect, b = P(S.boat.x, S.boat.y), wide = aspect > 1.25;
+      elev = wide ? 0.95 : aspect > 0.8 ? 1.05 : 1.2;
+      var visibleW = wide ? 96 : 42, vf = camera.fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * aspect);
+      var dist = wide ? Math.max(visibleW / 2 / Math.tan(hf / 2), 62 / 2 / Math.tan(vf / 2) * 0.95) : Math.min(visibleW / 2 / Math.tan(hf / 2), 30 / Math.tan(vf / 2));
+      if (!wide) visibleW = 2 * dist * Math.tan(hf / 2);
+      var tx = wide ? -3 : Math.max(-56 + visibleW / 2, Math.min(50 - visibleW / 2, b.X)), tz = wide ? 3 : Math.max(-22, Math.min(22, b.Z + 1));
+      var k = snap ? 1 : 0.06; camTarget.x += (tx - camTarget.x) * k; camTarget.z += (tz - camTarget.z) * k;
+      camera.position.set(camTarget.x, Math.sin(elev) * dist, camTarget.z + Math.cos(elev) * dist); camera.lookAt(camTarget);
+    }
+
+    var ray = new THREE.Raycaster(), sea = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), hit = new THREE.Vector3(), ndc = new THREE.Vector2();
+    var first = true;
+    return {
+      resize: function () { var r = stage.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width / Math.max(1, r.height); camera.updateProjectionMatrix(); placeCamera(true); },
+      pick: function (cx, cy, r) {
+        ndc.set((cx - r.left) / r.width * 2 - 1, -((cy - r.top) / r.height) * 2 + 1); ray.setFromCamera(ndc, camera);
+        if (!ray.ray.intersectPlane(sea, hit)) return null; return { x: hit.x * 10 + 500, y: hit.z * 10 + 310 };
+      },
+      screenOf: function (x, y) { var q = P(x, y), v = new THREE.Vector3(q.X, 0, q.Z).project(camera), r = cv.getBoundingClientRect(); return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }; },
+      draw: function (time) {
+        var t = time / 1000, b = S.boat, q = P(b.x, b.y);
+        // waves
+        for (var n = 0; n < wp.count; n++) { var X = base[n * 2], Z = base[n * 2 + 1]; wp.setY(n, 0.16 * Math.sin(X * 0.33 + t * 1.3) + 0.11 * Math.sin(Z * 0.47 + t * 1.7) + 0.05 * Math.sin((X + Z) * 0.9 + t * 2.3)); }
+        wp.needsUpdate = true; waterGeo.computeVertexNormals();
+        // boat follows the game, bobbing on the waves; oars move while rowing
+        boat.position.set(q.X, 0.12 * Math.sin(t * 1.6) - 0.85, q.Z); boat.rotation.set(0.04 * Math.sin(t * 1.3), -b.a, 0.04 * Math.sin(t * 1.1));
+        var rowing = S.mode === 'row' && (S.target || S.keys.ArrowLeft || S.keys.ArrowRight || S.keys.ArrowUp || S.keys.ArrowDown);
+        oars.forEach(function (o, n2) { var sw = rowing ? Math.sin(t * 6) * 0.55 : 0.25; o.rotation.y = (n2 ? -1 : 1) * sw; o.rotation.x = (n2 ? -1 : 1) * (rowing ? 0.2 + Math.cos(t * 6) * 0.15 : 0.3); });
+        saqr.rotation.y = S.mode === 'reel' ? Math.sin(t * 8) * 0.12 : 0; saqr.position.y = 1.0 + (S.mode === 'reel' ? Math.abs(Math.sin(t * 8)) * 0.1 : 0);
+        // spots
+        spotFx.forEach(function (fx, n3) {
+          fx.bubbles.forEach(function (bb) { var u = (t * 0.6 + bb.userData.o) % 1; bb.position.set(bb.userData.dx * (1 + u * 0.3), -0.6 + u * 1.3, bb.userData.dz); bb.scale.setScalar(0.5 + u * 1.2); bb.material.opacity = 0.85 * (1 - u); });
+          var pulse = (t * 0.5 + n3 * 0.2) % 1; fx.ring.scale.setScalar(0.8 + pulse * 0.8); fx.ring.material.opacity = 0.55 * (1 - pulse);
+          fx.marker.visible = !save.spots[fx.sp.id]; fx.marker.rotation.y = t * 1.5; fx.marker.position.y = 3 + Math.sin(t * 2 + n3) * 0.35;
+        });
+        // fish
+        schools3.forEach(function (sc2) { sc2.forEach(function (f) { var a = t * 0.7 + f.o; f.g.position.set(f.cx + Math.cos(a) * f.r, -0.9, f.cz + Math.sin(a) * f.r * 0.7); f.g.rotation.y = -a - Math.PI / 2; f.tail.rotation.y = Math.sin(t * 10 + f.o) * 0.5; }); });
+        // line and bobber
+        line.visible = bobber.visible = splash.visible = !!S.cast;
+        if (S.cast) {
+          var c = P(S.cast.x, S.cast.y), bob = Math.sin(t * 5) * (S.mode === 'reel' ? 0.25 : 0.08);
+          var tip = new THREE.Vector3(q.X + Math.cos(b.a) * 0.6, 2.6 + boat.position.y + 0.85, q.Z + Math.sin(b.a) * 0.6), end = new THREE.Vector3(c.X, 0.2 + bob, c.Z);
+          for (var m = 0; m < 24; m++) { var u = m / 23; linePts[m].lerpVectors(tip, end, u); linePts[m].y -= Math.sin(u * Math.PI) * 0.8; }
+          line.geometry.setFromPoints(linePts); bobber.position.copy(end);
+          var sp2 = (t * (S.mode === 'reel' ? 1.6 : 0.5)) % 1; splash.position.set(c.X, 0.2, c.Z); splash.scale.setScalar(0.5 + sp2 * 1.5); splash.material.opacity = 0.7 * (1 - sp2);
+        }
+        // dhow
+        var dx = 46 - ((t * 0.8) % 110); dhow.position.set(dx, -0.1 + Math.sin(t) * 0.1, -36); dhow.rotation.y = Math.PI;
+        daylight(Math.min(1, S.t / DAY));
+        placeCamera(first); first = false;
+        renderer.render(scene, camera);
+      }
+    };
+  }
+  var three = makeThree();
+  if (!three) { g = cv.getContext('2d'); }
+  function draw(time) { if (three) three.draw(time); else draw2D(time); }
+
   // ---- loop ----
-  function resize() { var r = stage.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); }
+  function resize() { if (three) return three.resize(); var r = stage.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); }
   window.addEventListener('resize', resize); resize();
   var last = performance.now(), hudT = 0;
   function frame(now) {
@@ -417,5 +619,5 @@
   hud(); controls();
   requestAnimationFrame(frame);
   // for automated tests
-  window.__bay = { view: view, S: S, SPOTS: SPOTS, DOCK: DOCK, save: save, FISH: FISH, bite: function () { bite(); } };
+  window.__bay = { three: !!three, screenOf: function (x, y) { return three ? three.screenOf(x, y) : null; }, view: view, S: S, SPOTS: SPOTS, DOCK: DOCK, save: save, FISH: FISH, bite: function () { bite(); } };
 })();
