@@ -36,7 +36,7 @@ B. Full learning platform (owner's request; profiles first):
 A. Ideas from the best children's learning apps (owner's request; Sadu's own look and content, nothing copied):
    - [x] Split Phonics into English Phonics and Arabic Phonics (lesson ids and stickers kept).
    - [x] Daily goal (like Duolingo ABC, Lingokids): pick 1, 2 or 3 lessons a day; a goal ring on the dashboard; a celebration when it is reached. Done: in the This week card.
-   - [ ] Quick review (spaced practice, like Duolingo): a short lesson built from recently missed questions, offered by Saqr.
+   - [x] Quick review (spaced practice, like Duolingo): a short lesson built from recently missed questions, offered by Saqr. Done: offer on the journey and the dashboard (up to 6 questions, newest lessons first; maths gives a fresh sum of the same kind); right answers clear them and lift the lesson's score.
    - [ ] Adaptive maths (like Khan Academy Kids, Prodigy): numbers get bigger or smaller with the child's recent accuracy.
    - [ ] Animated blending (like Teach Your Monster to Read, Starfall): letters slide together as the sounds are spoken.
    - [ ] Watch, then trace (like letter-writing apps): a dotted demo moves along the shape first; a green start dot shows where to begin.

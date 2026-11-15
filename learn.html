@@ -167,6 +167,7 @@
 </div>
 
 
+<sc-if value="{{ review.has }}"><div class="review-offer"><span class="review-ic" aria-hidden="true">🔁</span><p>{{ review.text }}</p><button type="button" class="btn accent" onclick="{{ review.start }}">{{ t.rvBtn }}</button></div></sc-if>
 <article class="card sticker-card">
 <div class="sticker-card-text"><h2 class="h3">{{ t.stickerTitle }}</h2><span class="small muted">{{ stickers.count }}</span>
 <div class="bar"><span style="width: {{ stickers.pct }}"></span></div></div>
@@ -280,6 +281,7 @@
 </div>
 <sc-if value="{{ journey.hasNext }}"><button type="button" class="btn primary lg point go-btn" onclick="{{ journey.go }}">{{ t.jGo }}</button></sc-if>
 </div>
+<sc-if value="{{ review.has }}"><div class="review-offer"><span class="review-ic" aria-hidden="true">🔁</span><p>{{ review.text }}</p><button type="button" class="btn accent" onclick="{{ review.start }}">{{ t.rvBtn }}</button></div></sc-if>
 <sc-if value="{{ journey.hasEarlier }}"><p class="small muted road-earlier">✓ {{ journey.earlier }}</p></sc-if>
 <ol class="road">
 <sc-for list="{{ journey.stops }}" as="st">

@@ -70,6 +70,8 @@
       agePick: 'How old is your child?', ageIntro: 'Sadu shows the courses that fit this age first. You can change it at any time.',
       ageChip: 'Age %A', ageChange: 'Change age', ageAll: 'Show all courses', forAge: 'Courses for age %A', allCourses: 'All courses',
       otherAges: 'Courses for other ages', ageNote10: 'Sadu\'s lessons go up to age 10 for now, so all courses are shown.', ageLabel: 'Age',
+      rvTitle: 'Quick review', rvOffer: 'Saqr found %A tricky questions to practise again. Ready?', rvOffer1: 'Saqr found 1 tricky question to practise again. Ready?',
+      rvBtn: 'Start quick review', rvCleared: 'Tricky questions cleared: %A',
       wkTitle: 'This week', wkBtn: 'Weekly summary', wkRange: '%A to %B', wkLessons: 'lessons finished', wkMinutes: 'minutes learning', wkDays: 'days active',
       wkStories: 'stories read', wkWell: 'What went well', wkWellNone: 'Finish a few lessons this week to see highlights here.', wkPractise: 'Practise next',
       wkPractiseNone: 'Nothing to repeat from this week. Great work!', wkNext: 'Next week', wkNextText: 'Aim for %A lessons a day. %B',
@@ -160,6 +162,8 @@
       agePick: 'كم عمر طفلك؟', ageIntro: 'يعرض سدو أولًا الدورات المناسبة لهذا العمر. يمكنك تغييره في أي وقت.',
       ageChip: 'العمر %A', ageChange: 'غيّر العمر', ageAll: 'اعرض كل الدورات', forAge: 'دورات لعمر %A', allCourses: 'كل الدورات',
       otherAges: 'دورات لأعمار أخرى', ageNote10: 'دروس سدو حاليًا حتى عمر 10 سنوات، لذلك تظهر كل الدورات.', ageLabel: 'العمر',
+      rvTitle: 'مراجعة سريعة', rvOffer: 'وجد صقر %A أسئلة صعبة لنتدرّب عليها مرة أخرى. هل أنت مستعد؟', rvOffer1: 'وجد صقر سؤالًا صعبًا واحدًا لنتدرّب عليه مرة أخرى. هل أنت مستعد؟',
+      rvBtn: 'ابدأ المراجعة السريعة', rvCleared: 'أسئلة صعبة تجاوزتها: %A',
       wkTitle: 'هذا الأسبوع', wkBtn: 'ملخّص الأسبوع', wkRange: 'من %A إلى %B', wkLessons: 'دروس مكتملة', wkMinutes: 'دقائق تعلّم', wkDays: 'أيام نشاط',
       wkStories: 'قصص مقروءة', wkWell: 'ما أُنجز جيدًا', wkWellNone: 'أنهِ بعض الدروس هذا الأسبوع لترى أبرز الإنجازات هنا.', wkPractise: 'تدرّب بعد ذلك',
       wkPractiseNone: 'لا شيء يحتاج إلى إعادة من هذا الأسبوع. عمل رائع!', wkNext: 'الأسبوع القادم', wkNextText: 'الهدف: %A دروس في اليوم. %B',
@@ -405,6 +409,30 @@
     return COURSES[ci].lessons.every(function (l) { return (lv && (l.level || 1) !== lv) || !!data.lessons[l.id]; });
   }
 
+  // ---- quick review (spaced practice): questions missed recently, newest lessons first ----
+  function reviewItems(data, max) {
+    var picks = [];
+    COURSES.forEach(function (c, ci) { c.lessons.forEach(function (l, li) {
+      var rec = data.lessons[l.id]; if (rec && rec.missed && rec.missed.length) picks.push({ ci: ci, li: li, l: l, rec: rec });
+    }); });
+    picks.sort(function (a, b) { return b.rec.when - a.rec.when; });
+    var out = [];
+    picks.forEach(function (pk) {
+      pk.rec.missed.forEach(function (label) {
+        if (out.length >= max) return;
+        var q = null;
+        if (pk.l.make) { var made = pk.l.make().filter(function (x) { return !x.kind; }); q = made[0] || null; }
+        else (pk.l.questions || []).some(function (x) {
+          if (x.kind) return false;
+          var lab = x.say ? x.say : x.show ? x.show + (tx(x.gloss) ? ' (' + tx(x.gloss) + ')' : '') : tx(x.q);
+          if (lab === label) { q = x; return true; } return false;
+        });
+        if (q) out.push({ q: q, ci: pk.ci, li: pk.li, label: label, hint: pk.l.hint });
+      });
+    });
+    return out;
+  }
+
   // ---- levels: the order lessons are shown and played in (by level, then as written) ----
   function orderOf(ci) {
     var ls = COURSES[ci].lessons;
@@ -564,6 +592,13 @@
       this.go('worksheet', { ci: ci, wsLi: li, wsItems: worksheetItems(COURSES[ci].lessons[li]) });
     }
 
+    startReview() {
+      var items = reviewItems(this.state.data, 6);
+      if (!items.length) return;
+      var qs = items.map(function (it) { var x = prepQ(it.q, it.hint); x.ci = it.ci; x.li = it.li; x.label = it.label; return x; });
+      this.go('lesson', { ls: { review: true, li: 0, step: 'quiz', qs: qs, qi: 0, firstTry: 0, wrong: [], solved: false, t0: Date.now(), earned: 0, secs: 0, missed: [], results: [], act: freshAct(qs[0]) } });
+    }
+
     startChallenge(ci) {
       var c = COURSES[ci], data = this.state.data, pools = [];
       c.lessons.forEach(function (l, li) {
@@ -600,7 +635,17 @@
       var earned = ls.firstTry === n ? 3 : ls.firstTry === n - 1 ? 2 : 1;
       var secs = Math.min(900, Math.round((Date.now() - ls.t0) / 1000));
       var data = JSON.parse(JSON.stringify(this.state.data));
-      if (ls.challenge) {
+      if (ls.review) {
+        var cleared = 0;
+        (results || []).forEach(function (ok, k) {
+          var qq = ls.qs[k], l = COURSES[qq.ci].lessons[qq.li], rec = data.lessons[l.id];
+          if (!ok || !rec) return;
+          var at = (rec.missed || []).indexOf(qq.label);
+          if (at >= 0) { rec.missed.splice(at, 1); cleared++; }
+          rec.acc = Math.min(1, (rec.acc != null ? rec.acc : accuracy(rec)) + 0.25);
+        });
+        levelMsg = fill(T.rvCleared, { A: cleared + ' / ' + n }); levelCls = 'mlv l3';
+      } else if (ls.challenge) {
         var c = COURSES[this.state.ci], per = {};
         (results || []).forEach(function (ok, k) { var li = ls.qs[k].li; per[li] = per[li] || { n: 0, ok: 0 }; per[li].n++; if (ok) per[li].ok++; });
         changes = [];
@@ -819,6 +864,9 @@
       out.dash.saqrCls = funN ? (funN % 2 ? 'saqr cheer' : 'saqr cheer2') : 'saqr';
       out.dash.saqrTap = function (e) { sfx('pop'); burst(e && e.currentTarget, 18); var n = funN + 1; self.setState({ saqrN: n }); if (out.speakOk) speak([T.fun[(n - 1) % T.fun.length]]); };
       out.dash.say = function () { speak([out.dash.guide]); };
+
+      var rvCount = reviewItems(data, 6).length;
+      out.review = { has: rvCount > 0, text: rvCount === 1 ? T.rvOffer1 : fill(T.rvOffer, { A: rvCount }), start: function () { sfx('pop'); self.startReview(); } };
 
       // ---- journey: lessons from the courses that suit the child, taking turns, easiest levels first ----
       (function () {
@@ -1091,10 +1139,12 @@
       var ls = s.ls;
       if (s.view === 'lesson' && ls) {
         var isStoryQuiz = ls.story != null, story = isStoryQuiz ? STORIES[ls.story] : null;
-        var isChallenge = !!ls.challenge;
+        var isChallenge = !!ls.challenge, isReview = !!ls.review;
         var lesson = isStoryQuiz ? { id: 'story-' + story.id, title: story.title, teach: '' }
-          : isChallenge ? { id: 'challenge-' + COURSES[s.ci].id, title: T.chTitle, teach: '' } : COURSES[s.ci].lessons[ls.li];
-        var lessonCount = isStoryQuiz || isChallenge ? 1 : COURSES[s.ci].lessons.length;
+          : isChallenge ? { id: 'challenge-' + COURSES[s.ci].id, title: T.chTitle, teach: '' }
+          : isReview ? { id: 'review', title: T.rvTitle, teach: '' } : COURSES[s.ci].lessons[ls.li];
+        var lessonCount = isStoryQuiz || isChallenge || isReview ? 1 : COURSES[s.ci].lessons.length;
+        if (isReview) out.course = { name: T.rvTitle, color: '#B9A8FF', tint: '#E4DDFF' };
         if (isStoryQuiz) out.course = { name: T.storiesTitle, color: story.color, tint: story.tint };
         var q = ls.qs[ls.qi], last = ls.qi === ls.qs.length - 1;
         var seq = (q.seq || []).map(function (name) { return { hex: COLOURS[name].hex, name: COLOURS[name][LANG] }; });
@@ -1129,7 +1179,7 @@
         out.ls = {
           isTeach: ls.step === 'teach', isQuiz: ls.step === 'quiz', isDone: ls.step === 'done',
           title: tx(lesson.title), teach: tx(lesson.teach),
-          of: fill(T.lessonOf, { A: isStoryQuiz || isChallenge ? 1 : orderOf(s.ci).indexOf(ls.li) + 1, B: lessonCount }),
+          of: fill(T.lessonOf, { A: isStoryQuiz || isChallenge || isReview ? 1 : orderOf(s.ci).indexOf(ls.li) + 1, B: lessonCount }),
           // the podcast file for this lesson and language, without its ending (see audio/README.md)
           audio: 'audio/' + lesson.id + '-' + LANG,
           audioReady: function (e) { e.target.parentNode.hidden = false; },
@@ -1160,17 +1210,17 @@
           doneTitle: data.name && data.name.trim() ? fill(T.wellDone, { N: data.name.trim() }) : T.doneTitle,
           firstTry: ls.firstTry + ' / ' + ls.qs.length, time: clock(ls.secs), earnedNum: ls.earned + ' / 3',
           fromJourney: !!ls.fromJourney, notJourney: !ls.fromJourney,
-          hasNext: !ls.fromJourney && !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) < lessonCount - 1,
-          isLast: !ls.fromJourney && !isStoryQuiz && !isChallenge && orderOf(s.ci).indexOf(ls.li) === lessonCount - 1,
-          backLabel: ls.fromJourney ? T.jBack : isStoryQuiz ? T.backStories : T.backCourse,
+          hasNext: !ls.fromJourney && !isStoryQuiz && !isChallenge && !isReview && orderOf(s.ci).indexOf(ls.li) < lessonCount - 1,
+          isLast: !ls.fromJourney && !isStoryQuiz && !isChallenge && !isReview && orderOf(s.ci).indexOf(ls.li) === lessonCount - 1,
+          backLabel: ls.fromJourney ? T.jBack : isStoryQuiz ? T.backStories : isReview ? T.backHome : T.backCourse,
           startQuiz: startQuiz,
           next: next,
-          again: function () { if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
+          again: function () { if (isReview) self.startReview(); else if (isChallenge) self.startChallenge(s.ci); else self.startLesson(s.ci, ls.li); },
           hasCert: !!ls.cert, certMsg: ls.cert ? ls.cert.msg : '',
           openCert: function () { if (ls.cert) self.go('cert', { certCi: ls.cert.ci, certLv: ls.cert.lv }); },
           isChallenge: isChallenge, changes: ls.changes || [], hasChanges: !!(ls.changes && ls.changes.length), noChanges: !!(ls.changes && !ls.changes.length),
           nextLesson: function () { var o = orderOf(s.ci); self.startLesson(s.ci, o[o.indexOf(ls.li) + 1]); },
-          backCourse: function () { self.go(ls.fromJourney ? 'journey' : isStoryQuiz ? 'stories' : 'course'); }
+          backCourse: function () { self.go(ls.fromJourney ? 'journey' : isStoryQuiz ? 'stories' : isReview ? 'journey' : 'course'); }
         };
         out.ls.opts = q.opts.map(function (opt, k) {
           var isColour = !!(opt.o && opt.o.colour), col = isColour ? COLOURS[opt.o.colour] : null;
