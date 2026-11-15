@@ -116,11 +116,16 @@
   var HEAR_LONG = { en: 'Listen. Which long sound is in the word?', ar: 'استمع. أي صوت طويل في الكلمة؟' };
   var HEAR_SOUND = { en: 'Listen. Which sound do you hear?', ar: 'استمع. أي صوت تسمع؟' };
   var DOTS = { en: 'How many dots does this letter have?', ar: 'كم نقطة لهذا الحرف؟' };
+  var HEAR_RHYME = { en: 'Listen. Which word rhymes with it?', ar: 'استمع. أي كلمة على قافيتها؟' };
+  var HEAR_COUNT = { en: 'Listen. How many sounds are in the word?', ar: 'استمع. كم صوتًا في الكلمة؟' };
+  var HEAR_WHICH = { en: 'Listen. Which word did you hear?', ar: 'استمع. أي كلمة سمعت؟' };
+  var SHADDA = { en: 'Which letter has the shadda (ّ)?', ar: 'أي حرف عليه الشدّة؟' };
+  var LETTERS = { en: 'How many letters are in this word?', ar: 'كم حرفًا في هذه الكلمة؟' };
   function hear(word, letters, q) { return { q: q || HEAR_FIRST, say: word, opts: letters }; }
 
   window.SADU_COURSES = [
     {
-      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🐇', '🚢', '🪁', '🌕', '🥁'], name: { en: 'English Phonics', ar: 'الأصوات الإنجليزية' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
+      id: 'phonics', stickers: ['🦜', '🐝', '🐸', '🦉', '🐱', '🐇', '🚢', '🪁', '🌕', '🥁', '🦊', '🌧️', '🎩', '👆', '👀'], name: { en: 'English Phonics', ar: 'الأصوات الإنجليزية' }, age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#B9A8FF', tint: '#E4DDFF',
       tip: { en: 'Say letter sounds, not letter names: "sss" for s, "mmm" for m. On walks, ask: which sound does "palm" start with?', ar: 'انطق صوت الحرف لا اسمه: «سَ» لا «سين». وفي النزهة اسأل: بأي صوت تبدأ كلمة «نخلة»؟' },
       icon: 'M7 10a5 5 0 1 1 10 0c0 3.5-3.5 4-3.5 7a2.5 2.5 0 0 1-5 0M10 10a2 2 0 1 1 4 0',
@@ -169,11 +174,31 @@
         { id: 'phonics-13', title: { en: 'Blend four sounds', ar: 'اجمع أربعة أصوات' },
           teach: { en: 'Longer words have four sounds. Say each one, then push them together: f · r · o · g becomes frog!', ar: 'الكلمات الأطول فيها أربعة أصوات. انطق كل صوت ثم اجمعها: f · r · o · g تصير frog!' },
           hint: { en: 'Point to each letter and say its sound, then say them faster.', ar: 'أشِر إلى كل حرف وانطق صوته، ثم انطقها أسرع.' },
-          questions: [{ q: BLEND, show: 'f · r · o · g', opts: ['🐸', '🦀', '🥁'] }, { q: BLEND, show: 'c · r · a · b', opts: ['🦀', '🐸', '🚩'] }, { q: BLEND, show: 'd · r · u · m', opts: ['🥁', '🚩', '🦀'] }, { q: BLEND, show: 'f · l · a · g', opts: ['🚩', '🥁', '🐸'] }] }
+          questions: [{ q: BLEND, show: 'f · r · o · g', opts: ['🐸', '🦀', '🥁'] }, { q: BLEND, show: 'c · r · a · b', opts: ['🦀', '🐸', '🚩'] }, { q: BLEND, show: 'd · r · u · m', opts: ['🥁', '🚩', '🦀'] }, { q: BLEND, show: 'f · l · a · g', opts: ['🚩', '🥁', '🐸'] }] },
+        { id: 'phonics-21', title: { en: 'Sounds: v z qu x', ar: 'أصوات: v z qu x' },
+          teach: { en: 'v says "vvv" as in van, z says "zzz" like a bee in zip, qu says "kw" as in queen, and x says "ks" at the end of fox.', ar: 'v صوته «فْ» مهتزّ كما في van، و z صوته «زْ» كما في zip، و qu صوته «كو» كما في queen، و x صوته «كس» في آخر fox.' },
+          hint: { en: 'Does it buzz (z), vibrate on your lip (v), or sound like "kw" (qu)?', ar: 'هل يطنّ (z)، أم يهتزّ على الشفة (v)، أم يشبه «كو» (qu)؟' },
+          questions: [hear('van', ['v', 'z', 'qu']), hear('zip', ['z', 'v', 'x']), hear('queen', ['qu', 'v', 'z']), hear('fox', ['x', 'v', 'z'], HEAR_LAST)] },
+        { id: 'phonics-22', title: { en: 'Long sounds: ai oa igh ar', ar: 'أصوات طويلة: ai oa igh ar' },
+          teach: { en: 'More letter teams: ai says "ay" as in rain, oa says "oh" as in boat, igh says "eye" as in night, and ar says "ar" as in car.', ar: 'فرق حروف أخرى: ai صوته «اي» كما في rain، و oa صوته «أو» كما في boat، و igh صوته «آي» كما في night، و ar صوته «آر» كما في car.' },
+          hint: { en: 'Say the word slowly and listen to the long sound in the middle.', ar: 'انطق الكلمة ببطء واستمع إلى الصوت الطويل في وسطها.' },
+          questions: [hear('rain', ['ai', 'oa', 'igh'], HEAR_LONG), hear('boat', ['oa', 'ai', 'ar'], HEAR_LONG), hear('night', ['igh', 'ai', 'oa'], HEAR_LONG), hear('car', ['ar', 'oa', 'igh'], HEAR_LONG)] },
+        { id: 'phonics-23', title: { en: 'Listen and rhyme', ar: 'استمع والقافية' },
+          teach: { en: 'Listen to the word Saqr says, then find the word that ends with the same sound. Cat rhymes with hat.', ar: 'استمع إلى الكلمة التي يقولها صقر، ثم ابحث عن الكلمة التي تنتهي بالصوت نفسه. cat على قافية hat.' },
+          hint: { en: 'Say both words out loud. Do they end the same?', ar: 'انطق الكلمتين بصوت عالٍ. هل تنتهيان بالصوت نفسه؟' },
+          questions: [hear('cat', ['hat', 'dog', 'sun'], HEAR_RHYME), hear('pig', ['wig', 'pot', 'pen'], HEAR_RHYME), hear('bun', ['sun', 'bat', 'bed'], HEAR_RHYME), hear('ten', ['hen', 'tin', 'top'], HEAR_RHYME)] },
+        { id: 'phonics-24', title: { en: 'Count the sounds', ar: 'عُدّ الأصوات' },
+          teach: { en: 'Words are made of sounds. Cat has three sounds: c-a-t. Ship has three too: sh-i-p, because sh is one sound. Tap one finger for each sound.', ar: 'الكلمات مكوّنة من أصوات. cat فيها ثلاثة أصوات: c-a-t. و ship فيها ثلاثة أيضًا: sh-i-p، لأن sh صوت واحد. انقر بإصبع لكل صوت.' },
+          hint: { en: 'Tap a finger for each sound as you say the word.', ar: 'انقر بإصبع لكل صوت وأنت تنطق الكلمة.' },
+          questions: [hear('cat', ['3', '2', '4'], HEAR_COUNT), hear('ship', ['3', '4', '2'], HEAR_COUNT), hear('frog', ['4', '3', '5'], HEAR_COUNT), hear('up', ['2', '3', '1'], HEAR_COUNT)] },
+        { id: 'phonics-25', title: { en: 'Tricky words', ar: 'كلمات خادعة' },
+          teach: { en: 'Some words do not follow the sound rules, so we learn them by sight: the, was, said, they. Look at them carefully!', ar: 'بعض الكلمات الإنجليزية لا تتبع قواعد الأصوات، فنحفظ شكلها: the و was و said و they. انظر إليها جيدًا!' },
+          hint: { en: 'Look at the first and last letters of each word.', ar: 'انظر إلى أول حرف وآخر حرف في كل كلمة.' },
+          questions: [hear('the', ['the', 'he', 'to'], HEAR_WHICH), hear('was', ['was', 'saw', 'we'], HEAR_WHICH), hear('said', ['said', 'sad', 'sea'], HEAR_WHICH), hear('they', ['they', 'the', 'then'], HEAR_WHICH)] }
       ]
     },
     {
-      id: 'arabic-phonics', stickers: ['🏠', '🍊', '🌙', '🔍', '☀️', '⛺', '🔑', '🎵', '🦅', '🐘'], name: { en: 'Arabic Phonics', ar: 'الأصوات العربية' },
+      id: 'arabic-phonics', stickers: ['🏠', '🍊', '🌙', '🔍', '☀️', '⛺', '🔑', '🎵', '🦅', '🐘', '✈️', '🦒', '✨', '🔢', '📖'], name: { en: 'Arabic Phonics', ar: 'الأصوات العربية' },
       age: { en: 'Ages 3 to 7', ar: 'من 3 إلى 7 سنوات' }, ages: [3, 7],
       color: '#F6A04D', tint: '#FFE3C4',
       tip: { en: 'Say each letter with its vowel sound: بَ is "ba", بِ is "bi", بُ is "bu". Point to letters on signs and packets and ask which sound they make.', ar: 'انطق كل حرف مع حركته: بَ، بِ، بُ. وأشِر إلى الحروف على اللافتات والعلب واسأل عن صوتها.' },
@@ -223,7 +248,27 @@
         { id: 'phonics-20', title: { en: 'More Arabic blending', ar: 'تجميع حروف أكثر' },
           teach: { en: 'Join the letters to read new words: ف · ي · ل makes فيل (elephant) and ب · ا · ب makes باب (door).', ar: 'صِل الحروف لتقرأ كلمات جديدة: ف · ي · ل تصير «فيل»، و ب · ا · ب تصير «باب».' },
           hint: { en: 'Say each letter with its sound, then join them quickly.', ar: 'انطق كل حرف بصوته، ثم صِلها بسرعة.' },
-          questions: [{ q: BLEND_AR, show: 'ف · ي · ل', opts: ['🐘', '🚪', '🌹'] }, { q: BLEND_AR, show: 'ب · ا · ب', opts: ['🚪', '🐘', '🐝'] }, { q: BLEND_AR, show: 'و · ر · د', opts: ['🌹', '🐝', '🚪'] }, { q: BLEND_AR, show: 'ن · ح · ل', opts: ['🐝', '🌹', '🐘'] }] }
+          questions: [{ q: BLEND_AR, show: 'ف · ي · ل', opts: ['🐘', '🚪', '🌹'] }, { q: BLEND_AR, show: 'ب · ا · ب', opts: ['🚪', '🐘', '🐝'] }, { q: BLEND_AR, show: 'و · ر · د', opts: ['🌹', '🐝', '🚪'] }, { q: BLEND_AR, show: 'ن · ح · ل', opts: ['🐝', '🌹', '🐘'] }] },
+        { id: 'phonics-26', title: { en: 'Sounds: ط or ت', ar: 'ط أم ت؟' },
+          teach: { en: 'ط is a heavy, strong "t" as in طائرة. ت is a light "t" as in تفاحة.', ar: 'الطاء صوت ثقيل قوي كما في «طائرة»، والتاء صوت خفيف كما في «تفاحة».' },
+          hint: { en: 'Is the sound heavy (ط) or light (ت)?', ar: 'هل الصوت ثقيل (ط) أم خفيف (ت)؟' },
+          questions: [hear('طائرة', ['ط', 'ت', 'د'], HEAR_AR), hear('تفاحة', ['ت', 'ط', 'د'], HEAR_AR), hear('طاولة', ['ط', 'د', 'ت'], HEAR_AR), hear('تمر', ['ت', 'د', 'ط'], HEAR_AR)] },
+        { id: 'phonics-27', title: { en: 'Sounds: ذ ز ظ', ar: 'أصوات: ذ ز ظ' },
+          teach: { en: 'ذ is soft, with the tongue between the teeth, as in ذهب. ز buzzes like a bee, as in زرافة. ظ is like ذ but heavy, as in ظرف.', ar: 'الذال ناعمة ويخرج اللسان بين الأسنان كما في «ذهب»، والزاي تطنّ مثل النحلة كما في «زرافة»، والظاء مثل الذال لكنها ثقيلة كما في «ظرف».' },
+          hint: { en: 'Is your tongue between your teeth (ذ or ظ), or do you buzz (ز)?', ar: 'هل لسانك بين أسنانك (ذ أو ظ)، أم تطنّ (ز)؟' },
+          questions: [hear('ذهب', ['ذ', 'ز', 'ظ'], HEAR_AR), hear('زرافة', ['ز', 'ذ', 'ظ'], HEAR_AR), hear('ظرف', ['ظ', 'ذ', 'ز'], HEAR_AR), hear('زيتون', ['ز', 'ظ', 'ذ'], HEAR_AR)] },
+        { id: 'phonics-28', title: { en: 'The shadda (ّ)', ar: 'الشدّة' },
+          teach: { en: 'The shadda (ّ) is a small mark that doubles a letter: in دلّة the ل is said twice, دَلْلَة.', ar: 'الشدّة (ّ) علامة صغيرة تضاعف الحرف: في «دلّة» ننطق اللام مرتين «دَلْلَة».' },
+          hint: { en: 'Look for the small "w" shape above a letter.', ar: 'ابحث عن العلامة الصغيرة التي تشبه حرف w فوق الحرف.' },
+          questions: [{ q: SHADDA, show: 'دلّة', opts: ['ل', 'د', 'ة'] }, { q: SHADDA, show: 'سكّر', opts: ['ك', 'س', 'ر'] }, { q: SHADDA, show: 'قطّة', opts: ['ط', 'ق', 'ة'] }, { q: SHADDA, show: 'أمّ', opts: ['م', 'أ', 'ب'] }] },
+        { id: 'phonics-29', title: { en: 'Count the letters', ar: 'عُدّ الحروف' },
+          teach: { en: 'Arabic letters join together, but each one still counts. شمس has three letters: ش م س. كتاب has four: ك ت ا ب.', ar: 'الحروف العربية تتّصل، لكن كل حرف يُعدّ وحده. «شمس» فيها ثلاثة حروف: ش م س. و«كتاب» فيها أربعة: ك ت ا ب.' },
+          hint: { en: 'Point to each letter as you count, including ا and ة.', ar: 'أشِر إلى كل حرف وأنت تعدّ، ومعها الألف والتاء المربوطة.' },
+          questions: [{ q: LETTERS, show: 'شمس', opts: ['3', '4', '2'] }, { q: LETTERS, show: 'كتاب', opts: ['4', '3', '5'] }, { q: LETTERS, show: 'نخلة', opts: ['4', '3', '5'] }, { q: LETTERS, show: 'أسد', opts: ['3', '2', '4'] }] },
+        { id: 'phonics-30', title: { en: 'Read short words', ar: 'اقرأ كلمات قصيرة' },
+          teach: { en: 'Listen to the word Saqr says, then find it. Look at the first letter to help you: باب starts with ب.', ar: 'استمع إلى الكلمة التي يقولها صقر، ثم ابحث عنها. انظر إلى أول حرف ليساعدك: «باب» تبدأ بالباء.' },
+          hint: { en: 'Which word starts with the first sound you heard?', ar: 'أي كلمة تبدأ بأول صوت سمعته؟' },
+          questions: [hear('باب', ['باب', 'نار', 'قمر'], HEAR_WHICH), hear('شمس', ['شمس', 'قمر', 'بحر'], HEAR_WHICH), hear('وردة', ['وردة', 'سمكة', 'نخلة'], HEAR_WHICH), hear('جمل', ['جمل', 'فيل', 'أسد'], HEAR_WHICH)] }
       ]
     },
     {
@@ -725,7 +770,7 @@
       ]
     },
     {
-      id: 'art', stickers: ['🎨', '🌈', '🧶', '🔺', '🖌️', '🌗', '〰️', '🧵', '🦋', '🎡'], name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
+      id: 'art', stickers: ['🎨', '🌈', '🧶', '🔺', '🖌️', '🌗', '〰️', '🧵', '🦋', '🎡', '😊', '🧸', '🕌', '💙', '⛵'], name: { en: 'Art', ar: 'الفنون' }, age: { en: 'Ages 3 to 10', ar: 'من 3 إلى 10 سنوات' }, ages: [3, 10],
       color: '#FF7A45', tint: '#FFD3C0',
       tip: { en: 'Mix paints or food colouring together, and look for repeating patterns on rugs, tiles and clothes.', ar: 'امزجا الألوان أو ألوان الطعام، وابحثا عن النقوش المتكرّرة في السجاد والبلاط والملابس.' },
       icon: 'M20 4l-9 9M14 4l6 6M11 13c-3 0-4 2-4 4s-2 3-3 3c4 1 9 0 9-5',
@@ -814,6 +859,51 @@
             { q: { en: 'What is the opposite of blue?', ar: 'ما اللون المقابل للأزرق؟' }, opts: [c('orange'), c('purple'), c('green')] },
             { q: { en: 'What is the opposite of yellow?', ar: 'ما اللون المقابل للأصفر؟' }, opts: [c('purple'), c('orange'), c('red')] },
             { q: { en: 'Opposite colours side by side look…', ar: 'الألوان المتقابلة عندما تتجاور تبدو…' }, opts: [{ en: 'extra bright', ar: 'زاهية جدًّا' }, { en: 'invisible', ar: 'غير مرئية' }, { en: 'exactly the same', ar: 'متشابهة تمامًا' }] }
+          ] },
+        { id: 'art-11', title: { en: 'Drawing feelings', ar: 'رسم المشاعر' },
+          teach: { en: 'Artists show feelings with faces: a smile for happy, a down-turned mouth and tears for sad, frowning eyebrows for angry, and a round open mouth for surprised.', ar: 'يعبّر الفنانون عن المشاعر بالوجوه: الابتسامة للفرح، والفم المقلوب والدموع للحزن، والحاجبان المقطّبان للغضب، والفم المفتوح المستدير للدهشة.' },
+          hint: { en: 'Look at the mouth and the eyebrows.', ar: 'انظر إلى الفم والحاجبين.' },
+          questions: [
+            { q: { en: 'How does this face feel?', ar: 'بماذا يشعر هذا الوجه؟' }, show: '😀', opts: [{ en: 'happy', ar: 'سعيد' }, { en: 'sad', ar: 'حزين' }, { en: 'angry', ar: 'غاضب' }] },
+            { q: { en: 'How does this face feel?', ar: 'بماذا يشعر هذا الوجه؟' }, show: '😢', opts: [{ en: 'sad', ar: 'حزين' }, { en: 'happy', ar: 'سعيد' }, { en: 'surprised', ar: 'مندهش' }] },
+            { q: { en: 'How does this face feel?', ar: 'بماذا يشعر هذا الوجه؟' }, show: '😠', opts: [{ en: 'angry', ar: 'غاضب' }, { en: 'surprised', ar: 'مندهش' }, { en: 'happy', ar: 'سعيد' }] },
+            { q: { en: 'How does this face feel?', ar: 'بماذا يشعر هذا الوجه؟' }, show: '😮', opts: [{ en: 'surprised', ar: 'مندهش' }, { en: 'angry', ar: 'غاضب' }, { en: 'sad', ar: 'حزين' }] }
+          ] },
+        { id: 'art-12', title: { en: 'Textures', ar: 'الملمس' },
+          teach: { en: 'Texture is how something feels: a teddy is soft, a cactus is prickly, a rock is rough and an egg is smooth. Artists show texture with lines and dots.', ar: 'الملمس هو كيف نشعر بالشيء عند لمسه: الدبدوب ناعم، والصبّار شائك، والصخرة خشنة، والبيضة ملساء. ويرسم الفنانون الملمس بالخطوط والنقاط.' },
+          hint: { en: 'Imagine touching it gently with your finger.', ar: 'تخيّل أنك تلمسه بإصبعك بلطف.' },
+          questions: [
+            { q: { en: 'How does it feel to touch?', ar: 'كيف ملمسه؟' }, show: '🧸', opts: [{ en: 'soft', ar: 'ناعم' }, { en: 'prickly', ar: 'شائك' }, { en: 'rough', ar: 'خشن' }] },
+            { q: { en: 'How does it feel to touch?', ar: 'كيف ملمسه؟' }, show: '🌵', opts: [{ en: 'prickly', ar: 'شائك' }, { en: 'soft', ar: 'ناعم' }, { en: 'smooth', ar: 'أملس' }] },
+            { q: { en: 'How does it feel to touch?', ar: 'كيف ملمسه؟' }, show: '🪨', opts: [{ en: 'rough', ar: 'خشن' }, { en: 'soft', ar: 'ناعم' }, { en: 'smooth', ar: 'أملس' }] },
+            { q: { en: 'How does it feel to touch?', ar: 'كيف ملمسه؟' }, show: '🥚', opts: [{ en: 'smooth', ar: 'أملس' }, { en: 'prickly', ar: 'شائك' }, { en: 'rough', ar: 'خشن' }] }
+          ] },
+        { id: 'art-13', title: { en: 'Geometric patterns', ar: 'الزخارف الهندسية' },
+          teach: { en: 'Islamic art is famous for geometric patterns: stars and shapes that repeat again and again. They are drawn with a ruler and a compass and decorate tiles, doors and mosques.', ar: 'يشتهر الفن الإسلامي بالزخارف الهندسية: نجوم وأشكال تتكرّر مرة بعد مرة. تُرسم بالمسطرة والفرجار، وتزيّن البلاط والأبواب والمساجد.' },
+          hint: { en: 'Think of the patterns on tiles and doors.', ar: 'فكّر في الزخارف على البلاط والأبواب.' },
+          questions: [
+            { q: { en: 'Geometric patterns are made of…', ar: 'تتكوّن الزخارف الهندسية من…' }, opts: [{ en: 'shapes that repeat', ar: 'أشكال تتكرّر' }, { en: 'random scribbles', ar: 'خربشات عشوائية' }, { en: 'photos', ar: 'صور فوتوغرافية' }] },
+            { q: { en: 'Which shape is very common in these patterns?', ar: 'أي شكل يكثر في هذه الزخارف؟' }, opts: ['⭐', '🐟', '🌧️'] },
+            { q: { en: 'Which tools help draw them?', ar: 'أي أدوات تساعد على رسمها؟' }, opts: [{ en: 'a ruler and a compass', ar: 'المسطرة والفرجار' }, { en: 'a spoon and a fork', ar: 'الملعقة والشوكة' }, { en: 'a ball', ar: 'الكرة' }] },
+            { q: { en: 'Where can you see these patterns?', ar: 'أين ترى هذه الزخارف؟' }, opts: [{ en: 'on tiles, doors and mosques', ar: 'على البلاط والأبواب والمساجد' }, { en: 'only in the sea', ar: 'في البحر فقط' }, { en: 'on clouds', ar: 'على الغيوم' }] }
+          ] },
+        { id: 'art-14', title: { en: 'Colour feelings', ar: 'مشاعر الألوان' },
+          teach: { en: 'Colours can make us feel things. Blue feels calm like the sea, yellow feels happy like the sun, green feels fresh like plants, and red feels hot and strong like fire.', ar: 'للألوان مشاعر: الأزرق هادئ مثل البحر، والأصفر مبهج مثل الشمس، والأخضر منعش مثل النبات، والأحمر حارّ وقوي مثل النار.' },
+          hint: { en: 'Think of where you see that colour in nature.', ar: 'فكّر أين ترى هذا اللون في الطبيعة.' },
+          questions: [
+            { q: { en: 'Which colour feels calm like the sea?', ar: 'أي لون هادئ مثل البحر؟' }, opts: [c('blue'), c('red'), c('orange')] },
+            { q: { en: 'Which colour feels happy like a sunny day?', ar: 'أي لون مبهج مثل يوم مشمس؟' }, opts: [c('yellow'), c('navy'), c('grey')] },
+            { q: { en: 'Which colour feels fresh like plants?', ar: 'أي لون منعش مثل النبات؟' }, opts: [c('green'), c('red'), c('black')] },
+            { q: { en: 'Which colour feels hot and strong like fire?', ar: 'أي لون حارّ وقوي مثل النار؟' }, opts: [c('red'), c('blue'), c('white')] }
+          ] },
+        { id: 'art-15', title: { en: 'Gulf crafts', ar: 'الحرف الخليجية' },
+          teach: { en: 'The Gulf has beautiful traditional crafts: Sadu weaving with wool, pottery made from clay, wooden dhow boats, and henna patterns drawn on hands.', ar: 'في الخليج حرف تقليدية جميلة: نسيج السدو من الصوف، والفخّار من الطين، والسفن الخشبية (المحامل)، ونقوش الحنّاء على الأيدي.' },
+          hint: { en: 'Think about what each thing is made from.', ar: 'فكّر في المادة التي يُصنع منها كل شيء.' },
+          questions: [
+            { q: { en: 'What is a dhow boat made of?', ar: 'من أي مادة تُصنع السفينة الخشبية (المحمل)؟' }, opts: [{ en: 'wood', ar: 'الخشب' }, { en: 'glass', ar: 'الزجاج' }, { en: 'paper', ar: 'الورق' }] },
+            { q: { en: 'What are pots made from?', ar: 'من أي مادة يُصنع الفخّار؟' }, opts: [{ en: 'clay', ar: 'الطين' }, { en: 'wool', ar: 'الصوف' }, { en: 'sand only', ar: 'الرمل فقط' }] },
+            { q: { en: 'Where are henna patterns drawn?', ar: 'أين تُرسم نقوش الحنّاء؟' }, opts: [{ en: 'on hands', ar: 'على الأيدي' }, { en: 'on walls', ar: 'على الجدران' }, { en: 'on boats', ar: 'على السفن' }] },
+            { q: { en: 'How is Sadu made?', ar: 'كيف يُصنع السدو؟' }, opts: [{ en: 'by weaving wool', ar: 'بنسج الصوف' }, { en: 'by baking clay', ar: 'بشيّ الطين' }, { en: 'by carving wood', ar: 'بنحت الخشب' }] }
           ] }
       ]
     }
@@ -836,6 +926,9 @@
     'arabic-1': 1, 'arabic-6': 1, 'arabic-3': 2, 'arabic-2': 2, 'arabic-4': 3, 'arabic-5': 3,
     'arabic-7': 1, 'arabic-8': 1, 'arabic-9': 2, 'arabic-10': 3,
     'art-7': 1, 'art-8': 2, 'art-9': 2, 'art-10': 3,
+    'art-11': 1, 'art-12': 1, 'art-13': 2, 'art-14': 2, 'art-15': 3,
+    'phonics-21': 2, 'phonics-23': 2, 'phonics-22': 3, 'phonics-24': 3, 'phonics-25': 3,
+    'phonics-26': 2, 'phonics-29': 2, 'phonics-27': 3, 'phonics-28': 3, 'phonics-30': 3,
     'art-1': 1, 'art-4': 1, 'art-6': 1, 'art-2': 2, 'art-5': 2, 'art-3': 3
   };
   window.SADU_COURSES.forEach(function (c) { c.lessons.forEach(function (l) { l.level = l.level || LEVELS[l.id] || 1; }); });

@@ -11,7 +11,8 @@ The language link in the top menu switches between the two.
 ## Courses and family report
 
 `learn.html` is the learning page (Arabic: `learn.html?lang=ar`). It has seven courses: English
-phonics, Arabic phonics, maths, science, English, Arabic and art; each lesson is a
+phonics, Arabic phonics, maths, science, English, Arabic and art, with 15 lessons each in three
+levels (105 lessons); each lesson is a
 short idea to learn followed by four questions. A lesson earns 1 to 3 stars, depending on how
 many questions were right on the first try.
 
